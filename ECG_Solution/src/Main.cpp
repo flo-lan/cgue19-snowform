@@ -1,0 +1,368 @@
+/*
+* Copyright 2018 Vienna University of Technology.
+* Institute of Computer Graphics and Algorithms.
+* This file is part of the ECG Lab Framework and must not be redistributed.
+*/
+
+
+#include "Utils.h"
+#include "AssetManager.h"
+#include "InputManager.h"
+#include "ShaderProgram.h"
+#include "GameObject.h"
+#include "TransformComponent.h"
+#include "TeapotRendererComponent.h"
+#include "MeshRendererComponent.h"
+#include "CameraComponent.h"
+#include "ArcBallControllerComponent.h"
+#include "DirectionalLightComponent.h"
+#include "PointLightComponent.h"
+#include "SpotLightComponent.h"
+#include "SimpleMaterial.h"
+#include "PhongGouraudMaterial.h"
+#include "Mesh.h"
+
+
+/* --------------------------------------------- */
+// Prototypes
+/* --------------------------------------------- */
+
+
+
+/* --------------------------------------------- */
+// Global variables
+/* --------------------------------------------- */
+
+
+/* --------------------------------------------- */
+// Error Callback
+/* --------------------------------------------- */
+
+void error_callback(int error, const char* description)
+{
+    fprintf(stderr, "Error: %s\n", description);
+}
+
+/* --------------------------------------------- */
+// Input Callback
+/* --------------------------------------------- */
+
+bool gEnableWireframe = false;
+bool gDisableCullFace = false;
+
+static void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+    if (key == GLFW_KEY_ESCAPE && action == GLFW_PRESS)
+        glfwSetWindowShouldClose(window, GLFW_TRUE);
+
+    if (key == GLFW_KEY_F1 && action == GLFW_PRESS)
+    {
+        if (gEnableWireframe)
+        {
+            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+            gEnableWireframe = false;
+        }
+        else
+        {
+            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+            gEnableWireframe = true;
+        }
+    }
+
+    if (key == GLFW_KEY_F2 && action == GLFW_PRESS)
+    {
+        if (!gDisableCullFace)
+        {
+            glDisable(GL_CULL_FACE);
+            gDisableCullFace = true;
+        }
+        else
+        {
+            glEnable(GL_CULL_FACE);
+            gDisableCullFace = false;
+        }
+    }
+}
+
+/* --------------------------------------------- */
+// Main
+/* --------------------------------------------- */
+
+int main(int argc, char** argv)
+{
+    /* --------------------------------------------- */
+    // Load settings.ini
+    /* --------------------------------------------- */
+
+    // init reader for ini files
+    INIReader reader("assets/settings.ini");
+
+    // load values from ini file
+    // first param: section [window], second param: property name, third param: default value
+    int width = reader.GetInteger("window", "width", 800);
+    int height = reader.GetInteger("window", "height", 800);
+    int refresh_rate = reader.GetInteger("window", "refresh_rate", 60);
+    std::string window_title = reader.Get("window", "title", "ECG");
+
+    /* --------------------------------------------- */
+    // Init GLFW, create window and init GLEW
+    /* --------------------------------------------- */
+
+    // One of the few GLFW functions that may be called before initialization
+    glfwSetErrorCallback(error_callback);
+
+    // Before you can use most GLFW functions, the library must be initialized
+    if (!glfwInit())
+    {
+        // Initialization failed
+        EXIT_WITH_ERROR("Failed to init GLFW")
+    }
+
+    // The minimum required OpenGL version for this lecture is 4.3 Core Profile
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    // Newer versions may also be used.
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+    // Additionally, the context should be a core context, which marks the old fixed-function pipeline and its methods as deprecated
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    glfwWindowHint(GLFW_REFRESH_RATE, refresh_rate);
+    //glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
+
+    // Enable antialiasing (4xMSAA)
+    glfwWindowHint(GLFW_SAMPLES, 4);
+
+    GLFWwindow* window = glfwCreateWindow(width, height, window_title.c_str(), NULL, NULL);
+    if (!window)
+    {
+        // Window or OpenGL context creation failed
+        EXIT_WITH_ERROR("Failed to create window or OpenGL context")
+    }
+
+    // Before we can use the OpenGL API, we must have a current OpenGL context
+    // The context will remain current until you make another context current or until the window owning the current context is destroyed
+    glfwMakeContextCurrent(window);
+
+    // Register per-window callbacks
+    glfwSetKeyCallback(window, key_callback);
+    glfwSetScrollCallback(window, MouseScrollCallback);
+    glfwSetCursorPosCallback(window, MouseCursorPositionCallback);
+    glfwSetMouseButtonCallback(window, MouseButtonCallback);
+
+    // To force GLEW to load all functions, the variable glewExperimental has to be modified
+    glewExperimental = true;
+
+    // Initialize GLEW
+    if (glewInit() != GLEW_OK)
+    {
+        EXIT_WITH_ERROR("Failed to init GLEW, something is seriously wrong")
+    }
+
+    fprintf(stdout, "Status: Using GLEW %s\n", glewGetString(GLEW_VERSION));
+
+    /* --------------------------------------------- */
+    // Init framework
+    /* --------------------------------------------- */
+
+    if (!initFramework())
+    {
+        EXIT_WITH_ERROR("Failed to init framework")
+    }
+
+    /* --------------------------------------------- */
+    // Initialize scene and render loop
+    /* --------------------------------------------- */
+
+    if (!sAssetManager.Load())
+    {
+        sAssetManager.Unload();
+
+        EXIT_WITH_ERROR("Failed to load assets!")
+    }
+
+    /************************ Focus Point ***********************/
+    GameObject* focusPoint = new GameObject("Focus Point");
+
+    TransformComponent* focusPointTransformComponent = focusPoint->AttachComponent<TransformComponent>();
+
+    ArcBallControllerComponent* arcBallControllerComponent = focusPoint->AttachComponent<ArcBallControllerComponent>();
+
+    /************************ Main Camera ***********************/
+    GameObject* mainCamera = new GameObject("Main Camera");
+
+    TransformComponent* mainCameraTransformComponent = mainCamera->AttachComponent<TransformComponent>();
+    // Add main camera transform to focus point transform
+    focusPointTransformComponent->AddChild(mainCameraTransformComponent);
+    mainCameraTransformComponent->SetLocalPosition(0.f, 0.f, 6.f);
+
+    CameraComponent* mainCameraComponent = mainCamera->AttachComponent<CameraComponent>();
+    mainCameraComponent->SetFov((float)glm::radians(reader.GetReal("camera", "fov", 60.f)));
+    mainCameraComponent->SetAspectRatio((float)width / height);
+    mainCameraComponent->SetNearPlane((float)reader.GetReal("camera", "near", 0.1f));
+    mainCameraComponent->SetFarPlane((float)reader.GetReal("camera", "far", 100.f));
+
+    /******************* Directional Light *******************/
+    GameObject* directionalLight = new GameObject("Directional Light");
+
+    TransformComponent* directionalLightTransformComponent = directionalLight->AttachComponent<TransformComponent>();
+    DirectionalLightComponent* directionalLightComponent = directionalLight->AttachComponent<DirectionalLightComponent>();
+    directionalLightComponent->SetDirection(glm::vec3(0.f, -1.f, -1.f));
+    directionalLightComponent->SetColor(glm::vec3(0.8f, 0.8f, 0.8f));
+
+    /********************** Point Light **********************/
+    GameObject* pointLight = new GameObject("Point Light");
+
+    TransformComponent* pointLightTransformComponent = pointLight->AttachComponent<TransformComponent>();
+    pointLightTransformComponent->SetLocalPosition(0.f, 0.f, 0.f);
+    PointLightComponent* pointLightComponent = pointLight->AttachComponent<PointLightComponent>();
+    pointLightComponent->SetColor(glm::vec3(1.f, 1.f, 1.f));
+    pointLightComponent->SetConstant(1.f);
+    pointLightComponent->SetLinear(0.4f);
+    pointLightComponent->SetQuadratic(0.1f);
+
+    /************************* Torus *************************/
+    GameObject* torus = new GameObject("Torus");
+
+    TransformComponent* torusTransformComponent = torus->AttachComponent<TransformComponent>();
+    torusTransformComponent->SetLocalRotation(glm::radians(90.f), 0.f, 0.f);
+    torusTransformComponent->SetLocalScale(1.f, 1.f, 0.6f);
+
+    SimpleMaterial* torusMaterial = sAssetManager.GetMaterial<SimpleMaterial>("Torus");
+    torusMaterial->SetColor(glm::vec3(1.f, 0.f, 1.f)); // Magenta
+
+    //MeshRendererComponent* torusMeshRendererComponent = torus->AttachComponent<MeshRendererComponent>();
+    //torusMeshRendererComponent->SetCamera(mainCameraComponent);
+    //torusMeshRendererComponent->SetMaterial(torusMaterial);
+    //torusMeshRendererComponent->SetMesh(sAssetManager.GetMesh("Torus"));
+
+
+    /************************* Sphere *************************/
+    GameObject* sphere = new GameObject("Sphere");
+
+    TransformComponent* sphereTransformComponent = sphere->AttachComponent<TransformComponent>();
+    sphereTransformComponent->SetLocalPosition(1.5f, -1.f, 0.f);
+
+    PhongGouraudMaterial* sphereMaterial = sAssetManager.GetMaterial<PhongGouraudMaterial>("Sphere");
+    sphereMaterial->SetDiffuseColor(glm::vec3(1.f, 1.f, 1.f));
+    sphereMaterial->SetDiffuseTexture(sAssetManager.GetTexture2D("bricks_diffuse"));
+    sphereMaterial->SetSpecularTexture(sAssetManager.GetTexture2D("bricks_specular"));
+    sphereMaterial->SetAmbientReflectionConstant(0.1f);
+    sphereMaterial->SetDiffuseReflectionConstant(0.7f);
+    sphereMaterial->SetSpecularReflectionConstant(0.3f);
+    sphereMaterial->SetShininess(8.f);
+
+    MeshRendererComponent* sphereMeshRendererComponent = sphere->AttachComponent<MeshRendererComponent>();
+    sphereMeshRendererComponent->SetCamera(mainCameraComponent);
+    sphereMeshRendererComponent->SetMaterial(sphereMaterial);
+    sphereMeshRendererComponent->SetMesh(sAssetManager.GetMesh("Sphere"));
+    sphereMeshRendererComponent->AddLight(directionalLightComponent);
+    sphereMeshRendererComponent->AddLight(pointLightComponent);
+
+    /************************* Cylinder *************************/
+    GameObject* cylinder = new GameObject("Cylinder");
+
+    TransformComponent* cylinderTransformComponent = cylinder->AttachComponent<TransformComponent>();
+    cylinderTransformComponent->SetLocalPosition(-1.5f, -1.0f, 0.f);
+
+    PhongGouraudMaterial* cylinderMaterial = sAssetManager.GetMaterial<PhongGouraudMaterial>("Cylinder");
+    cylinderMaterial->SetDiffuseColor(glm::vec3(1.f, 1.f, 1.f));
+    cylinderMaterial->SetDiffuseTexture(sAssetManager.GetTexture2D("bricks_diffuse"));
+    cylinderMaterial->SetSpecularTexture(sAssetManager.GetTexture2D("bricks_specular"));
+    cylinderMaterial->SetAmbientReflectionConstant(0.1f);
+    cylinderMaterial->SetDiffuseReflectionConstant(0.7f);
+    cylinderMaterial->SetSpecularReflectionConstant(0.3f);
+    cylinderMaterial->SetShininess(8.f);
+
+    MeshRendererComponent* cylinderMeshRendererComponent = cylinder->AttachComponent<MeshRendererComponent>();
+    cylinderMeshRendererComponent->SetCamera(mainCameraComponent);
+    cylinderMeshRendererComponent->SetMaterial(cylinderMaterial);
+    cylinderMeshRendererComponent->SetMesh(sAssetManager.GetMesh("Cylinder"));
+    cylinderMeshRendererComponent->AddLight(directionalLightComponent);
+    cylinderMeshRendererComponent->AddLight(pointLightComponent);
+
+    /************************* Cube *************************/
+    GameObject* cube = new GameObject("Cube");
+
+    TransformComponent* cubeTransformComponent = cube->AttachComponent<TransformComponent>();
+    cubeTransformComponent->SetLocalPosition(0.0f, 1.5f, 0.f);
+
+    PhongGouraudMaterial* cubeMaterial = sAssetManager.GetMaterial<PhongGouraudMaterial>("Cube");
+    cubeMaterial->SetDiffuseColor(glm::vec3(1.f, 1.f, 1.f));
+    cubeMaterial->SetDiffuseTexture(sAssetManager.GetTexture2D("wood_diffuse"));
+    cubeMaterial->SetAmbientReflectionConstant(0.1f);
+    cubeMaterial->SetDiffuseReflectionConstant(0.7f);
+    cubeMaterial->SetSpecularReflectionConstant(0.1f);
+    cubeMaterial->SetShininess(2.f);
+
+    MeshRendererComponent* cubeMeshRendererComponent = cube->AttachComponent<MeshRendererComponent>();
+    cubeMeshRendererComponent->SetCamera(mainCameraComponent);
+    cubeMeshRendererComponent->SetMaterial(cubeMaterial);
+    cubeMeshRendererComponent->SetMesh(sAssetManager.GetMesh("Cube"));
+    cubeMeshRendererComponent->AddLight(directionalLightComponent);
+    cubeMeshRendererComponent->AddLight(pointLightComponent);
+
+    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_CULL_FACE);
+
+    glClearColor(1.f, 1.f, 1.f, 1.f);
+
+    while (!glfwWindowShouldClose(window))
+    {
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+        glfwPollEvents();
+
+        focusPoint->Update();
+        mainCamera->Update();
+        directionalLight->Update();
+        pointLight->Update();
+        torus->Update();
+        sphere->Update();
+        cylinder->Update();
+        cube->Update();
+
+        focusPoint->Render();
+        mainCamera->Render();
+        directionalLight->Render();
+        pointLight->Render();
+        torus->Render();
+        sphere->Render();
+        cylinder->Render();
+        cube->Render();
+
+        glfwSwapBuffers(window);
+    }
+
+    delete cube;
+    delete cylinder;
+    delete sphere;
+    delete torus;
+    delete pointLight;
+    delete directionalLight;
+    delete mainCamera;
+    delete focusPoint;
+
+    sAssetManager.Unload();
+
+    /* --------------------------------------------- */
+    // Destroy framework
+    /* --------------------------------------------- */
+
+    destroyFramework();
+
+    /* --------------------------------------------- */
+    // Destroy context and exit
+    /* --------------------------------------------- */
+
+    // When a window and context is no longer needed, it should be destroyed
+    // Once this function is called, no more events will be delivered for that window and its handle becomes invalid
+    glfwDestroyWindow(window);
+
+    // Just before the application exits, we need to terminate GLFW
+    glfwTerminate();
+
+    return EXIT_SUCCESS;
+}
+
+
+
+
