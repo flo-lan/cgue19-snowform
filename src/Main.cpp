@@ -11,7 +11,6 @@
 #include "ShaderProgram.h"
 #include "GameObject.h"
 #include "TransformComponent.h"
-#include "TeapotRendererComponent.h"
 #include "MeshRendererComponent.h"
 #include "CameraComponent.h"
 #include "ArcBallControllerComponent.h"
