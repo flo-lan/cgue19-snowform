@@ -17,7 +17,6 @@
     <ClCompile Include="src\ShaderProgram.cpp" />
     <ClCompile Include="src\SimpleMaterial.cpp" />
     <ClCompile Include="src\SpotLightComponent.cpp" />
-    <ClCompile Include="src\TeapotRendererComponent.cpp" />
     <ClCompile Include="src\Texture2D.cpp" />
     <ClCompile Include="src\TransformComponent.cpp" />
     <ClInclude Include="src\ArcBallControllerComponent.h" />
@@ -40,7 +39,6 @@
     <ClInclude Include="src\ShaderProgram.h" />
     <ClInclude Include="src\SimpleMaterial.h" />
     <ClInclude Include="src\SpotLightComponent.h" />
-    <ClInclude Include="src\TeapotRendererComponent.h" />
     <ClInclude Include="src\Texture2D.h" />
     <ClInclude Include="src\TransformComponent.h" />
     <ClInclude Include="src\UniqueTypeId.h" />

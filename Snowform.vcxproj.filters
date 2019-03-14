@@ -1,0 +1,187 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\GameObject.cpp">
+      <Filter>Engine\GameObject</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Component.cpp">
+      <Filter>Engine\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MeshRendererComponent.cpp">
+      <Filter>Engine\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Shader.cpp">
+      <Filter>Engine\Render\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ShaderProgram.cpp">
+      <Filter>Engine\Render\Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Material.cpp">
+      <Filter>Engine\Render\Material</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Texture2D.cpp">
+      <Filter>Engine\Render\Texture2D</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mesh.cpp">
+      <Filter>Engine\Render\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SimpleMaterial.cpp">
+      <Filter>Engine\Render\Material</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PointLightComponent.cpp">
+      <Filter>Engine\Render\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SpotLightComponent.cpp">
+      <Filter>Engine\Render\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DirectionalLightComponent.cpp">
+      <Filter>Engine\Render\Light</Filter>
+    </ClCompile>
+    <ClCompile Include="src\InputManager.cpp">
+      <Filter>Engine\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TransformComponent.cpp">
+      <Filter>Engine\Render\Transform</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AssetManager.cpp">
+      <Filter>Game\AssetManager</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CameraComponent.cpp">
+      <Filter>Engine\Render\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ArcBallControllerComponent.cpp">
+      <Filter>Game\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PhongGouraudMaterial.cpp">
+      <Filter>Game\Render\Material</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RenderSettings.cpp">
+      <Filter>Game\Render</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="src\GameObject.h">
+      <Filter>Engine\GameObject</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Component.h">
+      <Filter>Engine\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MeshRendererComponent.h">
+      <Filter>Engine\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Shader.h">
+      <Filter>Engine\Render\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ShaderProgram.h">
+      <Filter>Engine\Render\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Material.h">
+      <Filter>Engine\Render\Material</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Texture2D.h">
+      <Filter>Engine\Render\Texture2D</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mesh.h">
+      <Filter>Engine\Render\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SimpleMaterial.h">
+      <Filter>Engine\Render\Material</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PointLightComponent.h">
+      <Filter>Engine\Render\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SpotLightComponent.h">
+      <Filter>Engine\Render\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DirectionalLightComponent.h">
+      <Filter>Engine\Render\Light</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Utils.h">
+      <Filter>Engine\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UniqueTypeId.h">
+      <Filter>Engine\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\INIReader.h">
+      <Filter>Engine\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\InputManager.h">
+      <Filter>Engine\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TransformComponent.h">
+      <Filter>Engine\Render\Transform</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AssetManager.h">
+      <Filter>Game\AssetManager</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CameraComponent.h">
+      <Filter>Engine\Render\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ArcBallControllerComponent.h">
+      <Filter>Game\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PhongGouraudMaterial.h">
+      <Filter>Game\Render\Material</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RenderSettings.h">
+      <Filter>Game\Render</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Engine">
+      <UniqueIdentifier>{8c94a05c-9533-466f-ab05-0f7da47373bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Component">
+      <UniqueIdentifier>{25ad1c51-8b26-4e40-b197-31b3f18bdc89}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\GameObject">
+      <UniqueIdentifier>{5ce3b074-8aa1-4cf3-86ed-2154e64eab15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Util">
+      <UniqueIdentifier>{a53dec9e-7dbe-47f4-a62e-e57e0990bb5a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Input">
+      <UniqueIdentifier>{2a9d7122-fe4c-4354-9d7b-c2439a14b595}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game">
+      <UniqueIdentifier>{aab842e8-8ff4-45af-ae04-1c5b5c305ef9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\AssetManager">
+      <UniqueIdentifier>{37b9798e-45c3-48fe-98d7-99f8d230c273}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Render">
+      <UniqueIdentifier>{5704f6b6-a58e-410c-8f03-885ac6a6e0bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Render">
+      <UniqueIdentifier>{a4c5b1df-6ea4-4214-ab84-0ec62db074cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Render\Camera">
+      <UniqueIdentifier>{1e306c68-f3a3-4189-8343-442148b08a78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Render\Light">
+      <UniqueIdentifier>{26d434c3-f296-422c-ad30-0a971e555af3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Render\Material">
+      <UniqueIdentifier>{d3e146fd-9adb-4cfd-a12f-1975400b6400}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Render\Mesh">
+      <UniqueIdentifier>{db9610fd-cbd5-487f-8830-63d20edb0d44}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Render\Texture2D">
+      <UniqueIdentifier>{9528127a-b6db-4975-89ac-d94328f52e66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Render\Transform">
+      <UniqueIdentifier>{e57b5eeb-9fa6-4d90-acef-e342db88bfaf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Render\Material">
+      <UniqueIdentifier>{54f0ae49-fd43-40d3-8c7a-56b623f1b58e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Controller">
+      <UniqueIdentifier>{94a86d10-8932-45d0-a1b5-c642699f0d52}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Render\Shader">
+      <UniqueIdentifier>{9008dc15-7dc2-4c08-8e91-d4645a25d871}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
