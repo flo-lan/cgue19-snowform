@@ -4,10 +4,13 @@ class GameObject;
 
 class Component
 {
-public:
+    friend class GameObject;
+
+protected:
     Component(GameObject* owner);
     virtual ~Component();
 
+public:
     virtual void OnAwake() {}
     virtual void OnStart() {}
 
