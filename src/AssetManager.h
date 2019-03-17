@@ -87,6 +87,7 @@ private:
     Mesh* CreateCylinderMesh(std::string const& name, uint32_t segments, float radius, float height);
     Mesh* CreateSphereMesh(std::string const& name, uint32_t segmentsLongitude, uint32_t segmentsLatitude, float radius);
     Mesh* CreateTorusMesh(std::string const& name, uint32_t tubeSegments, uint32_t crossSectionSegments, float r1, float r2);
+    Mesh* CreateMeshFromFile(std::string const& name, std::string const& file);
     void DeleteMeshes();
 
     ShaderMap shaders;

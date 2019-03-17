@@ -1,4 +1,7 @@
 #include "Mesh.h"
+#include "assimp/Importer.hpp"
+#include "assimp/postprocess.h"
+#include "assimp/scene.h"
 #include <glm\gtc\quaternion.hpp>
 #include <glm\gtx\quaternion.hpp>
 #include <glm/gtc/constants.hpp>
@@ -312,6 +315,65 @@ Mesh* Mesh::CreateTorus(std::string const& name, uint32_t tubeSegments, uint32_t
                 mesh->Indices.push_back(curr + 1);
             }
         }
+    }
+
+    return mesh;
+}
+
+// Source: http://ogldev.atspace.co.uk/www/tutorial22/tutorial22.html
+Mesh* Mesh::CreateFromFile(std::string const& name, std::string const& file)
+{
+    const static aiVector3D Zero3D(0.0f, 0.0f, 0.0f);
+
+    // Create an instance of the Importer class
+    Assimp::Importer importer;
+
+    // And have it read the given file
+    const aiScene* aiScene = importer.ReadFile(file, aiProcess_Triangulate | aiProcess_GenSmoothNormals | aiProcess_FlipUVs);
+
+    // Check if import failed
+    if (!aiScene)
+    {
+        return nullptr;
+    }
+
+    // Check if there is at least one mesh
+    if (aiScene->mNumMeshes < 1)
+    {
+        return nullptr;
+    }
+
+    Mesh* mesh = new Mesh(name);
+
+    for (uint32_t j = 0, indexOffset = 0; j < aiScene->mNumMeshes; j++)
+    {
+        const aiMesh* aiMesh = aiScene->mMeshes[j];
+
+        if (!aiMesh)
+        {
+            continue;
+        }
+
+        for (uint32_t i = 0; i < aiMesh->mNumVertices; i++)
+        {
+            const aiVector3D* pos = &(aiMesh->mVertices[i]);
+            const aiVector3D* normal = aiMesh->HasNormals() ? &(aiMesh->mNormals[i]) : &Zero3D;
+            const aiVector3D* uv = aiMesh->HasTextureCoords(0) ? &(aiMesh->mTextureCoords[0][i]) : &Zero3D;
+
+            mesh->Vertices.push_back(Vertex(pos->x, pos->y, pos->z, normal->x, normal->y, normal->z, uv->x, uv->y));
+        }
+
+        for (uint32_t i = 0; i < aiMesh->mNumFaces; i++)
+        {
+            const aiFace& aiFace = aiMesh->mFaces[i];
+            assert(aiFace.mNumIndices == 3);
+
+            mesh->Indices.push_back(indexOffset + aiFace.mIndices[0]);
+            mesh->Indices.push_back(indexOffset + aiFace.mIndices[1]);
+            mesh->Indices.push_back(indexOffset + aiFace.mIndices[2]);
+        }
+
+        indexOffset += aiMesh->mNumFaces * 3;
     }
 
     return mesh;

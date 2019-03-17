@@ -147,7 +147,7 @@ void GameScene::OnLoad()
     MeshRendererComponent* cubeMeshRendererComponent = cube->AttachComponent<MeshRendererComponent>();
     cubeMeshRendererComponent->SetCamera(mainCameraComponent);
     cubeMeshRendererComponent->SetMaterial(cubeMaterial);
-    cubeMeshRendererComponent->SetMesh(sAssetManager.GetMesh("Cube"));
+    cubeMeshRendererComponent->SetMesh(sAssetManager.GetMesh("TreePineSnowMesh"));
     cubeMeshRendererComponent->AddLight(directionalLightComponent);
     cubeMeshRendererComponent->AddLight(pointLightComponent);
 }

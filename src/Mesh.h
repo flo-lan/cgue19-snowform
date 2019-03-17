@@ -41,6 +41,11 @@ struct Vertex
         : Vertex(glm::vec3(positionX, positionY, positionZ), glm::vec3(normalX, normalY, normalZ), uv)
     {
     }
+
+    Vertex(float positionX, float positionY, float positionZ, float normalX, float normalY, float normalZ, float u, float v)
+        : Vertex(glm::vec3(positionX, positionY, positionZ), glm::vec3(normalX, normalY, normalZ), glm::vec2(u, v))
+    {
+    }
 };
 
 struct Mesh
@@ -52,6 +57,7 @@ struct Mesh
     static Mesh* CreateCylinder(std::string const& name, uint32_t segments, float radius, float height);
     static Mesh* CreateSphere(std::string const& name, uint32_t segmentsLongitude, uint32_t segmentsLatitude, float radius);
     static Mesh* CreateTorus(std::string const& name, uint32_t tubeSegments, uint32_t crossSectionSegments, float r1, float r2);
+    static Mesh* CreateFromFile(std::string const& name, std::string const& file);
 
     std::string Name;
     std::vector<Vertex> Vertices;

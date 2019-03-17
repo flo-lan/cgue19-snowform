@@ -73,6 +73,7 @@ bool AssetManager::Load()
     CreateCylinderMesh("Cylinder", 32, 1.f, 1.3f);
     CreateSphereMesh("Sphere", 64, 32, 1.f);
     CreateTorusMesh("Torus", 32, 8, 4.5f, 0.5f);
+    CreateMeshFromFile("TreePineSnowMesh", "assets/meshes/tree_pine_snow.obj");
 
     return true;
 }
@@ -198,6 +199,18 @@ Mesh* AssetManager::CreateSphereMesh(std::string const& name, uint32_t segmentsL
 Mesh* AssetManager::CreateTorusMesh(std::string const& name, uint32_t tubeSegments, uint32_t crossSectionSegments, float r1, float r2)
 {
     return meshes[name] = Mesh::CreateTorus(name, tubeSegments, crossSectionSegments, r1, r2);
+}
+
+Mesh* AssetManager::CreateMeshFromFile(std::string const& name, std::string const& file)
+{
+    Mesh* mesh = Mesh::CreateFromFile(name, file);
+
+    if (mesh)
+    {
+        meshes[name] = mesh;
+    }
+
+    return mesh;
 }
 
 void AssetManager::DeleteMeshes()

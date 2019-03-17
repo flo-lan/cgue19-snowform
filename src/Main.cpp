@@ -174,7 +174,7 @@ int main(int argc, char** argv)
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);
 
-    glClearColor(1.f, 1.f, 1.f, 1.f);
+    glClearColor(0.f, 0.f, 0.f, 1.f);
 
     while (!glfwWindowShouldClose(window))
     {
