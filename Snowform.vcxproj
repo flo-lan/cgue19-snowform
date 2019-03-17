@@ -6,6 +6,7 @@
     <ClCompile Include="src\Component.cpp" />
     <ClCompile Include="src\DirectionalLightComponent.cpp" />
     <ClCompile Include="src\GameObject.cpp" />
+    <ClCompile Include="src\GameScene.cpp" />
     <ClCompile Include="src\InputManager.cpp" />
     <ClCompile Include="src\Material.cpp" />
     <ClCompile Include="src\Mesh.cpp" />
@@ -13,6 +14,8 @@
     <ClCompile Include="src\PhongGouraudMaterial.cpp" />
     <ClCompile Include="src\PointLightComponent.cpp" />
     <ClCompile Include="src\RenderSettings.cpp" />
+    <ClCompile Include="src\Scene.cpp" />
+    <ClCompile Include="src\SceneManager.cpp" />
     <ClCompile Include="src\Shader.cpp" />
     <ClCompile Include="src\ShaderProgram.cpp" />
     <ClCompile Include="src\SimpleMaterial.cpp" />
@@ -25,6 +28,7 @@
     <ClInclude Include="src\Component.h" />
     <ClInclude Include="src\DirectionalLightComponent.h" />
     <ClInclude Include="src\GameObject.h" />
+    <ClInclude Include="src\GameScene.h" />
     <ClInclude Include="src\INIReader.h" />
     <ClCompile Include="src\AssetManager.cpp" />
     <ClCompile Include="src\Main.cpp" />
@@ -35,6 +39,8 @@
     <ClInclude Include="src\PhongGouraudMaterial.h" />
     <ClInclude Include="src\PointLightComponent.h" />
     <ClInclude Include="src\RenderSettings.h" />
+    <ClInclude Include="src\Scene.h" />
+    <ClInclude Include="src\SceneManager.h" />
     <ClInclude Include="src\Shader.h" />
     <ClInclude Include="src\ShaderProgram.h" />
     <ClInclude Include="src\SimpleMaterial.h" />

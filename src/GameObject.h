@@ -7,13 +7,17 @@
 #include <map>
 
 class Component;
+class Scene;
 
 class GameObject
 {
-public:
-    GameObject(std::string const& Name);
+    friend class Scene;
+
+private:
+    GameObject(std::string const& name, Scene* scene);
     ~GameObject();
 
+public:
     void Update();
     void Render();
 
@@ -45,13 +49,19 @@ public:
         return nullptr;
     }
 
-    std::string const& GetName() const { return Name; }
+    std::string const& GetName() const { return name; }
+    Scene* GetScene() const { return scene; }
+
+    void Destroy() { destroyed = true; }
+    bool IsDestroyed() const { return destroyed; }
 
 private:
     typedef std::map<uint32_t /* Type Id */, std::vector<Component*>> ComponentMap;
 
 private:
-    std::string Name;
+    std::string name;
     ComponentMap componentQueue;
     ComponentMap components;
+    Scene* scene;
+    bool destroyed;
 };

@@ -1,12 +1,15 @@
 #include "GameObject.h"
 #include "Component.h"
+#include "Scene.h"
 
 #include <algorithm>
 
-GameObject::GameObject(std::string const& _name) :
-    Name(_name)
+GameObject::GameObject(std::string const& _name, Scene* _scene) :
+    name(_name),
+    scene(_scene),
+    destroyed(false)
 {
-    fprintf(stdout, "Created game object '%s'!\n", Name.c_str());
+    fprintf(stdout, "Created game object '%s' in scene '%s'!\n", name.c_str(), scene->GetName().c_str());
 }
 
 GameObject::~GameObject()
@@ -27,7 +30,7 @@ GameObject::~GameObject()
         }
     }
 
-    fprintf(stdout, "Deleted game object '%s'!\n", Name.c_str());
+    fprintf(stdout, "Deleted game object '%s' from scene '%s'!\n", name.c_str(), scene->GetName().c_str());
 }
 
 void GameObject::Update()

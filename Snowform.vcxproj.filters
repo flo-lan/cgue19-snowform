@@ -59,6 +59,15 @@
     <ClCompile Include="src\RenderSettings.cpp">
       <Filter>Game\Render</Filter>
     </ClCompile>
+    <ClCompile Include="src\SceneManager.cpp">
+      <Filter>Engine\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Scene.cpp">
+      <Filter>Engine\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameScene.cpp">
+      <Filter>Game\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameObject.h">
@@ -127,6 +136,15 @@
     <ClInclude Include="src\RenderSettings.h">
       <Filter>Game\Render</Filter>
     </ClInclude>
+    <ClInclude Include="src\SceneManager.h">
+      <Filter>Engine\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Scene.h">
+      <Filter>Engine\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameScene.h">
+      <Filter>Game\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">
@@ -182,6 +200,12 @@
     </Filter>
     <Filter Include="Engine\Render\Shader">
       <UniqueIdentifier>{9008dc15-7dc2-4c08-8e91-d4645a25d871}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Scene">
+      <UniqueIdentifier>{276de6b1-991b-45b5-90bf-7867f3dfc34f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Scene">
+      <UniqueIdentifier>{d930d507-d95a-4c92-9d7b-f87d4729e179}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
