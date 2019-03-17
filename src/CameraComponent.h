@@ -20,7 +20,7 @@ public:
     void SetNearPlane(float value) { nearPlane = value; }
     void SetFarPlane(float value) { farPlane = value; }
 
-    glm::vec3 const& GetPosition();
+    glm::vec3 GetPosition() const;
     glm::mat4 const& GetViewProjectionMatrix() const { return viewProjectionMatrix; }
 
 private:

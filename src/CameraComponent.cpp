@@ -30,7 +30,7 @@ void CameraComponent::LateUpdate()
         (transform ? glm::inverse(transform->GetModelMatrix()) : glm::mat4(1.f)) /* View Matrix */;
 }
 
-glm::vec3 const& CameraComponent::GetPosition()
+glm::vec3 CameraComponent::GetPosition() const
 {
     return transform ? transform->GetPosition() : glm::vec3(0.f);
 }
