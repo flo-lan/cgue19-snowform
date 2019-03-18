@@ -70,21 +70,6 @@ void GameScene::OnLoad()
     pointLightComponent->SetLinear(0.4f);
     pointLightComponent->SetQuadratic(0.1f);
 
-    /************************* Torus *************************/
-    GameObject* torus = CreateGameObject("Torus");
-
-    TransformComponent* torusTransformComponent = torus->AttachComponent<TransformComponent>();
-    torusTransformComponent->SetLocalRotation(glm::radians(90.f), 0.f, 0.f);
-    torusTransformComponent->SetLocalScale(1.f, 1.f, 0.6f);
-
-    SimpleMaterial* torusMaterial = sAssetManager.GetMaterial<SimpleMaterial>("Torus");
-    torusMaterial->SetColor(glm::vec3(1.f, 0.f, 1.f)); // Magenta
-
-    //MeshRendererComponent* torusMeshRendererComponent = torus->AttachComponent<MeshRendererComponent>();
-    //torusMeshRendererComponent->SetCamera(mainCameraComponent);
-    //torusMeshRendererComponent->SetMaterial(torusMaterial);
-    //torusMeshRendererComponent->SetMesh(sAssetManager.GetMesh("Torus"));
-
 
     /************************* Sphere *************************/
     GameObject* sphere = CreateGameObject("Sphere");
@@ -130,24 +115,16 @@ void GameScene::OnLoad()
     cylinderMeshRendererComponent->AddLight(directionalLightComponent);
     cylinderMeshRendererComponent->AddLight(pointLightComponent);
 
-    /************************* Cube *************************/
-    GameObject* cube = CreateGameObject("Cube");
+    /************************* Tree *************************/
+    GameObject* tree = CreateGameObject("Tree");
 
-    TransformComponent* cubeTransformComponent = cube->AttachComponent<TransformComponent>();
-    cubeTransformComponent->SetLocalPosition(0.0f, 1.5f, 0.f);
+    TransformComponent* treeTransformComponent = tree->AttachComponent<TransformComponent>();
+    treeTransformComponent->SetLocalPosition(0.0f, 1.5f, 0.f);
 
-    PhongGouraudMaterial* cubeMaterial = sAssetManager.GetMaterial<PhongGouraudMaterial>("Cube");
-    cubeMaterial->SetDiffuseColor(glm::vec3(1.f, 1.f, 1.f));
-    cubeMaterial->SetDiffuseTexture(sAssetManager.GetTexture2D("wood_diffuse"));
-    cubeMaterial->SetAmbientReflectionConstant(0.1f);
-    cubeMaterial->SetDiffuseReflectionConstant(0.7f);
-    cubeMaterial->SetSpecularReflectionConstant(0.1f);
-    cubeMaterial->SetShininess(2.f);
-
-    MeshRendererComponent* cubeMeshRendererComponent = cube->AttachComponent<MeshRendererComponent>();
-    cubeMeshRendererComponent->SetCamera(mainCameraComponent);
-    cubeMeshRendererComponent->SetMaterial(cubeMaterial);
-    cubeMeshRendererComponent->SetMesh(sAssetManager.GetMesh("TreePineSnowMesh"));
-    cubeMeshRendererComponent->AddLight(directionalLightComponent);
-    cubeMeshRendererComponent->AddLight(pointLightComponent);
+    MeshRendererComponent* treeMeshRendererComponent = tree->AttachComponent<MeshRendererComponent>();
+    treeMeshRendererComponent->SetCamera(mainCameraComponent);
+    treeMeshRendererComponent->SetMaterial(sAssetManager.GetMaterial<SimpleMaterial>("SimpleDefault"));
+    treeMeshRendererComponent->SetMesh(sAssetManager.GetMesh("TreePineSnowMesh"));
+    treeMeshRendererComponent->AddLight(directionalLightComponent);
+    treeMeshRendererComponent->AddLight(pointLightComponent);
 }

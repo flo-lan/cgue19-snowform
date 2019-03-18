@@ -51,10 +51,10 @@ bool AssetManager::Load()
     if (Texture2D* texture = CreateTexture("bricks_specular")) { texture->LoadFromFile("assets/textures/bricks_specular.dds"); } else { return false; }
     if (Texture2D* texture = CreateTexture("wood_diffuse")) { texture->LoadFromFile("assets/textures/wood_texture.dds"); } else { return false; }
 
+    CreateMaterial<SimpleMaterial>("SimpleDefault", simpleShaderProgram);
     CreateMaterial<PhongGouraudMaterial>("Cube", phongShaderProgram);
     CreateMaterial<PhongGouraudMaterial>("Cylinder", phongShaderProgram);
     CreateMaterial<PhongGouraudMaterial>("Sphere", phongShaderProgram);
-    CreateMaterial<SimpleMaterial>("Torus", simpleShaderProgram);
 
     CreateCubeMesh("Cube", 1.5f, 1.5f, 1.5f);
     CreateCylinderMesh("Cylinder", 32, 1.f, 1.3f);
