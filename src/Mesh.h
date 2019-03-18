@@ -9,11 +9,18 @@ struct Vertex
     glm::vec3 Position;
     glm::vec3 Normal;
     glm::vec2 UV;
+    glm::vec3 Color;
 
-    Vertex(glm::vec3 position, glm::vec3 normal, glm::vec2 uv) :
+    Vertex(glm::vec3 position, glm::vec3 normal, glm::vec2 uv, glm::vec3 color) :
         Position(position),
         Normal(normal),
-        UV(uv)
+        UV(uv),
+        Color(color)
+    {
+    }
+
+    Vertex(glm::vec3 position, glm::vec3 normal, glm::vec2 uv) :
+        Vertex(position, normal, uv, glm::vec3(1.f, 1.f, 1.f))
     {
     }
 
@@ -44,6 +51,11 @@ struct Vertex
 
     Vertex(float positionX, float positionY, float positionZ, float normalX, float normalY, float normalZ, float u, float v)
         : Vertex(glm::vec3(positionX, positionY, positionZ), glm::vec3(normalX, normalY, normalZ), glm::vec2(u, v))
+    {
+    }
+
+    Vertex(float positionX, float positionY, float positionZ, float normalX, float normalY, float normalZ, float u, float v, float r, float g, float b)
+        : Vertex(glm::vec3(positionX, positionY, positionZ), glm::vec3(normalX, normalY, normalZ), glm::vec2(u, v), glm::vec3(r, g, b))
     {
     }
 };

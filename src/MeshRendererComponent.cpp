@@ -99,6 +99,9 @@ void MeshRendererComponent::SetMesh(Mesh* value)
         glEnableVertexAttribArray(2 /* Vertex UV */);
         glVertexAttribPointer(2 /* Vertex UV */, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, UV));
 
+        glEnableVertexAttribArray(3 /* Vertex Color */);
+        glVertexAttribPointer(3 /* Vertex Color */, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Color));
+
         glBindVertexArray(0);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);

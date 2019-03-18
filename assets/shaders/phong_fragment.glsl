@@ -64,8 +64,9 @@ struct SpotLight
 in vec3 fragPosition;
 in vec3 fragNormal;
 in vec2 fragUV;
+in vec3 fragColor;
 
-out vec4 fragColor;
+out vec4 colorOut;
 
 uniform vec3 viewPosition;
 uniform Material material;
@@ -85,7 +86,7 @@ vec3 CalculateDirectionalLight(DirectionalLight light, vec3 normal, vec3 viewDir
     vec3 reflectDirection = reflect(-lightDirection, normal);
     float spec = pow(max(dot(viewDirection, reflectDirection), 0.0), material.shininess);
     // Combine results
-    vec3 diffuse  = light.diffuse  * material.diffuseReflectionConstant  * material.diffuse  * diff * diffuseTextureColor.rgb;
+    vec3 diffuse  = light.diffuse  * material.diffuseReflectionConstant  * material.diffuse  * diff * diffuseTextureColor.rgb * fragColor;
     vec3 specular = light.specular * material.specularReflectionConstant * material.specular * spec * specularTextureColor.rgb;
     return (diffuse + specular);
 }
@@ -102,7 +103,7 @@ vec3 CalculatePointLight(PointLight light, vec3 normal, vec3 viewDirection, vec4
     float distance = length(light.position - fragPosition);
     float attenuation = 1.0 / max(light.constant + light.linear * distance + light.quadratic * (distance * distance), 1.0);
     // Combine results
-    vec3 diffuse  = attenuation * light.diffuse  * material.diffuseReflectionConstant  * material.diffuse  * diff * diffuseTextureColor.rgb;
+    vec3 diffuse  = attenuation * light.diffuse  * material.diffuseReflectionConstant  * material.diffuse  * diff * diffuseTextureColor.rgb * fragColor;
     vec3 specular = attenuation * light.specular * material.specularReflectionConstant * material.specular * spec * specularTextureColor.rgb;
     return (diffuse + specular);
 }
@@ -125,7 +126,7 @@ vec3 CalculateSpotLight(SpotLight light, vec3 normal, vec3 viewDirection, vec4 d
     float epsilon = light.innerCutOff - light.outerCutOff;
     float intensity = clamp((theta - light.outerCutOff) / epsilon, 0.0, 1.0);
     // Combine results
-    vec3 diffuse  = intensity * attenuation * light.diffuse  * material.diffuseReflectionConstant  * material.diffuse  * diff * diffuseTextureColor.rgb;
+    vec3 diffuse  = intensity * attenuation * light.diffuse  * material.diffuseReflectionConstant  * material.diffuse  * diff * diffuseTextureColor.rgb * fragColor;
     vec3 specular = intensity * attenuation * light.specular * material.specularReflectionConstant * material.specular * spec * specularTextureColor.rgb;
     return (diffuse + specular);
 }
@@ -134,7 +135,7 @@ void main()
 {
     vec4 diffuseTextureColor = texture(material.diffuseTexture, fragUV);
     vec4 specularTextureColor = texture(material.specularTexture, fragUV);
-    vec3 result = ambientLight.ambient  * material.ambientReflectionConstant  * material.diffuse * diffuseTextureColor.rgb;
+    vec3 result = ambientLight.ambient * material.ambientReflectionConstant * material.diffuse * diffuseTextureColor.rgb * fragColor;
     vec3 normal = normalize(fragNormal); // Important, because length of fragNormal can be != 1 after interpolation
     vec3 viewDirection = normalize(viewPosition - fragPosition);
 
@@ -153,5 +154,5 @@ void main()
         result += CalculateSpotLight(spotLights[i], normal, viewDirection, diffuseTextureColor, specularTextureColor);
     }
 
-    fragColor = vec4(result, 1.0);
+    colorOut = vec4(result, 1.0);
 }
