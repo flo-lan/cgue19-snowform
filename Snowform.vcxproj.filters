@@ -53,9 +53,6 @@
     <ClCompile Include="src\ArcBallControllerComponent.cpp">
       <Filter>Game\Controller</Filter>
     </ClCompile>
-    <ClCompile Include="src\PhongGouraudMaterial.cpp">
-      <Filter>Game\Render\Material</Filter>
-    </ClCompile>
     <ClCompile Include="src\RenderSettings.cpp">
       <Filter>Game\Render</Filter>
     </ClCompile>
@@ -67,6 +64,9 @@
     </ClCompile>
     <ClCompile Include="src\GameScene.cpp">
       <Filter>Game\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\StandardMaterial.cpp">
+      <Filter>Game\Render\Material</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -130,9 +130,6 @@
     <ClInclude Include="src\ArcBallControllerComponent.h">
       <Filter>Game\Controller</Filter>
     </ClInclude>
-    <ClInclude Include="src\PhongGouraudMaterial.h">
-      <Filter>Game\Render\Material</Filter>
-    </ClInclude>
     <ClInclude Include="src\RenderSettings.h">
       <Filter>Game\Render</Filter>
     </ClInclude>
@@ -144,6 +141,9 @@
     </ClInclude>
     <ClInclude Include="src\GameScene.h">
       <Filter>Game\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\StandardMaterial.h">
+      <Filter>Game\Render\Material</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

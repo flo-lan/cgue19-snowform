@@ -1,4 +1,4 @@
-#include "PhongGouraudMaterial.h"
+#include "StandardMaterial.h"
 #include "ShaderProgram.h"
 #include "Texture2D.h"
 #include "AssetManager.h"
@@ -10,7 +10,7 @@
 #include "PointLightComponent.h"
 #include "SpotLightComponent.h"
 
-PhongGouraudMaterial::PhongGouraudMaterial(std::string const& _name, ShaderProgram* _shaderProgram) :
+StandardMaterial::StandardMaterial(std::string const& _name, ShaderProgram* _shaderProgram) :
     Material(_name, _shaderProgram),
     diffuseColor(1.f, 1.f, 1.f),
     specularColor(1.f, 1.f, 1.f),
@@ -24,11 +24,11 @@ PhongGouraudMaterial::PhongGouraudMaterial(std::string const& _name, ShaderProgr
 {
 }
 
-PhongGouraudMaterial::~PhongGouraudMaterial()
+StandardMaterial::~StandardMaterial()
 {
 }
 
-void PhongGouraudMaterial::SetUniforms(MeshRendererComponent* renderer)
+void StandardMaterial::SetUniforms(MeshRendererComponent* renderer)
 {
     if (shaderProgram)
     {

@@ -7,7 +7,7 @@
 #include "PointLightComponent.h"
 #include "SimpleMaterial.h"
 #include "AssetManager.h"
-#include "PhongGouraudMaterial.h"
+#include "StandardMaterial.h"
 #include "MeshRendererComponent.h"
 #include "INIReader.h"
 #include "Mesh.h"
@@ -77,7 +77,7 @@ void GameScene::OnLoad()
     TransformComponent* sphereTransformComponent = sphere->AttachComponent<TransformComponent>();
     sphereTransformComponent->SetLocalPosition(1.5f, -1.f, 0.f);
 
-    PhongGouraudMaterial* sphereMaterial = sAssetManager.GetMaterial<PhongGouraudMaterial>("Sphere");
+    StandardMaterial* sphereMaterial = sAssetManager.GetMaterial<StandardMaterial>("Sphere");
     sphereMaterial->SetDiffuseColor(glm::vec3(1.f, 1.f, 1.f));
     sphereMaterial->SetDiffuseTexture(sAssetManager.GetTexture2D("bricks_diffuse"));
     sphereMaterial->SetSpecularTexture(sAssetManager.GetTexture2D("bricks_specular"));
@@ -99,7 +99,7 @@ void GameScene::OnLoad()
     TransformComponent* cylinderTransformComponent = cylinder->AttachComponent<TransformComponent>();
     cylinderTransformComponent->SetLocalPosition(-1.5f, -1.0f, 0.f);
 
-    PhongGouraudMaterial* cylinderMaterial = sAssetManager.GetMaterial<PhongGouraudMaterial>("Cylinder");
+    StandardMaterial* cylinderMaterial = sAssetManager.GetMaterial<StandardMaterial>("Cylinder");
     cylinderMaterial->SetDiffuseColor(glm::vec3(1.f, 1.f, 1.f));
     cylinderMaterial->SetDiffuseTexture(sAssetManager.GetTexture2D("bricks_diffuse"));
     cylinderMaterial->SetSpecularTexture(sAssetManager.GetTexture2D("bricks_specular"));
@@ -123,8 +123,8 @@ void GameScene::OnLoad()
 
     MeshRendererComponent* treeMeshRendererComponent = tree->AttachComponent<MeshRendererComponent>();
     treeMeshRendererComponent->SetCamera(mainCameraComponent);
-    treeMeshRendererComponent->SetMaterial(sAssetManager.GetMaterial<SimpleMaterial>("SimpleDefault"));
-    treeMeshRendererComponent->SetMesh(sAssetManager.GetMesh("TreePineSnowMesh"));
+    treeMeshRendererComponent->SetMaterial(sAssetManager.GetMaterial<StandardMaterial>("StandardDefault"));
+    treeMeshRendererComponent->SetMesh(sAssetManager.GetMesh("TreePineSnow"));
     treeMeshRendererComponent->AddLight(directionalLightComponent);
     treeMeshRendererComponent->AddLight(pointLightComponent);
 }

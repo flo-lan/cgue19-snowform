@@ -11,7 +11,7 @@
     <ClCompile Include="src\Material.cpp" />
     <ClCompile Include="src\Mesh.cpp" />
     <ClCompile Include="src\MeshRendererComponent.cpp" />
-    <ClCompile Include="src\PhongGouraudMaterial.cpp" />
+    <ClCompile Include="src\StandardMaterial.cpp" />
     <ClCompile Include="src\PointLightComponent.cpp" />
     <ClCompile Include="src\RenderSettings.cpp" />
     <ClCompile Include="src\Scene.cpp" />
@@ -36,7 +36,7 @@
     <ClInclude Include="src\Material.h" />
     <ClInclude Include="src\Mesh.h" />
     <ClInclude Include="src\MeshRendererComponent.h" />
-    <ClInclude Include="src\PhongGouraudMaterial.h" />
+    <ClInclude Include="src\StandardMaterial.h" />
     <ClInclude Include="src\PointLightComponent.h" />
     <ClInclude Include="src\RenderSettings.h" />
     <ClInclude Include="src\Scene.h" />

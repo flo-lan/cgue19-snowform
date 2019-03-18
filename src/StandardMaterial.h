@@ -6,11 +6,11 @@
 
 class Texture2D;
 
-class PhongGouraudMaterial : public Material
+class StandardMaterial : public Material
 {
 public:
-    PhongGouraudMaterial(std::string const& name, ShaderProgram* shaderProgram);
-    virtual ~PhongGouraudMaterial();
+    StandardMaterial(std::string const& name, ShaderProgram* shaderProgram);
+    virtual ~StandardMaterial();
 
     virtual void SetUniforms(MeshRendererComponent* renderer);
 

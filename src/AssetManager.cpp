@@ -4,7 +4,7 @@
 #include "ShaderProgram.h"
 #include "Material.h"
 #include "SimpleMaterial.h"
-#include "PhongGouraudMaterial.h"
+#include "StandardMaterial.h"
 #include "Mesh.h"
 #include "Texture2D.h"
 
@@ -14,37 +14,37 @@ bool AssetManager::Load()
 {
     Shader* simpleVertexShader = CreateShader("simple_vertex_shader", GL_VERTEX_SHADER);
     Shader* simpleFragmentShader = CreateShader("simple_fragment_shader", GL_FRAGMENT_SHADER);
-    Shader* phongVertexShader = CreateShader("phong_vertex_shader", GL_VERTEX_SHADER);
-    Shader* phongFragmentShader = CreateShader("phong_fragment_shader", GL_FRAGMENT_SHADER);
+    Shader* standardVertexShader = CreateShader("standard_vertex_shader", GL_VERTEX_SHADER);
+    Shader* standardFragmentShader = CreateShader("standard_fragment_shader", GL_FRAGMENT_SHADER);
 
     if (!simpleVertexShader) { return false; }
     if (!simpleFragmentShader) { return false; }
-    if (!phongVertexShader) { return false; }
-    if (!phongFragmentShader) { return false; }
+    if (!standardVertexShader) { return false; }
+    if (!standardFragmentShader) { return false; }
 
     if (!simpleVertexShader->LoadSourceFromFile("assets/shaders/simple_vertex.glsl")) { return false; }
     if (!simpleFragmentShader->LoadSourceFromFile("assets/shaders/simple_fragment.glsl")) { return false; }
-    if (!phongVertexShader->LoadSourceFromFile("assets/shaders/phong_vertex.glsl")) { return false; }
-    if (!phongFragmentShader->LoadSourceFromFile("assets/shaders/phong_fragment.glsl")) { return false; }
+    if (!standardVertexShader->LoadSourceFromFile("assets/shaders/standard_vertex.glsl")) { return false; }
+    if (!standardFragmentShader->LoadSourceFromFile("assets/shaders/standard_fragment.glsl")) { return false; }
 
     if (!simpleVertexShader->Compile()) { return false; }
     if (!simpleFragmentShader->Compile()) { return false; }
-    if (!phongVertexShader->Compile()) { return false; }
-    if (!phongFragmentShader->Compile()) { return false; }
+    if (!standardVertexShader->Compile()) { return false; }
+    if (!standardFragmentShader->Compile()) { return false; }
 
     ShaderProgram* simpleShaderProgram = CreateShaderProgram("simple_shader_program");
-    ShaderProgram* phongShaderProgram = CreateShaderProgram("phong_shader_program");
+    ShaderProgram* standardShaderProgram = CreateShaderProgram("standard_shader_program");
 
     if (!simpleShaderProgram) { return false; }
-    if (!phongShaderProgram) { return false; }
+    if (!standardShaderProgram) { return false; }
 
     if (!simpleShaderProgram->AttachShader(simpleVertexShader)) { return false; }
     if (!simpleShaderProgram->AttachShader(simpleFragmentShader)) { return false; }
-    if (!phongShaderProgram->AttachShader(phongVertexShader)) { return false; }
-    if (!phongShaderProgram->AttachShader(phongFragmentShader)) { return false; }
+    if (!standardShaderProgram->AttachShader(standardVertexShader)) { return false; }
+    if (!standardShaderProgram->AttachShader(standardFragmentShader)) { return false; }
 
     if (!simpleShaderProgram->Link()) { return false; }
-    if (!phongShaderProgram->Link()) { return false; }
+    if (!standardShaderProgram->Link()) { return false; }
     
     if (Texture2D* texture = CreateTexture("pixel_diffuse")) { texture->LoadFromFile("assets/textures/pixel_diffuse.dds"); } else { return false; }
     if (Texture2D* texture = CreateTexture("bricks_diffuse")) { texture->LoadFromFile("assets/textures/bricks_diffuse.dds"); } else { return false; }
@@ -52,15 +52,16 @@ bool AssetManager::Load()
     if (Texture2D* texture = CreateTexture("wood_diffuse")) { texture->LoadFromFile("assets/textures/wood_texture.dds"); } else { return false; }
 
     CreateMaterial<SimpleMaterial>("SimpleDefault", simpleShaderProgram);
-    CreateMaterial<PhongGouraudMaterial>("Cube", phongShaderProgram);
-    CreateMaterial<PhongGouraudMaterial>("Cylinder", phongShaderProgram);
-    CreateMaterial<PhongGouraudMaterial>("Sphere", phongShaderProgram);
+    CreateMaterial<StandardMaterial>("StandardDefault", standardShaderProgram);
+    CreateMaterial<StandardMaterial>("Cube", standardShaderProgram);
+    CreateMaterial<StandardMaterial>("Cylinder", standardShaderProgram);
+    CreateMaterial<StandardMaterial>("Sphere", standardShaderProgram);
 
     CreateCubeMesh("Cube", 1.5f, 1.5f, 1.5f);
     CreateCylinderMesh("Cylinder", 32, 1.f, 1.3f);
     CreateSphereMesh("Sphere", 64, 32, 1.f);
     CreateTorusMesh("Torus", 32, 8, 4.5f, 0.5f);
-    CreateMeshFromFile("TreePineSnowMesh", "assets/meshes/tree_pine_snow.fbx");
+    CreateMeshFromFile("TreePineSnow", "assets/meshes/tree_pine_snow.fbx");
 
     return true;
 }
