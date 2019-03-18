@@ -60,7 +60,7 @@ bool AssetManager::Load()
     CreateCylinderMesh("Cylinder", 32, 1.f, 1.3f);
     CreateSphereMesh("Sphere", 64, 32, 1.f);
     CreateTorusMesh("Torus", 32, 8, 4.5f, 0.5f);
-    CreateMeshFromFile("TreePineSnowMesh", "assets/meshes/tree_pine_snow.obj");
+    CreateMeshFromFile("TreePineSnowMesh", "assets/meshes/tree_pine_snow.fbx");
 
     return true;
 }

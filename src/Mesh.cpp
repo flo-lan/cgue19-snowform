@@ -354,13 +354,22 @@ Mesh* Mesh::CreateFromFile(std::string const& name, std::string const& file)
             continue;
         }
 
+        const aiMaterial* aiMaterial = (aiMesh->mMaterialIndex >= 0 && aiMesh->mMaterialIndex < aiScene->mNumMaterials) ?
+            aiScene->mMaterials[aiMesh->mMaterialIndex] : nullptr;
+
+        aiColor4D color = aiColor4D(1.f, 1.f, 1.f, 1.f);
+        if (aiMaterial != nullptr)
+        {
+            aiMaterial->Get(AI_MATKEY_COLOR_DIFFUSE, color);
+        }
+
         for (uint32_t i = 0; i < aiMesh->mNumVertices; i++)
         {
             const aiVector3D* pos = &(aiMesh->mVertices[i]);
             const aiVector3D* normal = aiMesh->HasNormals() ? &(aiMesh->mNormals[i]) : &Zero3D;
             const aiVector3D* uv = aiMesh->HasTextureCoords(0) ? &(aiMesh->mTextureCoords[0][i]) : &Zero3D;
 
-            mesh->Vertices.push_back(Vertex(pos->x, pos->y, pos->z, normal->x, normal->y, normal->z, uv->x, uv->y));
+            mesh->Vertices.push_back(Vertex(pos->x, pos->y, pos->z, normal->x, normal->y, normal->z, uv->x, uv->y, color.r, color.g, color.b));
         }
 
         for (uint32_t i = 0; i < aiMesh->mNumFaces; i++)
