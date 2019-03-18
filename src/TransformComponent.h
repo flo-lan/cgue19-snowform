@@ -7,8 +7,6 @@
 #include <glm\gtx\quaternion.hpp>
 #include <vector>
 
-class TeapotRendererComponent;
-
 class TransformComponent : public Component
 {
 public:

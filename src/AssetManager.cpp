@@ -12,38 +12,38 @@
 
 bool AssetManager::Load()
 {
-    Shader* simpleTeapotVertexShader = CreateShader("simple_teapot_vertex_shader", GL_VERTEX_SHADER);
-    Shader* simpleTeapotFragmentShader = CreateShader("simple_teapot_fragment_shader", GL_FRAGMENT_SHADER);
+    Shader* simpleVertexShader = CreateShader("simple_vertex_shader", GL_VERTEX_SHADER);
+    Shader* simpleFragmentShader = CreateShader("simple_fragment_shader", GL_FRAGMENT_SHADER);
     Shader* phongVertexShader = CreateShader("phong_vertex_shader", GL_VERTEX_SHADER);
     Shader* phongFragmentShader = CreateShader("phong_fragment_shader", GL_FRAGMENT_SHADER);
 
-    if (!simpleTeapotVertexShader) { return false; }
-    if (!simpleTeapotFragmentShader) { return false; }
+    if (!simpleVertexShader) { return false; }
+    if (!simpleFragmentShader) { return false; }
     if (!phongVertexShader) { return false; }
     if (!phongFragmentShader) { return false; }
 
-    if (!simpleTeapotVertexShader->LoadSourceFromFile("assets/shaders/simple_teapot_vertex.glsl")) { return false; }
-    if (!simpleTeapotFragmentShader->LoadSourceFromFile("assets/shaders/simple_teapot_fragment.glsl")) { return false; }
+    if (!simpleVertexShader->LoadSourceFromFile("assets/shaders/simple_vertex.glsl")) { return false; }
+    if (!simpleFragmentShader->LoadSourceFromFile("assets/shaders/simple_fragment.glsl")) { return false; }
     if (!phongVertexShader->LoadSourceFromFile("assets/shaders/phong_vertex.glsl")) { return false; }
     if (!phongFragmentShader->LoadSourceFromFile("assets/shaders/phong_fragment.glsl")) { return false; }
 
-    if (!simpleTeapotVertexShader->Compile()) { return false; }
-    if (!simpleTeapotFragmentShader->Compile()) { return false; }
+    if (!simpleVertexShader->Compile()) { return false; }
+    if (!simpleFragmentShader->Compile()) { return false; }
     if (!phongVertexShader->Compile()) { return false; }
     if (!phongFragmentShader->Compile()) { return false; }
 
-    ShaderProgram* simpleTeapotShaderProgram1 = CreateShaderProgram("simple_teapot_shader_program1");
+    ShaderProgram* simpleShaderProgram = CreateShaderProgram("simple_shader_program");
     ShaderProgram* phongShaderProgram = CreateShaderProgram("phong_shader_program");
 
-    if (!simpleTeapotShaderProgram1) { return false; }
+    if (!simpleShaderProgram) { return false; }
     if (!phongShaderProgram) { return false; }
 
-    if (!simpleTeapotShaderProgram1->AttachShader(simpleTeapotVertexShader)) { return false; }
-    if (!simpleTeapotShaderProgram1->AttachShader(simpleTeapotFragmentShader)) { return false; }
+    if (!simpleShaderProgram->AttachShader(simpleVertexShader)) { return false; }
+    if (!simpleShaderProgram->AttachShader(simpleFragmentShader)) { return false; }
     if (!phongShaderProgram->AttachShader(phongVertexShader)) { return false; }
     if (!phongShaderProgram->AttachShader(phongFragmentShader)) { return false; }
 
-    if (!simpleTeapotShaderProgram1->Link()) { return false; }
+    if (!simpleShaderProgram->Link()) { return false; }
     if (!phongShaderProgram->Link()) { return false; }
     
     if (Texture2D* texture = CreateTexture("pixel_diffuse")) { texture->LoadFromFile("assets/textures/pixel_diffuse.dds"); } else { return false; }
@@ -54,7 +54,7 @@ bool AssetManager::Load()
     CreateMaterial<PhongGouraudMaterial>("Cube", phongShaderProgram);
     CreateMaterial<PhongGouraudMaterial>("Cylinder", phongShaderProgram);
     CreateMaterial<PhongGouraudMaterial>("Sphere", phongShaderProgram);
-    CreateMaterial<SimpleMaterial>("Torus", simpleTeapotShaderProgram1);
+    CreateMaterial<SimpleMaterial>("Torus", simpleShaderProgram);
 
     CreateCubeMesh("Cube", 1.5f, 1.5f, 1.5f);
     CreateCylinderMesh("Cylinder", 32, 1.f, 1.3f);
