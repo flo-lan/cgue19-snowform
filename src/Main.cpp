@@ -89,8 +89,8 @@ int main(int argc, char** argv)
 
     // load values from ini file
     // first param: section [window], second param: property name, third param: default value
-    int width = reader.GetInteger("window", "width", 800);
-    int height = reader.GetInteger("window", "height", 800);
+    int width = reader.GetInteger("window", "width", 1280);
+    int height = reader.GetInteger("window", "height", 720);
     int refresh_rate = reader.GetInteger("window", "refresh_rate", 60);
     std::string window_title = reader.Get("window", "title", "ECG");
 
