@@ -6,7 +6,7 @@
 
 SimpleMaterial::SimpleMaterial(std::string const& _name, ShaderProgram* _shaderProgram) :
     Material(_name, _shaderProgram),
-    color(0.f, 0.f, 0.f)
+    color(1.f, 1.f, 1.f)
 {
 }
 
