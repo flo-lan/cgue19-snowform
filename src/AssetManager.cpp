@@ -16,48 +16,35 @@ bool AssetManager::Load()
     Shader* simpleTeapotFragmentShader = CreateShader("simple_teapot_fragment_shader", GL_FRAGMENT_SHADER);
     Shader* phongVertexShader = CreateShader("phong_vertex_shader", GL_VERTEX_SHADER);
     Shader* phongFragmentShader = CreateShader("phong_fragment_shader", GL_FRAGMENT_SHADER);
-    Shader* gouraudVertexShader = CreateShader("gouraud_vertex_shader", GL_VERTEX_SHADER);
-    Shader* gouraudFragmentShader = CreateShader("gouraud_fragment_shader", GL_FRAGMENT_SHADER);
 
     if (!simpleTeapotVertexShader) { return false; }
     if (!simpleTeapotFragmentShader) { return false; }
     if (!phongVertexShader) { return false; }
     if (!phongFragmentShader) { return false; }
-    if (!gouraudVertexShader) { return false; }
-    if (!gouraudFragmentShader) { return false; }
 
     if (!simpleTeapotVertexShader->LoadSourceFromFile("assets/shaders/simple_teapot_vertex.glsl")) { return false; }
     if (!simpleTeapotFragmentShader->LoadSourceFromFile("assets/shaders/simple_teapot_fragment.glsl")) { return false; }
     if (!phongVertexShader->LoadSourceFromFile("assets/shaders/phong_vertex.glsl")) { return false; }
     if (!phongFragmentShader->LoadSourceFromFile("assets/shaders/phong_fragment.glsl")) { return false; }
-    if (!gouraudVertexShader->LoadSourceFromFile("assets/shaders/gouraud_vertex.glsl")) { return false; }
-    if (!gouraudFragmentShader->LoadSourceFromFile("assets/shaders/gouraud_fragment.glsl")) { return false; }
 
     if (!simpleTeapotVertexShader->Compile()) { return false; }
     if (!simpleTeapotFragmentShader->Compile()) { return false; }
     if (!phongVertexShader->Compile()) { return false; }
     if (!phongFragmentShader->Compile()) { return false; }
-    if (!gouraudVertexShader->Compile()) { return false; }
-    if (!gouraudFragmentShader->Compile()) { return false; }
 
     ShaderProgram* simpleTeapotShaderProgram1 = CreateShaderProgram("simple_teapot_shader_program1");
     ShaderProgram* phongShaderProgram = CreateShaderProgram("phong_shader_program");
-    ShaderProgram* gouraudShaderProgram = CreateShaderProgram("gouraud_shader_program");
 
     if (!simpleTeapotShaderProgram1) { return false; }
     if (!phongShaderProgram) { return false; }
-    if (!gouraudShaderProgram) { return false; }
 
     if (!simpleTeapotShaderProgram1->AttachShader(simpleTeapotVertexShader)) { return false; }
     if (!simpleTeapotShaderProgram1->AttachShader(simpleTeapotFragmentShader)) { return false; }
     if (!phongShaderProgram->AttachShader(phongVertexShader)) { return false; }
     if (!phongShaderProgram->AttachShader(phongFragmentShader)) { return false; }
-    if (!gouraudShaderProgram->AttachShader(gouraudVertexShader)) { return false; }
-    if (!gouraudShaderProgram->AttachShader(gouraudFragmentShader)) { return false; }
 
     if (!simpleTeapotShaderProgram1->Link()) { return false; }
     if (!phongShaderProgram->Link()) { return false; }
-    if (!gouraudShaderProgram->Link()) { return false; }
     
     if (Texture2D* texture = CreateTexture("pixel_diffuse")) { texture->LoadFromFile("assets/textures/pixel_diffuse.dds"); } else { return false; }
     if (Texture2D* texture = CreateTexture("bricks_diffuse")) { texture->LoadFromFile("assets/textures/bricks_diffuse.dds"); } else { return false; }
