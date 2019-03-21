@@ -1,8 +1,11 @@
 #include "GameObject.h"
 #include "Component.h"
 #include "Scene.h"
+#include "TransformComponent.h"
 
 #include <algorithm>
+#include <stack>
+#include <queue>
 
 GameObject::GameObject(std::string const& _name, Scene* _scene) :
     name(_name),
@@ -14,6 +17,10 @@ GameObject::GameObject(std::string const& _name, Scene* _scene) :
 
 GameObject::~GameObject()
 {
+    destroyed = true;
+
+    DeleteChildren();
+
     for (ComponentMap::const_iterator itr = componentQueue.begin(); itr != componentQueue.end(); ++itr)
     {
         for (std::vector<Component*>::const_iterator itr2 = itr->second.begin(); itr2 != itr->second.end(); ++itr2)
@@ -31,6 +38,44 @@ GameObject::~GameObject()
     }
 
     fprintf(stdout, "Deleted game object '%s' from scene '%s'!\n", name.c_str(), scene->GetName().c_str());
+}
+
+void GameObject::DeleteChildren()
+{
+    TransformComponent* transform = GetComponent<TransformComponent>();
+
+    if (transform == nullptr)
+    {
+        return;
+    }
+
+    std::stack<TransformComponent*> childStack;
+    std::queue<TransformComponent*> childQueue;
+
+    childQueue.push(transform);
+
+    while (childQueue.size())
+    {
+        transform = childQueue.front();
+
+        childQueue.pop();
+
+        for (uint32_t i = 0; i < transform->GetChildCount(); i++)
+        {
+            childQueue.push(transform->GetChild(i));
+        }
+
+        childStack.push(transform);
+    }
+
+    while (childStack.size())
+    {
+        transform = childStack.top();
+
+        childStack.pop();
+
+        delete transform->GetOwner();
+    }
 }
 
 void GameObject::Update()
