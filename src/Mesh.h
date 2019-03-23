@@ -60,8 +60,9 @@ struct Vertex
     }
 };
 
-struct Mesh
+class Mesh
 {
+public:
     Mesh(std::string const& name);
     ~Mesh();
 
