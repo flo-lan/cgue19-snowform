@@ -34,13 +34,13 @@ void GameScene::OnLoad()
     /************************ Focus Point ***********************/
     GameObject* focusPoint = CreateGameObject("Focus Point");
 
-    TransformComponent* focusPointTransformComponent = focusPoint->AttachComponent<TransformComponent>();
+    TransformComponent* focusPointTransformComponent = focusPoint->GetComponent<TransformComponent>();
     ArcBallControllerComponent* arcBallControllerComponent = focusPoint->AttachComponent<ArcBallControllerComponent>();
 
     /************************ Main Camera ***********************/
     GameObject* mainCamera = CreateGameObject("Main Camera");
 
-    TransformComponent* mainCameraTransformComponent = mainCamera->AttachComponent<TransformComponent>();
+    TransformComponent* mainCameraTransformComponent = mainCamera->GetComponent<TransformComponent>();
     // Add main camera transform to focus point transform
     focusPointTransformComponent->AddChild(mainCameraTransformComponent);
     mainCameraTransformComponent->SetLocalPosition(0.f, 0.f, 6.f);
@@ -54,7 +54,7 @@ void GameScene::OnLoad()
     /******************* Directional Light *******************/
     GameObject* directionalLight = CreateGameObject("Directional Light");
 
-    TransformComponent* directionalLightTransformComponent = directionalLight->AttachComponent<TransformComponent>();
+    TransformComponent* directionalLightTransformComponent = directionalLight->GetComponent<TransformComponent>();
     DirectionalLightComponent* directionalLightComponent = directionalLight->AttachComponent<DirectionalLightComponent>();
     directionalLightComponent->SetDirection(glm::vec3(0.f, -1.f, -1.f));
     directionalLightComponent->SetColor(glm::vec3(0.8f, 0.8f, 0.8f));
@@ -62,7 +62,7 @@ void GameScene::OnLoad()
     /********************** Point Light **********************/
     GameObject* pointLight = CreateGameObject("Point Light");
 
-    TransformComponent* pointLightTransformComponent = pointLight->AttachComponent<TransformComponent>();
+    TransformComponent* pointLightTransformComponent = pointLight->GetComponent<TransformComponent>();
     pointLightTransformComponent->SetLocalPosition(0.f, 0.f, 0.f);
     PointLightComponent* pointLightComponent = pointLight->AttachComponent<PointLightComponent>();
     pointLightComponent->SetColor(glm::vec3(1.f, 1.f, 1.f));
@@ -74,7 +74,7 @@ void GameScene::OnLoad()
     /************************* Sphere *************************/
     GameObject* sphere = CreateGameObject("Sphere");
 
-    TransformComponent* sphereTransformComponent = sphere->AttachComponent<TransformComponent>();
+    TransformComponent* sphereTransformComponent = sphere->GetComponent<TransformComponent>();
     sphereTransformComponent->SetLocalPosition(1.5f, -1.f, 0.f);
 
     StandardMaterial* sphereMaterial = sAssetManager.GetMaterial<StandardMaterial>("Sphere");
@@ -96,7 +96,7 @@ void GameScene::OnLoad()
     /************************* Cylinder *************************/
     GameObject* cylinder = CreateGameObject("Cylinder");
 
-    TransformComponent* cylinderTransformComponent = cylinder->AttachComponent<TransformComponent>();
+    TransformComponent* cylinderTransformComponent = cylinder->GetComponent<TransformComponent>();
     cylinderTransformComponent->SetLocalPosition(-1.5f, -1.0f, 0.f);
 
     StandardMaterial* cylinderMaterial = sAssetManager.GetMaterial<StandardMaterial>("Cylinder");
@@ -118,7 +118,7 @@ void GameScene::OnLoad()
     /************************* Tree *************************/
     GameObject* tree = CreateGameObject("Tree");
 
-    TransformComponent* treeTransformComponent = tree->AttachComponent<TransformComponent>();
+    TransformComponent* treeTransformComponent = tree->GetComponent<TransformComponent>();
     treeTransformComponent->SetLocalPosition(0.0f, 1.5f, 0.f);
 
     MeshRendererComponent* treeMeshRendererComponent = tree->AttachComponent<MeshRendererComponent>();

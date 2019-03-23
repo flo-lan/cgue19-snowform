@@ -17,7 +17,7 @@ private:
     GameObject(std::string const& name, Scene* scene);
     ~GameObject();
 
-    void DeleteChildren();
+    void DestroyChildren();
 
 public:
     void Update();

@@ -4,13 +4,12 @@
 #include <vector>
 
 class GameObject;
+class TransformComponent;
+struct SceneGraphTraverser;
 
 class Scene
 {
     friend class SceneManager;
-
-private:
-    typedef std::vector<GameObject*> GameObjectList;
 
 protected:
     Scene(std::string const& name);
@@ -22,12 +21,20 @@ public:
 
     std::string const& GetName() const { return name; }
 
+    void InsertSceneGraphRoot(TransformComponent* transform);
+    void RemoveSceneGraphRoot(TransformComponent* transform);
+
+    // Traverse scene graph depth first
+    void TraverseSceneGraphDF(SceneGraphTraverser& traverser);
+    // Traverse scene graph depth first inversed
+    void TraverseSceneGraphDFI(SceneGraphTraverser& traverser);
+
     // Call this for creating a new game object in this scene
-    GameObject* CreateGameObject(std::string const& name);
+    GameObject* CreateGameObject(std::string const& name, TransformComponent* parent = nullptr);
 
 private:
-    // Only called in Scene::Update() if GameObject::IsDestroyed() returns true
-    bool DeleteGameObject(GameObject* gameObject); // If you want to delete a game object call GameObject::Destroy()
+    // Outside usage forbidden - if you want to delete a game object call GameObject::Destroy()
+    void DeleteGameObject(GameObject* gameObject);
 
     void Load() { OnLoad(); }
 
@@ -37,6 +44,8 @@ protected:
     virtual void OnRender() {}
 
 private:
+    typedef std::vector<TransformComponent*> TransformList;
+
     std::string name;
-    GameObjectList gameObjects;
+    TransformList sceneGraphRoots;
 };

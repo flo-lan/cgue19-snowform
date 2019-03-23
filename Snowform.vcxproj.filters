@@ -68,6 +68,12 @@
     <ClCompile Include="src\StandardMaterial.cpp">
       <Filter>Game\Render\Material</Filter>
     </ClCompile>
+    <ClCompile Include="src\TransformGraphTraverser.cpp">
+      <Filter>Engine\Render\Transform</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SceneGraphTraverser.cpp">
+      <Filter>Engine\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameObject.h">
@@ -144,6 +150,12 @@
     </ClInclude>
     <ClInclude Include="src\StandardMaterial.h">
       <Filter>Game\Render\Material</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TransformGraphTraverser.h">
+      <Filter>Engine\Render\Transform</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SceneGraphTraverser.h">
+      <Filter>Engine\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,10 @@
 #include "Scene.h"
+#include "SceneGraphTraverser.h"
 #include "GameObject.h"
+#include "TransformComponent.h"
 #include <algorithm>
+#include <stack>
+#include <queue>
 
 Scene::Scene(std::string const& _name) :
     name(_name)
@@ -9,64 +13,131 @@ Scene::Scene(std::string const& _name) :
 
 Scene::~Scene()
 {
-    for (GameObject* gameObject : gameObjects)
+    struct DeleteSceneGraphTraverser : public SceneGraphTraverser
     {
-        delete gameObject;
-    }
+        virtual void Visit(TransformComponent* transform)
+        {
+            GameObject* gameObject = transform->GetOwner();
 
-    gameObjects.clear();
+            gameObject->GetScene()->DeleteGameObject(gameObject);
+        }
+    } t;
+
+    TraverseSceneGraphDFI(t);
 }
 
 void Scene::Update()
 {
-    GameObjectList gameObjectsCopy(gameObjects);
-
-    for (GameObject* gameObject : gameObjectsCopy)
+    struct UpdateSceneGraphTraverser : public SceneGraphTraverser
     {
-        if (gameObject->IsDestroyed())
+        virtual void Visit(TransformComponent* transform)
         {
-            DeleteGameObject(gameObject);
+            GameObject* gameObject = transform->GetOwner();
+
+            if (!gameObject->IsDestroyed())
+            {
+                gameObject->Update();
+            }
+
+            if (gameObject->IsDestroyed())
+            {
+                gameObject->GetScene()->DeleteGameObject(gameObject);
+            }
         }
-        else
-        {
-            gameObject->Update();
-        }
-    }
+    } t;
+
+    TraverseSceneGraphDF(t);
 
     OnUpdate();
 }
 
 void Scene::Render()
 {
-    for (GameObject* gameObject : gameObjects)
+    struct RenderSceneGraphTraverser : public SceneGraphTraverser
     {
-        gameObject->Render();
-    }
+        virtual void Visit(TransformComponent* transform)
+        {
+            GameObject* gameObject = transform->GetOwner();
+
+            if (!gameObject->IsDestroyed())
+            {
+                gameObject->Render();
+            }
+
+            if (gameObject->IsDestroyed())
+            {
+                gameObject->GetScene()->DeleteGameObject(gameObject);
+            }
+        }
+    } t;
+
+    TraverseSceneGraphDF(t);
 
     OnRender();
 }
 
-GameObject* Scene::CreateGameObject(std::string const& name)
+void Scene::InsertSceneGraphRoot(TransformComponent* transform)
+{
+    if (!transform)
+    {
+        return;
+    }
+
+    if (transform->GetParent())
+    {
+        return;
+    }
+
+    sceneGraphRoots.push_back(transform);
+}
+
+void Scene::RemoveSceneGraphRoot(TransformComponent* transform)
+{
+    if (!transform)
+    {
+        return;
+    }
+
+    sceneGraphRoots.erase(std::remove(sceneGraphRoots.begin(), sceneGraphRoots.end(), transform), sceneGraphRoots.end());
+}
+
+void Scene::TraverseSceneGraphDF(SceneGraphTraverser& traverser)
+{
+    TransformList sceneGraphRootsCopy(sceneGraphRoots);
+
+    for (TransformList::const_iterator itr = sceneGraphRootsCopy.begin(); itr != sceneGraphRootsCopy.end(); itr++)
+    {
+        (*itr)->TraverseTransformGraphDF(traverser, true);
+    }
+}
+
+void Scene::TraverseSceneGraphDFI(SceneGraphTraverser& traverser)
+{
+    TransformList sceneGraphRootsCopy(sceneGraphRoots);
+
+    for (TransformList::const_iterator itr = sceneGraphRootsCopy.begin(); itr != sceneGraphRootsCopy.end(); itr++)
+    {
+        (*itr)->TraverseTransformGraphDFI(traverser, true);
+    }
+}
+
+GameObject* Scene::CreateGameObject(std::string const& name, TransformComponent* parent)
 {
     GameObject* gameObject = new GameObject(name, this);
 
-    gameObjects.push_back(gameObject);
+    // Every game object should have a transform component attached
+    TransformComponent* transform = gameObject->AttachComponent<TransformComponent>();
+
+    if (parent)
+    {
+        // Set parent
+        transform->SetParent(parent);
+    }
 
     return gameObject;
 }
 
-bool Scene::DeleteGameObject(GameObject* gameObject)
+void Scene::DeleteGameObject(GameObject* gameObject)
 {
-    GameObjectList::const_iterator itr = std::remove(gameObjects.begin(), gameObjects.end(), gameObject);
-
-    if (itr == gameObjects.end())
-    {
-        return false;
-    }
-
-    gameObjects.erase(itr, gameObjects.end());
-
     delete gameObject;
-
-    return true;
 }

@@ -2,7 +2,7 @@
 #include "Component.h"
 #include "Scene.h"
 #include "TransformComponent.h"
-
+#include "TransformGraphTraverser.h"
 #include <algorithm>
 #include <stack>
 #include <queue>
@@ -19,7 +19,7 @@ GameObject::~GameObject()
 {
     destroyed = true;
 
-    DeleteChildren();
+    DestroyChildren();
 
     for (ComponentMap::const_iterator itr = componentQueue.begin(); itr != componentQueue.end(); ++itr)
     {
@@ -40,7 +40,7 @@ GameObject::~GameObject()
     fprintf(stdout, "Deleted game object '%s' from scene '%s'!\n", name.c_str(), scene->GetName().c_str());
 }
 
-void GameObject::DeleteChildren()
+void GameObject::DestroyChildren()
 {
     TransformComponent* transform = GetComponent<TransformComponent>();
 
@@ -49,33 +49,15 @@ void GameObject::DeleteChildren()
         return;
     }
 
-    std::stack<TransformComponent*> childStack;
-    std::queue<TransformComponent*> childQueue;
-
-    childQueue.push(transform);
-
-    while (childQueue.size())
+    struct DeleteTransformGraphTraverser : public TransformGraphTraverser
     {
-        transform = childQueue.front();
-
-        childQueue.pop();
-
-        for (uint32_t i = 0; i < transform->GetChildCount(); i++)
+        virtual void Visit(TransformComponent* transform)
         {
-            childQueue.push(transform->GetChild(i));
+            transform->GetOwner()->Destroy();
         }
+    } t;
 
-        childStack.push(transform);
-    }
-
-    while (childStack.size())
-    {
-        transform = childStack.top();
-
-        childStack.pop();
-
-        delete transform->GetOwner();
-    }
+    transform->TraverseTransformGraphDFI(t, false);
 }
 
 void GameObject::Update()

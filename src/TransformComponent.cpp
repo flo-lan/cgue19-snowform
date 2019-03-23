@@ -1,8 +1,12 @@
 #include "TransformComponent.h"
+#include "TransformGraphTraverser.h"
 #include "GameObject.h"
-
+#include "Scene.h"
 #include <glm/gtc/matrix_transform.hpp> // glm::translate, glm::rotate, glm::scale, glm::perspective
+#include <algorithm>
 #include <iostream>
+#include <stack>
+#include <queue>
 
 static const glm::vec3 gAxisDirectionX = glm::vec3(1.f, 0.f, 0.f);
 static const glm::vec3 gAxisDirectionY = glm::vec3(0.f, 1.f, 0.f);
@@ -27,19 +31,22 @@ TransformComponent::TransformComponent(GameObject* owner) :
     ignoreParentRotation(false),
     ignoreParentScale(false)
 {
-    fprintf(stdout, "Attached transform component to game object '%s'!\n", GetOwner()->GetName().c_str());
+    GetOwner()->GetScene()->InsertSceneGraphRoot(this);
 }
 
 TransformComponent::~TransformComponent()
 {
-    fprintf(stdout, "Deleted transform component from game object '%s'!\n", GetOwner()->GetName().c_str());
-
-    if (parent != nullptr)
+    if (parent)
     {
-        parent->RemoveChild(this);
+        parent->_RemoveChild(this);
+    }
+    else
+    {
+        GetOwner()->GetScene()->RemoveSceneGraphRoot(this);
     }
 
     std::vector<TransformComponent*> children_copy(children);
+
     for (std::vector<TransformComponent*>::const_iterator itr = children_copy.begin(); itr != children_copy.end(); ++itr)
     {
         RemoveChild(*itr);
@@ -62,16 +69,18 @@ void TransformComponent::SetParent(TransformComponent* transform)
         return;
     }
 
-    if (parent != nullptr)
+    if (transform == parent)
     {
-        parent->RemoveChild(this);
+        return;
     }
 
-    parent = transform;
-
-    if (parent != nullptr)
+    if (transform != nullptr)
     {
-        parent->AddChild(this);
+        transform->AddChild(this);
+    }
+    else if (parent != nullptr)
+    {
+        parent->RemoveChild(this);
     }
 }
 
@@ -87,14 +96,18 @@ void TransformComponent::AddChild(TransformComponent* child)
         return;
     }
 
-    if (child->GetParent() != nullptr)
+    if (child->GetParent())
     {
-        child->GetParent()->RemoveChild(child);
+        child->GetParent()->_RemoveChild(child);
+    }
+    else
+    {
+        child->GetOwner()->GetScene()->RemoveSceneGraphRoot(child);
     }
 
     child->parent = this;
 
-    children.push_back(child);
+    _AddChild(child);
 
     // Update local position
     child->SetLocalPosition
@@ -120,17 +133,17 @@ void TransformComponent::AddChild(TransformComponent* child)
     //);
 }
 
+void TransformComponent::_AddChild(TransformComponent* child)
+{
+    children.push_back(child);
+}
+
 void TransformComponent::RemoveChild(TransformComponent* child)
 {
-    std::vector<TransformComponent*>::const_iterator itr = std::find(children.begin(), children.end(), child);
-    if (itr == children.end())
-    {
-        return;
-    }
-
-    children.erase(itr);
+    _RemoveChild(child);
 
     child->parent = nullptr;
+    child->GetOwner()->GetScene()->InsertSceneGraphRoot(child);
 
     // Update local position
     child->SetLocalPosition(child->GetPositionX(), child->GetPositionY(), child->GetPositionZ());
@@ -140,6 +153,83 @@ void TransformComponent::RemoveChild(TransformComponent* child)
 
     // Update local scale
     child->SetLocalScale(child->GetScaleX(), child->GetScaleY(), child->GetScaleZ());
+}
+
+void TransformComponent::_RemoveChild(TransformComponent* child)
+{
+    std::vector<TransformComponent*>::const_iterator itr = std::find(children.begin(), children.end(), child);
+
+    if (itr == children.end())
+    {
+        return;
+    }
+
+    children.erase(itr);
+}
+
+void TransformComponent::TraverseTransformGraphDF(TransformGraphTraverser& traverser, bool traverseThis)
+{
+    std::stack<TransformComponent*> childStack;
+    std::queue<TransformComponent*> childQueue;
+
+    childStack.push(this);
+
+    while (childStack.size())
+    {
+        TransformComponent* transform = childStack.top();
+
+        childStack.pop();
+
+        for (int32_t i = (int32_t)transform->GetChildCount() - 1; i >= 0; i--)
+        {
+            childStack.push(transform->GetChild(i));
+        }
+
+        childQueue.push(transform);
+    }
+
+    if (!traverseThis)
+    {
+        childQueue.pop();
+    }
+
+    while (childQueue.size())
+    {
+        traverser.Visit(childQueue.front());
+
+        childQueue.pop();
+    }
+}
+
+void TransformComponent::TraverseTransformGraphDFI(TransformGraphTraverser& traverser, bool traverseThis)
+{
+    std::stack<TransformComponent*> childStack;
+    std::queue<TransformComponent*> childQueue;
+
+    childQueue.push(this);
+
+    while (childQueue.size())
+    {
+        TransformComponent* transform = childQueue.front();
+
+        childQueue.pop();
+
+        for (uint32_t i = 0; i < transform->GetChildCount(); i++)
+        {
+            childQueue.push(transform->GetChild(i));
+        }
+
+        childStack.push(transform);
+    }
+
+    size_t min = traverseThis ? 0 : 1;
+
+    while (childStack.size() > min)
+    {
+        traverser.Visit(childStack.top());
+
+        childStack.pop();
+    }
 }
 
 void TransformComponent::SetLocalPositionX(float localPositionX)

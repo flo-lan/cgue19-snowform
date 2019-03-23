@@ -7,6 +7,8 @@
 #include <glm\gtx\quaternion.hpp>
 #include <vector>
 
+struct TransformGraphTraverser;
+
 class TransformComponent : public Component
 {
 public:
@@ -18,6 +20,11 @@ public:
     void SetParent(TransformComponent* transform);
     void AddChild(TransformComponent* child);
     void RemoveChild(TransformComponent* child);
+
+    // Traverse transform graph depth first
+    void TraverseTransformGraphDF(TransformGraphTraverser& traverser, bool traverseThis = true);
+    // Traverse transform graph depth first inversed
+    void TraverseTransformGraphDFI(TransformGraphTraverser& traverser, bool traverseThis = true);
 
     void SetLocalPositionX(float localPositionX);
     void SetLocalPositionY(float localPositionY);
@@ -96,8 +103,14 @@ public:
     glm::vec3 GetDirectionBackward() const { return directionBackward; }
 
 private:
+    typedef std::vector<TransformComponent*> TransformList;
+
+    void _AddChild(TransformComponent* child);
+    void _RemoveChild(TransformComponent* child);
+
+private:
     TransformComponent* parent;
-    std::vector<TransformComponent*> children;
+    TransformList children;
 
     glm::vec3 localPosition;
     glm::vec3 localRotation;
