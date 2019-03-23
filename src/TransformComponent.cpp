@@ -112,16 +112,16 @@ void TransformComponent::AddChild(TransformComponent* child)
     // Update local position
     child->SetLocalPosition
     (
-        position.x - child->GetPositionX(),
-        position.y - child->GetPositionY(),
-        position.z - child->GetPositionZ()
+        child->GetPositionX() - position.x,
+        child->GetPositionY() - position.y,
+        child->GetPositionZ() - position.z
     );
 
     // Update local rotation
     child->SetLocalRotation(
-        rotation.x - child->GetRotationX(),
-        rotation.y - child->GetRotationY(),
-        rotation.z - child->GetRotationZ()
+        child->GetRotationX() - rotation.x,
+        child->GetRotationY() - rotation.y,
+        child->GetRotationZ() - rotation.z
     );
 
     // Update local scale
