@@ -74,6 +74,9 @@
     <ClCompile Include="src\SceneGraphTraverser.cpp">
       <Filter>Engine\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="dep\tinyxml2\include\tinyxml2.cpp">
+      <Filter>Dependencies\TinyXML2</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameObject.h">
@@ -157,6 +160,9 @@
     <ClInclude Include="src\SceneGraphTraverser.h">
       <Filter>Engine\Scene</Filter>
     </ClInclude>
+    <ClInclude Include="dep\tinyxml2\include\tinyxml2.h">
+      <Filter>Dependencies\TinyXML2</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">
@@ -218,6 +224,12 @@
     </Filter>
     <Filter Include="Game\Scene">
       <UniqueIdentifier>{d930d507-d95a-4c92-9d7b-f87d4729e179}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dependencies">
+      <UniqueIdentifier>{db6f1ccf-d32a-4c8e-b743-e0b1284fc721}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Dependencies\TinyXML2">
+      <UniqueIdentifier>{e7ee5d50-3250-469d-a01e-ebadf398115e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
