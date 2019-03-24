@@ -125,12 +125,11 @@ void TransformComponent::AddChild(TransformComponent* child)
     );
 
     // Update local scale
-    // TODO
-    //child->SetLocalScale(
-    //    scale.x - child->GetScaleX(),
-    //    scale.y - child->GetScaleY(),
-    //    scale.z - child->GetScaleZ()
-    //);
+    child->SetLocalScale(
+        child->GetScaleX() / scale.x,
+        child->GetScaleY() / scale.y,
+        child->GetScaleZ() / scale.z
+    );
 }
 
 void TransformComponent::_AddChild(TransformComponent* child)
@@ -415,23 +414,71 @@ void TransformComponent::SetLocalRotationZ(float localRotationZ)
 void TransformComponent::SetLocalScaleX(float localScaleX)
 {
     localScale.x = localScaleX;
-    scale.x = localScale.x;
 
-    // TODO
+    if (parent != nullptr && !ignoreParentScale)
+    {
+        scale.x = parent->GetScaleX() * localScaleX;
+    }
+    else
+    {
+        scale.x = localScale.x;
+    }
+
+    static struct UpdateLocalScaleXTraverser : public TransformGraphTraverser
+    {
+        virtual void Visit(TransformComponent* child)
+        {
+            child->SetLocalScaleX(child->GetLocalScaleX()); // Update x scale of child
+        }
+    } t;
+
+    TraverseTransformGraphDF(t, false);
 }
 
 void TransformComponent::SetLocalScaleY(float localScaleY)
 {
     localScale.y = localScaleY;
-    scale.y = localScale.y;
 
-    // TODO
+    if (parent != nullptr && !ignoreParentScale)
+    {
+        scale.y = parent->GetScaleY() * localScaleY;
+    }
+    else
+    {
+        scale.y = localScale.y;
+    }
+
+    static struct UpdateLocalScaleYTraverser : public TransformGraphTraverser
+    {
+        virtual void Visit(TransformComponent* child)
+        {
+            child->SetLocalScaleY(child->GetLocalScaleY()); // Update y scale of child
+        }
+    } t;
+
+    TraverseTransformGraphDF(t, false);
 }
 
 void TransformComponent::SetLocalScaleZ(float localScaleZ)
 {
     localScale.z = localScaleZ;
-    scale.z = localScale.z;
 
-    // TODO
+    if (parent != nullptr && !ignoreParentScale)
+    {
+        scale.z = parent->GetScaleZ() * localScaleZ;
+    }
+    else
+    {
+        scale.z = localScale.z;
+    }
+
+    static struct UpdateLocalScaleZTraverser : public TransformGraphTraverser
+    {
+        virtual void Visit(TransformComponent* child)
+        {
+            child->SetLocalScaleZ(child->GetLocalScaleZ()); // Update z scale of child
+        }
+    } t;
+
+    TraverseTransformGraphDF(t, false);
 }
