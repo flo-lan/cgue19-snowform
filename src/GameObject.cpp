@@ -49,7 +49,7 @@ void GameObject::DestroyChildren()
         return;
     }
 
-    struct DeleteTransformGraphTraverser : public TransformGraphTraverser
+    static struct DeleteTransformGraphTraverser : public TransformGraphTraverser
     {
         virtual void Visit(TransformComponent* transform)
         {

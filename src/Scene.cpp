@@ -13,7 +13,7 @@ Scene::Scene(std::string const& _name) :
 
 Scene::~Scene()
 {
-    struct DeleteSceneGraphTraverser : public SceneGraphTraverser
+    static struct DeleteSceneGraphTraverser : public SceneGraphTraverser
     {
         virtual void Visit(TransformComponent* transform)
         {
@@ -28,7 +28,7 @@ Scene::~Scene()
 
 void Scene::Update()
 {
-    struct UpdateSceneGraphTraverser : public SceneGraphTraverser
+    static struct UpdateSceneGraphTraverser : public SceneGraphTraverser
     {
         virtual void Visit(TransformComponent* transform)
         {
@@ -53,7 +53,7 @@ void Scene::Update()
 
 void Scene::Render()
 {
-    struct RenderSceneGraphTraverser : public SceneGraphTraverser
+    static struct RenderSceneGraphTraverser : public SceneGraphTraverser
     {
         virtual void Visit(TransformComponent* transform)
         {
