@@ -4,6 +4,8 @@
 
 #include <glm/gtc/matrix_transform.hpp> // glm::translate, glm::rotate, glm::scale, glm::perspective
 
+CameraComponent* CameraComponent::main = nullptr;
+
 CameraComponent::CameraComponent(GameObject* owner) :
     Component::Component(owner),
     transform(nullptr),
@@ -13,10 +15,18 @@ CameraComponent::CameraComponent(GameObject* owner) :
     nearPlane(0.1f),
     farPlane(100.f)
 {
+    if (main == nullptr)
+    {
+        main = this;
+    }
 }
 
 CameraComponent::~CameraComponent()
 {
+    if (main == this)
+    {
+        main = nullptr;
+    }
 }
 
 void CameraComponent::OnStart()

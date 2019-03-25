@@ -23,6 +23,8 @@ public:
     glm::vec3 GetPosition() const;
     glm::mat4 const& GetViewProjectionMatrix() const { return viewProjectionMatrix; }
 
+    static CameraComponent* GetMainCameraComponent() { return main; }
+
 private:
     TransformComponent* transform;
     glm::mat4 viewProjectionMatrix;
@@ -30,4 +32,6 @@ private:
     float aspectRatio;
     float nearPlane;
     float farPlane;
+
+    static CameraComponent* main;
 };

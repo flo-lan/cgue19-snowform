@@ -30,7 +30,7 @@ public:
     void AddLight(PointLightComponent* light);
     void AddLight(SpotLightComponent* light);
 
-    CameraComponent* GetCamera() { return camera; }
+    CameraComponent* GetCamera();
     TransformComponent* GetTransform() { return transform; }
     std::vector<DirectionalLightComponent*> const& GetDirectionalLights() { return directionalLights; }
     std::vector<PointLightComponent*> const& GetPointLights() { return pointLights; }

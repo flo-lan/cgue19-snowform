@@ -149,3 +149,8 @@ void MeshRendererComponent::AddLight(SpotLightComponent* light)
         spotLights.push_back(light);
     }
 }
+
+CameraComponent* MeshRendererComponent::GetCamera()
+{
+    return camera ? camera : CameraComponent::GetMainCameraComponent();
+}
