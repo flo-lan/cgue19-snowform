@@ -10,6 +10,7 @@
 #include "InputManager.h"
 #include "ShaderProgram.h"
 #include "SceneManager.h"
+#include "GlobalAssetLoader.h"
 #include "GameScene.h"
 #include "Settings.h"
 
@@ -161,11 +162,11 @@ int main(int argc, char** argv)
     // Initialize scene and render loop
     /* --------------------------------------------- */
 
-    if (!sAssetManager.Load())
-    {
-        sAssetManager.Unload();
+    GlobalAssetLoader globalAssetLoader;
 
-        EXIT_WITH_ERROR("Failed to load assets!")
+    if (!globalAssetLoader.LoadAssets())
+    {
+        EXIT_WITH_ERROR("Failed to load global assets!")
     }
 
     if (!sSceneManager.LoadSceneFromFile<GameScene>("assets/scenes/game_scene.xml"))

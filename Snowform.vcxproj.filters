@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="src\Main.cpp" />
@@ -45,7 +45,7 @@
       <Filter>Engine\Render\Transform</Filter>
     </ClCompile>
     <ClCompile Include="src\AssetManager.cpp">
-      <Filter>Game\AssetManager</Filter>
+      <Filter>Engine\AssetManager</Filter>
     </ClCompile>
     <ClCompile Include="src\CameraComponent.cpp">
       <Filter>Engine\Render\Camera</Filter>
@@ -88,6 +88,12 @@
     </ClCompile>
     <ClCompile Include="src\Settings.cpp">
       <Filter>Engine\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AssetLoader.cpp">
+      <Filter>Game\AssetLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GlobalAssetLoader.cpp">
+      <Filter>Game\AssetLoader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -143,7 +149,7 @@
       <Filter>Engine\Render\Transform</Filter>
     </ClInclude>
     <ClInclude Include="src\AssetManager.h">
-      <Filter>Game\AssetManager</Filter>
+      <Filter>Engine\AssetManager</Filter>
     </ClInclude>
     <ClInclude Include="src\CameraComponent.h">
       <Filter>Engine\Render\Camera</Filter>
@@ -190,6 +196,12 @@
     <ClInclude Include="src\StringUtils.h">
       <Filter>Engine\Util</Filter>
     </ClInclude>
+    <ClInclude Include="src\AssetLoader.h">
+      <Filter>Game\AssetLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GlobalAssetLoader.h">
+      <Filter>Game\AssetLoader</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">
@@ -209,9 +221,6 @@
     </Filter>
     <Filter Include="Game">
       <UniqueIdentifier>{aab842e8-8ff4-45af-ae04-1c5b5c305ef9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Game\AssetManager">
-      <UniqueIdentifier>{37b9798e-45c3-48fe-98d7-99f8d230c273}</UniqueIdentifier>
     </Filter>
     <Filter Include="Game\Render">
       <UniqueIdentifier>{5704f6b6-a58e-410c-8f03-885ac6a6e0bf}</UniqueIdentifier>
@@ -260,6 +269,12 @@
     </Filter>
     <Filter Include="Engine\Scene\ComponentFactories">
       <UniqueIdentifier>{f272df56-b6bb-44a2-bc12-183225559b62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\AssetManager">
+      <UniqueIdentifier>{37b9798e-45c3-48fe-98d7-99f8d230c273}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\AssetLoader">
+      <UniqueIdentifier>{58316b65-a66e-4783-89d5-96daf5c8510a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

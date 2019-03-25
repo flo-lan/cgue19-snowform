@@ -39,8 +39,26 @@ public:
     AssetManager(AssetManager const&) = delete;
     void operator=(AssetManager const&) = delete;
 
-    bool Load();
+    // Unloads all loaded assets
     void Unload();
+
+    Shader* CreateShader(std::string const& name, GLenum type);
+    ShaderProgram* CreateShaderProgram(std::string const& name);
+    Texture2D* CreateTexture(std::string const& name);
+    Mesh* CreateCubeMesh(std::string const& name, float width, float height, float depth);
+    Mesh* CreateCylinderMesh(std::string const& name, uint32_t segments, float radius, float height);
+    Mesh* CreateSphereMesh(std::string const& name, uint32_t segmentsLongitude, uint32_t segmentsLatitude, float radius);
+    Mesh* CreateTorusMesh(std::string const& name, uint32_t tubeSegments, uint32_t crossSectionSegments, float r1, float r2);
+    Mesh* CreateMeshFromFile(std::string const& name, std::string const& file);
+
+    template<class T> T* CreateMaterial(std::string const& name, ShaderProgram* shaderProgram)
+    {
+        T* material = new T(name, shaderProgram);
+
+        materials[UniqueTypeId<T>()][name] = material;
+
+        return material;
+    }
 
     ShaderProgram* GetShaderProgram(std::string const& name);
     Texture2D* GetTexture2D(std::string const& name);
@@ -64,30 +82,10 @@ public:
     }
 
 private:
-    Shader* CreateShader(std::string const& name, GLenum type);
     void DeleteShaders();
-
-    ShaderProgram* CreateShaderProgram(std::string const& name);
     void DeleteShaderPrograms();
-
-    Texture2D* CreateTexture(std::string const& name);
     void DeleteTextures();
-
-    template<class T> T* CreateMaterial(std::string const& name, ShaderProgram* shaderProgram)
-    {
-        T* material = new T(name, shaderProgram);
-
-        materials[UniqueTypeId<T>()][name] = material;
-
-        return material;
-    }
     void DeleteMaterials();
-
-    Mesh* CreateCubeMesh(std::string const& name, float width, float height, float depth);
-    Mesh* CreateCylinderMesh(std::string const& name, uint32_t segments, float radius, float height);
-    Mesh* CreateSphereMesh(std::string const& name, uint32_t segmentsLongitude, uint32_t segmentsLatitude, float radius);
-    Mesh* CreateTorusMesh(std::string const& name, uint32_t tubeSegments, uint32_t crossSectionSegments, float r1, float r2);
-    Mesh* CreateMeshFromFile(std::string const& name, std::string const& file);
     void DeleteMeshes();
 
     ShaderMap shaders;
