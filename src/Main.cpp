@@ -11,6 +11,7 @@
 #include "ShaderProgram.h"
 #include "SceneManager.h"
 #include "GameScene.h"
+#include "Settings.h"
 
 
 /* --------------------------------------------- */
@@ -84,15 +85,13 @@ int main(int argc, char** argv)
     // Load settings.ini
     /* --------------------------------------------- */
 
-    // init reader for ini files
-    INIReader reader("assets/settings.ini");
+	sSettings.Load();
 
     // load values from ini file
-    // first param: section [window], second param: property name, third param: default value
-    int width = reader.GetInteger("window", "width", 1280);
-    int height = reader.GetInteger("window", "height", 720);
-    int refresh_rate = reader.GetInteger("window", "refresh_rate", 60);
-    std::string window_title = reader.Get("window", "title", "ECG");
+  	int width = sSettings.getWindowWidth();
+    int height = sSettings.getWindowHeight();
+    int refresh_rate = sSettings.getMaxFps();
+    std::string window_title = sSettings.getTitle();
 
     /* --------------------------------------------- */
     // Init GLFW, create window and init GLEW

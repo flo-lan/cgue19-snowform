@@ -1,4 +1,6 @@
 #pragma once
+#include <string>
+#include "INIReader.h"
 
 class Settings
 {
@@ -18,7 +20,7 @@ public:
 	int getWindowWidth() const;
 	int getWindowHeight() const;
 	bool getFullscreen() const;
-	const char* getTitle() const;
+	std::string getTitle() const;
 	int getMaxFps() const;
 
 	float getCameraFov() const;
@@ -31,7 +33,7 @@ private:
 	int windowWidth;
 	int windowHeight;
 	bool isFullscreen;
-	const char* title;
+	string title;
 	int maxFps;
 
 	float cameraFov;

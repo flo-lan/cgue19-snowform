@@ -5,7 +5,6 @@
 */
 #pragma once
 
-#include "INIReader.h"
 #include <iostream>
 #include <Windows.h>
 #include <memory>

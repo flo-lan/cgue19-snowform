@@ -10,10 +10,10 @@ void Settings::Load()
 	// init reader for ini files
 	INIReader reader("assets/settings.ini");
 
-	windowWidth = reader.GetInteger("window", "width", 800);
-	windowHeight = reader.GetInteger("window", "height", 800);
+	windowWidth = reader.GetInteger("window", "width", 1280);
+	windowHeight = reader.GetInteger("window", "height", 720);
 	isFullscreen = reader.GetBoolean("window", "fullscreen", false);
-	title = reader.Get("window", "title", "Snowform").c_str();
+	title = reader.Get("window", "title", "Snowform");
 	maxFps = reader.GetInteger("window", "refresh_rate", 60);
 	
 	cameraFov = static_cast<float>(glm::radians(reader.GetReal("camera", "fov", 60.f)));
@@ -36,7 +36,7 @@ bool Settings::getFullscreen() const
 	return isFullscreen;
 }
 
-const char* Settings::getTitle() const
+std::string Settings::getTitle() const
 {
 	return title;
 }

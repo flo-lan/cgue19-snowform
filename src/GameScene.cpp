@@ -9,7 +9,7 @@
 #include "AssetManager.h"
 #include "StandardMaterial.h"
 #include "MeshRendererComponent.h"
-#include "INIReader.h"
+#include "Settings.h"
 #include "Mesh.h"
 
 GameScene::GameScene() :
@@ -23,13 +23,11 @@ GameScene::~GameScene()
 
 void GameScene::OnLoad()
 {
-    // init reader for ini files
-    INIReader reader("assets/settings.ini");
 
-    // load values from ini file
-    // first param: section [window], second param: property name, third param: default value
-    int width = reader.GetInteger("window", "width", 800);
-    int height = reader.GetInteger("window", "height", 800);
+	sSettings.Load();
+
+	const int width = sSettings.getWindowWidth();
+	const int height = sSettings.getWindowHeight();
 
     /************************ Focus Point ***********************/
     GameObject* focusPoint = CreateGameObject("Focus Point");
@@ -46,10 +44,10 @@ void GameScene::OnLoad()
     mainCameraTransformComponent->SetLocalPosition(0.f, 0.f, 6.f);
 
     CameraComponent* mainCameraComponent = mainCamera->AttachComponent<CameraComponent>();
-    mainCameraComponent->SetFov((float)glm::radians(reader.GetReal("camera", "fov", 60.f)));
+    mainCameraComponent->SetFov(sSettings.getCameraFov());
     mainCameraComponent->SetAspectRatio((float)width / height);
-    mainCameraComponent->SetNearPlane((float)reader.GetReal("camera", "near", 0.1f));
-    mainCameraComponent->SetFarPlane((float)reader.GetReal("camera", "far", 100.f));
+    mainCameraComponent->SetNearPlane(sSettings.getCameraNear());
+    mainCameraComponent->SetFarPlane(sSettings.getCameraFar());
 
     /******************* Directional Light *******************/
     GameObject* directionalLight = CreateGameObject("Directional Light");
