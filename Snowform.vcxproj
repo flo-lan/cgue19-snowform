@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="dep\tinyxml2\include\tinyxml2.cpp" />
@@ -52,6 +52,7 @@
     <ClInclude Include="src\ShaderProgram.h" />
     <ClInclude Include="src\SimpleMaterial.h" />
     <ClInclude Include="src\SpotLightComponent.h" />
+    <ClInclude Include="src\StringUtils.h" />
     <ClInclude Include="src\Texture2D.h" />
     <ClInclude Include="src\TransformComponent.h" />
     <ClInclude Include="src\TransformGraphTraverser.h" />
