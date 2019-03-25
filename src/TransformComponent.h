@@ -17,9 +17,9 @@ public:
 
     virtual void LateUpdate();
 
-    void SetParent(TransformComponent* transform);
-    void AddChild(TransformComponent* child);
-    void RemoveChild(TransformComponent* child);
+    void SetParent(TransformComponent* transform, bool keepGlobalChildTransformation = true);
+    void AddChild(TransformComponent* child, bool keepGlobalChildTransformation = true);
+    void RemoveChild(TransformComponent* child, bool keepGlobalChildTransformation = true);
 
     // Traverse transform graph depth first
     void TraverseTransformGraphDF(TransformGraphTraverser& traverser, bool traverseThis = true);

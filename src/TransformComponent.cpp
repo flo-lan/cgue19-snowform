@@ -62,7 +62,7 @@ void TransformComponent::LateUpdate()
     modelMatrix = translationMatrix * rotationMatrix * scaleMatrix;
 }
 
-void TransformComponent::SetParent(TransformComponent* transform)
+void TransformComponent::SetParent(TransformComponent* transform, bool keepGlobalChildTransformation)
 {
     if (transform == this)
     {
@@ -76,15 +76,15 @@ void TransformComponent::SetParent(TransformComponent* transform)
 
     if (transform != nullptr)
     {
-        transform->AddChild(this);
+        transform->AddChild(this, keepGlobalChildTransformation);
     }
     else if (parent != nullptr)
     {
-        parent->RemoveChild(this);
+        parent->RemoveChild(this, keepGlobalChildTransformation);
     }
 }
 
-void TransformComponent::AddChild(TransformComponent* child)
+void TransformComponent::AddChild(TransformComponent* child, bool keepGlobalChildTransformation)
 {
     if (child == nullptr)
     {
@@ -109,27 +109,41 @@ void TransformComponent::AddChild(TransformComponent* child)
 
     _AddChild(child);
 
-    // Update local position
-    child->SetLocalPosition
-    (
-        child->GetPositionX() - position.x,
-        child->GetPositionY() - position.y,
-        child->GetPositionZ() - position.z
-    );
+    if (keepGlobalChildTransformation)
+    {
+        // Update local position
+        child->SetLocalPosition
+        (
+            child->GetPositionX() - position.x,
+            child->GetPositionY() - position.y,
+            child->GetPositionZ() - position.z
+        );
 
-    // Update local rotation
-    child->SetLocalRotation(
-        child->GetRotationX() - rotation.x,
-        child->GetRotationY() - rotation.y,
-        child->GetRotationZ() - rotation.z
-    );
+        // Update local rotation
+        child->SetLocalRotation(
+            child->GetRotationX() - rotation.x,
+            child->GetRotationY() - rotation.y,
+            child->GetRotationZ() - rotation.z
+        );
 
-    // Update local scale
-    child->SetLocalScale(
-        child->GetScaleX() / scale.x,
-        child->GetScaleY() / scale.y,
-        child->GetScaleZ() / scale.z
-    );
+        // Update local scale
+        child->SetLocalScale(
+            child->GetScaleX() / scale.x,
+            child->GetScaleY() / scale.y,
+            child->GetScaleZ() / scale.z
+        );
+    }
+    else
+    {
+        // Update position
+        child->SetLocalPosition(child->GetLocalPositionX(), child->GetLocalPositionY(), child->GetLocalPositionZ());
+
+        // Update rotation
+        child->SetLocalRotation(child->GetLocalRotationX(), child->GetLocalRotationY(), child->GetLocalRotationZ());
+
+        // Update scale
+        child->SetLocalScale(child->GetLocalScaleX(), child->GetLocalScaleY(), child->GetLocalScaleZ());
+    }
 }
 
 void TransformComponent::_AddChild(TransformComponent* child)
@@ -137,21 +151,35 @@ void TransformComponent::_AddChild(TransformComponent* child)
     children.push_back(child);
 }
 
-void TransformComponent::RemoveChild(TransformComponent* child)
+void TransformComponent::RemoveChild(TransformComponent* child, bool keepGlobalChildTransformation)
 {
     _RemoveChild(child);
 
     child->parent = nullptr;
     child->GetOwner()->GetScene()->InsertSceneGraphRoot(child);
 
-    // Update local position
-    child->SetLocalPosition(child->GetPositionX(), child->GetPositionY(), child->GetPositionZ());
+    if (keepGlobalChildTransformation)
+    {
+        // Set local position to global position
+        child->SetLocalPosition(child->GetPositionX(), child->GetPositionY(), child->GetPositionZ());
 
-    // Update local rotation
-    child->SetLocalRotation(child->GetRotationX(), child->GetRotationY(), child->GetRotationZ());
+        // Set local rotation to global rotation
+        child->SetLocalRotation(child->GetRotationX(), child->GetRotationY(), child->GetRotationZ());
 
-    // Update local scale
-    child->SetLocalScale(child->GetScaleX(), child->GetScaleY(), child->GetScaleZ());
+        // Set local scale to global scale
+        child->SetLocalScale(child->GetScaleX(), child->GetScaleY(), child->GetScaleZ());
+    }
+    else
+    {
+        // Update position
+        child->SetLocalPosition(child->GetLocalPositionX(), child->GetLocalPositionY(), child->GetLocalPositionZ());
+
+        // Update rotation
+        child->SetLocalRotation(child->GetLocalRotationX(), child->GetLocalRotationY(), child->GetLocalRotationZ());
+
+        // Update scale
+        child->SetLocalScale(child->GetLocalScaleX(), child->GetLocalScaleY(), child->GetLocalScaleZ());
+    }
 }
 
 void TransformComponent::_RemoveChild(TransformComponent* child)

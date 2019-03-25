@@ -224,7 +224,7 @@ GameObject* Scene::CreateGameObject(std::string const& name, TransformComponent*
     if (parent)
     {
         // Set parent
-        transform->SetParent(parent);
+        transform->SetParent(parent, false);
     }
 
     return gameObject;
