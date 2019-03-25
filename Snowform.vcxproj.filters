@@ -77,6 +77,9 @@
     <ClCompile Include="dep\tinyxml2\include\tinyxml2.cpp">
       <Filter>Dependencies\TinyXML2</Filter>
     </ClCompile>
+    <ClCompile Include="src\Settings.cpp">
+      <Filter>Engine\Util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameObject.h">
@@ -162,6 +165,9 @@
     </ClInclude>
     <ClInclude Include="dep\tinyxml2\include\tinyxml2.h">
       <Filter>Dependencies\TinyXML2</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Settings.h">
+      <Filter>Engine\Util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -13,6 +13,7 @@
     <ClCompile Include="src\Mesh.cpp" />
     <ClCompile Include="src\MeshRendererComponent.cpp" />
     <ClCompile Include="src\SceneGraphTraverser.cpp" />
+    <ClCompile Include="src\Settings.cpp" />
     <ClCompile Include="src\StandardMaterial.cpp" />
     <ClCompile Include="src\PointLightComponent.cpp" />
     <ClCompile Include="src\RenderSettings.cpp" />
@@ -41,6 +42,7 @@
     <ClInclude Include="src\Mesh.h" />
     <ClInclude Include="src\MeshRendererComponent.h" />
     <ClInclude Include="src\SceneGraphTraverser.h" />
+    <ClInclude Include="src\Settings.h" />
     <ClInclude Include="src\StandardMaterial.h" />
     <ClInclude Include="src\PointLightComponent.h" />
     <ClInclude Include="src\RenderSettings.h" />
