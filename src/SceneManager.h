@@ -2,9 +2,10 @@
 
 #include "UniqueTypeId.h"
 
+#include <assert.h>
+#include <string>
 #include <unordered_map>
 #include <vector>
-#include <assert.h>
 
 class Scene;
 
@@ -43,6 +44,33 @@ public:
         // does not support calling virtual methods
         // inside the constructor
         scene->Load();
+
+        return scene;
+    }
+
+    template<class T> Scene* LoadSceneFromFile(std::string const& file)
+    {
+        // Avoid to load the same scene twice
+        assert(GetScene<T>() == nullptr);
+
+        // Create new scene object and call default constructor
+        T* scene = new T();
+
+        // Add the new scene object to the loaded scenes map
+        loadedScenes[UniqueTypeId<T>()] = scene;
+
+        // Load() must be called here - do not move
+        // it to the Scene constructor, because C++
+        // does not support calling virtual methods
+        // inside the constructor
+        if (!scene->LoadFromFile(file))
+        {
+            loadedScenes.erase(UniqueTypeId<T>());
+
+            delete scene;
+
+            scene = nullptr;
+        }
 
         return scene;
     }

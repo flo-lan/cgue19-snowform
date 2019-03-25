@@ -1,10 +1,12 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="dep\tinyxml2\include\tinyxml2.cpp" />
     <ClCompile Include="src\ArcBallControllerComponent.cpp" />
     <ClCompile Include="src\CameraComponent.cpp" />
     <ClCompile Include="src\Component.cpp" />
+    <ClCompile Include="src\ComponentFactory.cpp" />
+    <ClCompile Include="src\ComponentIndustry.cpp" />
     <ClCompile Include="src\DirectionalLightComponent.cpp" />
     <ClCompile Include="src\GameObject.cpp" />
     <ClCompile Include="src\GameScene.cpp" />
@@ -25,12 +27,15 @@
     <ClCompile Include="src\SpotLightComponent.cpp" />
     <ClCompile Include="src\Texture2D.cpp" />
     <ClCompile Include="src\TransformComponent.cpp" />
+    <ClCompile Include="src\TransformComponentFactory.cpp" />
     <ClCompile Include="src\TransformGraphTraverser.cpp" />
     <ClInclude Include="dep\tinyxml2\include\tinyxml2.h" />
     <ClInclude Include="src\ArcBallControllerComponent.h" />
     <ClInclude Include="src\AssetManager.h" />
     <ClInclude Include="src\CameraComponent.h" />
     <ClInclude Include="src\Component.h" />
+    <ClInclude Include="src\ComponentFactory.h" />
+    <ClInclude Include="src\ComponentIndustry.h" />
     <ClInclude Include="src\DirectionalLightComponent.h" />
     <ClInclude Include="src\GameObject.h" />
     <ClInclude Include="src\GameScene.h" />
@@ -55,6 +60,7 @@
     <ClInclude Include="src\StringUtils.h" />
     <ClInclude Include="src\Texture2D.h" />
     <ClInclude Include="src\TransformComponent.h" />
+    <ClInclude Include="src\TransformComponentFactory.h" />
     <ClInclude Include="src\TransformGraphTraverser.h" />
     <ClInclude Include="src\UniqueTypeId.h" />
     <ClInclude Include="src\Utils.h" />

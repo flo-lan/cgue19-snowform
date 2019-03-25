@@ -168,7 +168,10 @@ int main(int argc, char** argv)
         EXIT_WITH_ERROR("Failed to load assets!")
     }
 
-    sSceneManager.LoadScene<GameScene>();
+    if (!sSceneManager.LoadSceneFromFile<GameScene>("assets/scenes/game_scene.xml"))
+    {
+        EXIT_WITH_ERROR("Failed to load game scene!")
+    }
 
     glEnable(GL_DEPTH_TEST);
     glEnable(GL_CULL_FACE);

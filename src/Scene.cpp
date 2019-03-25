@@ -2,6 +2,9 @@
 #include "SceneGraphTraverser.h"
 #include "GameObject.h"
 #include "TransformComponent.h"
+#include "ComponentIndustry.h"
+#include "ComponentFactory.h"
+#include "tinyxml2.h"
 #include <algorithm>
 #include <stack>
 #include <queue>
@@ -24,6 +27,96 @@ Scene::~Scene()
     } t;
 
     TraverseSceneGraphDFI(t);
+}
+
+struct GameObjectElement
+{
+    GameObject* Parent;
+    tinyxml2::XMLElement* Element;
+
+    GameObjectElement(GameObject* parent, tinyxml2::XMLElement* element) :
+        Parent(parent),
+        Element(element)
+    {}
+};
+
+bool Scene::LoadFromFile(std::string const& file)
+{
+    tinyxml2::XMLDocument doc;
+
+    switch (doc.LoadFile(file.c_str()))
+    {
+        case tinyxml2::XML_SUCCESS:
+            break;
+        default:
+            return false;
+    }
+
+    tinyxml2::XMLElement* rootElement = doc.RootElement();
+
+    if (rootElement == nullptr)
+    {
+        return false;
+    }
+
+    std::string rootElementName = std::string(rootElement->Name());
+
+    if (rootElementName != "Scene")
+    {
+        return false;
+    }
+
+    std::queue<GameObjectElement> gameObjectQueue;
+
+    for (tinyxml2::XMLElement* childElement = rootElement->FirstChildElement("GameObject"); childElement != nullptr; childElement = childElement->NextSiblingElement("GameObject"))
+    {
+        gameObjectQueue.push(GameObjectElement(nullptr, childElement));
+    }
+
+    while (gameObjectQueue.size())
+    {
+        GameObjectElement& gameObjectElement = gameObjectQueue.front();
+
+        gameObjectQueue.pop();
+
+        const char* gameObjectName = gameObjectElement.Element->Attribute("name");
+        GameObject* gameObject = CreateGameObject
+        (
+            gameObjectName ? std::string(gameObjectName) : std::string(),
+            gameObjectElement.Parent ? gameObjectElement.Parent->GetComponent<TransformComponent>() : nullptr
+        );
+
+        if (tinyxml2::XMLNode* componentsNode = gameObjectElement.Element->FirstChildElement("Components"))
+        {
+            for (tinyxml2::XMLElement* componentElement = componentsNode->FirstChildElement(); componentElement != nullptr; componentElement = componentElement->NextSiblingElement())
+            {
+                if (ComponentFactory* factory = sComponentIndustry.GetFactory(std::string(componentElement->Name())))
+                {
+                    factory->Build(gameObject, componentElement);
+                }
+                else
+                {
+                    fprintf(stderr, "Could not find component factory for component '%s' of game object '%s'!\n", componentElement->Name(), gameObject->GetName().c_str());
+                }
+            }
+        }
+
+        tinyxml2::XMLNode* childrenNode = gameObjectElement.Element->FirstChildElement("Children");
+
+        if (!childrenNode)
+        {
+            continue;
+        }
+
+        for (tinyxml2::XMLElement* childElement = childrenNode->FirstChildElement("GameObject"); childElement != nullptr; childElement = childElement->NextSiblingElement("GameObject"))
+        {
+            gameObjectQueue.push(GameObjectElement(gameObject, childElement));
+        }
+    }
+
+    OnLoad();
+
+    return true;
 }
 
 void Scene::Update()

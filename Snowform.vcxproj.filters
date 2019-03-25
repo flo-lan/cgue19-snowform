@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="src\Main.cpp" />
@@ -76,6 +76,15 @@
     </ClCompile>
     <ClCompile Include="dep\tinyxml2\include\tinyxml2.cpp">
       <Filter>Dependencies\TinyXML2</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ComponentIndustry.cpp">
+      <Filter>Engine\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ComponentFactory.cpp">
+      <Filter>Engine\Scene\ComponentFactories</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TransformComponentFactory.cpp">
+      <Filter>Engine\Scene\ComponentFactories</Filter>
     </ClCompile>
     <ClCompile Include="src\Settings.cpp">
       <Filter>Engine\Util</Filter>
@@ -169,6 +178,15 @@
     <ClInclude Include="src\Settings.h">
       <Filter>Engine\Util</Filter>
     </ClInclude>
+    <ClInclude Include="src\ComponentIndustry.h">
+      <Filter>Engine\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ComponentFactory.h">
+      <Filter>Engine\Scene\ComponentFactories</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TransformComponentFactory.h">
+      <Filter>Engine\Scene\ComponentFactories</Filter>
+    </ClInclude>
     <ClInclude Include="src\StringUtils.h">
       <Filter>Engine\Util</Filter>
     </ClInclude>
@@ -239,6 +257,9 @@
     </Filter>
     <Filter Include="Dependencies\TinyXML2">
       <UniqueIdentifier>{e7ee5d50-3250-469d-a01e-ebadf398115e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Scene\ComponentFactories">
+      <UniqueIdentifier>{f272df56-b6bb-44a2-bc12-183225559b62}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

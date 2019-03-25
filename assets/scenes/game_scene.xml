@@ -1,0 +1,30 @@
+<Scene>
+    <GameObject name="Forrest">
+        <Components>
+            <TransformComponent localPosition="0.0 0.0 0.0" />
+        </Components>
+        <Children>
+			<GameObject name="Tree1">
+				<Components>
+					<TransformComponent localPosition="0.0 0.0 0.0" />
+				</Components>
+				<Children>
+				</Children>
+			</GameObject>
+			<GameObject name="Tree2">
+				<Components>
+					<TransformComponent localPosition="0.0 0.0 0.0" />
+				</Components>
+				<Children>
+				</Children>
+			</GameObject>
+			<GameObject name="Tree3">
+				<Components>
+					<TransformComponent localPosition="0.0 0.0 0.0" />
+				</Components>
+				<Children>
+				</Children>
+			</GameObject>
+        </Children>
+    </GameObject>
+</Scene>

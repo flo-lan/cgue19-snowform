@@ -37,6 +37,7 @@ private:
     void DeleteGameObject(GameObject* gameObject);
 
     void Load() { OnLoad(); }
+    bool LoadFromFile(std::string const& file);
 
 protected:
     virtual void OnLoad() {}
