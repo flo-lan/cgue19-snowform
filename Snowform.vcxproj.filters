@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="src\Main.cpp" />
@@ -88,6 +88,9 @@
     </ClCompile>
     <ClCompile Include="src\Settings.cpp">
       <Filter>Engine\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MeshRendererComponentFactory.cpp">
+      <Filter>Engine\Scene\ComponentFactories</Filter>
     </ClCompile>
     <ClCompile Include="src\AssetLoader.cpp">
       <Filter>Game\AssetLoader</Filter>
@@ -195,6 +198,9 @@
     </ClInclude>
     <ClInclude Include="src\StringUtils.h">
       <Filter>Engine\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MeshRendererComponentFactory.h">
+      <Filter>Engine\Scene\ComponentFactories</Filter>
     </ClInclude>
     <ClInclude Include="src\AssetLoader.h">
       <Filter>Game\AssetLoader</Filter>

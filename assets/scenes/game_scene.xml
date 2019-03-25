@@ -1,12 +1,13 @@
 <Scene>
     <GameObject name="Forrest">
         <Components>
-            <TransformComponent localPosition="0.0 0.0 0.0" />
+            <TransformComponent localPosition="0.0 0.0 0.0" localScale="0.1 0.1 0.1" />
         </Components>
         <Children>
 			<GameObject name="Tree1">
 				<Components>
-					<TransformComponent localPosition="0.0 0.0 0.0" />
+					<TransformComponent localPosition="-3.0 0.0 0.0" />
+					<MeshRendererComponent material="StandardDefault" mesh="TreePineSnow" />
 				</Components>
 				<Children>
 				</Children>
@@ -14,13 +15,15 @@
 			<GameObject name="Tree2">
 				<Components>
 					<TransformComponent localPosition="0.0 0.0 0.0" />
+					<MeshRendererComponent material="StandardDefault" mesh="TreePineSnow" />
 				</Components>
 				<Children>
 				</Children>
 			</GameObject>
 			<GameObject name="Tree3">
 				<Components>
-					<TransformComponent localPosition="0.0 0.0 0.0" />
+					<TransformComponent localPosition="3.0 0.0 0.0" />
+					<MeshRendererComponent material="StandardDefault" mesh="TreePineSnow" />
 				</Components>
 				<Children>
 				</Children>

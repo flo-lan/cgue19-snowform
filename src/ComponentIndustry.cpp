@@ -1,11 +1,14 @@
 #include "ComponentIndustry.h"
 #include "TransformComponentFactory.h"
+#include "MeshRendererComponentFactory.h"
 
 ComponentIndustry::ComponentIndustry()
 {
     static TransformComponentFactory transformComponentFactory;
+    static MeshRendererComponentFactory meshRendererComponentFactory;
 
     factories["TransformComponent"] = &transformComponentFactory;
+    factories["MeshRendererComponent"] = &meshRendererComponentFactory;
 }
 
 void ComponentIndustry::AddFactory(std::string const& componentName, ComponentFactory* factory)

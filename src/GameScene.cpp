@@ -112,17 +112,4 @@ void GameScene::OnLoad()
     cylinderMeshRendererComponent->SetMesh(sAssetManager.GetMesh("Cylinder"));
     cylinderMeshRendererComponent->AddLight(directionalLightComponent);
     cylinderMeshRendererComponent->AddLight(pointLightComponent);
-
-    /************************* Tree *************************/
-    GameObject* tree = CreateGameObject("Tree");
-
-    TransformComponent* treeTransformComponent = tree->GetComponent<TransformComponent>();
-    treeTransformComponent->SetLocalPosition(0.0f, 1.5f, 0.f);
-
-    MeshRendererComponent* treeMeshRendererComponent = tree->AttachComponent<MeshRendererComponent>();
-    treeMeshRendererComponent->SetCamera(mainCameraComponent);
-    treeMeshRendererComponent->SetMaterial(sAssetManager.GetMaterial<StandardMaterial>("StandardDefault"));
-    treeMeshRendererComponent->SetMesh(sAssetManager.GetMesh("TreePineSnow"));
-    treeMeshRendererComponent->AddLight(directionalLightComponent);
-    treeMeshRendererComponent->AddLight(pointLightComponent);
 }
