@@ -63,6 +63,7 @@ public:
     ShaderProgram* GetShaderProgram(std::string const& name);
     Texture2D* GetTexture2D(std::string const& name);
     Mesh* GetMesh(std::string const& name);
+    Material* GetMaterial(std::string const& name);
 
     template<class T> T* GetMaterial(std::string const& name)
     {

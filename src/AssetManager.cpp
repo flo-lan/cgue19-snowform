@@ -37,6 +37,23 @@ Mesh* AssetManager::GetMesh(std::string const& name)
     return itr != meshes.end() ? itr->second : nullptr;
 }
 
+Material* AssetManager::GetMaterial(std::string const& name)
+{
+    for (MaterialTypeMap::const_iterator itr = materials.begin(); itr != materials.end(); itr++)
+    {
+        MaterialMap::const_iterator itr2 = itr->second.find(name);
+
+        if (itr2 == itr->second.end())
+        {
+            continue;
+        }
+
+        return itr2->second;
+    }
+
+    return nullptr;
+}
+
 Shader* AssetManager::CreateShader(std::string const& name, GLenum type)
 {
     if (shaders.find(name) != shaders.end())
