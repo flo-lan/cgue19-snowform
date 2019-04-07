@@ -8,7 +8,7 @@ Settings::Settings()
 void Settings::Load()
 {
 	// init reader for ini files
-	INIReader reader("assets/settings.ini");
+    INIReader reader("assets/settings.ini");
 
 	windowWidth = reader.GetInteger("window", "width", 1280);
 	windowHeight = reader.GetInteger("window", "height", 720);

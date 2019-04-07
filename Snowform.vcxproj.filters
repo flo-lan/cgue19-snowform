@@ -98,6 +98,9 @@
     <ClCompile Include="src\GlobalAssetLoader.cpp">
       <Filter>Game\AssetLoader</Filter>
     </ClCompile>
+    <ClCompile Include="src\Time.cpp">
+      <Filter>Engine\Util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameObject.h">
@@ -207,6 +210,9 @@
     </ClInclude>
     <ClInclude Include="src\GlobalAssetLoader.h">
       <Filter>Game\AssetLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Time.h">
+      <Filter>Engine\Util</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
