@@ -5,7 +5,8 @@
 
 Time::Time()
 {
-    delta = 0.f;
+    realDeltaTime = 0.f;
+    deltaTime = 0.f;
     currentTime = glfwGetTime();
     lastTime = currentTime;
 
@@ -14,17 +15,7 @@ Time::Time()
 
     fps = 0.f;
     fpsLimit = 1000.f / sSettings.getMaxFps(); // max ms per update
-    paused = false;
-}
-
-float Time::GetDelta() const
-{
-    return paused ? 0.f : delta;
-}
-
-void Time::Resume()
-{
-    lastTime = glfwGetTime();
+    timeScale = 1;
 }
 
 void Time::UpdateDeltaTime()
@@ -37,22 +28,20 @@ void Time::UpdateDeltaTime()
     }
 
     currentTime = glfwGetTime();
-    delta = (currentTime - lastTime) * 1000;
-
+    realDeltaTime = (currentTime - lastTime) * 1000;
+    deltaTime = realDeltaTime * timeScale;
     lastTime = currentTime;
 }
 
 void Time::Update()
 {
-    if (paused) return;
-
     UpdateDeltaTime();
 
-    fps = 1000 / delta;
+    fps = 1000 / realDeltaTime;
 
     if (countdownRunning)
     {
-        countdownTime -= delta;
+        countdownTime -= deltaTime;
         if (countdownTime <= 0.f)
         {
             countdownRunning = false;
