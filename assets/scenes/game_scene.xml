@@ -4,6 +4,14 @@
             <TransformComponent localPosition="0.0 0.0 0.0" localScale="0.1 0.1 0.1" />
         </Components>
         <Children>
+        	<GameObject name="Snowball">
+				<Components>
+					<TransformComponent localPosition="1.5 1.0 0.0" localScale="0.02 0.02 0.02" />
+					<MeshRendererComponent material="Snowball" mesh="Snowball" />
+				</Components>
+				<Children>
+				</Children>
+			</GameObject>
 			<GameObject name="Tree1">
 				<Components>
 					<TransformComponent localPosition="-3.0 0.0 0.0" />

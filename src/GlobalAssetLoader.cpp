@@ -58,18 +58,23 @@ bool GlobalAssetLoader::LoadAssets()
     else { return false; }
     if (Texture2D* texture = sAssetManager.CreateTexture("wood_diffuse")) { texture->LoadFromFile("assets/textures/wood_texture.dds"); }
     else { return false; }
+    if (Texture2D* texture = sAssetManager.CreateTexture("snowball_diffuse")) { texture->LoadFromFile("assets/textures/snowball_diffuse.dds"); }
+    else { return false; }
 
     sAssetManager.CreateMaterial<SimpleMaterial>("SimpleDefault", simpleShaderProgram);
     sAssetManager.CreateMaterial<StandardMaterial>("StandardDefault", standardShaderProgram);
     sAssetManager.CreateMaterial<StandardMaterial>("Cube", standardShaderProgram);
     sAssetManager.CreateMaterial<StandardMaterial>("Cylinder", standardShaderProgram);
     sAssetManager.CreateMaterial<StandardMaterial>("Sphere", standardShaderProgram);
+    auto snowballMaterial = sAssetManager.CreateMaterial<StandardMaterial>("Snowball", standardShaderProgram);
+    snowballMaterial->SetDiffuseTexture(sAssetManager.GetTexture2D("snowball_diffuse"));
 
     sAssetManager.CreateCubeMesh("Cube", 1.5f, 1.5f, 1.5f);
     sAssetManager.CreateCylinderMesh("Cylinder", 32, 1.f, 1.3f);
     sAssetManager.CreateSphereMesh("Sphere", 64, 32, 1.f);
     sAssetManager.CreateTorusMesh("Torus", 32, 8, 4.5f, 0.5f);
     sAssetManager.CreateMeshFromFile("TreePineSnow", "assets/meshes/tree_pine_snow.fbx");
+    sAssetManager.CreateMeshFromFile("Snowball", "assets/meshes/snowball.fbx");
 
     return true;
 }
