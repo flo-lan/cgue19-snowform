@@ -29,7 +29,8 @@ void Time::Resume()
 
 void Time::UpdateDeltaTime()
 {
-    const float sleepTime = fpsLimit - (glfwGetTime() - lastTime);
+    // difference between delta and limit
+    const float sleepTime = fpsLimit - ((glfwGetTime() - lastTime) * 1000);
     if (sleepTime > 0)
     {
         Sleep(sleepTime);

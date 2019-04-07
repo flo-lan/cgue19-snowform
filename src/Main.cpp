@@ -13,7 +13,7 @@
 #include "GlobalAssetLoader.h"
 #include "GameScene.h"
 #include "Settings.h"
-
+#include "Time.h"
 
 /* --------------------------------------------- */
 // Prototypes
@@ -185,6 +185,7 @@ int main(int argc, char** argv)
 
         glfwPollEvents();
 
+        sTime.Update();
         sSceneManager.Update();
         sSceneManager.Render();
 
