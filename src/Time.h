@@ -15,11 +15,11 @@ public:
     void operator=(Time const&) = delete;
 
     void Pause() { timeScale = 0; }
-    void Resume() { timeScale = 1; };
+    void Resume() { timeScale = 1; }
     float GetCountdownTime() const { return countdownTime; }
     float GetFPS() const { return fps; }
-    float GetRealDeltaTime() { return realDeltaTime; }
-    float GetDeltaTime() { return deltaTime; };;
+    float GetUnscaledDeltaTime() { return unscaledDeltaTime; }
+    float GetDeltaTime() { return deltaTime; }
 
     void Update();
     void StartCountdown(float durationInMs);
@@ -28,7 +28,7 @@ private:
     Time();
 
     // difference since last update in ms
-    float realDeltaTime;
+    float unscaledDeltaTime;
     // 0 if paused, otherwise realDeltaTime
     float deltaTime;
     float currentTime;

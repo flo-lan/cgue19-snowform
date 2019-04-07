@@ -5,7 +5,7 @@
 
 Time::Time()
 {
-    realDeltaTime = 0.f;
+    unscaledDeltaTime = 0.f;
     deltaTime = 0.f;
     currentTime = glfwGetTime();
     lastTime = currentTime;
@@ -28,8 +28,8 @@ void Time::UpdateDeltaTime()
     }
 
     currentTime = glfwGetTime();
-    realDeltaTime = (currentTime - lastTime) * 1000;
-    deltaTime = realDeltaTime * timeScale;
+    unscaledDeltaTime = (currentTime - lastTime) * 1000;
+    deltaTime = unscaledDeltaTime * timeScale;
     lastTime = currentTime;
 }
 
@@ -37,7 +37,7 @@ void Time::Update()
 {
     UpdateDeltaTime();
 
-    fps = 1000 / realDeltaTime;
+    fps = 1000 / unscaledDeltaTime;
 
     if (countdownRunning)
     {
