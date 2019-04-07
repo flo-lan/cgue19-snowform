@@ -35,8 +35,11 @@ private:
     bool countdownRunning;
 
     float fps;
+    float fpsLimit;
     // don't update delta time if paused
     bool paused;
+
+    void UpdateDeltaTime();
 };
 
 #define sTime Time::getInstance()

@@ -1,5 +1,7 @@
 ﻿#include "Time.h"
 #include <GLFW\glfw3.h>
+#include "Settings.h"
+#include <windows.h>
 
 Time::Time()
 {
@@ -11,6 +13,7 @@ Time::Time()
     countdownRunning = false;
 
     fps = 0.f;
+    fpsLimit = 1000.f / sSettings.getMaxFps(); // max ms per update
     paused = false;
 }
 
@@ -24,13 +27,25 @@ void Time::Resume()
     lastTime = glfwGetTime();
 }
 
+void Time::UpdateDeltaTime()
+{
+    const float sleepTime = fpsLimit - (glfwGetTime() - lastTime);
+    if (sleepTime > 0)
+    {
+        Sleep(sleepTime);
+    }
+
+    currentTime = glfwGetTime();
+    delta = (currentTime - lastTime) * 1000;
+
+    lastTime = currentTime;
+}
+
 void Time::Update()
 {
     if (paused) return;
 
-    currentTime = glfwGetTime();
-    delta = (currentTime - lastTime) * 1000;
-    lastTime = currentTime;
+    UpdateDeltaTime();
 
     fps = 1000 / delta;
 
