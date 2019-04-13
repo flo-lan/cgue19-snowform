@@ -101,6 +101,9 @@
     <ClCompile Include="src\Time.cpp">
       <Filter>Engine\Util</Filter>
     </ClCompile>
+    <ClCompile Include="src\PhysXScene.cpp">
+      <Filter>Engine\Scene</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameObject.h">
@@ -213,6 +216,9 @@
     </ClInclude>
     <ClInclude Include="src\Time.h">
       <Filter>Engine\Util</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PhysXScene.h">
+      <Filter>Engine\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
