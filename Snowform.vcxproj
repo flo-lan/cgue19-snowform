@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="dep\tinyxml2\include\tinyxml2.cpp" />
     <ClCompile Include="src\ArcBallControllerComponent.cpp" />
     <ClCompile Include="src\AssetLoader.cpp" />
     <ClCompile Include="src\CameraComponent.cpp" />
@@ -34,7 +33,6 @@
     <ClCompile Include="src\TransformComponent.cpp" />
     <ClCompile Include="src\TransformComponentFactory.cpp" />
     <ClCompile Include="src\TransformGraphTraverser.cpp" />
-    <ClInclude Include="dep\tinyxml2\include\tinyxml2.h" />
     <ClInclude Include="src\ArcBallControllerComponent.h" />
     <ClInclude Include="src\AssetLoader.h" />
     <ClInclude Include="src\AssetManager.h" />
@@ -88,6 +86,11 @@
       <Configuration>Release</Configuration>
       <Platform>Win32</Platform>
     </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="TinyXML2.vcxproj">
+      <Project>{3cbaf24a-1d83-4f2c-ad1b-dfff5e06640f}</Project>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{89281764-4192-41E0-B813-DFB62C075125}</ProjectGuid>
