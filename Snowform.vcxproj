@@ -167,7 +167,8 @@
       <IgnoreSpecificDefaultLibraries>LIBCMT;MSVCRT</IgnoreSpecificDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>copy /B /Y  "$(SolutionDir)dep\assimp\lib\*.dll" "$(TargetDir)"</Command>
+      <Command>copy /B /Y  "$(SolutionDir)dep\assimp\lib\*.dll" "$(TargetDir)"
+copy /B /Y  "$(SolutionDir)dep\physx\lib_debug\*.dll" "$(TargetDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -195,7 +196,8 @@
       </ForceFileOutput>
     </Link>
     <PostBuildEvent>
-      <Command>copy /B /Y  "$(SolutionDir)dep\assimp\lib\*.dll" "$(TargetDir)"</Command>
+      <Command>copy /B /Y  "$(SolutionDir)dep\assimp\lib\*.dll" "$(TargetDir)"
+copy /B /Y  "$(SolutionDir)dep\physx\lib_release\*.dll" "$(TargetDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='ReleaseExe|Win32'">
@@ -222,7 +224,8 @@
       </ForceFileOutput>
     </Link>
     <PostBuildEvent>
-      <Command>copy /B /Y  "$(SolutionDir)dep\assimp\lib\*.dll" "$(TargetDir)"</Command>
+      <Command>copy /B /Y  "$(SolutionDir)dep\assimp\lib\*.dll" "$(TargetDir)"
+copy /B /Y  "$(SolutionDir)dep\physx\lib_release\*.dll" "$(TargetDir)"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
