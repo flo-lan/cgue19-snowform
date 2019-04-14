@@ -7,6 +7,7 @@
 namespace physx
 {
     class PxFoundation;
+    class PxPhysics;
 }
 
 class PhysicsEngine
@@ -41,6 +42,8 @@ private:
     PhysicsEngine();
 
     physx::PxFoundation* foundation;
+    physx::PxPhysics* physics;
+
     AllocatorCallback allocatorCallback;
     ErrorCallback errorCallback;
 };

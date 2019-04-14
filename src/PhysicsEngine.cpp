@@ -1,6 +1,8 @@
 #include "PhysicsEngine.h"
 #include "PxFoundation.h"
+#include "PxPhysics.h"
 #include "PxPhysicsVersion.h"
+#include "common/PxTolerancesScale.h"
 #include <iostream>
 
 void PhysicsEngine::ErrorCallback::reportError(physx::PxErrorCode::Enum code, const char* message, const char* file, int line)
@@ -9,7 +11,8 @@ void PhysicsEngine::ErrorCallback::reportError(physx::PxErrorCode::Enum code, co
 }
 
 PhysicsEngine::PhysicsEngine() :
-    foundation(nullptr)
+    foundation(nullptr),
+    physics(nullptr)
 {
 }
 
@@ -29,11 +32,25 @@ bool PhysicsEngine::Start()
         return false;
     }
 
+    physics = PxCreateBasePhysics(PX_PHYSICS_VERSION, *foundation, physx::PxTolerancesScale(), true);
+
+    if (!physics)
+    {
+        fprintf(stderr, "PhysX Error: Could not create PhysX base physics!\n");
+        return false;
+    }
+
     return true;
 }
 
 void PhysicsEngine::Stop()
 {
+    if (physics)
+    {
+        physics->release();
+        physics = nullptr;
+    }
+
     if (foundation)
     {
         foundation->release();
