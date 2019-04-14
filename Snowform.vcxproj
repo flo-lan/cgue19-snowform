@@ -17,6 +17,7 @@
     <ClCompile Include="src\MeshRendererComponent.cpp" />
     <ClCompile Include="src\MeshRendererComponentFactory.cpp" />
     <ClCompile Include="src\PhysicsEngine.cpp" />
+    <ClCompile Include="src\PhysicsMaterial.cpp" />
     <ClCompile Include="src\SceneGraphTraverser.cpp" />
     <ClCompile Include="src\Settings.cpp" />
     <ClCompile Include="src\StandardMaterial.cpp" />
@@ -53,6 +54,7 @@
     <ClInclude Include="src\MeshRendererComponent.h" />
     <ClInclude Include="src\MeshRendererComponentFactory.h" />
     <ClInclude Include="src\PhysicsEngine.h" />
+    <ClInclude Include="src\PhysicsMaterial.h" />
     <ClInclude Include="src\SceneGraphTraverser.h" />
     <ClInclude Include="src\Settings.h" />
     <ClInclude Include="src\StandardMaterial.h" />

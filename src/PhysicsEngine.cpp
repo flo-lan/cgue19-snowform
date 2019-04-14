@@ -1,7 +1,9 @@
 #include "PhysicsEngine.h"
+#include "PhysicsMaterial.h"
 #include "PxFoundation.h"
 #include "PxPhysics.h"
 #include "PxPhysicsVersion.h"
+#include "PxMaterial.h"
 #include "PxScene.h"
 #include "PxSceneDesc.h"
 #include "extensions/PxDefaultCpuDispatcher.h"
@@ -104,4 +106,24 @@ void PhysicsEngine::Stop()
         pxFoundation->release();
         pxFoundation = nullptr;
     }
+}
+
+PhysicsMaterial* PhysicsEngine::CreatePhysicsMaterial(std::string const& name,
+    float staticFriction, float dynamicFriction, float restitution)
+{
+    if (!pxPhysics)
+    {
+        fprintf(stderr, "PhysX Error: Could not create physics material, because PhysX physics is null!\n");
+        return nullptr;
+    }
+
+    physx::PxMaterial* pxMaterial = pxPhysics->createMaterial(staticFriction, dynamicFriction, restitution);
+
+    if (!pxMaterial)
+    {
+        fprintf(stderr, "PhysX Error: Could not create physics material, because PhysX material creation failed!\n");
+        return nullptr;
+    }
+
+    return new PhysicsMaterial(name, pxMaterial);
 }

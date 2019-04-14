@@ -4,6 +4,10 @@
 #include "foundation/PxErrorCallback.h"
 #include "foundation/PxErrors.h"
 
+#include <string>
+
+class PhysicsMaterial;
+
 namespace physx
 {
     class PxFoundation;
@@ -31,6 +35,9 @@ public:
     bool Start();
     void Update();
     void Stop();
+
+    PhysicsMaterial* CreatePhysicsMaterial(std::string const& name,
+        float staticFriction, float dynamicFriction, float restitution);
 
 private:
     class AllocatorCallback : public physx::PxDefaultAllocator

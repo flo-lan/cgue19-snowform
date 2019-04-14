@@ -101,6 +101,9 @@
     <ClCompile Include="src\PhysicsEngine.cpp">
       <Filter>Engine\Physics</Filter>
     </ClCompile>
+    <ClCompile Include="src\PhysicsMaterial.cpp">
+      <Filter>Engine\Physics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameObject.h">
@@ -212,6 +215,9 @@
       <Filter>Engine\Util</Filter>
     </ClInclude>
     <ClInclude Include="src\PhysicsEngine.h">
+      <Filter>Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PhysicsMaterial.h">
       <Filter>Engine\Physics</Filter>
     </ClInclude>
   </ItemGroup>
