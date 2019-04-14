@@ -8,6 +8,8 @@ namespace physx
 {
     class PxFoundation;
     class PxPhysics;
+    class PxScene;
+    class PxDefaultCpuDispatcher;
 }
 
 class PhysicsEngine
@@ -27,6 +29,7 @@ public:
     void operator=(PhysicsEngine const&) = delete;
 
     bool Start();
+    void Update();
     void Stop();
 
 private:
@@ -41,8 +44,10 @@ private:
 
     PhysicsEngine();
 
-    physx::PxFoundation* foundation;
-    physx::PxPhysics* physics;
+    physx::PxFoundation* pxFoundation;
+    physx::PxPhysics* pxPhysics;
+    physx::PxScene* pxScene;
+    physx::PxDefaultCpuDispatcher* pxCpuDispatcher;
 
     AllocatorCallback allocatorCallback;
     ErrorCallback errorCallback;

@@ -4,7 +4,6 @@
 #include <vector>
 
 class GameObject;
-class PhysicsScene;
 class TransformComponent;
 struct SceneGraphTraverser;
 
@@ -21,7 +20,6 @@ public:
     void Render();
 
     std::string const& GetName() const { return name; }
-    PhysicsScene* GetPhysicsScene() const { return physicsScene; }
 
     void InsertSceneGraphRoot(TransformComponent* transform);
     void RemoveSceneGraphRoot(TransformComponent* transform);
@@ -51,5 +49,4 @@ private:
 
     std::string name;
     TransformList sceneGraphRoots;
-    PhysicsScene* physicsScene;
 };

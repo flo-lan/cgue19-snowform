@@ -98,9 +98,6 @@
     <ClCompile Include="src\Time.cpp">
       <Filter>Engine\Util</Filter>
     </ClCompile>
-    <ClCompile Include="src\PhysicsScene.cpp">
-      <Filter>Engine\Physics</Filter>
-    </ClCompile>
     <ClCompile Include="src\PhysicsEngine.cpp">
       <Filter>Engine\Physics</Filter>
     </ClCompile>
@@ -213,9 +210,6 @@
     </ClInclude>
     <ClInclude Include="src\Time.h">
       <Filter>Engine\Util</Filter>
-    </ClInclude>
-    <ClInclude Include="src\PhysicsScene.h">
-      <Filter>Engine\Physics</Filter>
     </ClInclude>
     <ClInclude Include="src\PhysicsEngine.h">
       <Filter>Engine\Physics</Filter>

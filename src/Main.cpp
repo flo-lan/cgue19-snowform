@@ -192,6 +192,7 @@ int main(int argc, char** argv)
         glfwPollEvents();
 
         sTime.Update();
+        sPhysicsEngine.Update();
         sSceneManager.Update();
         sSceneManager.Render();
 
