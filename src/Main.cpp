@@ -10,6 +10,7 @@
 #include "InputManager.h"
 #include "ShaderProgram.h"
 #include "SceneManager.h"
+#include "PhysicsEngine.h"
 #include "GlobalAssetLoader.h"
 #include "GameScene.h"
 #include "Settings.h"
@@ -162,6 +163,11 @@ int main(int argc, char** argv)
     // Initialize scene and render loop
     /* --------------------------------------------- */
 
+    if (!sPhysicsEngine.Start())
+    {
+        EXIT_WITH_ERROR("Failed to start physics engine!")
+    }
+
     GlobalAssetLoader globalAssetLoader;
 
     if (!globalAssetLoader.LoadAssets())
@@ -194,6 +200,7 @@ int main(int argc, char** argv)
 
     sSceneManager.Unload();
     sAssetManager.Unload();
+    sPhysicsEngine.Stop();
 
     /* --------------------------------------------- */
     // Destroy framework
