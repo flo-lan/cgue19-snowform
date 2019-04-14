@@ -107,6 +107,15 @@
     <ClCompile Include="src\MeshColliderComponent.cpp">
       <Filter>Engine\Physics</Filter>
     </ClCompile>
+    <ClCompile Include="src\RigidComponent.cpp">
+      <Filter>Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RigidDynamicComponent.cpp">
+      <Filter>Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RigidStaticComponent.cpp">
+      <Filter>Engine\Physics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameObject.h">
@@ -224,6 +233,15 @@
       <Filter>Engine\Physics</Filter>
     </ClInclude>
     <ClInclude Include="src\MeshColliderComponent.h">
+      <Filter>Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RigidComponent.h">
+      <Filter>Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RigidDynamicComponent.h">
+      <Filter>Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RigidStaticComponent.h">
       <Filter>Engine\Physics</Filter>
     </ClInclude>
   </ItemGroup>
