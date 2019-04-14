@@ -13,8 +13,10 @@ namespace physx
 
 class ColliderComponent : public Component
 {
-public:
+protected:
     ColliderComponent(GameObject* owner);
+
+public:
     virtual ~ColliderComponent();
 
     physx::PxMaterial* GetPxMaterial() const { return pxMaterial; }
