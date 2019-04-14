@@ -1,14 +1,18 @@
 #include "PhysicsEngine.h"
-#include "PhysicsMaterial.h"
+#include "common/PxTolerancesScale.h"
+#include "cooking/PxCooking.h"
+#include "cooking/PxTriangleMeshDesc.h"
+#include "geometry/PxTriangleMesh.h"
+#include "geometry/PxGeometry.h"
+#include "extensions/PxExtensionsAPI.h"
 #include "PxFoundation.h"
 #include "PxPhysics.h"
 #include "PxPhysicsVersion.h"
 #include "PxMaterial.h"
 #include "PxScene.h"
 #include "PxSceneDesc.h"
-#include "common/PxTolerancesScale.h"
-#include "extensions/PxExtensionsAPI.h"
 #include "Time.h"
+#include "Mesh.h"
 #include <iostream>
 
 void PhysicsEngine::ErrorCallback::reportError(physx::PxErrorCode::Enum code, const char* message, const char* file, int line)
@@ -19,6 +23,7 @@ void PhysicsEngine::ErrorCallback::reportError(physx::PxErrorCode::Enum code, co
 PhysicsEngine::PhysicsEngine() :
     pxFoundation(nullptr),
     pxPhysics(nullptr),
+    pxCooking(nullptr),
     pxScene(nullptr),
     pxCpuDispatcher(nullptr)
 {
@@ -51,6 +56,14 @@ bool PhysicsEngine::Start()
     if (!PxInitExtensions(*pxPhysics, nullptr))
     {
         fprintf(stderr, "PhysX Error: Could not initialize PhysX extensions!\n");
+        return false;
+    }
+
+    pxCooking = PxCreateCooking(PX_PHYSICS_VERSION, *pxFoundation, physx::PxCookingParams(physx::PxTolerancesScale()));
+
+    if (!pxCooking)
+    {
+        fprintf(stderr, "PhysX Error: Could not create PhysX cooking!\n");
         return false;
     }
 
@@ -88,6 +101,9 @@ void PhysicsEngine::Update()
 
 void PhysicsEngine::Stop()
 {
+    DeletePxMaterials();
+    DeletePxTriangleMeshes();
+
     if (pxScene)
     {
         pxScene->release();
@@ -98,6 +114,12 @@ void PhysicsEngine::Stop()
     {
         pxCpuDispatcher->release();
         pxCpuDispatcher = nullptr;
+    }
+
+    if (pxCooking)
+    {
+        pxCooking->release();
+        pxCooking = nullptr;
     }
 
     PxCloseExtensions();
@@ -115,22 +137,110 @@ void PhysicsEngine::Stop()
     }
 }
 
-PhysicsMaterial* PhysicsEngine::CreatePhysicsMaterial(std::string const& name,
+physx::PxMaterial* PhysicsEngine::CreatePxMaterial(std::string const& name,
     float staticFriction, float dynamicFriction, float restitution)
 {
     if (!pxPhysics)
     {
-        fprintf(stderr, "PhysX Error: Could not create physics material, because PhysX physics is null!\n");
+        fprintf(stderr, "PhysX Error: Could not create PhysX material, because PhysX physics is null!\n");
+        return nullptr;
+    }
+
+    PxMaterialMap::const_iterator itr = pxMaterials.find(name);
+
+    if (itr != pxMaterials.end())
+    {
+        fprintf(stderr, "PhysX Error: Could not create PhysX material, because the name '%s' is already used!\n", name.c_str());
         return nullptr;
     }
 
     physx::PxMaterial* pxMaterial = pxPhysics->createMaterial(staticFriction, dynamicFriction, restitution);
 
-    if (!pxMaterial)
+    if (pxMaterial)
     {
-        fprintf(stderr, "PhysX Error: Could not create physics material, because PhysX material creation failed!\n");
+        pxMaterials[name] = pxMaterial;
+    }
+
+    return pxMaterial;
+}
+
+physx::PxTriangleMesh* PhysicsEngine::CreatePxTriangleMesh(std::string const& name,
+    std::vector<Vertex> const& vertices, std::vector<uint32_t> const& indices)
+{
+    if (!pxCooking)
+    {
+        fprintf(stderr, "PhysX Error: Could not create PhysX triangle mesh, because PhysX cooking is null!\n");
         return nullptr;
     }
 
-    return new PhysicsMaterial(name, pxMaterial);
+    PxTriangleMeshMap::const_iterator itr = pxTriangleMeshes.find(name);
+
+    if (itr != pxTriangleMeshes.end())
+    {
+        fprintf(stderr, "PhysX Error: Could not create PhysX triangle mesh, because the name '%s' is already used!\n", name.c_str());
+        return nullptr;
+    }
+
+    physx::PxTriangleMeshDesc pxTriangleMeshDesc;
+
+    pxTriangleMeshDesc.points.count = vertices.size();
+    pxTriangleMeshDesc.points.stride = sizeof(Vertex);
+    pxTriangleMeshDesc.points.data = vertices.data();
+
+    pxTriangleMeshDesc.triangles.count = indices.size();
+    pxTriangleMeshDesc.triangles.stride = 3 * sizeof(uint32_t);
+    pxTriangleMeshDesc.triangles.data = indices.data();
+
+    physx::PxTriangleMesh* pxTriangleMesh = pxCooking->createTriangleMesh(pxTriangleMeshDesc,
+        pxPhysics->getPhysicsInsertionCallback());
+
+    if (pxTriangleMesh)
+    {
+        pxTriangleMeshes[name] = pxTriangleMesh;
+    }
+
+    return pxTriangleMesh;
+}
+
+physx::PxShape* PhysicsEngine::CreatePxShape(const physx::PxGeometry& geometry, const physx::PxMaterial& material)
+{
+    if (!pxPhysics)
+    {
+        fprintf(stderr, "PhysX Error: Could not create physics shape, because PhysX physics is null!\n");
+        return nullptr;
+    }
+
+    return pxPhysics->createShape(geometry, material);
+}
+
+physx::PxMaterial* PhysicsEngine::GetPxMaterial(std::string const& name)
+{
+    PxMaterialMap::const_iterator itr = pxMaterials.find(name);
+    return itr != pxMaterials.end() ? itr->second : nullptr;
+}
+
+physx::PxTriangleMesh* PhysicsEngine::GetPxTriangleMesh(std::string const& name)
+{
+    PxTriangleMeshMap::const_iterator itr = pxTriangleMeshes.find(name);
+    return itr != pxTriangleMeshes.end() ? itr->second : nullptr;
+}
+
+void PhysicsEngine::DeletePxMaterials()
+{
+    for (PxMaterialMap::const_iterator itr = pxMaterials.begin(); itr != pxMaterials.end(); ++itr)
+    {
+        itr->second->release();
+    }
+
+    pxMaterials.clear();
+}
+
+void PhysicsEngine::DeletePxTriangleMeshes()
+{
+    for (PxTriangleMeshMap::const_iterator itr = pxTriangleMeshes.begin(); itr != pxTriangleMeshes.end(); ++itr)
+    {
+        itr->second->release();
+    }
+
+    pxTriangleMeshes.clear();
 }

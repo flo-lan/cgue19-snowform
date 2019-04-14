@@ -5,15 +5,23 @@
 #include "foundation/PxErrors.h"
 
 #include <string>
+#include <unordered_map>
+#include <vector>
 
 class PhysicsMaterial;
+struct Vertex;
 
 namespace physx
 {
     class PxFoundation;
     class PxPhysics;
+    class PxCooking;
     class PxScene;
     class PxDefaultCpuDispatcher;
+    class PxTriangleMesh;
+    class PxShape;
+    class PxGeometry;
+    class PxMaterial;
 }
 
 class PhysicsEngine
@@ -36,8 +44,17 @@ public:
     void Update();
     void Stop();
 
-    PhysicsMaterial* CreatePhysicsMaterial(std::string const& name,
+    physx::PxMaterial* CreatePxMaterial(std::string const& name,
         float staticFriction, float dynamicFriction, float restitution);
+    physx::PxTriangleMesh* CreatePxTriangleMesh(std::string const& name,
+        std::vector<Vertex> const& vertices, std::vector<uint32_t> const& indices);
+    physx::PxShape* CreatePxShape(const physx::PxGeometry& geometry, const physx::PxMaterial& material);
+
+    physx::PxMaterial* GetPxMaterial(std::string const& name);
+    physx::PxTriangleMesh* GetPxTriangleMesh(std::string const& name);
+
+    void DeletePxMaterials();
+    void DeletePxTriangleMeshes();
 
 private:
     class AllocatorCallback : public physx::PxDefaultAllocator
@@ -49,12 +66,19 @@ private:
         virtual void reportError(physx::PxErrorCode::Enum code, const char* message, const char* file, int line);
     };
 
+    typedef std::unordered_map<std::string /* Material Name */, physx::PxMaterial*> PxMaterialMap;
+    typedef std::unordered_map<std::string /* Mesh Name */, physx::PxTriangleMesh*> PxTriangleMeshMap;
+
     PhysicsEngine();
 
     physx::PxFoundation* pxFoundation;
     physx::PxPhysics* pxPhysics;
+    physx::PxCooking* pxCooking;
     physx::PxScene* pxScene;
     physx::PxDefaultCpuDispatcher* pxCpuDispatcher;
+
+    PxMaterialMap pxMaterials;
+    PxTriangleMeshMap pxTriangleMeshes;
 
     AllocatorCallback allocatorCallback;
     ErrorCallback errorCallback;
