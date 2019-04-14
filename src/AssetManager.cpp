@@ -8,6 +8,8 @@
 #include "Mesh.h"
 #include "Texture2D.h"
 #include <fstream>
+#include "Font.h"
+#include "Text.h"
 
 void AssetManager::Unload()
 {
@@ -16,6 +18,7 @@ void AssetManager::Unload()
     DeleteMaterials();
     DeleteTextures();
     DeleteMeshes();
+    DeleteFonts();
 }
 
 ShaderProgram* AssetManager::GetShaderProgram(std::string const& name)
@@ -51,6 +54,12 @@ Material* AssetManager::GetMaterial(std::string const& name)
     }
 
     return nullptr;
+}
+
+Font* AssetManager::GetFont(std::string const& name)
+{
+    FontMap::const_iterator itr = fonts.find(name);
+    return itr != fonts.end() ? itr->second : nullptr;
 }
 
 Shader* AssetManager::CreateShader(std::string const& name, GLenum type)
@@ -169,4 +178,26 @@ void AssetManager::DeleteMeshes()
     }
 
     meshes.clear();
+}
+
+Font* AssetManager::CreateFontFromFile(std::string const& name, std::string const& file)
+{
+    Font* font = sText.CreateFontFromFile(file);
+
+    if (font)
+    {
+        fonts[name] = font;
+    }
+
+    return font;
+}
+
+void AssetManager::DeleteFonts()
+{
+    for (FontMap::const_iterator itr = fonts.begin(); itr != fonts.end(); ++itr)
+    {
+        delete itr->second;
+    }
+
+    fonts.clear();
 }

@@ -116,6 +116,18 @@
     <ClCompile Include="src\RigidStaticComponent.cpp">
       <Filter>Engine\Physics</Filter>
     </ClCompile>
+    <ClCompile Include="src\TextRendererComponent.cpp">
+      <Filter>Engine\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TextComponent.cpp">
+      <Filter>Engine\Render\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Text.cpp">
+      <Filter>Engine\Render\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Font.cpp">
+      <Filter>Engine\Render\Text</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameObject.h">
@@ -244,6 +256,18 @@
     <ClInclude Include="src\RigidStaticComponent.h">
       <Filter>Engine\Physics</Filter>
     </ClInclude>
+    <ClInclude Include="src\TextRendererComponent.h">
+      <Filter>Engine\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TextComponent.h">
+      <Filter>Engine\Render\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Text.h">
+      <Filter>Engine\Render\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Font.h">
+      <Filter>Engine\Render\Text</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">
@@ -314,6 +338,9 @@
     </Filter>
     <Filter Include="Engine\Physics">
       <UniqueIdentifier>{b9d0c192-1849-4894-a715-471bece7ef93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Render\Text">
+      <UniqueIdentifier>{6708b689-24f5-423c-9e89-a155a038dfae}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

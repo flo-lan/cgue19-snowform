@@ -15,6 +15,7 @@
 #include "GameScene.h"
 #include "Settings.h"
 #include "Time.h"
+#include "Text.h"
 
 /* --------------------------------------------- */
 // Prototypes
@@ -162,6 +163,11 @@ int main(int argc, char** argv)
     /* --------------------------------------------- */
     // Initialize scene and render loop
     /* --------------------------------------------- */
+
+    if (!sText.Start())
+    {
+        EXIT_WITH_ERROR("Failed to initialize Text engine!")
+    }
 
     if (!sPhysicsEngine.Start())
     {
