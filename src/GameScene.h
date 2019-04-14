@@ -1,8 +1,8 @@
 #pragma once
 
-#include "PhysXScene.h"
+#include "Scene.h"
 
-class GameScene : public PhysXScene
+class GameScene : public Scene
 {
     friend class SceneManager;
 

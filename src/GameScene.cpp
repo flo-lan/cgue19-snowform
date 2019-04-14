@@ -13,7 +13,7 @@
 #include "Mesh.h"
 
 GameScene::GameScene() :
-    PhysXScene::PhysXScene("Game Scene")
+    Scene::Scene("Game Scene")
 {
 }
 

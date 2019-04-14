@@ -1,6 +1,7 @@
 #include "Scene.h"
 #include "SceneGraphTraverser.h"
 #include "GameObject.h"
+#include "PhysicsScene.h"
 #include "TransformComponent.h"
 #include "ComponentIndustry.h"
 #include "ComponentFactory.h"
@@ -10,7 +11,8 @@
 #include <queue>
 
 Scene::Scene(std::string const& _name) :
-    name(_name)
+    name(_name),
+    physicsScene(new PhysicsScene(this))
 {
 }
 
@@ -27,6 +29,12 @@ Scene::~Scene()
     } t;
 
     TraverseSceneGraphDFI(t);
+
+    if (physicsScene)
+    {
+        delete physicsScene;
+        physicsScene = nullptr;
+    }
 }
 
 struct GameObjectElement

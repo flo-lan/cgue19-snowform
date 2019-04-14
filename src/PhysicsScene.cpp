@@ -1,27 +1,27 @@
-﻿#include "PhysXScene.h"
-#include "Scene.h"
-#include "Utils.h"
+﻿#include "PhysicsScene.h"
 #include "PxFoundation.h"
 #include "PxPhysicsVersion.h"
+#include "Scene.h"
+#include <iostream>
 
-void PhysXScene::ErrorCallback::reportError(physx::PxErrorCode::Enum code, const char* message, const char* file, int line)
+void PhysicsScene::ErrorCallback::reportError(physx::PxErrorCode::Enum code, const char* message, const char* file, int line)
 {
     fprintf(stderr, "PhysX Error %i: %s! File: %s, Line: %i\n", ((int)code), message, file, line);
 }
 
-PhysXScene::PhysXScene(std::string const& name) :
-    Scene(name),
+PhysicsScene::PhysicsScene(Scene* _ownerScene) :
+    ownerScene(_ownerScene),
     foundation(nullptr)
 {
     foundation = PxCreateFoundation(PX_PHYSICS_VERSION, allocatorCallback, errorCallback);
 
     if (!foundation)
     {
-        fprintf(stderr, "PhysX Error: Could not create PhysX foundation for scene '%s'!\n", name.c_str());
+        fprintf(stderr, "PhysX Error: Could not create PhysX foundation!\n");
     }
 }
 
-PhysXScene::~PhysXScene()
+PhysicsScene::~PhysicsScene()
 {
     if (foundation)
     {

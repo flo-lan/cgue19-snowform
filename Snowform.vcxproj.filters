@@ -98,8 +98,8 @@
     <ClCompile Include="src\Time.cpp">
       <Filter>Engine\Util</Filter>
     </ClCompile>
-    <ClCompile Include="src\PhysXScene.cpp">
-      <Filter>Engine\Scene</Filter>
+    <ClCompile Include="src\PhysicsScene.cpp">
+      <Filter>Engine\Physics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -211,8 +211,8 @@
     <ClInclude Include="src\Time.h">
       <Filter>Engine\Util</Filter>
     </ClInclude>
-    <ClInclude Include="src\PhysXScene.h">
-      <Filter>Engine\Scene</Filter>
+    <ClInclude Include="src\PhysicsScene.h">
+      <Filter>Engine\Physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -281,6 +281,9 @@
     </Filter>
     <Filter Include="Game\AssetLoader">
       <UniqueIdentifier>{58316b65-a66e-4783-89d5-96daf5c8510a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Physics">
+      <UniqueIdentifier>{b9d0c192-1849-4894-a715-471bece7ef93}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

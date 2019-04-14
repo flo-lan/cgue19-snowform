@@ -1,16 +1,17 @@
 ﻿#pragma once
 
-#include "Scene.h"
 #include "extensions/PxDefaultAllocator.h"
 #include "foundation/PxErrorCallback.h"
 #include "foundation/PxErrors.h"
+
+class Scene;
 
 namespace physx
 {
     class PxFoundation;
 }
 
-class PhysXScene : public Scene
+class PhysicsScene
 {
 private:
     class AllocatorCallback : public physx::PxDefaultAllocator
@@ -23,10 +24,13 @@ private:
     };
 
 public:
-    PhysXScene(std::string const& _name);
-    virtual ~PhysXScene();
+    PhysicsScene(Scene* ownerScene);
+    ~PhysicsScene();
+
+    Scene* GetOwnerScene() const { return ownerScene; }
 
 private:
+    Scene* ownerScene;
     physx::PxFoundation* foundation;
     AllocatorCallback allocatorCallback;
     ErrorCallback errorCallback;
