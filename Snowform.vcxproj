@@ -1,9 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="src\ArcBallControllerComponent.cpp" />
     <ClCompile Include="src\AssetLoader.cpp" />
     <ClCompile Include="src\CameraComponent.cpp" />
+    <ClCompile Include="src\ColliderComponent.cpp" />
     <ClCompile Include="src\Component.cpp" />
     <ClCompile Include="src\ComponentFactory.cpp" />
     <ClCompile Include="src\ComponentIndustry.cpp" />
@@ -14,6 +15,7 @@
     <ClCompile Include="src\InputManager.cpp" />
     <ClCompile Include="src\Material.cpp" />
     <ClCompile Include="src\Mesh.cpp" />
+    <ClCompile Include="src\MeshColliderComponent.cpp" />
     <ClCompile Include="src\MeshRendererComponent.cpp" />
     <ClCompile Include="src\MeshRendererComponentFactory.cpp" />
     <ClCompile Include="src\PhysicsEngine.cpp" />
@@ -37,6 +39,7 @@
     <ClInclude Include="src\AssetLoader.h" />
     <ClInclude Include="src\AssetManager.h" />
     <ClInclude Include="src\CameraComponent.h" />
+    <ClInclude Include="src\ColliderComponent.h" />
     <ClInclude Include="src\Component.h" />
     <ClInclude Include="src\ComponentFactory.h" />
     <ClInclude Include="src\ComponentIndustry.h" />
@@ -50,6 +53,7 @@
     <ClInclude Include="src\InputManager.h" />
     <ClInclude Include="src\Material.h" />
     <ClInclude Include="src\Mesh.h" />
+    <ClInclude Include="src\MeshColliderComponent.h" />
     <ClInclude Include="src\MeshRendererComponent.h" />
     <ClInclude Include="src\MeshRendererComponentFactory.h" />
     <ClInclude Include="src\PhysicsEngine.h" />

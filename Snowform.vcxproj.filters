@@ -101,7 +101,10 @@
     <ClCompile Include="src\PhysicsEngine.cpp">
       <Filter>Engine\Physics</Filter>
     </ClCompile>
-    <ClCompile Include="src\PhysicsMaterial.cpp">
+    <ClCompile Include="src\ColliderComponent.cpp">
+      <Filter>Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MeshColliderComponent.cpp">
       <Filter>Engine\Physics</Filter>
     </ClCompile>
   </ItemGroup>
@@ -217,7 +220,10 @@
     <ClInclude Include="src\PhysicsEngine.h">
       <Filter>Engine\Physics</Filter>
     </ClInclude>
-    <ClInclude Include="src\PhysicsMaterial.h">
+    <ClInclude Include="src\ColliderComponent.h">
+      <Filter>Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MeshColliderComponent.h">
       <Filter>Engine\Physics</Filter>
     </ClInclude>
   </ItemGroup>
