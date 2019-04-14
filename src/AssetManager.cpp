@@ -1,5 +1,4 @@
 #include "AssetManager.h"
-#include "PhysicsEngine.h"
 #include "Utils.h"
 #include "Shader.h"
 #include "ShaderProgram.h"
@@ -8,8 +7,6 @@
 #include "StandardMaterial.h"
 #include "Mesh.h"
 #include "Texture2D.h"
-#include "PhysicsMaterial.h"
-
 #include <fstream>
 
 void AssetManager::Unload()
@@ -19,7 +16,6 @@ void AssetManager::Unload()
     DeleteMaterials();
     DeleteTextures();
     DeleteMeshes();
-    DeletePhysicsMaterials();
 }
 
 ShaderProgram* AssetManager::GetShaderProgram(std::string const& name)
@@ -38,12 +34,6 @@ Mesh* AssetManager::GetMesh(std::string const& name)
 {
     MeshMap::const_iterator itr = meshes.find(name);
     return itr != meshes.end() ? itr->second : nullptr;
-}
-
-PhysicsMaterial* AssetManager::GetPhysicsMaterial(std::string const& name)
-{
-    PhysicsMaterialMap::const_iterator itr = physicsMaterials.find(name);
-    return itr != physicsMaterials.end() ? itr->second : nullptr;
 }
 
 Material* AssetManager::GetMaterial(std::string const& name)
@@ -179,26 +169,4 @@ void AssetManager::DeleteMeshes()
     }
 
     meshes.clear();
-}
-
-PhysicsMaterial* AssetManager::CreatePhysicsMaterial(std::string const& name, float staticFriction, float dynamicFriction, float restitution)
-{
-    PhysicsMaterial* physicsMaterial = sPhysicsEngine.CreatePhysicsMaterial(name, staticFriction, dynamicFriction, restitution);
-
-    if (physicsMaterial)
-    {
-        physicsMaterials[name] = physicsMaterial;
-    }
-
-    return physicsMaterial;
-}
-
-void AssetManager::DeletePhysicsMaterials()
-{
-    for (PhysicsMaterialMap::const_iterator itr = physicsMaterials.begin(); itr != physicsMaterials.end(); ++itr)
-    {
-        delete itr->second;
-    }
-
-    physicsMaterials.clear();
 }

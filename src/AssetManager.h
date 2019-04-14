@@ -12,7 +12,6 @@ class ShaderProgram;
 class Material;
 class Mesh;
 class Texture2D;
-class PhysicsMaterial;
 
 class AssetManager
 {
@@ -33,7 +32,6 @@ private:
     typedef std::unordered_map<std::string /* Material Name */, Material*> MaterialMap;
     typedef std::unordered_map<uint32_t /* Type Id */, MaterialMap> MaterialTypeMap;
     typedef std::unordered_map<std::string /* Mesh Name */, Mesh*> MeshMap;
-    typedef std::unordered_map<std::string /* Physics Material Name */, PhysicsMaterial*> PhysicsMaterialMap;
 
 public:
     // We want to make sure these two methods are unacceptable,
@@ -52,7 +50,6 @@ public:
     Mesh* CreateSphereMesh(std::string const& name, uint32_t segmentsLongitude, uint32_t segmentsLatitude, float radius);
     Mesh* CreateTorusMesh(std::string const& name, uint32_t tubeSegments, uint32_t crossSectionSegments, float r1, float r2);
     Mesh* CreateMeshFromFile(std::string const& name, std::string const& file);
-    PhysicsMaterial* CreatePhysicsMaterial(std::string const& name, float staticFriction, float dynamicFriction, float restitution);
 
     template<class T> T* CreateMaterial(std::string const& name, ShaderProgram* shaderProgram)
     {
@@ -66,7 +63,6 @@ public:
     ShaderProgram* GetShaderProgram(std::string const& name);
     Texture2D* GetTexture2D(std::string const& name);
     Mesh* GetMesh(std::string const& name);
-    PhysicsMaterial* GetPhysicsMaterial(std::string const& name);
     Material* GetMaterial(std::string const& name);
 
     template<class T> T* GetMaterial(std::string const& name)
@@ -92,14 +88,12 @@ private:
     void DeleteTextures();
     void DeleteMaterials();
     void DeleteMeshes();
-    void DeletePhysicsMaterials();
 
     ShaderMap shaders;
     ShaderProgramMap shaderPrograms;
     TextureMap textures;
     MaterialTypeMap materials;
     MeshMap meshes;
-    PhysicsMaterialMap physicsMaterials;
 };
 
 #define sAssetManager AssetManager::getInstance()
