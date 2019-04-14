@@ -6,9 +6,8 @@
 #include "PxMaterial.h"
 #include "PxScene.h"
 #include "PxSceneDesc.h"
-#include "extensions/PxDefaultCpuDispatcher.h"
-#include "extensions/PxDefaultSimulationFilterShader.h"
 #include "common/PxTolerancesScale.h"
+#include "extensions/PxExtensionsAPI.h"
 #include "Time.h"
 #include <iostream>
 
@@ -46,6 +45,12 @@ bool PhysicsEngine::Start()
     if (!pxPhysics)
     {
         fprintf(stderr, "PhysX Error: Could not create PhysX base physics!\n");
+        return false;
+    }
+
+    if (!PxInitExtensions(*pxPhysics, nullptr))
+    {
+        fprintf(stderr, "PhysX Error: Could not initialize PhysX extensions!\n");
         return false;
     }
 
@@ -94,6 +99,8 @@ void PhysicsEngine::Stop()
         pxCpuDispatcher->release();
         pxCpuDispatcher = nullptr;
     }
+
+    PxCloseExtensions();
 
     if (pxPhysics)
     {
