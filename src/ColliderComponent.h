@@ -26,6 +26,7 @@ protected:
 
 private:
     void CreatePxShape();
+    void DeletePxGeometry();
 
     physx::PxMaterial* pxMaterial;
     physx::PxGeometry* pxGeometry;

@@ -2,8 +2,15 @@
 #include "GameObject.h"
 #include "PhysicsEngine.h"
 #include "geometry/PxGeometry.h"
+#include "geometry/PxTriangleMeshGeometry.h"
+#include "geometry/PxBoxGeometry.h"
+#include "geometry/PxSphereGeometry.h"
+#include "geometry/PxPlaneGeometry.h"
+#include "geometry/PxCapsuleGeometry.h"
 #include "PxMaterial.h"
 #include "PxShape.h"
+#include <iostream>
+#include <assert.h>
 
 ColliderComponent::ColliderComponent(GameObject* owner) :
     Component::Component(owner),
@@ -24,11 +31,7 @@ ColliderComponent::~ColliderComponent()
     // Do not release pxMaterial - will be deleted from asset manager on shutdown
     pxMaterial = nullptr;
 
-    if (pxGeometry)
-    {
-        delete pxGeometry;
-        pxGeometry = nullptr;
-    }
+    DeletePxGeometry();
 }
 
 void ColliderComponent::SetPxMaterial(physx::PxMaterial* value)
@@ -67,11 +70,7 @@ void ColliderComponent::SetPxGeometry(physx::PxGeometry* value)
         return;
     }
 
-    if (pxGeometry)
-    {
-        delete pxGeometry;
-    }
-
+    DeletePxGeometry();
     pxGeometry = value;
 
     if (pxShape)
@@ -107,4 +106,54 @@ void ColliderComponent::CreatePxShape()
     {
         // ToDo: Find rigid component and attach shape
     }
+}
+
+void ColliderComponent::DeletePxGeometry()
+{
+    if (!pxGeometry)
+    {
+        return;
+    }
+
+    switch (pxGeometry->getType())
+    {
+        case physx::PxGeometryType::Enum::eBOX:
+        {
+            physx::PxBoxGeometry* pxBoxGeometry = (physx::PxBoxGeometry*)pxGeometry;
+            delete pxBoxGeometry;
+            break;
+        }
+        case physx::PxGeometryType::Enum::eSPHERE:
+        {
+            physx::PxSphereGeometry* pxSphereGeometry = (physx::PxSphereGeometry*)pxGeometry;
+            delete pxSphereGeometry;
+            break;
+        }
+        case physx::PxGeometryType::Enum::ePLANE:
+        {
+            physx::PxPlaneGeometry* pxPlaneGeometry = (physx::PxPlaneGeometry*)pxGeometry;
+            delete pxPlaneGeometry;
+            break;
+        }
+        case physx::PxGeometryType::Enum::eCAPSULE:
+        {
+            physx::PxCapsuleGeometry* pxCapsuleGeometry = (physx::PxCapsuleGeometry*)pxGeometry;
+            delete pxCapsuleGeometry;
+            break;
+        }
+        case physx::PxGeometryType::Enum::eTRIANGLEMESH:
+        {
+            physx::PxTriangleMeshGeometry* pxTriangleMeshGeometry = (physx::PxTriangleMeshGeometry*)pxGeometry;
+            delete pxTriangleMeshGeometry;
+            break;
+        }
+        default:
+        {
+            fprintf(stderr, "Could not delete PhysX geometry type %i, because deleting of this type is not implemented!", ((int)pxGeometry->getType()));
+            assert(false);
+            break;
+        }
+    }
+
+    pxGeometry = nullptr;
 }
