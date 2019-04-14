@@ -27,15 +27,15 @@ public:
     {
         T* component = new T(this);
 
-        componentQueue[UniqueTypeId<T>()].push_back(component);
+        componentQueue[component->typeId = UniqueTypeId<T>()].push_back(component);
 
         return component;
     }
 
     template<class T> T* GetComponent()
     {
-        ComponentMap::const_iterator itr = components.find(UniqueTypeId<T>());
-        if (itr != components.end() && itr->second.size())
+        ComponentMap::const_iterator itr = componentMap.find(UniqueTypeId<T>());
+        if (itr != componentMap.end() && itr->second.size())
         {
             // Return first component of this type
             return (T*)itr->second[0];
@@ -58,12 +58,14 @@ public:
     bool IsDestroyed() const { return destroyed; }
 
 private:
-    typedef std::map<uint32_t /* Type Id */, std::vector<Component*>> ComponentMap;
+    typedef std::vector<Component*> ComponentList;
+    typedef std::map<uint32_t /* Type Id */, ComponentList> ComponentMap;
 
 private:
     std::string name;
     ComponentMap componentQueue;
-    ComponentMap components;
+    ComponentMap componentMap;
+    ComponentList componentList;
     Scene* scene;
     bool destroyed;
 };
