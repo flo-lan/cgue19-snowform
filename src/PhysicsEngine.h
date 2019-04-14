@@ -22,6 +22,9 @@ namespace physx
     class PxShape;
     class PxGeometry;
     class PxMaterial;
+    class PxRigidDynamic;
+    class PxRigidStatic;
+    class PxTransform;
 }
 
 class PhysicsEngine
@@ -49,6 +52,8 @@ public:
     physx::PxTriangleMesh* CreatePxTriangleMesh(std::string const& name,
         std::vector<Vertex> const& vertices, std::vector<uint32_t> const& indices);
     physx::PxShape* CreatePxShape(const physx::PxGeometry& geometry, const physx::PxMaterial& material);
+    physx::PxRigidDynamic* CreatePxRigidDynamic(const physx::PxTransform& pose);
+    physx::PxRigidStatic* CreatePxRigidStatic(const physx::PxTransform& pose);
 
     physx::PxMaterial* GetPxMaterial(std::string const& name);
     physx::PxTriangleMesh* GetPxTriangleMesh(std::string const& name);

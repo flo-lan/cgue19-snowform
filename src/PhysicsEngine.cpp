@@ -2,15 +2,18 @@
 #include "common/PxTolerancesScale.h"
 #include "cooking/PxCooking.h"
 #include "cooking/PxTriangleMeshDesc.h"
+#include "extensions/PxExtensionsAPI.h"
+#include "foundation/PxTransform.h"
 #include "geometry/PxTriangleMesh.h"
 #include "geometry/PxGeometry.h"
-#include "extensions/PxExtensionsAPI.h"
 #include "PxFoundation.h"
 #include "PxPhysics.h"
 #include "PxPhysicsVersion.h"
 #include "PxMaterial.h"
 #include "PxScene.h"
 #include "PxSceneDesc.h"
+#include "PxRigidDynamic.h"
+#include "PxRigidStatic.h"
 #include "Time.h"
 #include "Mesh.h"
 #include <iostream>
@@ -206,11 +209,33 @@ physx::PxShape* PhysicsEngine::CreatePxShape(const physx::PxGeometry& geometry, 
 {
     if (!pxPhysics)
     {
-        fprintf(stderr, "PhysX Error: Could not create physics shape, because PhysX physics is null!\n");
+        fprintf(stderr, "PhysX Error: Could not create PhysX shape, because PhysX physics is null!\n");
         return nullptr;
     }
 
     return pxPhysics->createShape(geometry, material);
+}
+
+physx::PxRigidDynamic* PhysicsEngine::CreatePxRigidDynamic(const physx::PxTransform& pose)
+{
+    if (!pxPhysics)
+    {
+        fprintf(stderr, "PhysX Error: Could not create PhysX rigid dynamic, because PhysX physics is null!\n");
+        return nullptr;
+    }
+
+    return pxPhysics->createRigidDynamic(pose);
+}
+
+physx::PxRigidStatic* PhysicsEngine::CreatePxRigidStatic(const physx::PxTransform& pose)
+{
+    if (!pxPhysics)
+    {
+        fprintf(stderr, "PhysX Error: Could not create PhysX rigid static, because PhysX physics is null!\n");
+        return nullptr;
+    }
+
+    return pxPhysics->createRigidStatic(pose);
 }
 
 physx::PxMaterial* PhysicsEngine::GetPxMaterial(std::string const& name)
