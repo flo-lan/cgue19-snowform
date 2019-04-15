@@ -510,3 +510,37 @@ void TransformComponent::SetLocalScaleZ(float localScaleZ)
 
     TraverseTransformGraphDF(t, false);
 }
+
+void TransformComponent::SetPosition(float positionX, float positionY, float positionZ)
+{
+    glm::vec3 localPositionOffset = glm::vec3
+    (
+        positionX - position.x,
+        positionY - position.y,
+        positionZ - position.z
+    );
+
+    SetLocalPosition
+    (
+        localPosition.x + localPositionOffset.x,
+        localPosition.y + localPositionOffset.y,
+        localPosition.z + localPositionOffset.z
+    );
+}
+
+void TransformComponent::SetRotation(float rotationX, float rotationY, float rotationZ)
+{
+    glm::vec3 localRotationOffset = glm::vec3
+    (
+        rotationX - rotation.x,
+        rotationY - rotation.y,
+        rotationZ - rotation.z
+    );
+
+    SetLocalRotation
+    (
+        localRotation.x + localRotationOffset.x,
+        localRotation.y + localRotationOffset.y,
+        localRotation.z + localRotationOffset.z
+    );
+}

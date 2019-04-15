@@ -62,6 +62,9 @@ public:
         SetLocalScaleZ(localScaleZ);
     }
 
+    void SetPosition(float positionX, float positionY, float positionZ);
+    void SetRotation(float rotationX, float rotationY, float rotationZ);
+
     void SetIgnoreParentRotation(bool _ignoreParentRotation) { ignoreParentRotation = _ignoreParentRotation; }
 
     TransformComponent* GetParent() const { return parent; }
