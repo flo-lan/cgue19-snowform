@@ -28,6 +28,7 @@ public:
     void Destroy() { destroyed = true; OnDestroy(); }
 
     GameObject* GetOwner() const { return owner; }
+    uint32_t GetTypeId() const { return typeId;  }
     bool IsDestroyed() const { return destroyed; }
 
 private:

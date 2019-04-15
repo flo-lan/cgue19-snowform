@@ -1,8 +1,10 @@
 #include "RigidStaticComponent.h"
 #include "GameObject.h"
 #include "TransformComponent.h"
+#include "ColliderComponent.h"
 #include "PhysicsEngine.h"
 #include "PxRigidStatic.h"
+#include "PxShape.h"
 
 RigidStaticComponent::RigidStaticComponent(GameObject* owner) :
     RigidComponent::RigidComponent(owner),
@@ -20,6 +22,15 @@ RigidStaticComponent::RigidStaticComponent(GameObject* owner) :
         )
     );
 
+    std::vector<ColliderComponent*> colliders;
+
+    GetColliderComponents(colliders);
+
+    for (auto itr = colliders.begin(); itr != colliders.end(); ++itr)
+    {
+        AttachColliderComponent(*itr);
+    }
+
     sPhysicsEngine.InsertRigidActor(pxRigidStatic);
 }
 
@@ -32,6 +43,50 @@ RigidStaticComponent::~RigidStaticComponent()
         pxRigidStatic->release();
         pxRigidStatic = nullptr;
     }
+}
+
+void RigidStaticComponent::AttachColliderComponent(ColliderComponent* collider)
+{
+    if (!collider)
+    {
+        return;
+    }
+
+    if (!pxRigidStatic)
+    {
+        return;
+    }
+
+    physx::PxShape* pxShape = collider->GetPxShape();
+
+    if (!pxShape)
+    {
+        return;
+    }
+
+    pxRigidStatic->attachShape(*pxShape);
+}
+
+void RigidStaticComponent::RemoveColliderComponent(ColliderComponent* collider)
+{
+    if (!collider)
+    {
+        return;
+    }
+
+    if (!pxRigidStatic)
+    {
+        return;
+    }
+
+    physx::PxShape* pxShape = collider->GetPxShape();
+
+    if (!pxShape)
+    {
+        return;
+    }
+
+    pxRigidStatic->detachShape(*pxShape);
 }
 
 void RigidStaticComponent::SetGlobalPose(physx::PxTransform& pose)

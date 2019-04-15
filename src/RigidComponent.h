@@ -8,6 +8,7 @@
 
 class GameObject;
 class TransformComponent;
+class ColliderComponent;
 
 namespace physx
 {
@@ -22,11 +23,19 @@ protected:
 public:
     virtual ~RigidComponent();
 
+    virtual void OnAttachComponent(Component* component);
+    virtual void OnRemoveComponent(Component* component);
+
+    virtual void AttachColliderComponent(ColliderComponent* collider) = 0;
+    virtual void RemoveColliderComponent(ColliderComponent* collider) = 0;
+
     virtual void LateUpdate();
 
     void SetGlobalPose(glm::vec3 const& position, glm::quat const& rotation);
     virtual void SetGlobalPose(physx::PxTransform& pose) = 0;
 
 protected:
+    void GetColliderComponents(std::vector<ColliderComponent*>& colliders);
+
     TransformComponent* transform;
 };

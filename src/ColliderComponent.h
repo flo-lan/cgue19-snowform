@@ -22,6 +22,8 @@ public:
     physx::PxMaterial* GetPxMaterial() const { return pxMaterial; }
     void SetPxMaterial(physx::PxMaterial* value);
 
+    physx::PxShape* GetPxShape() const { return pxShape; }
+
 protected:
     physx::PxGeometry* GetPxGeometry() const { return pxGeometry; }
     void SetPxGeometry(physx::PxGeometry* value);
