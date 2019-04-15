@@ -19,10 +19,14 @@ RigidDynamicComponent::RigidDynamicComponent(GameObject* owner) :
             physx::PxQuat(rotation.x, rotation.y, rotation.z, rotation.w)
         )
     );
+
+    sPhysicsEngine.InsertRigidActor(pxRigidDynamic);
 }
 
 RigidDynamicComponent::~RigidDynamicComponent()
 {
+    sPhysicsEngine.RemoveRigidActor(pxRigidDynamic);
+
     if (pxRigidDynamic)
     {
         pxRigidDynamic->release();

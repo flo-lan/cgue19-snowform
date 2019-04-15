@@ -22,6 +22,7 @@ namespace physx
     class PxShape;
     class PxGeometry;
     class PxMaterial;
+    class PxRigidActor;
     class PxRigidDynamic;
     class PxRigidStatic;
     class PxTransform;
@@ -46,6 +47,9 @@ public:
     bool Start();
     void Update();
     void Stop();
+
+    void InsertRigidActor(physx::PxRigidActor* pxRigidActor);
+    void RemoveRigidActor(physx::PxRigidActor* pxRigidActor);
 
     physx::PxMaterial* CreatePxMaterial(std::string const& name,
         float staticFriction, float dynamicFriction, float restitution);

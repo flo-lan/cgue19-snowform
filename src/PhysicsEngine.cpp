@@ -140,6 +140,38 @@ void PhysicsEngine::Stop()
     }
 }
 
+void PhysicsEngine::InsertRigidActor(physx::PxRigidActor* pxRigidActor)
+{
+    if (!pxRigidActor)
+    {
+        return;
+    }
+
+    if (!pxScene)
+    {
+        fprintf(stderr, "PhysX Error: Could not insert PhysX rigid actor, because PhysX scene is null!\n");
+        return;
+    }
+
+    pxScene->addActor(*pxRigidActor);
+}
+
+void PhysicsEngine::RemoveRigidActor(physx::PxRigidActor* pxRigidActor)
+{
+    if (!pxRigidActor)
+    {
+        return;
+    }
+
+    if (!pxScene)
+    {
+        fprintf(stderr, "PhysX Error: Could not insert PhysX rigid actor, because PhysX scene is null!\n");
+        return;
+    }
+
+    pxScene->removeActor(*pxRigidActor);
+}
+
 physx::PxMaterial* PhysicsEngine::CreatePxMaterial(std::string const& name,
     float staticFriction, float dynamicFriction, float restitution)
 {
