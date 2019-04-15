@@ -8,6 +8,7 @@
 				<Components>
 					<TransformComponent localPosition="1.5 1.0 0.0" localScale="0.02 0.02 0.02" />
 					<MeshRendererComponent material="Snowball" mesh="Snowball" />
+					<MeshColliderComponent physicsMaterial="Default" collisionMesh="Snowball" />
 				</Components>
 				<Children>
 				</Children>
@@ -16,6 +17,7 @@
 				<Components>
 					<TransformComponent localPosition="-3.0 0.0 0.0" />
 					<MeshRendererComponent material="StandardDefault" mesh="TreePineSnow" />
+					<MeshColliderComponent physicsMaterial="Default" collisionMesh="TreePineSnow" />
 				</Components>
 				<Children>
 				</Children>
@@ -24,6 +26,7 @@
 				<Components>
 					<TransformComponent localPosition="0.0 0.0 0.0" />
 					<MeshRendererComponent material="StandardDefault" mesh="TreePineSnow" />
+					<MeshColliderComponent physicsMaterial="Default" collisionMesh="TreePineSnow" />
 				</Components>
 				<Children>
 				</Children>
@@ -32,6 +35,7 @@
 				<Components>
 					<TransformComponent localPosition="3.0 0.0 0.0" />
 					<MeshRendererComponent material="StandardDefault" mesh="TreePineSnow" />
+					<MeshColliderComponent physicsMaterial="Default" collisionMesh="TreePineSnow" />
 				</Components>
 				<Children>
 				</Children>

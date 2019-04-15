@@ -23,9 +23,10 @@ void MeshColliderComponent::SetMesh(Mesh* value)
     }
 
     physx::PxTriangleMesh* pxTriangleMesh = sPhysicsEngine.GetPxTriangleMesh(value->Name);
-        
+
     if (!pxTriangleMesh)
     {
+        fprintf(stdout, "Warning: PhysX triangle mesh '%s' was created in mesh collider component. Consider preloading it in asset loader!\n", value->Name.c_str());
         pxTriangleMesh = sPhysicsEngine.CreatePxTriangleMesh(value->Name, value->Vertices, value->Indices);
     }
 
