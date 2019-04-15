@@ -70,7 +70,8 @@ void RigidDynamicComponent::AttachShape(physx::PxShape* pxShape)
         return;
     }
 
-    if (!pxRigidDynamic->getRigidBodyFlags().isSet(physx::PxRigidBodyFlag::eKINEMATIC))
+    if (pxShape->getGeometryType() == physx::PxGeometryType::eTRIANGLEMESH &&
+        pxRigidDynamic->getRigidBodyFlags().isSet(physx::PxRigidBodyFlag::eKINEMATIC) == false)
     {
         if (pxShape->getFlags().isSet(physx::PxShapeFlag::eSIMULATION_SHAPE))
         {
