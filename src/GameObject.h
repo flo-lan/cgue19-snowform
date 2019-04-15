@@ -51,6 +51,29 @@ public:
         return nullptr;
     }
 
+    template<class T> void GetComponents(std::vector<T*>& components)
+    {
+        ComponentMap::const_iterator itr = componentMap.find(UniqueTypeId<T>());
+
+        if (itr != componentMap.end())
+        {
+            for (ComponentList::const_iterator itr2 = itr->second.begin(); itr2 != itr->second.end(); ++itr2)
+            {
+                components.push_back((T*)(*itr2));
+            }
+        }
+
+        itr = componentQueue.find(UniqueTypeId<T>());
+
+        if (itr != componentQueue.end())
+        {
+            for (ComponentList::const_iterator itr2 = itr->second.begin(); itr2 != itr->second.end(); ++itr2)
+            {
+                components.push_back((T*)(*itr2));
+            }
+        }
+    }
+
     std::string const& GetName() const { return name; }
     Scene* GetScene() const { return scene; }
 
