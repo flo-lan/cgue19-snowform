@@ -66,6 +66,15 @@ void RigidDynamicComponent::AttachShape(physx::PxShape* pxShape)
         return;
     }
 
+    if (!pxRigidDynamic->getRigidBodyFlags().isSet(physx::PxRigidBodyFlag::eKINEMATIC))
+    {
+        if (pxShape->getFlags().isSet(physx::PxShapeFlag::eSIMULATION_SHAPE))
+        {
+            fprintf(stderr, "Error: Could not attach PhysX shape to PhysX rigid dynamic of game object '%s', because attaching a triangle mesh shape configured as eSIMULATION_SHAPE is not supported for non-kinematic PhysX rigid dynamic instances!\n", GetOwner()->GetName().c_str());
+            return;
+        }
+    }
+
     pxRigidDynamic->attachShape(*pxShape);
 }
 
