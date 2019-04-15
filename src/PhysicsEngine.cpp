@@ -243,7 +243,7 @@ physx::PxTriangleMesh* PhysicsEngine::CreatePxTriangleMesh(std::string const& na
     pxTriangleMeshDesc.points.stride = sizeof(Vertex);
     pxTriangleMeshDesc.points.data = vertices.data();
 
-    pxTriangleMeshDesc.triangles.count = indices.size();
+    pxTriangleMeshDesc.triangles.count = indices.size() / 3;
     pxTriangleMeshDesc.triangles.stride = 3 * sizeof(uint32_t);
     pxTriangleMeshDesc.triangles.data = indices.data();
 
