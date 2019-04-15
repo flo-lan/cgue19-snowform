@@ -22,12 +22,12 @@ public:
     float GetDeltaTime() { return deltaTime; }
 
     void Update();
-    void StartCountdown(float durationInMs);
+    void StartCountdown(float durationInSeconds);
 
 private:
     Time();
 
-    // difference since last update in ms
+    // difference since last update in seconds
     float unscaledDeltaTime;
     // 0 if paused, otherwise realDeltaTime
     float deltaTime;
