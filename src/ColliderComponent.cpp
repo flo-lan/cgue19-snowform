@@ -1,6 +1,8 @@
 #include "ColliderComponent.h"
 #include "GameObject.h"
 #include "PhysicsEngine.h"
+#include "RigidDynamicComponent.h"
+#include "RigidStaticComponent.h"
 #include "geometry/PxGeometry.h"
 #include "geometry/PxTriangleMeshGeometry.h"
 #include "geometry/PxBoxGeometry.h"
@@ -102,9 +104,18 @@ void ColliderComponent::CreatePxShape()
 
     pxShape = sPhysicsEngine.CreatePxShape(*pxGeometry, *pxMaterial);
 
-    if (pxShape)
+    if (!pxShape)
     {
-        // ToDo: Find rigid component and attach shape
+        return;
+    }
+
+    if (RigidDynamicComponent* rigidDynamic = GetOwner()->GetComponent<RigidDynamicComponent>())
+    {
+        rigidDynamic->AttachColliderComponent(this);
+    }
+    else if (RigidStaticComponent* rigidStatic = GetOwner()->GetComponent<RigidStaticComponent>())
+    {
+        rigidStatic->AttachColliderComponent(this);
     }
 }
 
