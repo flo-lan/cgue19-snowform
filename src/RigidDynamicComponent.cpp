@@ -37,6 +37,19 @@ RigidDynamicComponent::~RigidDynamicComponent()
     }
 }
 
+physx::PxRigidBodyFlags RigidDynamicComponent::GetPxRigidBodyFlags() const
+{
+    return pxRigidDynamic ? pxRigidDynamic->getRigidBodyFlags() : (physx::PxRigidBodyFlag::Enum)0;
+}
+
+void RigidDynamicComponent::SetPxRigidBodyFlag(physx::PxRigidBodyFlag::Enum flag, bool value)
+{
+    if (pxRigidDynamic)
+    {
+        pxRigidDynamic->setRigidBodyFlag(flag, value);
+    }
+}
+
 void RigidDynamicComponent::SetGlobalPose(physx::PxTransform& globalPose)
 {
     if (pxRigidDynamic)

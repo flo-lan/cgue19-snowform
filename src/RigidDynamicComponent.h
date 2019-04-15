@@ -1,6 +1,7 @@
 #pragma once
 
 #include "RigidComponent.h"
+#include "PxRigidBody.h"
 
 class ColliderComponent;
 
@@ -15,6 +16,9 @@ class RigidDynamicComponent : public RigidComponent
 public:
     RigidDynamicComponent(GameObject* owner);
     virtual ~RigidDynamicComponent();
+
+    physx::PxRigidBodyFlags GetPxRigidBodyFlags() const;
+    void SetPxRigidBodyFlag(physx::PxRigidBodyFlag::Enum flag, bool value);
 
     virtual void SetGlobalPose(physx::PxTransform& globalPose);
 
