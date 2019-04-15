@@ -8,24 +8,17 @@ RigidStaticComponent::RigidStaticComponent(GameObject* owner) :
     RigidComponent::RigidComponent(owner),
     pxRigidStatic(nullptr)
 {
-    if (transform)
-    {
-        glm::vec3 position = transform->GetPosition();
-        glm::quat rotation = transform->GetRotationQ();
+    glm::vec3 position = transform->GetPosition();
+    glm::quat rotation = transform->GetRotationQ();
 
-        pxRigidStatic = sPhysicsEngine.CreatePxRigidStatic
+    pxRigidStatic = sPhysicsEngine.CreatePxRigidStatic
+    (
+        physx::PxTransform
         (
-            physx::PxTransform
-            (
-                physx::PxVec3(position.x, position.y, position.z),
-                physx::PxQuat(rotation.x, rotation.y, rotation.z, rotation.w)
-            )
-        );
-    }
-    else
-    {
-        pxRigidStatic = sPhysicsEngine.CreatePxRigidStatic(physx::PxTransform());
-    }
+            physx::PxVec3(position.x, position.y, position.z),
+            physx::PxQuat(rotation.x, rotation.y, rotation.z, rotation.w)
+        )
+    );
 }
 
 RigidStaticComponent::~RigidStaticComponent()

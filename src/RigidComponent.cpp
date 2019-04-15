@@ -15,11 +15,8 @@ RigidComponent::~RigidComponent()
 
 void RigidComponent::LateUpdate()
 {
-    if (transform)
-    {
-        // ToDo: Update only if dirty
-        SetGlobalPose(transform->GetPosition(), transform->GetRotationQ());
-    }
+    // ToDo: Update only if dirty
+    SetGlobalPose(transform->GetPosition(), transform->GetRotationQ());
 }
 
 void RigidComponent::SetGlobalPose(glm::vec3& position, glm::quat& rotation)
