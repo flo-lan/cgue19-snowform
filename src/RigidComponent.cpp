@@ -2,6 +2,7 @@
 #include "GameObject.h"
 #include "TransformComponent.h"
 #include "MeshColliderComponent.h"
+#include "SphereColliderComponent.h"
 #include "foundation/PxTransform.h"
 #include "UniqueTypeId.h"
 
@@ -34,7 +35,8 @@ void RigidComponent::OnAttachComponent(Component* component)
         return;
     }
 
-    if (component->GetTypeId() == UniqueTypeId<MeshColliderComponent>())
+    if (component->GetTypeId() == UniqueTypeId<MeshColliderComponent>() ||
+        component->GetTypeId() == UniqueTypeId<SphereColliderComponent>())
     {
         AttachColliderComponent((ColliderComponent*)component);
     }
@@ -47,7 +49,8 @@ void RigidComponent::OnRemoveComponent(Component* component)
         return;
     }
 
-    if (component->GetTypeId() == UniqueTypeId<MeshColliderComponent>())
+    if (component->GetTypeId() == UniqueTypeId<MeshColliderComponent>() ||
+        component->GetTypeId() == UniqueTypeId<SphereColliderComponent>())
     {
         RemoveColliderComponent((ColliderComponent*)component);
     }
@@ -135,7 +138,11 @@ void RigidComponent::SetGlobalPose(glm::vec3 const& position, glm::quat const& r
 void RigidComponent::GetColliderComponents(std::vector<ColliderComponent*>& colliders)
 {
     std::vector<MeshColliderComponent*> meshColliders;
+    std::vector<SphereColliderComponent*> sphereColliders;
+
     GetOwner()->GetComponents(meshColliders);
+    GetOwner()->GetComponents(sphereColliders);
 
     colliders.insert(colliders.end(), meshColliders.begin(), meshColliders.end());
+    colliders.insert(colliders.end(), sphereColliders.begin(), sphereColliders.end());
 }

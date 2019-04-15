@@ -125,6 +125,12 @@
     <ClCompile Include="src\RigidStaticComponentFactory.cpp">
       <Filter>Engine\Scene\ComponentFactories</Filter>
     </ClCompile>
+    <ClCompile Include="src\SphereColliderComponent.cpp">
+      <Filter>Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SphereColliderComponentFactory.cpp">
+      <Filter>Engine\Scene\ComponentFactories</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameObject.h">
@@ -260,6 +266,12 @@
       <Filter>Engine\Scene\ComponentFactories</Filter>
     </ClInclude>
     <ClInclude Include="src\RigidStaticComponentFactory.h">
+      <Filter>Engine\Scene\ComponentFactories</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SphereColliderComponent.h">
+      <Filter>Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SphereColliderComponentFactory.h">
       <Filter>Engine\Scene\ComponentFactories</Filter>
     </ClInclude>
   </ItemGroup>

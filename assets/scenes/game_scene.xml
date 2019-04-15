@@ -6,10 +6,10 @@
         <Children>
         	<GameObject name="Snowball">
 				<Components>
-					<TransformComponent localPosition="1.5 1.0 0.0" localScale="0.02 0.02 0.02" />
+					<TransformComponent localPosition="0 10.0 0.0" localScale="0.02 0.02 0.02" />
 					<MeshRendererComponent material="Snowball" mesh="Snowball" />
-					<MeshColliderComponent physicsMaterial="Default" collisionMesh="Snowball" />
-					<RigidDynamicComponent kinematic="true" />
+					<SphereColliderComponent physicsMaterial="Default" radius="1.0" />
+					<RigidDynamicComponent />
 				</Components>
 				<Children>
 				</Children>
