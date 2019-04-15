@@ -30,6 +30,8 @@ RigidDynamicComponent::RigidDynamicComponent(GameObject* owner) :
         AttachColliderComponent(*itr);
     }
 
+    pxRigidDynamic->userData = this;
+
     sPhysicsEngine.InsertRigidActor(pxRigidDynamic);
 }
 
@@ -88,10 +90,10 @@ void RigidDynamicComponent::RemoveColliderComponent(ColliderComponent* collider)
     pxRigidDynamic->detachShape(*pxShape);
 }
 
-void RigidDynamicComponent::SetGlobalPose(physx::PxTransform& pose)
+void RigidDynamicComponent::SetGlobalPose(physx::PxTransform& globalPose)
 {
     if (pxRigidDynamic)
     {
-        pxRigidDynamic->setGlobalPose(pose);
+        pxRigidDynamic->setGlobalPose(globalPose);
     }
 }

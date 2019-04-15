@@ -9,6 +9,7 @@
 #include <vector>
 
 class PhysicsMaterial;
+class RigidComponent;
 struct Vertex;
 
 namespace physx

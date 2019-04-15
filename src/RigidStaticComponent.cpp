@@ -31,6 +31,8 @@ RigidStaticComponent::RigidStaticComponent(GameObject* owner) :
         AttachColliderComponent(*itr);
     }
 
+    pxRigidStatic->userData = this;
+
     sPhysicsEngine.InsertRigidActor(pxRigidStatic);
 }
 
@@ -89,10 +91,10 @@ void RigidStaticComponent::RemoveColliderComponent(ColliderComponent* collider)
     pxRigidStatic->detachShape(*pxShape);
 }
 
-void RigidStaticComponent::SetGlobalPose(physx::PxTransform& pose)
+void RigidStaticComponent::SetGlobalPose(physx::PxTransform& globalPose)
 {
     if (pxRigidStatic)
     {
-        pxRigidStatic->setGlobalPose(pose);
+        pxRigidStatic->setGlobalPose(globalPose);
     }
 }

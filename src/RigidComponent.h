@@ -31,8 +31,9 @@ public:
 
     virtual void LateUpdate();
 
+    void SetTransform(physx::PxTransform& globalPose);
     void SetGlobalPose(glm::vec3 const& position, glm::quat const& rotation);
-    virtual void SetGlobalPose(physx::PxTransform& pose) = 0;
+    virtual void SetGlobalPose(physx::PxTransform& globalPose) = 0;
 
 protected:
     void GetColliderComponents(std::vector<ColliderComponent*>& colliders);

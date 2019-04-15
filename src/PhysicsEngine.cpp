@@ -1,4 +1,5 @@
 #include "PhysicsEngine.h"
+#include "RigidComponent.h"
 #include "common/PxTolerancesScale.h"
 #include "cooking/PxCooking.h"
 #include "cooking/PxTriangleMeshDesc.h"
@@ -95,10 +96,25 @@ bool PhysicsEngine::Start()
 
 void PhysicsEngine::Update()
 {
-    if (pxScene)
+    if (!pxScene)
     {
-        pxScene->simulate(sTime.GetDeltaTime());
-        pxScene->fetchResults(true);
+        return;
+    }
+
+    pxScene->simulate(sTime.GetDeltaTime());
+    pxScene->fetchResults(true /* block */);
+
+    physx::PxU32 pxActiveActorCount = 0;
+    physx::PxActor** pxActiveActors = pxScene->getActiveActors(pxActiveActorCount);
+
+    for (physx::PxU32 i = 0; i < pxActiveActorCount; ++i)
+    {
+        physx::PxRigidActor* pxRigidActor = static_cast<physx::PxRigidActor*>(pxActiveActors[i]);
+
+        if (RigidComponent* rigidComponent = static_cast<RigidComponent*>(pxRigidActor->userData))
+        {
+            rigidComponent->SetTransform(pxRigidActor->getGlobalPose());
+        }
     }
 }
 

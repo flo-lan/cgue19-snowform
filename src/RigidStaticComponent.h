@@ -18,7 +18,7 @@ public:
     virtual void AttachColliderComponent(ColliderComponent* collider);
     virtual void RemoveColliderComponent(ColliderComponent* collider);
 
-    virtual void SetGlobalPose(physx::PxTransform& pose);
+    virtual void SetGlobalPose(physx::PxTransform& globalPose);
 
 private:
     physx::PxRigidStatic* pxRigidStatic;

@@ -47,6 +47,17 @@ void RigidComponent::LateUpdate()
     SetGlobalPose(transform->GetPosition(), transform->GetRotationQ());
 }
 
+void RigidComponent::SetTransform(physx::PxTransform& globalPose)
+{
+    glm::vec3 eulerRotation = glm::eulerAngles
+    (
+        glm::quat(globalPose.q.x, globalPose.q.y, globalPose.q.z, globalPose.q.w)
+    );
+
+    transform->SetPosition(globalPose.p.x, globalPose.p.y, globalPose.p.z);
+    transform->SetRotation(eulerRotation.x, eulerRotation.y, eulerRotation.z);
+}
+
 void RigidComponent::SetGlobalPose(glm::vec3 const& position, glm::quat const& rotation)
 {
     SetGlobalPose
