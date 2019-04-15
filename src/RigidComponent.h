@@ -24,7 +24,7 @@ public:
 
     virtual void LateUpdate();
 
-    void SetGlobalPose(glm::vec3& position, glm::quat& rotation);
+    void SetGlobalPose(glm::vec3 const& position, glm::quat const& rotation);
     virtual void SetGlobalPose(physx::PxTransform& pose) = 0;
 
 protected:

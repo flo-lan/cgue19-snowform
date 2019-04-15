@@ -19,7 +19,7 @@ void RigidComponent::LateUpdate()
     SetGlobalPose(transform->GetPosition(), transform->GetRotationQ());
 }
 
-void RigidComponent::SetGlobalPose(glm::vec3& position, glm::quat& rotation)
+void RigidComponent::SetGlobalPose(glm::vec3 const& position, glm::quat const& rotation)
 {
     SetGlobalPose
     (
