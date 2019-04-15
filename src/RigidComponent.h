@@ -24,6 +24,8 @@ protected:
 public:
     virtual ~RigidComponent();
 
+    virtual void OnStart();
+
     virtual void OnAttachComponent(Component* component);
     virtual void OnRemoveComponent(Component* component);
 

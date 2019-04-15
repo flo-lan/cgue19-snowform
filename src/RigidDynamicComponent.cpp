@@ -21,15 +21,6 @@ RigidDynamicComponent::RigidDynamicComponent(GameObject* owner) :
         )
     );
 
-    std::vector<ColliderComponent*> colliders;
-
-    GetColliderComponents(colliders);
-
-    for (auto itr = colliders.begin(); itr != colliders.end(); ++itr)
-    {
-        AttachColliderComponent(*itr);
-    }
-
     pxRigidDynamic->userData = this;
 
     sPhysicsEngine.InsertRigidActor(pxRigidDynamic);
