@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Component.h"
+#include "PxShape.h"
 
 class GameObject;
 
@@ -24,6 +25,9 @@ public:
 
     physx::PxShape* GetPxShape() const { return pxShape; }
 
+    physx::PxShapeFlags GetPxShapeFlags() const { return pxShapeFlags; }
+    void SetPxShapeFlags(physx::PxShapeFlags value);
+
 protected:
     physx::PxGeometry* GetPxGeometry() const { return pxGeometry; }
     void SetPxGeometry(physx::PxGeometry* value);
@@ -35,4 +39,5 @@ private:
     physx::PxMaterial* pxMaterial;
     physx::PxGeometry* pxGeometry;
     physx::PxShape* pxShape;
+    physx::PxShapeFlags pxShapeFlags;
 };

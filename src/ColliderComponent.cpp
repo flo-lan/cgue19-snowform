@@ -18,7 +18,8 @@ ColliderComponent::ColliderComponent(GameObject* owner) :
     Component::Component(owner),
     pxMaterial(nullptr),
     pxGeometry(nullptr),
-    pxShape(nullptr)
+    pxShape(nullptr),
+    pxShapeFlags(physx::PxShapeFlag::eSIMULATION_SHAPE | physx::PxShapeFlag::eSCENE_QUERY_SHAPE)
 {
 }
 
@@ -85,6 +86,21 @@ void ColliderComponent::SetPxGeometry(physx::PxGeometry* value)
     }
 }
 
+void ColliderComponent::SetPxShapeFlags(physx::PxShapeFlags value)
+{
+    if (pxShapeFlags == value)
+    {
+        return;
+    }
+
+    pxShapeFlags = value;
+
+    if (pxShape)
+    {
+        pxShape->setFlags(value);
+    }
+}
+
 void ColliderComponent::CreatePxShape()
 {
     if (pxShape)
@@ -108,6 +124,8 @@ void ColliderComponent::CreatePxShape()
     {
         return;
     }
+
+    pxShape->setFlags(pxShapeFlags);
 
     if (RigidDynamicComponent* rigidDynamic = GetOwner()->GetComponent<RigidDynamicComponent>())
     {
