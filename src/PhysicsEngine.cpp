@@ -83,6 +83,11 @@ bool PhysicsEngine::Start()
     pxSceneDesc.gravity = physx::PxVec3(0.0f, -9.81f, 0.0f);
     pxSceneDesc.cpuDispatcher = pxCpuDispatcher;
     pxSceneDesc.filterShader = physx::PxDefaultSimulationFilterShader;
+    pxSceneDesc.flags = physx::PxSceneFlags
+    (
+        physx::PxSceneFlag::eENABLE_ACTIVE_ACTORS |
+        physx::PxSceneFlag::eEXCLUDE_KINEMATICS_FROM_ACTIVE_ACTORS
+    );
     pxScene = pxPhysics->createScene(pxSceneDesc);
 
     if (!pxScene)
