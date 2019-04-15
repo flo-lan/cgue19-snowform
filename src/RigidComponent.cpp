@@ -77,3 +77,53 @@ void RigidComponent::GetColliderComponents(std::vector<ColliderComponent*>& coll
 
     colliders.insert(colliders.end(), meshColliders.begin(), meshColliders.end());
 }
+
+void RigidComponent::AttachColliderComponent(ColliderComponent* collider)
+{
+    if (!collider)
+    {
+        return;
+    }
+
+    physx::PxShape* pxShape = collider->GetPxShape();
+
+    if (!pxShape)
+    {
+        return;
+    }
+
+    if (std::find(attachedColliders.begin(), attachedColliders.end(), collider) != attachedColliders.end())
+    {
+        return;
+    }
+
+    attachedColliders.push_back(collider);
+
+    AttachShape(pxShape);
+}
+
+void RigidComponent::RemoveColliderComponent(ColliderComponent* collider)
+{
+    if (!collider)
+    {
+        return;
+    }
+
+    physx::PxShape* pxShape = collider->GetPxShape();
+
+    if (!pxShape)
+    {
+        return;
+    }
+
+    auto itr = std::find(attachedColliders.begin(), attachedColliders.end(), collider);
+
+    if (itr == attachedColliders.end())
+    {
+        return;
+    }
+
+    attachedColliders.erase(itr);
+
+    DetachShape(pxShape);
+}

@@ -13,6 +13,7 @@ class ColliderComponent;
 namespace physx
 {
     class PxTransform;
+    class PxShape;
 }
 
 class RigidComponent : public Component
@@ -26,9 +27,6 @@ public:
     virtual void OnAttachComponent(Component* component);
     virtual void OnRemoveComponent(Component* component);
 
-    virtual void AttachColliderComponent(ColliderComponent* collider) = 0;
-    virtual void RemoveColliderComponent(ColliderComponent* collider) = 0;
-
     virtual void LateUpdate();
 
     void SetTransform(physx::PxTransform& globalPose);
@@ -38,5 +36,12 @@ public:
 protected:
     void GetColliderComponents(std::vector<ColliderComponent*>& colliders);
 
+    void AttachColliderComponent(ColliderComponent* collider);
+    void RemoveColliderComponent(ColliderComponent* collider);
+
+    virtual void AttachShape(physx::PxShape* pxShape) = 0;
+    virtual void DetachShape(physx::PxShape* pxShape) = 0;
+
     TransformComponent* transform;
+    std::vector<ColliderComponent*> attachedColliders;
 };

@@ -46,21 +46,22 @@ RigidDynamicComponent::~RigidDynamicComponent()
     }
 }
 
-void RigidDynamicComponent::AttachColliderComponent(ColliderComponent* collider)
+void RigidDynamicComponent::SetGlobalPose(physx::PxTransform& globalPose)
 {
-    if (!collider)
+    if (pxRigidDynamic)
+    {
+        pxRigidDynamic->setGlobalPose(globalPose);
+    }
+}
+
+void RigidDynamicComponent::AttachShape(physx::PxShape* pxShape)
+{
+    if (!pxShape)
     {
         return;
     }
 
     if (!pxRigidDynamic)
-    {
-        return;
-    }
-
-    physx::PxShape* pxShape = collider->GetPxShape();
-
-    if (!pxShape)
     {
         return;
     }
@@ -68,9 +69,9 @@ void RigidDynamicComponent::AttachColliderComponent(ColliderComponent* collider)
     pxRigidDynamic->attachShape(*pxShape);
 }
 
-void RigidDynamicComponent::RemoveColliderComponent(ColliderComponent* collider)
+void RigidDynamicComponent::DetachShape(physx::PxShape* pxShape)
 {
-    if (!collider)
+    if (!pxShape)
     {
         return;
     }
@@ -80,20 +81,5 @@ void RigidDynamicComponent::RemoveColliderComponent(ColliderComponent* collider)
         return;
     }
 
-    physx::PxShape* pxShape = collider->GetPxShape();
-
-    if (!pxShape)
-    {
-        return;
-    }
-
     pxRigidDynamic->detachShape(*pxShape);
-}
-
-void RigidDynamicComponent::SetGlobalPose(physx::PxTransform& globalPose)
-{
-    if (pxRigidDynamic)
-    {
-        pxRigidDynamic->setGlobalPose(globalPose);
-    }
 }
