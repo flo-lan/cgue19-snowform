@@ -43,6 +43,7 @@
     <ClCompile Include="src\TransformComponent.cpp" />
     <ClCompile Include="src\TransformComponentFactory.cpp" />
     <ClCompile Include="src\TransformGraphTraverser.cpp" />
+    <ClCompile Include="src\UniqueTypeId.cpp" />
     <ClInclude Include="src\ArcBallControllerComponent.h" />
     <ClInclude Include="src\AssetLoader.h" />
     <ClInclude Include="src\AssetManager.h" />
