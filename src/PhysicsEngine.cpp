@@ -8,6 +8,9 @@
 #include "geometry/PxTriangleMesh.h"
 #include "geometry/PxGeometry.h"
 #include "PxFoundation.h"
+#include "pvd/PxPvd.h"
+#include "pvd/PxPvdTransport.h"
+#include "pvd/PxPvdSceneClient.h"
 #include "PxPhysics.h"
 #include "PxPhysicsVersion.h"
 #include "PxMaterial.h"
@@ -26,6 +29,7 @@ void PhysicsEngine::ErrorCallback::reportError(physx::PxErrorCode::Enum code, co
 
 PhysicsEngine::PhysicsEngine() :
     pxFoundation(nullptr),
+    pxPvd(nullptr),
     pxPhysics(nullptr),
     pxCooking(nullptr),
     pxScene(nullptr),
@@ -47,6 +51,21 @@ bool PhysicsEngine::Start()
     {
         fprintf(stderr, "PhysX Error: Could not create PhysX foundation!\n");
         return false;
+    }
+
+    pxPvd = physx::PxCreatePvd(*pxFoundation);
+
+    if (!pxPvd)
+    {
+        fprintf(stderr, "PhysX Error: Could not create PhysX pvd!\n");
+        return false;
+    }
+
+    physx::PxPvdTransport* pxPvdTransport = physx::PxDefaultPvdSocketTransportCreate("127.0.0.1", 5425, 10);
+
+    if (pxPvdTransport)
+    {
+        pxPvd->connect(*pxPvdTransport, physx::PxPvdInstrumentationFlag::eALL);
     }
 
     pxPhysics = PxCreateBasePhysics(PX_PHYSICS_VERSION, *pxFoundation, physx::PxTolerancesScale(), true);
@@ -94,6 +113,15 @@ bool PhysicsEngine::Start()
     {
         fprintf(stderr, "PhysX Error: Could not create PhysX scene!\n");
         return false;
+    }
+
+    physx::PxPvdSceneClient* pxPvdSceneClient = pxScene->getScenePvdClient();
+
+    if (pxPvdSceneClient)
+    {
+        pxPvdSceneClient->setScenePvdFlag(physx::PxPvdSceneFlag::eTRANSMIT_CONSTRAINTS, true);
+        pxPvdSceneClient->setScenePvdFlag(physx::PxPvdSceneFlag::eTRANSMIT_CONTACTS, true);
+        pxPvdSceneClient->setScenePvdFlag(physx::PxPvdSceneFlag::eTRANSMIT_SCENEQUERIES, true);
     }
 
     return true;
@@ -152,6 +180,12 @@ void PhysicsEngine::Stop()
     {
         pxPhysics->release();
         pxPhysics = nullptr;
+    }
+
+    if (pxPvd)
+    {
+        pxPvd->release();
+        pxPvd = nullptr;
     }
 
     if (pxFoundation)

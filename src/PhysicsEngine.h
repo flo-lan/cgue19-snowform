@@ -15,6 +15,7 @@ struct Vertex;
 namespace physx
 {
     class PxFoundation;
+    class PxPvd;
     class PxPhysics;
     class PxCooking;
     class PxScene;
@@ -82,6 +83,7 @@ private:
     PhysicsEngine();
 
     physx::PxFoundation* pxFoundation;
+    physx::PxPvd* pxPvd;
     physx::PxPhysics* pxPhysics;
     physx::PxCooking* pxCooking;
     physx::PxScene* pxScene;
