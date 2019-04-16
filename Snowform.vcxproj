@@ -175,12 +175,12 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>NO_BONUS;WIN32;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)external\include;$(SolutionDir)dep\assimp\include;$(SolutionDir)dep\physx\include;$(SolutionDir)dep\freetype\include;$(SolutionDir)dep\tinyxml2\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)external\include;$(SolutionDir)dep\assimp\include;$(SolutionDir)dep\physx\include;$(SolutionDir)dep\tinyxml2\include;$(SolutionDir)dep\freetype\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)external\lib;$(SolutionDir)dep\assimp\lib;$(SolutionDir)dep\physx\lib_debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(SolutionDir)external\lib;$(SolutionDir)dep\assimp\lib;$(SolutionDir)dep\freetype\lib;$(SolutionDir)dep\physx\lib_debug;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>opengl32.lib;glew32s.lib;glfw3.lib;assimp-vc140-mt.lib;PhysX_32.lib;PhysXCommon_32.lib;PhysXCooking_32.lib;PhysXExtensions_static_32.lib;PhysXFoundation_32.lib;PhysXPvdSDK_static_32.lib;ECG_Library_Debug.lib;freetype255d.lib</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>LIBCMT;MSVCRT</IgnoreSpecificDefaultLibraries>
     </Link>
@@ -199,7 +199,7 @@ copy /B /Y  "$(SolutionDir)dep\physx\lib_debug\*.dll" "$(TargetDir)"</Command>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NO_BONUS;WIN32;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)external\include;$(SolutionDir)dep\assimp\include;$(SolutionDir)dep\physx\include;$(SolutionDir)dep\tinyxml2\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)external\include;$(SolutionDir)dep\assimp\include;$(SolutionDir)dep\physx\include;$(SolutionDir)dep\tinyxml2\include;$(SolutionDir)dep\freetype\include</AdditionalIncludeDirectories>
       <PreprocessToFile>false</PreprocessToFile>
     </ClCompile>
     <Link>
@@ -207,8 +207,8 @@ copy /B /Y  "$(SolutionDir)dep\physx\lib_debug\*.dll" "$(TargetDir)"</Command>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)external\lib;$(SolutionDir)dep\assimp\lib;$(SolutionDir)dep\physx\lib_release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glew32s.lib;glfw3.lib;assimp-vc140-mt.lib;PhysX_32.lib;PhysXCommon_32.lib;PhysXCooking_32.lib;PhysXExtensions_static_32.lib;PhysXFoundation_32.lib;PhysXPvdSDK_static_32.lib;ECG_Library_Release.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)external\lib;$(SolutionDir)dep\assimp\lib;$(SolutionDir)dep\freetype\lib;$(SolutionDir)dep\physx\lib_release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glew32s.lib;glfw3.lib;assimp-vc140-mt.lib;PhysX_32.lib;PhysXCommon_32.lib;PhysXCooking_32.lib;PhysXExtensions_static_32.lib;PhysXFoundation_32.lib;PhysXPvdSDK_static_32.lib;ECG_Library_Release.lib;freetype255.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>LIBCMT</IgnoreSpecificDefaultLibraries>
       <ForceFileOutput>
       </ForceFileOutput>
@@ -228,15 +228,15 @@ copy /B /Y  "$(SolutionDir)dep\physx\lib_release\*.dll" "$(TargetDir)"</Command>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NO_BONUS;WIN32;_CRT_SECURE_NO_WARNINGS;GLEW_STATIC;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)external\include;$(SolutionDir)dep\assimp\include;$(SolutionDir)dep\physx\include;$(SolutionDir)dep\tinyxml2\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)external\include;$(SolutionDir)dep\assimp\include;$(SolutionDir)dep\physx\include;$(SolutionDir)dep\tinyxml2\include;$(SolutionDir)dep\freetype\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)external\lib;$(SolutionDir)dep\assimp\lib;$(SolutionDir)dep\physx\lib_release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glew32s.lib;glfw3.lib;assimp-vc140-mt.lib;PhysX_32.lib;PhysXCommon_32.lib;PhysXCooking_32.lib;PhysXExtensions_static_32.lib;PhysXFoundation_32.lib;PhysXPvdSDK_static_32.lib;ECG_Library_Release.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(SolutionDir)external\lib;$(SolutionDir)dep\assimp\lib;$(SolutionDir)dep\freetype\lib;$(SolutionDir)dep\physx\lib_release;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>opengl32.lib;glew32s.lib;glfw3.lib;assimp-vc140-mt.lib;PhysX_32.lib;PhysXCommon_32.lib;PhysXCooking_32.lib;PhysXExtensions_static_32.lib;PhysXFoundation_32.lib;PhysXPvdSDK_static_32.lib;ECG_Library_Release.lib;freetype255.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <IgnoreSpecificDefaultLibraries>LIBCMT</IgnoreSpecificDefaultLibraries>
       <ForceFileOutput>
       </ForceFileOutput>
