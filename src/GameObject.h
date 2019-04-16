@@ -19,6 +19,10 @@ private:
 
     void DestroyChildren();
 
+    void RemoveComponentFromComponentWaitingList(Component* component);
+    void RemoveComponentFromComponentWaitingMap(Component* component);
+    void RemoveComponentFromComponentMap(Component* component);
+
 public:
     void Update();
     void Render();
@@ -27,7 +31,8 @@ public:
     {
         T* component = new T(this);
 
-        componentQueue[component->typeId = UniqueTypeId<T>()].push_back(component);
+        componentWaitingMap[component->typeId = UniqueTypeId<T>()].push_back(component);
+        componentWaitingList.push_back(component);
 
         return component;
     }
@@ -41,8 +46,8 @@ public:
             return (T*)itr->second[0];
         }
 
-        itr = componentQueue.find(UniqueTypeId<T>());
-        if (itr != componentQueue.end() && itr->second.size())
+        itr = componentWaitingMap.find(UniqueTypeId<T>());
+        if (itr != componentWaitingMap.end() && itr->second.size())
         {
             // Return first component of this type
             return (T*)itr->second[0];
@@ -63,9 +68,9 @@ public:
             }
         }
 
-        itr = componentQueue.find(UniqueTypeId<T>());
+        itr = componentWaitingMap.find(UniqueTypeId<T>());
 
-        if (itr != componentQueue.end())
+        if (itr != componentWaitingMap.end())
         {
             for (ComponentList::const_iterator itr2 = itr->second.begin(); itr2 != itr->second.end(); ++itr2)
             {
@@ -86,7 +91,8 @@ private:
 
 private:
     std::string name;
-    ComponentMap componentQueue;
+    ComponentMap componentWaitingMap;
+    ComponentList componentWaitingList;
     ComponentMap componentMap;
     ComponentList componentList;
     Scene* scene;

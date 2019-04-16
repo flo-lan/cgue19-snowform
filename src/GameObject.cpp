@@ -21,7 +21,7 @@ GameObject::~GameObject()
 
     DestroyChildren();
 
-    for (ComponentMap::const_iterator itr = componentQueue.begin(); itr != componentQueue.end(); ++itr)
+    for (ComponentMap::const_iterator itr = componentWaitingMap.begin(); itr != componentWaitingMap.end(); ++itr)
     {
         for (ComponentList::const_iterator itr2 = itr->second.begin(); itr2 != itr->second.end(); ++itr2)
         {
@@ -63,56 +63,92 @@ void GameObject::DestroyChildren()
     transform->TraverseTransformGraphDFI(t, false);
 }
 
+void GameObject::RemoveComponentFromComponentWaitingList(Component* component)
+{
+    ComponentList::iterator itr = std::find(componentWaitingList.begin(), componentWaitingList.end(), component);
+
+    if (itr != componentWaitingList.end())
+    {
+        componentWaitingList.erase(itr);
+    }
+}
+
+void GameObject::RemoveComponentFromComponentWaitingMap(Component* component)
+{
+    if (!component)
+    {
+        return;
+    }
+
+    ComponentMap::iterator itr = componentWaitingMap.find(component->typeId);
+
+    if (itr == componentWaitingMap.end())
+    {
+        return;
+    }
+
+    ComponentList::iterator itr2 = std::find(itr->second.begin(), itr->second.end(), component);
+
+    if (itr2 != itr->second.end())
+    {
+        itr->second.erase(itr2);
+    }
+}
+
+void GameObject::RemoveComponentFromComponentMap(Component* component)
+{
+    if (!component)
+    {
+        return;
+    }
+
+    ComponentMap::iterator itr = componentMap.find(component->typeId);
+
+    if (itr == componentMap.end())
+    {
+        return;
+    }
+
+    ComponentList::iterator itr2 = std::find(itr->second.begin(), itr->second.end(), component);
+
+    if (itr2 != itr->second.end())
+    {
+        itr->second.erase(itr2);
+    }
+}
+
 void GameObject::Update()
 {
-    if (componentQueue.size())
+    if (componentWaitingList.size())
     {
-        // Create a copy of the component queue, because event calls could attach more components and modify the queue
-        ComponentMap componentQueueCopy(componentQueue);
+        // Create a copy of the component waiting list, because event calls could attach more components and modify the list
+        ComponentList componentWaitingListCopy(componentWaitingList);
 
-        // Move components from the component queue to the active components collection
-        for (ComponentMap::const_iterator itr = componentQueueCopy.begin(); itr != componentQueueCopy.end(); ++itr)
+        // Move components from the component waiting list to the active components collection
+        for (ComponentList::const_iterator itr = componentWaitingListCopy.begin(); itr != componentWaitingListCopy.end(); ++itr)
         {
-            ComponentMap::iterator itr4 = componentQueue.find(itr->first);
+            Component* component = *itr;
 
-            for (ComponentList::const_iterator itr2 = itr->second.begin(); itr2 != itr->second.end(); ++itr2)
+            RemoveComponentFromComponentWaitingMap(component);
+            RemoveComponentFromComponentWaitingList(component);
+
+            if (component->IsDestroyed())
             {
-                Component* component = *itr2;
-
-                if (itr4 != componentQueue.end())
+                for (ComponentList::const_iterator itr2 = componentList.begin(); itr2 != componentList.end(); ++itr2)
                 {
-                    ComponentList::iterator itr3 = std::find(itr4->second.begin(), itr4->second.end(), component);
-
-                    if (itr3 != itr4->second.end())
-                    {
-                        itr4->second.erase(itr3);
-
-                        // Remove empty lists
-                        if (itr4->second.size() == 0)
-                        {
-                            componentQueue.erase(itr4);
-                        }
-                    }
+                    (*itr2)->OnRemoveComponent(component);
                 }
 
-                if (component->IsDestroyed())
-                {
-                    for (ComponentList::const_iterator itr3 = componentList.begin(); itr3 != componentList.end(); ++itr3)
-                    {
-                        (*itr3)->OnRemoveComponent(component);
-                    }
-
-                    delete component;
-
-                    continue;
-                }
-
-                componentMap[itr->first].push_back(component);
+                delete component;
+            }
+            else
+            {
+                componentMap[component->typeId].push_back(component);
                 component->OnStart();
 
-                for (ComponentList::const_iterator itr3 = componentList.begin(); itr3 != componentList.end(); ++itr3)
+                for (ComponentList::const_iterator itr2 = componentList.begin(); itr2 != componentList.end(); ++itr2)
                 {
-                    (*itr3)->OnAttachComponent(component);
+                    (*itr2)->OnAttachComponent(component);
                 }
 
                 componentList.push_back(component);
@@ -127,23 +163,7 @@ void GameObject::Update()
 
         if (component->IsDestroyed())
         {
-            ComponentMap::iterator itr2 = componentMap.find(component->typeId);
-
-            if (itr2 != componentMap.end())
-            {
-                ComponentList::iterator itr3 = std::find(itr2->second.begin(), itr2->second.end(), component);
-
-                if (itr3 != itr2->second.end())
-                {
-                    itr2->second.erase(itr3);
-
-                    // Remove empty lists
-                    if (itr2->second.size() == 0)
-                    {
-                        componentMap.erase(itr2);
-                    }
-                }
-            }
+            RemoveComponentFromComponentMap(component);
 
             itr = componentList.erase(itr);
 
@@ -169,23 +189,7 @@ void GameObject::Update()
 
         if (component->IsDestroyed())
         {
-            ComponentMap::iterator itr2 = componentMap.find(component->typeId);
-
-            if (itr2 != componentMap.end())
-            {
-                ComponentList::iterator itr3 = std::find(itr2->second.begin(), itr2->second.end(), component);
-
-                if (itr3 != itr2->second.end())
-                {
-                    itr2->second.erase(itr3);
-
-                    // Remove empty lists
-                    if (itr2->second.size() == 0)
-                    {
-                        componentMap.erase(itr2);
-                    }
-                }
-            }
+            RemoveComponentFromComponentMap(component);
 
             itr = componentList.erase(itr);
 
