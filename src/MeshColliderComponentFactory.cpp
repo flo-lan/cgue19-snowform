@@ -6,7 +6,8 @@
 #include "tinyxml2.h"
 #include "PxMaterial.h"
 
-MeshColliderComponentFactory::MeshColliderComponentFactory()
+MeshColliderComponentFactory::MeshColliderComponentFactory() :
+    ComponentFactory::ComponentFactory()
 {
 }
 

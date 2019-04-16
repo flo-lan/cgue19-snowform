@@ -6,7 +6,8 @@
 #include "GameObject.h"
 #include "tinyxml2.h"
 
-MeshRendererComponentFactory::MeshRendererComponentFactory()
+MeshRendererComponentFactory::MeshRendererComponentFactory() :
+    ComponentFactory::ComponentFactory()
 {
 }
 

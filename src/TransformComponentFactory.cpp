@@ -4,7 +4,8 @@
 #include "StringUtils.h"
 #include "tinyxml2.h"
 
-TransformComponentFactory::TransformComponentFactory()
+TransformComponentFactory::TransformComponentFactory() :
+    ComponentFactory::ComponentFactory()
 {
 }
 

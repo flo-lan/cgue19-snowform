@@ -4,7 +4,8 @@
 #include "tinyxml2.h"
 #include <algorithm>
 
-RigidDynamicComponentFactory::RigidDynamicComponentFactory()
+RigidDynamicComponentFactory::RigidDynamicComponentFactory() :
+    ComponentFactory::ComponentFactory()
 {
 }
 

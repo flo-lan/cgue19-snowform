@@ -3,7 +3,8 @@
 #include "GameObject.h"
 #include "tinyxml2.h"
 
-RigidStaticComponentFactory::RigidStaticComponentFactory()
+RigidStaticComponentFactory::RigidStaticComponentFactory() :
+    ComponentFactory::ComponentFactory()
 {
 }
 
