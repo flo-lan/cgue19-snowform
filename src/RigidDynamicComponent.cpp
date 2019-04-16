@@ -9,6 +9,8 @@ RigidDynamicComponent::RigidDynamicComponent(GameObject* owner) :
     RigidComponent::RigidComponent(owner),
     pxRigidDynamic(nullptr)
 {
+    fprintf(stdout, "Attached rigid dynamic component to game object '%s'!\n", GetOwner()->GetName().c_str());
+
     glm::vec3 position = transform->GetPosition();
     glm::quat rotation = transform->GetRotationQ();
 
@@ -35,6 +37,8 @@ RigidDynamicComponent::~RigidDynamicComponent()
         pxRigidDynamic->release();
         pxRigidDynamic = nullptr;
     }
+
+    fprintf(stdout, "Deleted rigid dynamic component from game object '%s'!\n", GetOwner()->GetName().c_str());
 }
 
 physx::PxRigidBodyFlags RigidDynamicComponent::GetPxRigidBodyFlags() const

@@ -10,6 +10,8 @@ RigidStaticComponent::RigidStaticComponent(GameObject* owner) :
     RigidComponent::RigidComponent(owner),
     pxRigidStatic(nullptr)
 {
+    fprintf(stdout, "Attached rigid static component to game object '%s'!\n", GetOwner()->GetName().c_str());
+
     glm::vec3 position = transform->GetPosition();
     glm::quat rotation = transform->GetRotationQ();
 
@@ -36,6 +38,8 @@ RigidStaticComponent::~RigidStaticComponent()
         pxRigidStatic->release();
         pxRigidStatic = nullptr;
     }
+
+    fprintf(stdout, "Deleted rigid static component from game object '%s'!\n", GetOwner()->GetName().c_str());
 }
 
 void RigidStaticComponent::SetGlobalPose(physx::PxTransform& globalPose)

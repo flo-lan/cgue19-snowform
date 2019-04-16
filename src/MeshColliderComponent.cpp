@@ -9,10 +9,12 @@ MeshColliderComponent::MeshColliderComponent(GameObject* owner) :
     ColliderComponent::ColliderComponent(owner),
     pxTriangleMesh(nullptr)
 {
+    fprintf(stdout, "Attached mesh collider component to game object '%s'!\n", GetOwner()->GetName().c_str());
 }
 
 MeshColliderComponent::~MeshColliderComponent()
 {
+    fprintf(stdout, "Deleted mesh collider component from game object '%s'!\n", GetOwner()->GetName().c_str());
 }
 
 void MeshColliderComponent::SetMesh(Mesh* value)
