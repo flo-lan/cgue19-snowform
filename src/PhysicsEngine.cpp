@@ -53,6 +53,7 @@ bool PhysicsEngine::Start()
         return false;
     }
 
+#ifdef _DEBUG
     pxPvd = physx::PxCreatePvd(*pxFoundation);
 
     if (!pxPvd)
@@ -67,8 +68,9 @@ bool PhysicsEngine::Start()
     {
         pxPvd->connect(*pxPvdTransport, physx::PxPvdInstrumentationFlag::eALL);
     }
+#endif
 
-    pxPhysics = PxCreateBasePhysics(PX_PHYSICS_VERSION, *pxFoundation, physx::PxTolerancesScale(), true);
+    pxPhysics = PxCreateBasePhysics(PX_PHYSICS_VERSION, *pxFoundation, physx::PxTolerancesScale(), true, pxPvd);
 
     if (!pxPhysics)
     {
@@ -115,6 +117,7 @@ bool PhysicsEngine::Start()
         return false;
     }
 
+#ifdef _DEBUG
     physx::PxPvdSceneClient* pxPvdSceneClient = pxScene->getScenePvdClient();
 
     if (pxPvdSceneClient)
@@ -123,6 +126,7 @@ bool PhysicsEngine::Start()
         pxPvdSceneClient->setScenePvdFlag(physx::PxPvdSceneFlag::eTRANSMIT_CONTACTS, true);
         pxPvdSceneClient->setScenePvdFlag(physx::PxPvdSceneFlag::eTRANSMIT_SCENEQUERIES, true);
     }
+#endif
 
     return true;
 }
