@@ -1,5 +1,6 @@
 #include "MeshColliderComponent.h"
 #include "GameObject.h"
+#include "TransformComponent.h"
 #include "Mesh.h"
 #include "PhysicsEngine.h"
 #include "geometry/PxTriangleMesh.h"
@@ -49,5 +50,12 @@ void MeshColliderComponent::SetMesh(physx::PxTriangleMesh* value)
 
     pxTriangleMesh = value;
 
-    SetPxGeometry(new physx::PxTriangleMeshGeometry(pxTriangleMesh));
+    physx::PxVec3 pxMeshScale = physx::PxVec3
+    (
+        transform->GetScaleX(),
+        transform->GetScaleY(),
+        transform->GetScaleZ()
+    );
+
+    SetPxGeometry(new physx::PxTriangleMeshGeometry(pxTriangleMesh, physx::PxMeshScale(pxMeshScale)));
 }

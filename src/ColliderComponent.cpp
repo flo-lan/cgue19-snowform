@@ -1,5 +1,6 @@
 #include "ColliderComponent.h"
 #include "GameObject.h"
+#include "TransformComponent.h"
 #include "PhysicsEngine.h"
 #include "RigidDynamicComponent.h"
 #include "RigidStaticComponent.h"
@@ -16,6 +17,7 @@
 
 ColliderComponent::ColliderComponent(GameObject* owner) :
     Component::Component(owner),
+    transform(owner->GetComponent<TransformComponent>()),
     pxMaterial(nullptr),
     pxGeometry(nullptr),
     pxShape(nullptr),

@@ -4,6 +4,7 @@
 #include "PxShape.h"
 
 class GameObject;
+class TransformComponent;
 
 namespace physx
 {
@@ -31,6 +32,8 @@ public:
 protected:
     physx::PxGeometry* GetPxGeometry() const { return pxGeometry; }
     void SetPxGeometry(physx::PxGeometry* value);
+
+    TransformComponent* transform;
 
 private:
     void CreatePxShape();
