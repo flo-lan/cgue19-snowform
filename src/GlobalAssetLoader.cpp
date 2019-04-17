@@ -74,8 +74,14 @@ bool GlobalAssetLoader::LoadAssets()
     sAssetManager.CreateCylinderMesh("Cylinder", 32, 1.f, 1.3f);
     sAssetManager.CreateSphereMesh("Sphere", 64, 32, 1.f);
     sAssetManager.CreateTorusMesh("Torus", 32, 8, 4.5f, 0.5f);
-    sAssetManager.CreateMeshFromFile("TreePineSnow", "assets/meshes/tree_pine_snow.fbx");
+
+    sAssetManager.CreateMeshFromFile("BlockSnow", "assets/meshes/block_snow.fbx");
+    sAssetManager.CreateMeshFromFile("BlockSnowCliff", "assets/meshes/block_snow_cliff.fbx");
+    sAssetManager.CreateMeshFromFile("BlockSnowCliffCorner", "assets/meshes/block_snow_cliff_corner.fbx");
+    sAssetManager.CreateMeshFromFile("BlockSnowCornerLarge", "assets/meshes/block_snow_corner_large.fbx");
+    sAssetManager.CreateMeshFromFile("BlockSnowCornerSmall", "assets/meshes/block_snow_corner_small.fbx");
     sAssetManager.CreateMeshFromFile("Snowball", "assets/meshes/snowball.fbx");
+    sAssetManager.CreateMeshFromFile("TreePineSnow", "assets/meshes/tree_pine_snow.fbx");
 
     sPhysicsEngine.CreatePxMaterial("Default", 0.5f, 0.5f, 0.5f);
 
