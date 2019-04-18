@@ -1,49 +1,92 @@
 <Scene>
-    <GameObject name="Forrest">
+  <GameObject name="Main Camera Focus">
+    <Components>
+      <TransformComponent localPosition="-2.71 12.87162 9.585811" localRotation="0 0 0" localScale="1 1 1" />
+      <ArcBallControllerComponent />
+    </Components>
+    <Children>
+      <GameObject name="Main Camera">
         <Components>
-            <TransformComponent localPosition="0.0 0.0 0.0" localScale="0.1 0.1 0.1" />
+          <TransformComponent localPosition="0 0 20" localRotation="-180 180 180" localScale="1 1 1" />
+          <CameraComponent />
         </Components>
-        <Children>
-        	<GameObject name="Snowball">
-				<Components>
-					<TransformComponent localPosition="0 10.0 0.0" localScale="0.02 0.02 0.02" />
-					<MeshRendererComponent material="Snowball" mesh="Snowball" />
-					<SphereColliderComponent physicsMaterial="Default" radius="1.0" />
-					<RigidDynamicComponent />
-				</Components>
-				<Children>
-				</Children>
-			</GameObject>
-			<GameObject name="Tree1">
-				<Components>
-					<TransformComponent localPosition="-3.0 0.0 0.0" />
-					<MeshRendererComponent material="StandardDefault" mesh="TreePineSnow" />
-					<MeshColliderComponent physicsMaterial="Default" collisionMesh="TreePineSnow" />
-					<RigidStaticComponent />
-				</Components>
-				<Children>
-				</Children>
-			</GameObject>
-			<GameObject name="Tree2">
-				<Components>
-					<TransformComponent localPosition="0.0 0.0 0.0" />
-					<MeshRendererComponent material="StandardDefault" mesh="TreePineSnow" />
-					<MeshColliderComponent physicsMaterial="Default" collisionMesh="TreePineSnow" />
-					<RigidStaticComponent />
-				</Components>
-				<Children>
-				</Children>
-			</GameObject>
-			<GameObject name="Tree3">
-				<Components>
-					<TransformComponent localPosition="3.0 0.0 0.0" />
-					<MeshRendererComponent material="StandardDefault" mesh="TreePineSnow" />
-					<MeshColliderComponent physicsMaterial="Default" collisionMesh="TreePineSnow" />
-					<RigidStaticComponent />
-				</Components>
-				<Children>
-				</Children>
-			</GameObject>
-        </Children>
-    </GameObject>
+        <Children />
+      </GameObject>
+    </Children>
+  </GameObject>
+  <GameObject name="Trees">
+    <Components>
+      <TransformComponent localPosition="0 0 0" localRotation="0 0 0" localScale="1 1 1" />
+    </Components>
+    <Children>
+      <GameObject name="TreePineSnow">
+        <Components>
+          <TransformComponent localPosition="-2.71 10 8.23" localRotation="0 -45 0" localScale="0.2455 0.2455 0.2455" />
+          <MeshRendererComponent material="StandardDefault" mesh="TreePineSnow" />
+          <MeshColliderComponent physicsMaterial="Default" collisionMesh="TreePineSnow" />
+          <RigidStaticComponent />
+        </Components>
+        <Children />
+      </GameObject>
+      <GameObject name="TreePineSnow (1)">
+        <Components>
+          <TransformComponent localPosition="-4.03 10.015 7.78" localRotation="0 -79.4 0" localScale="0.18167 0.18167 0.18167" />
+          <MeshRendererComponent material="StandardDefault" mesh="TreePineSnow" />
+          <MeshColliderComponent physicsMaterial="Default" collisionMesh="TreePineSnow" />
+          <RigidStaticComponent />
+        </Components>
+        <Children />
+      </GameObject>
+      <GameObject name="TreePineSnow (2)">
+        <Components>
+          <TransformComponent localPosition="-3.75 10.015 9.1" localRotation="0 -191.6 0" localScale="0.1816701 0.18167 0.1816701" />
+          <MeshRendererComponent material="StandardDefault" mesh="TreePineSnow" />
+          <MeshColliderComponent physicsMaterial="Default" collisionMesh="TreePineSnow" />
+          <RigidStaticComponent />
+        </Components>
+        <Children />
+      </GameObject>
+      <GameObject name="TreePineSnow (3)">
+        <Components>
+          <TransformComponent localPosition="-7.68 9.97 3.52" localRotation="0 -6.5 0" localScale="0.4033075 0.4033074 0.4033075" />
+          <MeshRendererComponent material="StandardDefault" mesh="TreePineSnow" />
+          <MeshColliderComponent physicsMaterial="Default" collisionMesh="TreePineSnow" />
+          <RigidStaticComponent />
+        </Components>
+        <Children />
+      </GameObject>
+    </Children>
+  </GameObject>
+  <GameObject name="Snowball">
+    <Components>
+      <TransformComponent localPosition="-2.89 14.51 7.65" localRotation="0 0 0" localScale="1 1 1" />
+      <SphereColliderComponent physicsMaterial="Default" radius="0.5" />
+      <RigidDynamicComponent />
+    </Components>
+    <Children>
+      <GameObject name="SnowballMesh">
+        <Components>
+          <TransformComponent localPosition="0 0 0" localRotation="0 0 0" localScale="0.003305583 0.003305583 0.003305583" />
+          <MeshRendererComponent material="Snowball" mesh="Snowball" />
+        </Components>
+        <Children />
+      </GameObject>
+    </Children>
+  </GameObject>
+  <GameObject name="Blocks">
+    <Components>
+      <TransformComponent localPosition="0 0 0" localRotation="0 0 0" localScale="1 1 1" />
+    </Components>
+    <Children>
+      <GameObject name="BlockSnow">
+        <Components>
+          <TransformComponent localPosition="0 0 0" localRotation="0 0 0" localScale="1 1 1" />
+          <MeshRendererComponent material="StandardDefault" mesh="BlockSnow" />
+          <MeshColliderComponent physicsMaterial="Default" collisionMesh="BlockSnow" />
+          <RigidStaticComponent />
+        </Components>
+        <Children />
+      </GameObject>
+    </Children>
+  </GameObject>
 </Scene>

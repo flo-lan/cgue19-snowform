@@ -134,6 +134,12 @@
     <ClCompile Include="src\UniqueTypeId.cpp">
       <Filter>Engine\Util</Filter>
     </ClCompile>
+    <ClCompile Include="src\ArcBallControllerComponentFactory.cpp">
+      <Filter>Engine\Scene\ComponentFactories</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CameraComponentFactory.cpp">
+      <Filter>Engine\Scene\ComponentFactories</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameObject.h">
@@ -275,6 +281,12 @@
       <Filter>Engine\Physics</Filter>
     </ClInclude>
     <ClInclude Include="src\SphereColliderComponentFactory.h">
+      <Filter>Engine\Scene\ComponentFactories</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ArcBallControllerComponentFactory.h">
+      <Filter>Engine\Scene\ComponentFactories</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CameraComponentFactory.h">
       <Filter>Engine\Scene\ComponentFactories</Filter>
     </ClInclude>
   </ItemGroup>

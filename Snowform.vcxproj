@@ -2,8 +2,10 @@
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="src\ArcBallControllerComponent.cpp" />
+    <ClCompile Include="src\ArcBallControllerComponentFactory.cpp" />
     <ClCompile Include="src\AssetLoader.cpp" />
     <ClCompile Include="src\CameraComponent.cpp" />
+    <ClCompile Include="src\CameraComponentFactory.cpp" />
     <ClCompile Include="src\ColliderComponent.cpp" />
     <ClCompile Include="src\Component.cpp" />
     <ClCompile Include="src\ComponentFactory.cpp" />
@@ -45,9 +47,11 @@
     <ClCompile Include="src\TransformGraphTraverser.cpp" />
     <ClCompile Include="src\UniqueTypeId.cpp" />
     <ClInclude Include="src\ArcBallControllerComponent.h" />
+    <ClInclude Include="src\ArcBallControllerComponentFactory.h" />
     <ClInclude Include="src\AssetLoader.h" />
     <ClInclude Include="src\AssetManager.h" />
     <ClInclude Include="src\CameraComponent.h" />
+    <ClInclude Include="src\CameraComponentFactory.h" />
     <ClInclude Include="src\ColliderComponent.h" />
     <ClInclude Include="src\Component.h" />
     <ClInclude Include="src\ComponentFactory.h" />

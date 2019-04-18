@@ -5,6 +5,8 @@
 #include "RigidDynamicComponentFactory.h"
 #include "RigidStaticComponentFactory.h"
 #include "SphereColliderComponentFactory.h"
+#include "ArcBallControllerComponentFactory.h"
+#include "CameraComponentFactory.h"
 
 ComponentIndustry::ComponentIndustry()
 {
@@ -14,6 +16,8 @@ ComponentIndustry::ComponentIndustry()
     static RigidDynamicComponentFactory rigidDynamicComponentFactory;
     static RigidStaticComponentFactory rigidStaticComponentFactory;
     static SphereColliderComponentFactory sphereColliderComponentFactory;
+    static ArcBallControllerComponentFactory arcBallControllerComponentFactory;
+    static CameraComponentFactory cameraComponentFactory;
 
     factories["TransformComponent"] = &transformComponentFactory;
     factories["MeshRendererComponent"] = &meshRendererComponentFactory;
@@ -21,6 +25,8 @@ ComponentIndustry::ComponentIndustry()
     factories["RigidDynamicComponent"] = &rigidDynamicComponentFactory;
     factories["RigidStaticComponent"] = &rigidStaticComponentFactory;
     factories["SphereColliderComponent"] = &sphereColliderComponentFactory;
+    factories["ArcBallControllerComponent"] = &arcBallControllerComponentFactory;
+    factories["CameraComponent"] = &cameraComponentFactory;
 }
 
 void ComponentIndustry::AddFactory(std::string const& componentName, ComponentFactory* factory)
