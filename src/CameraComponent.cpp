@@ -8,7 +8,7 @@ CameraComponent* CameraComponent::main = nullptr;
 
 CameraComponent::CameraComponent(GameObject* owner) :
     Component::Component(owner),
-    transform(nullptr),
+    transform(GetOwner()->GetComponent<TransformComponent>()),
     viewProjectionMatrix(1.f),
     fov(60.f),
     aspectRatio(16.f / 9.f),
@@ -29,15 +29,12 @@ CameraComponent::~CameraComponent()
     }
 }
 
-void CameraComponent::OnStart()
-{
-    transform = GetOwner()->GetComponent<TransformComponent>();
-}
-
 void CameraComponent::LateUpdate()
 {
-    viewProjectionMatrix = glm::perspective(fov, aspectRatio, nearPlane, farPlane) /* Project Matrix */ *
-        (transform ? glm::inverse(transform->GetModelMatrix()) : glm::mat4(1.f)) /* View Matrix */;
+    glm::mat4 projMatrix = glm::perspective(fov, aspectRatio, nearPlane, farPlane);
+    glm::mat4 viewMatrix = glm::inverse(transform->GetModelMatrix());
+
+    viewProjectionMatrix = projMatrix * viewMatrix;
 }
 
 glm::vec3 CameraComponent::GetPosition() const
