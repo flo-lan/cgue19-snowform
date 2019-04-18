@@ -8,7 +8,9 @@
 
 RigidComponent::RigidComponent(GameObject* owner) :
     Component::Component(owner),
-    transform(owner->GetComponent<TransformComponent>())
+    transform(owner->GetComponent<TransformComponent>()),
+    lastPosition(owner->GetComponent<TransformComponent>()->GetPosition()),
+    lastRotation(owner->GetComponent<TransformComponent>()->GetRotationQ())
 {
 }
 
@@ -108,19 +110,36 @@ void RigidComponent::RemoveColliderComponent(ColliderComponent* collider)
 
 void RigidComponent::LateUpdate()
 {
-    // ToDo: Update only if dirty
-    SetGlobalPose(transform->GetPosition(), transform->GetRotationQ());
+    glm::vec3 positionDiff = lastPosition - transform->GetPosition();
+    glm::quat rotationDiff = glm::quat
+    (
+        lastRotation.x - transform->GetRotationQ().x,
+        lastRotation.y - transform->GetRotationQ().y,
+        lastRotation.z - transform->GetRotationQ().z,
+        lastRotation.w - transform->GetRotationQ().w
+    );
+
+    const float epsilon = 0.01f;
+
+    if (positionDiff.x < -epsilon || positionDiff.x > epsilon ||
+        positionDiff.y < -epsilon || positionDiff.y > epsilon ||
+        positionDiff.z < -epsilon || positionDiff.z > epsilon ||
+        rotationDiff.x < -epsilon || rotationDiff.x > epsilon ||
+        rotationDiff.y < -epsilon || rotationDiff.y > epsilon ||
+        rotationDiff.z < -epsilon || rotationDiff.z > epsilon ||
+        rotationDiff.w < -epsilon || rotationDiff.w > epsilon)
+    {
+        SetGlobalPose(transform->GetPosition(), transform->GetRotationQ());
+    }
 }
 
 void RigidComponent::SetTransform(physx::PxTransform& globalPose)
 {
-    glm::vec3 eulerRotation = glm::eulerAngles
-    (
-        glm::quat(globalPose.q.x, globalPose.q.y, globalPose.q.z, globalPose.q.w)
-    );
+    lastPosition = glm::vec3(globalPose.p.x, globalPose.p.y, globalPose.p.z);
+    lastRotation = glm::quat(globalPose.q.x, globalPose.q.y, globalPose.q.z, globalPose.q.w);
 
-    transform->SetPosition(globalPose.p.x, globalPose.p.y, globalPose.p.z);
-    transform->SetRotation(eulerRotation.x, eulerRotation.y, eulerRotation.z);
+    transform->SetPosition(lastPosition);
+    transform->SetRotation(lastRotation);
 }
 
 void RigidComponent::SetGlobalPose(glm::vec3 const& position, glm::quat const& rotation)

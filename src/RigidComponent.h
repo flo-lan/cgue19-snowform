@@ -46,4 +46,7 @@ protected:
 
     TransformComponent* transform;
     std::vector<ColliderComponent*> attachedColliders;
+
+    glm::vec3 lastPosition;
+    glm::quat lastRotation;
 };

@@ -289,10 +289,7 @@ void TransformComponent::TraverseTransformGraphDFI(TransformGraphTraverser& trav
 
 void TransformComponent::Rotate(glm::vec3 angles)
 {
-    localRotationQ = localRotationQ * glm::angleAxis(angles.x, gAxisDirectionX);
-    localRotationQ = localRotationQ * glm::angleAxis(angles.y, gAxisDirectionY);
-    localRotationQ = localRotationQ * glm::angleAxis(angles.z, gAxisDirectionZ);
-
+    localRotationQ = localRotationQ * glm::quat(angles);
     localRotation = glm::eulerAngles(localRotationQ);
 
     static struct UpdateChildTransformTraverser : public TransformGraphTraverser
@@ -469,13 +466,13 @@ void TransformComponent::SetLocalScaleZ(float localScaleZ)
     TraverseTransformGraphDF(t, false);
 }
 
-void TransformComponent::SetPosition(float positionX, float positionY, float positionZ)
+void TransformComponent::SetPosition(glm::vec3 p)
 {
     glm::vec3 localPositionOffset = glm::vec3
     (
-        positionX - position.x,
-        positionY - position.y,
-        positionZ - position.z
+        p.x - position.x,
+        p.y - position.y,
+        p.z - position.z
     );
 
     SetLocalPosition
@@ -486,19 +483,27 @@ void TransformComponent::SetPosition(float positionX, float positionY, float pos
     );
 }
 
-void TransformComponent::SetRotation(float rotationX, float rotationY, float rotationZ)
+void TransformComponent::SetRotation(glm::quat rq)
 {
-    glm::vec3 localRotationOffset = glm::vec3
-    (
-        rotationX - rotation.x,
-        rotationY - rotation.y,
-        rotationZ - rotation.z
-    );
+    if (parent != nullptr && !ignoreParentRotation)
+    {
+        localRotationQ = rq * glm::inverse(parent->rotationQ);
+    }
+    else
+    {
+        localRotationQ = rq;
+    }
 
-    SetLocalRotation
-    (
-        localRotation.x + localRotationOffset.x,
-        localRotation.y + localRotationOffset.y,
-        localRotation.z + localRotationOffset.z
-    );
+    localRotation = glm::eulerAngles(localRotationQ);
+
+    static struct UpdateChildTransformTraverser : public TransformGraphTraverser
+    {
+        virtual void Visit(TransformComponent* child)
+        {
+            child->UpdateRotation();
+            child->UpdatePosition();
+        }
+    } t;
+
+    TraverseTransformGraphDF(t, true);
 }
