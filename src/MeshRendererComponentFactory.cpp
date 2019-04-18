@@ -6,7 +6,8 @@
 #include "GameObject.h"
 #include "tinyxml2.h"
 
-MeshRendererComponentFactory::MeshRendererComponentFactory()
+MeshRendererComponentFactory::MeshRendererComponentFactory() :
+    ComponentFactory::ComponentFactory()
 {
 }
 
@@ -24,7 +25,7 @@ void MeshRendererComponentFactory::Build(GameObject* gameObject, tinyxml2::XMLEl
         }
         else
         {
-            fprintf(stderr, "Could not find material '%s' for game object '%s'!\n", materialName.c_str(), gameObject->GetName().c_str());
+            fprintf(stderr, "Could not find material '%s' for mesh renderer component of game object '%s'!\n", materialName.c_str(), gameObject->GetName().c_str());
         }
     }
 
@@ -38,7 +39,7 @@ void MeshRendererComponentFactory::Build(GameObject* gameObject, tinyxml2::XMLEl
         }
         else
         {
-            fprintf(stderr, "Could not find mesh '%s' for game object '%s'!\n", meshName.c_str(), gameObject->GetName().c_str());
+            fprintf(stderr, "Could not find mesh '%s' of mesh renderer component for game object '%s'!\n", meshName.c_str(), gameObject->GetName().c_str());
         }
     }
 }

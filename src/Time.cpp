@@ -14,21 +14,21 @@ Time::Time()
     countdownRunning = false;
 
     fps = 0.f;
-    fpsLimit = 1000.f / sSettings.getMaxFps(); // max ms per update
+    fpsLimit = 1.f / sSettings.getMaxFps(); // max ms per update
     timeScale = 1;
 }
 
 void Time::UpdateDeltaTime()
 {
     // difference between delta and limit
-    const float sleepTime = fpsLimit - ((glfwGetTime() - lastTime) * 1000);
+    const float sleepTime = fpsLimit - (glfwGetTime() - lastTime);
     if (sleepTime > 0)
     {
-        Sleep(sleepTime);
+        Sleep(sleepTime * 1000); // time in milliseconds
     }
 
     currentTime = glfwGetTime();
-    unscaledDeltaTime = (currentTime - lastTime) * 1000;
+    unscaledDeltaTime = currentTime - lastTime;
     deltaTime = unscaledDeltaTime * timeScale;
     lastTime = currentTime;
 }
@@ -37,7 +37,7 @@ void Time::Update()
 {
     UpdateDeltaTime();
 
-    fps = 1000 / unscaledDeltaTime;
+    fps = 1.f / unscaledDeltaTime;
 
     if (countdownRunning)
     {
@@ -50,9 +50,8 @@ void Time::Update()
     }
 }
 
-void Time::StartCountdown(float durationInMs)
+void Time::StartCountdown(float durationInSeconds)
 {
-    // convert to seconds, glfw returns seconds
-    countdownTime = durationInMs / 1000;
+    countdownTime = durationInSeconds;
     countdownTime = true;
 }

@@ -9,11 +9,13 @@
 #include <vector>
 
 class PhysicsMaterial;
+class RigidComponent;
 struct Vertex;
 
 namespace physx
 {
     class PxFoundation;
+    class PxPvd;
     class PxPhysics;
     class PxCooking;
     class PxScene;
@@ -22,6 +24,7 @@ namespace physx
     class PxShape;
     class PxGeometry;
     class PxMaterial;
+    class PxRigidActor;
     class PxRigidDynamic;
     class PxRigidStatic;
     class PxTransform;
@@ -46,6 +49,9 @@ public:
     bool Start();
     void Update();
     void Stop();
+
+    void InsertRigidActor(physx::PxRigidActor* pxRigidActor);
+    void RemoveRigidActor(physx::PxRigidActor* pxRigidActor);
 
     physx::PxMaterial* CreatePxMaterial(std::string const& name,
         float staticFriction, float dynamicFriction, float restitution);
@@ -77,6 +83,7 @@ private:
     PhysicsEngine();
 
     physx::PxFoundation* pxFoundation;
+    physx::PxPvd* pxPvd;
     physx::PxPhysics* pxPhysics;
     physx::PxCooking* pxCooking;
     physx::PxScene* pxScene;

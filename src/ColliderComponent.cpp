@@ -1,6 +1,9 @@
 #include "ColliderComponent.h"
 #include "GameObject.h"
+#include "TransformComponent.h"
 #include "PhysicsEngine.h"
+#include "RigidDynamicComponent.h"
+#include "RigidStaticComponent.h"
 #include "geometry/PxGeometry.h"
 #include "geometry/PxTriangleMeshGeometry.h"
 #include "geometry/PxBoxGeometry.h"
@@ -14,9 +17,11 @@
 
 ColliderComponent::ColliderComponent(GameObject* owner) :
     Component::Component(owner),
+    transform(owner->GetComponent<TransformComponent>()),
     pxMaterial(nullptr),
     pxGeometry(nullptr),
-    pxShape(nullptr)
+    pxShape(nullptr),
+    pxShapeFlags(physx::PxShapeFlag::eSIMULATION_SHAPE | physx::PxShapeFlag::eSCENE_QUERY_SHAPE)
 {
 }
 
@@ -83,6 +88,21 @@ void ColliderComponent::SetPxGeometry(physx::PxGeometry* value)
     }
 }
 
+void ColliderComponent::SetPxShapeFlags(physx::PxShapeFlags value)
+{
+    if (pxShapeFlags == value)
+    {
+        return;
+    }
+
+    pxShapeFlags = value;
+
+    if (pxShape)
+    {
+        pxShape->setFlags(value);
+    }
+}
+
 void ColliderComponent::CreatePxShape()
 {
     if (pxShape)
@@ -102,9 +122,20 @@ void ColliderComponent::CreatePxShape()
 
     pxShape = sPhysicsEngine.CreatePxShape(*pxGeometry, *pxMaterial);
 
-    if (pxShape)
+    if (!pxShape)
     {
-        // ToDo: Find rigid component and attach shape
+        return;
+    }
+
+    pxShape->setFlags(pxShapeFlags);
+
+    if (RigidDynamicComponent* rigidDynamic = GetOwner()->GetComponent<RigidDynamicComponent>())
+    {
+        rigidDynamic->AttachColliderComponent(this);
+    }
+    else if (RigidStaticComponent* rigidStatic = GetOwner()->GetComponent<RigidStaticComponent>())
+    {
+        rigidStatic->AttachColliderComponent(this);
     }
 }
 

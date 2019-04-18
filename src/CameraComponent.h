@@ -12,7 +12,6 @@ public:
     CameraComponent(GameObject* owner);
     virtual ~CameraComponent();
 
-    virtual void OnStart();
     virtual void LateUpdate();
 
     void SetFov(float value) { fov = value; }

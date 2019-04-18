@@ -128,6 +128,30 @@
     <ClCompile Include="src\Font.cpp">
       <Filter>Engine\Render\Text</Filter>
     </ClCompile>
+    <ClCompile Include="src\MeshColliderComponentFactory.cpp">
+      <Filter>Engine\Scene\ComponentFactories</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RigidDynamicComponentFactory.cpp">
+      <Filter>Engine\Scene\ComponentFactories</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RigidStaticComponentFactory.cpp">
+      <Filter>Engine\Scene\ComponentFactories</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SphereColliderComponent.cpp">
+      <Filter>Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SphereColliderComponentFactory.cpp">
+      <Filter>Engine\Scene\ComponentFactories</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UniqueTypeId.cpp">
+      <Filter>Engine\Util</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ArcBallControllerComponentFactory.cpp">
+      <Filter>Engine\Scene\ComponentFactories</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CameraComponentFactory.cpp">
+      <Filter>Engine\Scene\ComponentFactories</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameObject.h">
@@ -267,6 +291,27 @@
     </ClInclude>
     <ClInclude Include="src\Font.h">
       <Filter>Engine\Render\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MeshColliderComponentFactory.h">
+      <Filter>Engine\Scene\ComponentFactories</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RigidDynamicComponentFactory.h">
+      <Filter>Engine\Scene\ComponentFactories</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RigidStaticComponentFactory.h">
+      <Filter>Engine\Scene\ComponentFactories</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SphereColliderComponent.h">
+      <Filter>Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SphereColliderComponentFactory.h">
+      <Filter>Engine\Scene\ComponentFactories</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ArcBallControllerComponentFactory.h">
+      <Filter>Engine\Scene\ComponentFactories</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CameraComponentFactory.h">
+      <Filter>Engine\Scene\ComponentFactories</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -2,8 +2,10 @@
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="src\ArcBallControllerComponent.cpp" />
+    <ClCompile Include="src\ArcBallControllerComponentFactory.cpp" />
     <ClCompile Include="src\AssetLoader.cpp" />
     <ClCompile Include="src\CameraComponent.cpp" />
+    <ClCompile Include="src\CameraComponentFactory.cpp" />
     <ClCompile Include="src\ColliderComponent.cpp" />
     <ClCompile Include="src\Component.cpp" />
     <ClCompile Include="src\ComponentFactory.cpp" />
@@ -17,14 +19,19 @@
     <ClCompile Include="src\Material.cpp" />
     <ClCompile Include="src\Mesh.cpp" />
     <ClCompile Include="src\MeshColliderComponent.cpp" />
+    <ClCompile Include="src\MeshColliderComponentFactory.cpp" />
     <ClCompile Include="src\MeshRendererComponent.cpp" />
     <ClCompile Include="src\MeshRendererComponentFactory.cpp" />
     <ClCompile Include="src\PhysicsEngine.cpp" />
     <ClCompile Include="src\RigidComponent.cpp" />
     <ClCompile Include="src\RigidDynamicComponent.cpp" />
+    <ClCompile Include="src\RigidDynamicComponentFactory.cpp" />
     <ClCompile Include="src\RigidStaticComponent.cpp" />
+    <ClCompile Include="src\RigidStaticComponentFactory.cpp" />
     <ClCompile Include="src\SceneGraphTraverser.cpp" />
     <ClCompile Include="src\Settings.cpp" />
+    <ClCompile Include="src\SphereColliderComponent.cpp" />
+    <ClCompile Include="src\SphereColliderComponentFactory.cpp" />
     <ClCompile Include="src\StandardMaterial.cpp" />
     <ClCompile Include="src\PointLightComponent.cpp" />
     <ClCompile Include="src\RenderSettings.cpp" />
@@ -42,10 +49,13 @@
     <ClCompile Include="src\TransformComponent.cpp" />
     <ClCompile Include="src\TransformComponentFactory.cpp" />
     <ClCompile Include="src\TransformGraphTraverser.cpp" />
+    <ClCompile Include="src\UniqueTypeId.cpp" />
     <ClInclude Include="src\ArcBallControllerComponent.h" />
+    <ClInclude Include="src\ArcBallControllerComponentFactory.h" />
     <ClInclude Include="src\AssetLoader.h" />
     <ClInclude Include="src\AssetManager.h" />
     <ClInclude Include="src\CameraComponent.h" />
+    <ClInclude Include="src\CameraComponentFactory.h" />
     <ClInclude Include="src\ColliderComponent.h" />
     <ClInclude Include="src\Component.h" />
     <ClInclude Include="src\ComponentFactory.h" />
@@ -62,14 +72,19 @@
     <ClInclude Include="src\Material.h" />
     <ClInclude Include="src\Mesh.h" />
     <ClInclude Include="src\MeshColliderComponent.h" />
+    <ClInclude Include="src\MeshColliderComponentFactory.h" />
     <ClInclude Include="src\MeshRendererComponent.h" />
     <ClInclude Include="src\MeshRendererComponentFactory.h" />
     <ClInclude Include="src\PhysicsEngine.h" />
     <ClInclude Include="src\RigidComponent.h" />
     <ClInclude Include="src\RigidDynamicComponent.h" />
+    <ClInclude Include="src\RigidDynamicComponentFactory.h" />
     <ClInclude Include="src\RigidStaticComponent.h" />
+    <ClInclude Include="src\RigidStaticComponentFactory.h" />
     <ClInclude Include="src\SceneGraphTraverser.h" />
     <ClInclude Include="src\Settings.h" />
+    <ClInclude Include="src\SphereColliderComponent.h" />
+    <ClInclude Include="src\SphereColliderComponentFactory.h" />
     <ClInclude Include="src\StandardMaterial.h" />
     <ClInclude Include="src\PointLightComponent.h" />
     <ClInclude Include="src\RenderSettings.h" />

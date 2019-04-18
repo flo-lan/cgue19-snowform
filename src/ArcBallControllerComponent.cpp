@@ -37,14 +37,10 @@ void ArcBallControllerComponent::Update()
         float diffX = sInputManager.GetMousePositionX() - lastMousePositionX;
         float diffY = sInputManager.GetMousePositionY() - lastMousePositionY;
 
-        float localRotationX = transform->GetLocalRotationX() - glm::radians(diffY) * 0.5f /* Slow down */;
-        float localRotationY = transform->GetLocalRotationY() - glm::radians(diffX) * 0.5f /* Slow down */;
+        float localRotationX = -glm::radians(diffY) * 0.5f /* Slow down */;
+        float localRotationY = -glm::radians(diffX) * 0.5f /* Slow down */;
 
-        // Clamp vertical rotation between -90° and 90°
-        localRotationX = glm::clamp(localRotationX, -glm::half_pi<float>(), glm::half_pi<float>());
-
-        transform->SetLocalRotationX(localRotationX);
-        transform->SetLocalRotationY(localRotationY);
+        transform->Rotate(localRotationX, localRotationY, 0.f);
     }
 
     if (sInputManager.IsRightMouseButtonPressed() && transform && cameraTransform)

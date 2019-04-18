@@ -21,21 +21,24 @@ GameObject::~GameObject()
 
     DestroyChildren();
 
-    for (ComponentMap::const_iterator itr = componentQueue.begin(); itr != componentQueue.end(); ++itr)
+    for (ComponentMap::const_iterator itr = componentWaitingMap.begin(); itr != componentWaitingMap.end(); ++itr)
     {
-        for (std::vector<Component*>::const_iterator itr2 = itr->second.begin(); itr2 != itr->second.end(); ++itr2)
+        for (ComponentList::const_iterator itr2 = itr->second.begin(); itr2 != itr->second.end(); ++itr2)
         {
             delete *itr2;
         }
     }
 
-    for (ComponentMap::const_iterator itr = components.begin(); itr != components.end(); ++itr)
+    for (ComponentMap::const_iterator itr = componentMap.begin(); itr != componentMap.end(); ++itr)
     {
-        for (std::vector<Component*>::const_iterator itr2 = itr->second.begin(); itr2 != itr->second.end(); ++itr2)
+        for (ComponentList::const_iterator itr2 = itr->second.begin(); itr2 != itr->second.end(); ++itr2)
         {
             delete *itr2;
         }
     }
+
+    // Component list contains the same elements as component map
+    componentList.clear();
 
     fprintf(stdout, "Deleted game object '%s' from scene '%s'!\n", name.c_str(), scene->GetName().c_str());
 }
@@ -60,95 +63,147 @@ void GameObject::DestroyChildren()
     transform->TraverseTransformGraphDFI(t, false);
 }
 
+void GameObject::RemoveComponentFromComponentWaitingList(Component* component)
+{
+    ComponentList::iterator itr = std::find(componentWaitingList.begin(), componentWaitingList.end(), component);
+
+    if (itr != componentWaitingList.end())
+    {
+        componentWaitingList.erase(itr);
+    }
+}
+
+void GameObject::RemoveComponentFromComponentWaitingMap(Component* component)
+{
+    if (!component)
+    {
+        return;
+    }
+
+    ComponentMap::iterator itr = componentWaitingMap.find(component->typeId);
+
+    if (itr == componentWaitingMap.end())
+    {
+        return;
+    }
+
+    ComponentList::iterator itr2 = std::find(itr->second.begin(), itr->second.end(), component);
+
+    if (itr2 != itr->second.end())
+    {
+        itr->second.erase(itr2);
+    }
+}
+
+void GameObject::RemoveComponentFromComponentMap(Component* component)
+{
+    if (!component)
+    {
+        return;
+    }
+
+    ComponentMap::iterator itr = componentMap.find(component->typeId);
+
+    if (itr == componentMap.end())
+    {
+        return;
+    }
+
+    ComponentList::iterator itr2 = std::find(itr->second.begin(), itr->second.end(), component);
+
+    if (itr2 != itr->second.end())
+    {
+        itr->second.erase(itr2);
+    }
+}
+
 void GameObject::Update()
 {
-    if (componentQueue.size())
+    if (componentWaitingList.size())
     {
-        ComponentMap componentQueueCopy(componentQueue);
+        // Create a copy of the component waiting list, because event calls could attach more components and modify the list
+        ComponentList componentWaitingListCopy(componentWaitingList);
 
-        // Move components from the component queue to the active components collection
-        for (ComponentMap::const_iterator itr = componentQueue.begin(); itr != componentQueue.end(); ++itr)
+        // Move components from the component waiting list to the active components collection
+        for (ComponentList::const_iterator itr = componentWaitingListCopy.begin(); itr != componentWaitingListCopy.end(); ++itr)
         {
-            for (std::vector<Component*>::const_iterator itr2 = itr->second.begin(); itr2 != itr->second.end(); ++itr2)
+            Component* component = *itr;
+
+            RemoveComponentFromComponentWaitingMap(component);
+            RemoveComponentFromComponentWaitingList(component);
+
+            if (component->IsDestroyed())
             {
-                components[itr->first].push_back(*itr2);
-            }
-        }
-
-        componentQueue.clear();
-
-        // Call OnStart() events - must be called after all elements from the component queue are moved,
-        // because some OnStart() method calls could attach more components and modify the queue
-        for (ComponentMap::const_iterator itr = componentQueueCopy.begin(); itr != componentQueueCopy.end(); ++itr)
-        {
-            for (std::vector<Component*>::const_iterator itr2 = itr->second.begin(); itr2 != itr->second.end(); ++itr2)
-            {
-                Component* component = *itr2;
-
-                if (!component->IsDestroyed())
+                for (ComponentList::const_iterator itr2 = componentList.begin(); itr2 != componentList.end(); ++itr2)
                 {
-                    component->OnStart();
+                    (*itr2)->OnRemoveComponent(component);
                 }
+
+                delete component;
+            }
+            else
+            {
+                componentMap[component->typeId].push_back(component);
+                component->OnStart();
+
+                for (ComponentList::const_iterator itr2 = componentList.begin(); itr2 != componentList.end(); ++itr2)
+                {
+                    (*itr2)->OnAttachComponent(component);
+                }
+
+                componentList.push_back(component);
             }
         }
     }
 
     // Call Update()
-    for (ComponentMap::iterator itr = components.begin(); itr != components.end();)
+    for (ComponentList::const_iterator itr = componentList.begin(); itr != componentList.end();)
     {
-        for (std::vector<Component*>::iterator itr2 = itr->second.begin(); itr2 != itr->second.end();)
-        {
-            Component* component = *itr2;
+        Component* component = *itr;
 
-            if (component->IsDestroyed())
-            {
-                delete component;
-                itr2 = itr->second.erase(itr2);
-            }
-            else
-            {
-                component->Update();
-                ++itr2;
-            }
-        }
-
-        // Remove component types with empty lists
-        if (itr->second.size() == 0)
+        if (component->IsDestroyed())
         {
-            itr = components.erase(itr);
+            RemoveComponentFromComponentMap(component);
+
+            itr = componentList.erase(itr);
+
+            for (ComponentList::const_iterator itr3 = componentList.begin(); itr3 != componentList.end(); ++itr3)
+            {
+                (*itr3)->OnRemoveComponent(component);
+            }
+
+            delete component;
         }
         else
         {
+            component->Update();
+
             ++itr;
         }
     }
 
     // Call LateUpdate()
-    for (ComponentMap::iterator itr = components.begin(); itr != components.end();)
+    for (ComponentList::const_iterator itr = componentList.begin(); itr != componentList.end();)
     {
-        for (std::vector<Component*>::iterator itr2 = itr->second.begin(); itr2 != itr->second.end();)
-        {
-            Component* component = *itr2;
+        Component* component = *itr;
 
-            if (component->IsDestroyed())
-            {
-                delete component;
-                itr2 = itr->second.erase(itr2);
-            }
-            else
-            {
-                component->LateUpdate();
-                ++itr2;
-            }
-        }
-
-        // Remove component types with empty lists
-        if (itr->second.size() == 0)
+        if (component->IsDestroyed())
         {
-            itr = components.erase(itr);
+            RemoveComponentFromComponentMap(component);
+
+            itr = componentList.erase(itr);
+
+            for (ComponentList::const_iterator itr3 = componentList.begin(); itr3 != componentList.end(); ++itr3)
+            {
+                (*itr3)->OnRemoveComponent(component);
+            }
+
+            delete component;
         }
         else
         {
+            component->LateUpdate();
+
             ++itr;
         }
     }
@@ -156,11 +211,8 @@ void GameObject::Update()
 
 void GameObject::Render()
 {
-    for (ComponentMap::const_iterator itr = components.begin(); itr != components.end(); ++itr)
+    for (ComponentList::const_iterator itr = componentList.begin(); itr != componentList.end(); ++itr)
     {
-        for (std::vector<Component*>::const_iterator itr2 = itr->second.begin(); itr2 != itr->second.end(); ++itr2)
-        {
-            (*itr2)->Render();
-        }
+        (*itr)->Render();
     }
 }

@@ -19,6 +19,10 @@ private:
 
     void DestroyChildren();
 
+    void RemoveComponentFromComponentWaitingList(Component* component);
+    void RemoveComponentFromComponentWaitingMap(Component* component);
+    void RemoveComponentFromComponentMap(Component* component);
+
 public:
     void Update();
     void Render();
@@ -27,28 +31,52 @@ public:
     {
         T* component = new T(this);
 
-        componentQueue[UniqueTypeId<T>()].push_back(component);
+        componentWaitingMap[component->typeId = UniqueTypeId<T>()].push_back(component);
+        componentWaitingList.push_back(component);
 
         return component;
     }
 
     template<class T> T* GetComponent()
     {
-        ComponentMap::const_iterator itr = components.find(UniqueTypeId<T>());
-        if (itr != components.end() && itr->second.size())
+        ComponentMap::const_iterator itr = componentMap.find(UniqueTypeId<T>());
+        if (itr != componentMap.end() && itr->second.size())
         {
             // Return first component of this type
             return (T*)itr->second[0];
         }
 
-        itr = componentQueue.find(UniqueTypeId<T>());
-        if (itr != componentQueue.end() && itr->second.size())
+        itr = componentWaitingMap.find(UniqueTypeId<T>());
+        if (itr != componentWaitingMap.end() && itr->second.size())
         {
             // Return first component of this type
             return (T*)itr->second[0];
         }
 
         return nullptr;
+    }
+
+    template<class T> void GetComponents(std::vector<T*>& components)
+    {
+        ComponentMap::const_iterator itr = componentMap.find(UniqueTypeId<T>());
+
+        if (itr != componentMap.end())
+        {
+            for (ComponentList::const_iterator itr2 = itr->second.begin(); itr2 != itr->second.end(); ++itr2)
+            {
+                components.push_back((T*)(*itr2));
+            }
+        }
+
+        itr = componentWaitingMap.find(UniqueTypeId<T>());
+
+        if (itr != componentWaitingMap.end())
+        {
+            for (ComponentList::const_iterator itr2 = itr->second.begin(); itr2 != itr->second.end(); ++itr2)
+            {
+                components.push_back((T*)(*itr2));
+            }
+        }
     }
 
     std::string const& GetName() const { return name; }
@@ -58,12 +86,15 @@ public:
     bool IsDestroyed() const { return destroyed; }
 
 private:
-    typedef std::map<uint32_t /* Type Id */, std::vector<Component*>> ComponentMap;
+    typedef std::vector<Component*> ComponentList;
+    typedef std::map<uint32_t /* Type Id */, ComponentList> ComponentMap;
 
 private:
     std::string name;
-    ComponentMap componentQueue;
-    ComponentMap components;
+    ComponentMap componentWaitingMap;
+    ComponentList componentWaitingList;
+    ComponentMap componentMap;
+    ComponentList componentList;
     Scene* scene;
     bool destroyed;
 };

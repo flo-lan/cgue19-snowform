@@ -23,32 +23,6 @@ GameScene::~GameScene()
 
 void GameScene::OnLoad()
 {
-
-	sSettings.Load();
-
-	const int width = sSettings.getWindowWidth();
-	const int height = sSettings.getWindowHeight();
-
-    /************************ Focus Point ***********************/
-    GameObject* focusPoint = CreateGameObject("Focus Point");
-
-    TransformComponent* focusPointTransformComponent = focusPoint->GetComponent<TransformComponent>();
-    ArcBallControllerComponent* arcBallControllerComponent = focusPoint->AttachComponent<ArcBallControllerComponent>();
-
-    /************************ Main Camera ***********************/
-    GameObject* mainCamera = CreateGameObject("Main Camera");
-
-    TransformComponent* mainCameraTransformComponent = mainCamera->GetComponent<TransformComponent>();
-    // Add main camera transform to focus point transform
-    focusPointTransformComponent->AddChild(mainCameraTransformComponent);
-    mainCameraTransformComponent->SetLocalPosition(0.f, 0.f, 6.f);
-
-    CameraComponent* mainCameraComponent = mainCamera->AttachComponent<CameraComponent>();
-    mainCameraComponent->SetFov(sSettings.getCameraFov());
-    mainCameraComponent->SetAspectRatio((float)width / height);
-    mainCameraComponent->SetNearPlane(sSettings.getCameraNear());
-    mainCameraComponent->SetFarPlane(sSettings.getCameraFar());
-
     /******************* Directional Light *******************/
     GameObject* directionalLight = CreateGameObject("Directional Light");
 
@@ -85,7 +59,6 @@ void GameScene::OnLoad()
     sphereMaterial->SetShininess(8.f);
 
     MeshRendererComponent* sphereMeshRendererComponent = sphere->AttachComponent<MeshRendererComponent>();
-    sphereMeshRendererComponent->SetCamera(mainCameraComponent);
     sphereMeshRendererComponent->SetMaterial(sphereMaterial);
     sphereMeshRendererComponent->SetMesh(sAssetManager.GetMesh("Sphere"));
     sphereMeshRendererComponent->AddLight(directionalLightComponent);
@@ -107,7 +80,6 @@ void GameScene::OnLoad()
     cylinderMaterial->SetShininess(8.f);
 
     MeshRendererComponent* cylinderMeshRendererComponent = cylinder->AttachComponent<MeshRendererComponent>();
-    cylinderMeshRendererComponent->SetCamera(mainCameraComponent);
     cylinderMeshRendererComponent->SetMaterial(cylinderMaterial);
     cylinderMeshRendererComponent->SetMesh(sAssetManager.GetMesh("Cylinder"));
     cylinderMeshRendererComponent->AddLight(directionalLightComponent);

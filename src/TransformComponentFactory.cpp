@@ -4,7 +4,8 @@
 #include "StringUtils.h"
 #include "tinyxml2.h"
 
-TransformComponentFactory::TransformComponentFactory()
+TransformComponentFactory::TransformComponentFactory() :
+    ComponentFactory::ComponentFactory()
 {
 }
 
@@ -42,13 +43,13 @@ void TransformComponentFactory::Build(GameObject* gameObject, tinyxml2::XMLEleme
         switch (localRotationStringSplit.size())
         {
         case 3:
-            transform->SetLocalRotationZ((float)::atof(localRotationStringSplit[2].c_str()));
+            transform->SetLocalRotationZ(glm::radians((float)::atof(localRotationStringSplit[2].c_str())));
             // No break
         case 2:
-            transform->SetLocalRotationY((float)::atof(localRotationStringSplit[1].c_str()));
+            transform->SetLocalRotationY(glm::radians((float)::atof(localRotationStringSplit[1].c_str())));
             // No break
         case 1:
-            transform->SetLocalRotationX((float)::atof(localRotationStringSplit[0].c_str()));
+            transform->SetLocalRotationX(glm::radians((float)::atof(localRotationStringSplit[0].c_str())));
             break;
         default:
             fprintf(stderr, "Could not parse local rotation for game object '%s'!\n", gameObject->GetName().c_str());

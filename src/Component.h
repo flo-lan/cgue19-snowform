@@ -1,5 +1,7 @@
 #pragma once
 
+#include <vector>
+
 class GameObject;
 
 class Component
@@ -14,6 +16,9 @@ public:
     virtual void OnAwake() {}
     virtual void OnStart() {}
 
+    virtual void OnAttachComponent(Component* component) {}
+    virtual void OnRemoveComponent(Component* component) {}
+
     virtual void Update() {}
     virtual void LateUpdate() {}
     virtual void Render() {}
@@ -23,9 +28,11 @@ public:
     void Destroy() { destroyed = true; OnDestroy(); }
 
     GameObject* GetOwner() const { return owner; }
+    uint32_t GetTypeId() const { return typeId;  }
     bool IsDestroyed() const { return destroyed; }
 
 private:
     GameObject* owner;
+    uint32_t typeId;
     bool destroyed;
 };

@@ -1,4 +1,5 @@
 #include "PhysicsEngine.h"
+#include "RigidComponent.h"
 #include "common/PxTolerancesScale.h"
 #include "cooking/PxCooking.h"
 #include "cooking/PxTriangleMeshDesc.h"
@@ -7,6 +8,9 @@
 #include "geometry/PxTriangleMesh.h"
 #include "geometry/PxGeometry.h"
 #include "PxFoundation.h"
+#include "pvd/PxPvd.h"
+#include "pvd/PxPvdTransport.h"
+#include "pvd/PxPvdSceneClient.h"
 #include "PxPhysics.h"
 #include "PxPhysicsVersion.h"
 #include "PxMaterial.h"
@@ -25,6 +29,7 @@ void PhysicsEngine::ErrorCallback::reportError(physx::PxErrorCode::Enum code, co
 
 PhysicsEngine::PhysicsEngine() :
     pxFoundation(nullptr),
+    pxPvd(nullptr),
     pxPhysics(nullptr),
     pxCooking(nullptr),
     pxScene(nullptr),
@@ -48,7 +53,24 @@ bool PhysicsEngine::Start()
         return false;
     }
 
-    pxPhysics = PxCreateBasePhysics(PX_PHYSICS_VERSION, *pxFoundation, physx::PxTolerancesScale(), true);
+#ifdef _DEBUG
+    pxPvd = physx::PxCreatePvd(*pxFoundation);
+
+    if (!pxPvd)
+    {
+        fprintf(stderr, "PhysX Error: Could not create PhysX pvd!\n");
+        return false;
+    }
+
+    physx::PxPvdTransport* pxPvdTransport = physx::PxDefaultPvdSocketTransportCreate("127.0.0.1", 5425, 10);
+
+    if (pxPvdTransport)
+    {
+        pxPvd->connect(*pxPvdTransport, physx::PxPvdInstrumentationFlag::eALL);
+    }
+#endif
+
+    pxPhysics = PxCreateBasePhysics(PX_PHYSICS_VERSION, *pxFoundation, physx::PxTolerancesScale(), true, pxPvd);
 
     if (!pxPhysics)
     {
@@ -82,6 +104,11 @@ bool PhysicsEngine::Start()
     pxSceneDesc.gravity = physx::PxVec3(0.0f, -9.81f, 0.0f);
     pxSceneDesc.cpuDispatcher = pxCpuDispatcher;
     pxSceneDesc.filterShader = physx::PxDefaultSimulationFilterShader;
+    pxSceneDesc.flags = physx::PxSceneFlags
+    (
+        physx::PxSceneFlag::eENABLE_ACTIVE_ACTORS |
+        physx::PxSceneFlag::eEXCLUDE_KINEMATICS_FROM_ACTIVE_ACTORS
+    );
     pxScene = pxPhysics->createScene(pxSceneDesc);
 
     if (!pxScene)
@@ -90,15 +117,41 @@ bool PhysicsEngine::Start()
         return false;
     }
 
+#ifdef _DEBUG
+    physx::PxPvdSceneClient* pxPvdSceneClient = pxScene->getScenePvdClient();
+
+    if (pxPvdSceneClient)
+    {
+        pxPvdSceneClient->setScenePvdFlag(physx::PxPvdSceneFlag::eTRANSMIT_CONSTRAINTS, true);
+        pxPvdSceneClient->setScenePvdFlag(physx::PxPvdSceneFlag::eTRANSMIT_CONTACTS, true);
+        pxPvdSceneClient->setScenePvdFlag(physx::PxPvdSceneFlag::eTRANSMIT_SCENEQUERIES, true);
+    }
+#endif
+
     return true;
 }
 
 void PhysicsEngine::Update()
 {
-    if (pxScene)
+    if (!pxScene)
     {
-        pxScene->simulate(sTime.GetDeltaTime());
-        pxScene->fetchResults(true);
+        return;
+    }
+
+    pxScene->simulate(sTime.GetDeltaTime());
+    pxScene->fetchResults(true /* block */);
+
+    physx::PxU32 pxActiveActorCount = 0;
+    physx::PxActor** pxActiveActors = pxScene->getActiveActors(pxActiveActorCount);
+
+    for (physx::PxU32 i = 0; i < pxActiveActorCount; ++i)
+    {
+        physx::PxRigidActor* pxRigidActor = static_cast<physx::PxRigidActor*>(pxActiveActors[i]);
+
+        if (RigidComponent* rigidComponent = static_cast<RigidComponent*>(pxRigidActor->userData))
+        {
+            rigidComponent->SetTransform(pxRigidActor->getGlobalPose());
+        }
     }
 }
 
@@ -133,11 +186,49 @@ void PhysicsEngine::Stop()
         pxPhysics = nullptr;
     }
 
+    if (pxPvd)
+    {
+        pxPvd->release();
+        pxPvd = nullptr;
+    }
+
     if (pxFoundation)
     {
         pxFoundation->release();
         pxFoundation = nullptr;
     }
+}
+
+void PhysicsEngine::InsertRigidActor(physx::PxRigidActor* pxRigidActor)
+{
+    if (!pxRigidActor)
+    {
+        return;
+    }
+
+    if (!pxScene)
+    {
+        fprintf(stderr, "PhysX Error: Could not insert PhysX rigid actor, because PhysX scene is null!\n");
+        return;
+    }
+
+    pxScene->addActor(*pxRigidActor);
+}
+
+void PhysicsEngine::RemoveRigidActor(physx::PxRigidActor* pxRigidActor)
+{
+    if (!pxRigidActor)
+    {
+        return;
+    }
+
+    if (!pxScene)
+    {
+        fprintf(stderr, "PhysX Error: Could not insert PhysX rigid actor, because PhysX scene is null!\n");
+        return;
+    }
+
+    pxScene->removeActor(*pxRigidActor);
 }
 
 physx::PxMaterial* PhysicsEngine::CreatePxMaterial(std::string const& name,
@@ -190,7 +281,7 @@ physx::PxTriangleMesh* PhysicsEngine::CreatePxTriangleMesh(std::string const& na
     pxTriangleMeshDesc.points.stride = sizeof(Vertex);
     pxTriangleMeshDesc.points.data = vertices.data();
 
-    pxTriangleMeshDesc.triangles.count = indices.size();
+    pxTriangleMeshDesc.triangles.count = indices.size() / 3;
     pxTriangleMeshDesc.triangles.stride = 3 * sizeof(uint32_t);
     pxTriangleMeshDesc.triangles.data = indices.data();
 
