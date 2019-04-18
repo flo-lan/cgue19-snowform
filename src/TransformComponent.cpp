@@ -135,14 +135,8 @@ void TransformComponent::AddChild(TransformComponent* child, bool keepGlobalChil
     }
     else
     {
-        // Update position
-        child->SetLocalPosition(child->GetLocalPositionX(), child->GetLocalPositionY(), child->GetLocalPositionZ());
-
-        // Update rotation
-        child->SetLocalRotation(child->GetLocalRotationX(), child->GetLocalRotationY(), child->GetLocalRotationZ());
-
-        // Update scale
-        child->SetLocalScale(child->GetLocalScaleX(), child->GetLocalScaleY(), child->GetLocalScaleZ());
+        UpdateRotation();
+        UpdatePosition();
     }
 }
 
@@ -171,14 +165,8 @@ void TransformComponent::RemoveChild(TransformComponent* child, bool keepGlobalC
     }
     else
     {
-        // Update position
-        child->SetLocalPosition(child->GetLocalPositionX(), child->GetLocalPositionY(), child->GetLocalPositionZ());
-
-        // Update rotation
-        child->SetLocalRotation(child->GetLocalRotationX(), child->GetLocalRotationY(), child->GetLocalRotationZ());
-
-        // Update scale
-        child->SetLocalScale(child->GetLocalScaleX(), child->GetLocalScaleY(), child->GetLocalScaleZ());
+        UpdateRotation();
+        UpdatePosition();
     }
 }
 
@@ -192,6 +180,46 @@ void TransformComponent::_RemoveChild(TransformComponent* child)
     }
 
     children.erase(itr);
+}
+
+void TransformComponent::UpdatePosition()
+{
+    if (parent != nullptr && !ignoreParentPosition)
+    {
+        if (!ignoreParentRotation)
+        {
+            position = parent->position +
+                parent->directionRight    * localPosition.x +
+                parent->directionUp       * localPosition.y +
+                parent->directionBackward * localPosition.z;
+        }
+        else
+        {
+            position = parent->position + localPosition;
+        }
+    }
+    else
+    {
+        position = localPosition;
+    }
+}
+
+void TransformComponent::UpdateRotation()
+{
+    if (parent != nullptr && !ignoreParentRotation)
+    {
+        rotationQ = parent->rotationQ * localRotationQ;
+        rotation = glm::eulerAngles(rotationQ);
+    }
+    else
+    {
+        rotationQ = localRotationQ;
+        rotation = localRotation;
+    }
+
+    directionRight = rotationQ * gAxisDirectionX;
+    directionUp = rotationQ * gAxisDirectionY;
+    directionBackward = rotationQ * gAxisDirectionZ;
 }
 
 void TransformComponent::TraverseTransformGraphDF(TransformGraphTraverser& traverser, bool traverseThis)
@@ -259,21 +287,31 @@ void TransformComponent::TraverseTransformGraphDFI(TransformGraphTraverser& trav
     }
 }
 
+void TransformComponent::Rotate(glm::vec3 angles)
+{
+    localRotationQ = localRotationQ * glm::angleAxis(angles.x, gAxisDirectionX);
+    localRotationQ = localRotationQ * glm::angleAxis(angles.y, gAxisDirectionY);
+    localRotationQ = localRotationQ * glm::angleAxis(angles.z, gAxisDirectionZ);
+
+    localRotation = glm::eulerAngles(localRotationQ);
+
+    static struct UpdateChildTransformTraverser : public TransformGraphTraverser
+    {
+        virtual void Visit(TransformComponent* child)
+        {
+            child->UpdateRotation();
+            child->UpdatePosition();
+        }
+    } t;
+
+    TraverseTransformGraphDF(t, true);
+}
+
 void TransformComponent::SetLocalPositionX(float localPositionX)
 {
     localPosition.x = localPositionX;
 
-    if (parent != nullptr && !ignoreParentPosition)
-    {
-        position = parent->GetPosition() +
-            directionRight    * localPosition.x +
-            directionUp       * localPosition.y +
-            directionBackward * localPosition.z;
-    }
-    else
-    {
-        position.x = localPosition.x;
-    }
+    UpdatePosition();
 
     TransformComponent* child = nullptr;
     for (uint32_t i = 0, size = children.size(); i < size; i++)
@@ -287,17 +325,7 @@ void TransformComponent::SetLocalPositionY(float localPositionY)
 {
     localPosition.y = localPositionY;
 
-    if (parent != nullptr && !ignoreParentPosition)
-    {
-        position = parent->GetPosition() +
-            directionRight    * localPosition.x +
-            directionUp       * localPosition.y +
-            directionBackward * localPosition.z;
-    }
-    else
-    {
-        position.y = localPosition.y;
-    }
+    UpdatePosition();
 
     TransformComponent* child = nullptr;
     for (uint32_t i = 0, size = children.size(); i < size; i++)
@@ -311,17 +339,7 @@ void TransformComponent::SetLocalPositionZ(float localPositionZ)
 {
     localPosition.z = localPositionZ;
 
-    if (parent != nullptr && !ignoreParentPosition)
-    {
-        position = parent->GetPosition() +
-            directionRight    * localPosition.x +
-            directionUp       * localPosition.y +
-            directionBackward * localPosition.z;
-    }
-    else
-    {
-        position.z = localPosition.z;
-    }
+    UpdatePosition();
 
     TransformComponent* child = nullptr;
     for (uint32_t i = 0, size = children.size(); i < size; i++)
@@ -336,28 +354,8 @@ void TransformComponent::SetLocalRotationX(float localRotationX)
     localRotation.x = localRotationX;
     localRotationQ = glm::quat(localRotation);
 
-    if (parent != nullptr && !ignoreParentRotation)
-    {
-        rotation.x = parent->GetRotationX() + localRotation.x;
-    }
-    else
-    {
-        rotation.x = localRotation.x;
-    }
-    rotationQ = glm::quat(rotation);
-
-    directionRight    = rotationQ * gAxisDirectionX;
-    directionUp       = rotationQ * gAxisDirectionY;
-    directionBackward = rotationQ * gAxisDirectionZ;
-
-    // Recalculate position
-    if (parent != nullptr && !ignoreParentPosition)
-    {
-        position = parent->GetPosition() +
-            directionRight    * localPosition.x +
-            directionUp       * localPosition.y +
-            directionBackward * localPosition.z;
-    }
+    UpdateRotation();
+    UpdatePosition();
 
     TransformComponent* child = nullptr;
     for (uint32_t i = 0, size = children.size(); i < size; i++)
@@ -372,28 +370,8 @@ void TransformComponent::SetLocalRotationY(float localRotationY)
     localRotation.y = localRotationY;
     localRotationQ = glm::quat(localRotation);
 
-    if (parent != nullptr && !ignoreParentRotation)
-    {
-        rotation.y = parent->GetRotationY() + localRotation.y;
-    }
-    else
-    {
-        rotation.y = localRotation.y;
-    }
-    rotationQ = glm::quat(rotation);
-
-    directionRight    = rotationQ * gAxisDirectionX;
-    directionUp       = rotationQ * gAxisDirectionY;
-    directionBackward = rotationQ * gAxisDirectionZ;
-
-    // Recalculate position
-    if (parent != nullptr && !ignoreParentPosition)
-    {
-        position = parent->GetPosition() +
-            directionRight    * localPosition.x +
-            directionUp       * localPosition.y +
-            directionBackward * localPosition.z;
-    }
+    UpdateRotation();
+    UpdatePosition();
 
     TransformComponent* child = nullptr;
     for (uint32_t i = 0, size = children.size(); i < size; i++)
@@ -408,28 +386,8 @@ void TransformComponent::SetLocalRotationZ(float localRotationZ)
     localRotation.z = localRotationZ;
     localRotationQ = glm::quat(localRotation);
 
-    if (parent != nullptr && !ignoreParentRotation)
-    {
-        rotation.z = parent->GetRotationZ() + localRotation.z;
-    }
-    else
-    {
-        rotation.z = localRotation.z;
-    }
-    rotationQ = glm::quat(rotation);
-
-    directionRight    = rotationQ * gAxisDirectionX;
-    directionUp       = rotationQ * gAxisDirectionY;
-    directionBackward = rotationQ * gAxisDirectionZ;
-
-    // Recalculate position
-    if (parent != nullptr && !ignoreParentPosition)
-    {
-        position = parent->GetPosition() +
-            directionRight    * localPosition.x +
-            directionUp       * localPosition.y +
-            directionBackward * localPosition.z;
-    }
+    UpdateRotation();
+    UpdatePosition();
 
     TransformComponent* child = nullptr;
     for (uint32_t i = 0, size = children.size(); i < size; i++)

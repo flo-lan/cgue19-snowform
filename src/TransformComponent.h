@@ -26,6 +26,16 @@ public:
     // Traverse transform graph depth first inversed
     void TraverseTransformGraphDFI(TransformGraphTraverser& traverser, bool traverseThis = true);
 
+    void Rotate(glm::vec3 angles);
+    void Rotate(float angleX, float angleY, float angleZ)
+    {
+        Rotate(glm::vec3(angleX, angleY, angleZ));
+    }
+    void Rotate(glm::vec3 axis, float angle)
+    {
+        Rotate(axis * angle);
+    }
+
     void SetLocalPositionX(float localPositionX);
     void SetLocalPositionY(float localPositionY);
     void SetLocalPositionZ(float localPositionZ);
@@ -110,6 +120,9 @@ private:
 
     void _AddChild(TransformComponent* child);
     void _RemoveChild(TransformComponent* child);
+
+    void UpdatePosition();
+    void UpdateRotation();
 
 private:
     TransformComponent* parent;
