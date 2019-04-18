@@ -89,4 +89,107 @@
       </GameObject>
     </Children>
   </GameObject>
+  <GameObject name="SnowBallTest">
+    <Components>
+      <TransformComponent localPosition="0 0 0" localRotation="0 0 0" localScale="1 1 1" />
+    </Components>
+    <Children>
+      <GameObject name="Snowball (1)">
+        <Components>
+          <TransformComponent localPosition="-2.89 20.2 4.53" localRotation="8.059995 -1.93 0" localScale="1 1 1" />
+          <SphereColliderComponent physicsMaterial="Default" radius="0.5" />
+          <RigidDynamicComponent />
+        </Components>
+        <Children>
+          <GameObject name="SnowballMesh">
+            <Components>
+              <TransformComponent localPosition="0 0 0" localRotation="0 0 0" localScale="0.003305583 0.003305583 0.003305583" />
+              <MeshRendererComponent material="Snowball" mesh="Snowball" />
+            </Components>
+            <Children />
+          </GameObject>
+        </Children>
+      </GameObject>
+      <GameObject name="Snowball (2)">
+        <Components>
+          <TransformComponent localPosition="-7.23 18.56 4.15" localRotation="8.059994 -4.329998 1.750002" localScale="1 1 1" />
+          <SphereColliderComponent physicsMaterial="Default" radius="0.5" />
+          <RigidDynamicComponent />
+        </Components>
+        <Children>
+          <GameObject name="SnowballMesh">
+            <Components>
+              <TransformComponent localPosition="0 0 0" localRotation="0 0 0" localScale="0.003305583 0.003305583 0.003305583" />
+              <MeshRendererComponent material="Snowball" mesh="Snowball" />
+            </Components>
+            <Children />
+          </GameObject>
+        </Children>
+      </GameObject>
+      <GameObject name="Snowball (3)">
+        <Components>
+          <TransformComponent localPosition="-2.34 16.54 1.92" localRotation="8.059994 -6.94 1.750002" localScale="1 1 1" />
+          <SphereColliderComponent physicsMaterial="Default" radius="0.5" />
+          <RigidDynamicComponent />
+        </Components>
+        <Children>
+          <GameObject name="SnowballMesh">
+            <Components>
+              <TransformComponent localPosition="0 0 0" localRotation="0 0 0" localScale="0.003305583 0.003305583 0.003305583" />
+              <MeshRendererComponent material="Snowball" mesh="Snowball" />
+            </Components>
+            <Children />
+          </GameObject>
+        </Children>
+      </GameObject>
+      <GameObject name="Snowball (4)">
+        <Components>
+          <TransformComponent localPosition="-6.01 15.93 6.48" localRotation="29.95999 -6.940001 8.049994" localScale="1 1 1" />
+          <SphereColliderComponent physicsMaterial="Default" radius="0.5" />
+          <RigidDynamicComponent />
+        </Components>
+        <Children>
+          <GameObject name="SnowballMesh">
+            <Components>
+              <TransformComponent localPosition="0 0 0" localRotation="0 0 0" localScale="0.003305583 0.003305583 0.003305583" />
+              <MeshRendererComponent material="Snowball" mesh="Snowball" />
+            </Components>
+            <Children />
+          </GameObject>
+        </Children>
+      </GameObject>
+      <GameObject name="Snowball (5)">
+        <Components>
+          <TransformComponent localPosition="-5.95 14.68 2.36" localRotation="33.48 -25.3 8.049996" localScale="1 1 1" />
+          <SphereColliderComponent physicsMaterial="Default" radius="0.5" />
+          <RigidDynamicComponent />
+        </Components>
+        <Children>
+          <GameObject name="SnowballMesh">
+            <Components>
+              <TransformComponent localPosition="0 0 0" localRotation="0 0 0" localScale="0.003305583 0.003305583 0.003305583" />
+              <MeshRendererComponent material="Snowball" mesh="Snowball" />
+            </Components>
+            <Children />
+          </GameObject>
+        </Children>
+      </GameObject>
+      <GameObject name="Snowball (6)">
+        <Components>
+          <TransformComponent localPosition="-6.44 15.85 7.71" localRotation="33.48 -25.3 8.049996" localScale="1 1 1" />
+          <SphereColliderComponent physicsMaterial="Default" radius="0.5" />
+          <RigidDynamicComponent />
+        </Components>
+        <Children>
+          <GameObject name="SnowballMesh">
+            <Components>
+              <TransformComponent localPosition="0 0 0" localRotation="0 0 0" localScale="0.003305583 0.003305583 0.003305583" />
+              <MeshRendererComponent material="Snowball" mesh="Snowball" />
+            </Components>
+            <Children />
+          </GameObject>
+        </Children>
+      </GameObject>
+    </Children>
+  </GameObject>
 </Scene>
