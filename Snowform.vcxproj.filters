@@ -50,9 +50,6 @@
     <ClCompile Include="src\CameraComponent.cpp">
       <Filter>Engine\Render\Camera</Filter>
     </ClCompile>
-    <ClCompile Include="src\ArcBallControllerComponent.cpp">
-      <Filter>Game\Controller</Filter>
-    </ClCompile>
     <ClCompile Include="src\RenderSettings.cpp">
       <Filter>Game\Render</Filter>
     </ClCompile>
@@ -158,6 +155,9 @@
     <ClCompile Include="src\StringUtils.cpp">
       <Filter>Engine\Util</Filter>
     </ClCompile>
+    <ClCompile Include="src\ArcBallControllerComponent.cpp">
+      <Filter>Engine\Debug</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameObject.h">
@@ -216,9 +216,6 @@
     </ClInclude>
     <ClInclude Include="src\CameraComponent.h">
       <Filter>Engine\Render\Camera</Filter>
-    </ClInclude>
-    <ClInclude Include="src\ArcBallControllerComponent.h">
-      <Filter>Game\Controller</Filter>
     </ClInclude>
     <ClInclude Include="src\RenderSettings.h">
       <Filter>Game\Render</Filter>
@@ -321,6 +318,9 @@
     </ClInclude>
     <ClInclude Include="src\BoxColliderComponentFactory.h">
       <Filter>Engine\Scene\ComponentFactories</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ArcBallControllerComponent.h">
+      <Filter>Engine\Debug</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
