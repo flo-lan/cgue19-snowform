@@ -4,6 +4,7 @@
 #include "MeshColliderComponentFactory.h"
 #include "RigidDynamicComponentFactory.h"
 #include "RigidStaticComponentFactory.h"
+#include "BoxColliderComponentFactory.h"
 #include "SphereColliderComponentFactory.h"
 #include "ArcBallControllerComponentFactory.h"
 #include "CameraComponentFactory.h"
@@ -16,6 +17,7 @@ ComponentIndustry::ComponentIndustry()
     static MeshColliderComponentFactory meshColliderComponentFactory;
     static RigidDynamicComponentFactory rigidDynamicComponentFactory;
     static RigidStaticComponentFactory rigidStaticComponentFactory;
+    static BoxColliderComponentFactory boxColliderComponentFactory;
     static SphereColliderComponentFactory sphereColliderComponentFactory;
     static ArcBallControllerComponentFactory arcBallControllerComponentFactory;
     static CameraComponentFactory cameraComponentFactory;
@@ -26,6 +28,7 @@ ComponentIndustry::ComponentIndustry()
     factories["MeshColliderComponent"] = &meshColliderComponentFactory;
     factories["RigidDynamicComponent"] = &rigidDynamicComponentFactory;
     factories["RigidStaticComponent"] = &rigidStaticComponentFactory;
+    factories["BoxColliderComponent"] = &boxColliderComponentFactory;
     factories["SphereColliderComponent"] = &sphereColliderComponentFactory;
     factories["ArcBallControllerComponent"] = &arcBallControllerComponentFactory;
     factories["CameraComponent"] = &cameraComponentFactory;

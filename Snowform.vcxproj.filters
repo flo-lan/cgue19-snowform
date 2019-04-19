@@ -149,6 +149,15 @@
     <ClCompile Include="src\DebugComponentFactory.cpp">
       <Filter>Engine\Scene\ComponentFactories</Filter>
     </ClCompile>
+    <ClCompile Include="src\BoxColliderComponent.cpp">
+      <Filter>Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BoxColliderComponentFactory.cpp">
+      <Filter>Engine\Scene\ComponentFactories</Filter>
+    </ClCompile>
+    <ClCompile Include="src\StringUtils.cpp">
+      <Filter>Engine\Util</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameObject.h">
@@ -305,6 +314,12 @@
       <Filter>Engine\Debug</Filter>
     </ClInclude>
     <ClInclude Include="src\DebugComponentFactory.h">
+      <Filter>Engine\Scene\ComponentFactories</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BoxColliderComponent.h">
+      <Filter>Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BoxColliderComponentFactory.h">
       <Filter>Engine\Scene\ComponentFactories</Filter>
     </ClInclude>
   </ItemGroup>
