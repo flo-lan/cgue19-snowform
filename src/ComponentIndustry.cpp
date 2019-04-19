@@ -7,6 +7,7 @@
 #include "SphereColliderComponentFactory.h"
 #include "ArcBallControllerComponentFactory.h"
 #include "CameraComponentFactory.h"
+#include "DebugComponentFactory.h"
 
 ComponentIndustry::ComponentIndustry()
 {
@@ -18,6 +19,7 @@ ComponentIndustry::ComponentIndustry()
     static SphereColliderComponentFactory sphereColliderComponentFactory;
     static ArcBallControllerComponentFactory arcBallControllerComponentFactory;
     static CameraComponentFactory cameraComponentFactory;
+    static DebugComponentFactory debugComponentFactory;
 
     factories["TransformComponent"] = &transformComponentFactory;
     factories["MeshRendererComponent"] = &meshRendererComponentFactory;
@@ -27,6 +29,7 @@ ComponentIndustry::ComponentIndustry()
     factories["SphereColliderComponent"] = &sphereColliderComponentFactory;
     factories["ArcBallControllerComponent"] = &arcBallControllerComponentFactory;
     factories["CameraComponent"] = &cameraComponentFactory;
+    factories["DebugComponent"] = &debugComponentFactory;
 }
 
 void ComponentIndustry::AddFactory(std::string const& componentName, ComponentFactory* factory)

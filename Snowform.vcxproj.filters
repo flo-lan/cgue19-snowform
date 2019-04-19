@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="src\Main.cpp" />
@@ -142,6 +142,12 @@
     </ClCompile>
     <ClCompile Include="src\Collision.cpp">
       <Filter>Engine\Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DebugComponent.cpp">
+      <Filter>Engine\Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="src\DebugComponentFactory.cpp">
+      <Filter>Engine\Scene\ComponentFactories</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -295,6 +301,12 @@
     <ClInclude Include="src\Collision.h">
       <Filter>Engine\Physics</Filter>
     </ClInclude>
+    <ClInclude Include="src\DebugComponent.h">
+      <Filter>Engine\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DebugComponentFactory.h">
+      <Filter>Engine\Scene\ComponentFactories</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">
@@ -365,6 +377,9 @@
     </Filter>
     <Filter Include="Engine\Physics">
       <UniqueIdentifier>{b9d0c192-1849-4894-a715-471bece7ef93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Debug">
+      <UniqueIdentifier>{a0a43f54-f542-481c-a479-2e2dc21b8657}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
