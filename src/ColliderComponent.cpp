@@ -39,6 +39,20 @@ ColliderComponent::~ColliderComponent()
     DeletePxGeometry();
 }
 
+void ColliderComponent::SetTrigger(bool value)
+{
+    if (value)
+    {
+        SetPxShapeFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, false);
+        SetPxShapeFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, true);
+    }
+    else
+    {
+        SetPxShapeFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, false);
+        SetPxShapeFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, true);
+    }
+}
+
 void ColliderComponent::SetPxMaterial(physx::PxMaterial* value)
 {
     if (!value)
@@ -88,18 +102,47 @@ void ColliderComponent::SetPxGeometry(physx::PxGeometry* value)
     }
 }
 
-void ColliderComponent::SetPxShapeFlags(physx::PxShapeFlags value)
+void ColliderComponent::SetPxShapeFlag(physx::PxShapeFlag::Enum flag, bool value)
 {
-    if (pxShapeFlags == value)
+    if (value)
+    {
+        if (pxShapeFlags & flag)
+        {
+            // Flag already set
+            return;
+        }
+
+        pxShapeFlags |= flag;
+    }
+    else
+    {
+        if (!(pxShapeFlags & flag))
+        {
+            // Flag not set
+            return;
+        }
+
+        pxShapeFlags &= ~flag;
+    }
+
+    if (pxShape)
+    {
+        pxShape->setFlag(flag, value);
+    }
+}
+
+void ColliderComponent::SetPxShapeFlags(physx::PxShapeFlags flags)
+{
+    if (pxShapeFlags == flags)
     {
         return;
     }
 
-    pxShapeFlags = value;
+    pxShapeFlags = flags;
 
     if (pxShape)
     {
-        pxShape->setFlags(value);
+        pxShape->setFlags(flags);
     }
 }
 

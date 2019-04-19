@@ -33,4 +33,9 @@ void SphereColliderComponentFactory::Build(GameObject* gameObject, tinyxml2::XML
         std::string radiusValue = std::string(element->Attribute("radius"));
         sphereCollider->SetRadius(std::strtof(radiusValue.c_str(), 0));
     }
+
+    if (element->Attribute("trigger"))
+    {
+        sphereCollider->SetTrigger(std::string(element->Attribute("trigger")) == "true");
+    }
 }

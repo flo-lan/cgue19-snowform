@@ -21,13 +21,17 @@ protected:
 public:
     virtual ~ColliderComponent();
 
+    void SetTrigger(bool value);
+    bool IsTrigger() const { return pxShapeFlags & physx::PxShapeFlag::eTRIGGER_SHAPE; }
+
     physx::PxMaterial* GetPxMaterial() const { return pxMaterial; }
     void SetPxMaterial(physx::PxMaterial* value);
 
     physx::PxShape* GetPxShape() const { return pxShape; }
 
     physx::PxShapeFlags GetPxShapeFlags() const { return pxShapeFlags; }
-    void SetPxShapeFlags(physx::PxShapeFlags value);
+    void SetPxShapeFlag(physx::PxShapeFlag::Enum flag, bool value);
+    void SetPxShapeFlags(physx::PxShapeFlags flags);
 
 protected:
     physx::PxGeometry* GetPxGeometry() const { return pxGeometry; }
