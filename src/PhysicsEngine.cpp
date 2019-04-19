@@ -18,6 +18,8 @@
 #include "PxSceneDesc.h"
 #include "PxRigidDynamic.h"
 #include "PxRigidStatic.h"
+#include "GameObject.h"
+#include "Collision.h"
 #include "Time.h"
 #include "Mesh.h"
 #include <iostream>
@@ -35,6 +37,19 @@ PhysicsEngine::PhysicsEngine() :
     pxScene(nullptr),
     pxCpuDispatcher(nullptr)
 {
+}
+
+physx::PxFilterFlags SimulationFilterShader(
+    physx::PxFilterObjectAttributes /*attributes0*/, physx::PxFilterData /*filterData0*/,
+    physx::PxFilterObjectAttributes /*attributes1*/, physx::PxFilterData /*filterData1*/,
+    physx::PxPairFlags& retPairFlags, const void* /*constantBlock*/, physx::PxU32 /*constantBlockSize*/)
+{
+    retPairFlags = physx::PxPairFlag::eSOLVE_CONTACT |
+        physx::PxPairFlag::eDETECT_DISCRETE_CONTACT |
+        physx::PxPairFlag::eNOTIFY_TOUCH_FOUND |
+        physx::PxPairFlag::eNOTIFY_TOUCH_LOST;
+
+    return physx::PxFilterFlag::eDEFAULT;
 }
 
 bool PhysicsEngine::Start()
@@ -103,12 +118,13 @@ bool PhysicsEngine::Start()
     physx::PxSceneDesc pxSceneDesc(pxPhysics->getTolerancesScale());
     pxSceneDesc.gravity = physx::PxVec3(0.0f, -9.81f, 0.0f);
     pxSceneDesc.cpuDispatcher = pxCpuDispatcher;
-    pxSceneDesc.filterShader = physx::PxDefaultSimulationFilterShader;
+    pxSceneDesc.filterShader = SimulationFilterShader;
     pxSceneDesc.flags = physx::PxSceneFlags
     (
         physx::PxSceneFlag::eENABLE_ACTIVE_ACTORS |
         physx::PxSceneFlag::eEXCLUDE_KINEMATICS_FROM_ACTIVE_ACTORS
     );
+    pxSceneDesc.simulationEventCallback = this;
     pxScene = pxPhysics->createScene(pxSceneDesc);
 
     if (!pxScene)
@@ -229,6 +245,97 @@ void PhysicsEngine::RemoveRigidActor(physx::PxRigidActor* pxRigidActor)
     }
 
     pxScene->removeActor(*pxRigidActor);
+}
+
+void PhysicsEngine::onContact(const physx::PxContactPairHeader& pairHeader, const physx::PxContactPair* pairs, physx::PxU32 nbPairs)
+{
+    // Ignore contact when actors have been removed
+    if (pairHeader.flags & (physx::PxContactPairHeaderFlag::eREMOVED_ACTOR_0 | physx::PxContactPairHeaderFlag::eREMOVED_ACTOR_1))
+    {
+        return;
+    }
+
+    physx::PxActor* pxActor0 = pairHeader.actors[0];
+    physx::PxActor* pxActor1 = pairHeader.actors[1];
+
+    RigidComponent* rigidComponent0 = static_cast<RigidComponent*>(pxActor0->userData);
+    RigidComponent* rigidComponent1 = static_cast<RigidComponent*>(pxActor1->userData);
+
+    GameObject* gameObject0 = rigidComponent0->GetOwner();
+    GameObject* gameObject1 = rigidComponent1->GetOwner();
+
+    for (physx::PxU32 i = 0; i < nbPairs; i++)
+    {
+        physx::PxContactPair const& pxContactPair = pairs[i];
+
+        // Ignore pair when shapes have been deleted
+        if (pxContactPair.flags & (physx::PxContactPairFlag::eREMOVED_SHAPE_0 | physx::PxContactPairFlag::eREMOVED_SHAPE_1))
+        {
+            continue;
+        }
+
+        ColliderComponent* hitCollider0 = rigidComponent1->GetAttachedColliderByPxShape(pxContactPair.shapes[0]);
+
+        if (!hitCollider0)
+        {
+            hitCollider0 = rigidComponent1->GetAttachedColliderByPxShape(pxContactPair.shapes[1]);
+        }
+
+        ColliderComponent* hitCollider1 = rigidComponent0->GetAttachedColliderByPxShape(pxContactPair.shapes[0]);
+
+        if (!hitCollider1)
+        {
+            hitCollider1 = rigidComponent0->GetAttachedColliderByPxShape(pxContactPair.shapes[1]);
+        }
+
+        Collision collision0 = Collision(hitCollider0, rigidComponent1);
+        Collision collision1 = Collision(hitCollider1, rigidComponent0);
+
+        if (pxContactPair.events & physx::PxPairFlag::eNOTIFY_TOUCH_FOUND)
+        {
+            gameObject0->CollisionEnter(collision0);
+            gameObject1->CollisionEnter(collision1);
+        }
+        else if (pxContactPair.events & physx::PxPairFlag::eNOTIFY_TOUCH_LOST)
+        {
+            gameObject0->CollisionExit(collision0);
+            gameObject1->CollisionExit(collision1);
+        }
+    }
+}
+
+void PhysicsEngine::onTrigger(physx::PxTriggerPair* pairs, physx::PxU32 count)
+{
+    for (physx::PxU32 i = 0; i < count; i++)
+    {
+        physx::PxTriggerPair const& pxTriggerPair = pairs[i];
+
+        // Ignore pair when shapes have been deleted
+        if (pxTriggerPair.flags & (physx::PxTriggerPairFlag::eREMOVED_SHAPE_TRIGGER | physx::PxTriggerPairFlag::eREMOVED_SHAPE_OTHER))
+        {
+            continue;
+        }
+
+        RigidComponent* triggerRigidComponent = static_cast<RigidComponent*>(pxTriggerPair.triggerActor->userData);
+        RigidComponent* otherRigidComponent = static_cast<RigidComponent*>(pxTriggerPair.otherActor->userData);
+
+        ColliderComponent* triggerCollider = triggerRigidComponent->GetAttachedColliderByPxShape(pxTriggerPair.triggerShape);
+        ColliderComponent* otherCollider = otherRigidComponent->GetAttachedColliderByPxShape(pxTriggerPair.otherShape);
+
+        GameObject* trigger = triggerRigidComponent->GetOwner();
+        GameObject* other = otherRigidComponent->GetOwner();
+
+        if (pxTriggerPair.status & physx::PxPairFlag::eNOTIFY_TOUCH_FOUND)
+        {
+            trigger->TriggerEnter(otherCollider);
+            other->TriggerEnter(triggerCollider);
+        }
+        else if (pxTriggerPair.status & physx::PxPairFlag::eNOTIFY_TOUCH_LOST)
+        {
+            trigger->TriggerExit(otherCollider);
+            other->TriggerExit(triggerCollider);
+        }
+    }
 }
 
 physx::PxMaterial* PhysicsEngine::CreatePxMaterial(std::string const& name,

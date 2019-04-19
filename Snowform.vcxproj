@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="src\ArcBallControllerComponent.cpp" />
@@ -7,6 +7,7 @@
     <ClCompile Include="src\CameraComponent.cpp" />
     <ClCompile Include="src\CameraComponentFactory.cpp" />
     <ClCompile Include="src\ColliderComponent.cpp" />
+    <ClCompile Include="src\Collision.cpp" />
     <ClCompile Include="src\Component.cpp" />
     <ClCompile Include="src\ComponentFactory.cpp" />
     <ClCompile Include="src\ComponentIndustry.cpp" />
@@ -53,6 +54,7 @@
     <ClInclude Include="src\CameraComponent.h" />
     <ClInclude Include="src\CameraComponentFactory.h" />
     <ClInclude Include="src\ColliderComponent.h" />
+    <ClInclude Include="src\Collision.h" />
     <ClInclude Include="src\Component.h" />
     <ClInclude Include="src\ComponentFactory.h" />
     <ClInclude Include="src\ComponentIndustry.h" />

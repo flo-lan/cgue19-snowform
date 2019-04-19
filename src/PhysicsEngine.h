@@ -3,6 +3,8 @@
 #include "extensions/PxDefaultAllocator.h"
 #include "foundation/PxErrorCallback.h"
 #include "foundation/PxErrors.h"
+#include "foundation/Px.h"
+#include "PxSimulationEventCallback.h"
 
 #include <string>
 #include <unordered_map>
@@ -24,13 +26,15 @@ namespace physx
     class PxShape;
     class PxGeometry;
     class PxMaterial;
+    class PxActor;
     class PxRigidActor;
+    class PxRigidBody;
     class PxRigidDynamic;
     class PxRigidStatic;
     class PxTransform;
 }
 
-class PhysicsEngine
+class PhysicsEngine : public physx::PxSimulationEventCallback
 {
 public:
     // https://stackoverflow.com/questions/1008019/c-singleton-design-pattern
@@ -52,6 +56,14 @@ public:
 
     void InsertRigidActor(physx::PxRigidActor* pxRigidActor);
     void RemoveRigidActor(physx::PxRigidActor* pxRigidActor);
+
+    // Implement PxSimulationEventCallback
+    virtual void onContact(const physx::PxContactPairHeader& pairHeader, const physx::PxContactPair* pairs, physx::PxU32 nbPairs);
+    virtual void onTrigger(physx::PxTriggerPair* pairs, physx::PxU32 count);
+    virtual void onConstraintBreak(physx::PxConstraintInfo*, physx::PxU32) {}
+    virtual void onWake(physx::PxActor**, physx::PxU32) {}
+    virtual void onSleep(physx::PxActor**, physx::PxU32) {}
+    virtual void onAdvance(const physx::PxRigidBody*const*, const physx::PxTransform*, const physx::PxU32) {}
 
     physx::PxMaterial* CreatePxMaterial(std::string const& name,
         float staticFriction, float dynamicFriction, float restitution);

@@ -133,6 +133,21 @@ void RigidComponent::LateUpdate()
     }
 }
 
+ColliderComponent* RigidComponent::GetAttachedColliderByPxShape(physx::PxShape* pxShape) const
+{
+    for (auto itr = attachedColliders.begin(); itr != attachedColliders.end(); ++itr)
+    {
+        ColliderComponent* collider = *itr;
+
+        if (collider->GetPxShape() == pxShape)
+        {
+            return collider;
+        }
+    }
+
+    return nullptr;
+}
+
 void RigidComponent::SetTransform(physx::PxTransform& globalPose)
 {
     lastPosition = glm::vec3(globalPose.p.x, globalPose.p.y, globalPose.p.z);

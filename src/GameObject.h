@@ -7,6 +7,8 @@
 #include <map>
 
 class Component;
+class Collision;
+class ColliderComponent;
 class Scene;
 
 class GameObject
@@ -26,6 +28,12 @@ private:
 public:
     void Update();
     void Render();
+
+    void CollisionEnter(Collision const& collision);
+    void CollisionExit(Collision const& collision);
+
+    void TriggerEnter(ColliderComponent* collider);
+    void TriggerExit(ColliderComponent* collider);
 
     template<class T> T* AttachComponent()
     {

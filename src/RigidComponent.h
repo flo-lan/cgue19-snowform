@@ -34,6 +34,8 @@ public:
 
     virtual void LateUpdate();
 
+    ColliderComponent* GetAttachedColliderByPxShape(physx::PxShape* pxShape) const;
+
     void SetTransform(physx::PxTransform& globalPose);
     void SetGlobalPose(glm::vec3 const& position, glm::quat const& rotation);
     virtual void SetGlobalPose(physx::PxTransform& globalPose) = 0;

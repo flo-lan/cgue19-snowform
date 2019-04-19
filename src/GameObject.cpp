@@ -1,5 +1,7 @@
 #include "GameObject.h"
 #include "Component.h"
+#include "Collision.h"
+#include "ColliderComponent.h"
 #include "Scene.h"
 #include "TransformComponent.h"
 #include "TransformGraphTraverser.h"
@@ -214,5 +216,57 @@ void GameObject::Render()
     for (ComponentList::const_iterator itr = componentList.begin(); itr != componentList.end(); ++itr)
     {
         (*itr)->Render();
+    }
+}
+
+void GameObject::CollisionEnter(Collision const& collision)
+{
+    for (ComponentList::const_iterator itr = componentList.begin(); itr != componentList.end(); ++itr)
+    {
+        Component* component = *itr;
+
+        if (!component->IsDestroyed())
+        {
+            component->OnCollisionEnter(collision);
+        }
+    }
+}
+
+void GameObject::CollisionExit(Collision const& collision)
+{
+    for (ComponentList::const_iterator itr = componentList.begin(); itr != componentList.end(); ++itr)
+    {
+        Component* component = *itr;
+
+        if (!component->IsDestroyed())
+        {
+            component->OnCollisionExit(collision);
+        }
+    }
+}
+
+void GameObject::TriggerEnter(ColliderComponent* collider)
+{
+    for (ComponentList::const_iterator itr = componentList.begin(); itr != componentList.end(); ++itr)
+    {
+        Component* component = *itr;
+
+        if (!component->IsDestroyed())
+        {
+            component->OnTriggerEnter(collider);
+        }
+    }
+}
+
+void GameObject::TriggerExit(ColliderComponent* collider)
+{
+    for (ComponentList::const_iterator itr = componentList.begin(); itr != componentList.end(); ++itr)
+    {
+        Component* component = *itr;
+
+        if (!component->IsDestroyed())
+        {
+            component->OnTriggerExit(collider);
+        }
     }
 }

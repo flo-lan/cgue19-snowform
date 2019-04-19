@@ -3,6 +3,8 @@
 #include <vector>
 
 class GameObject;
+class ColliderComponent;
+class Collision;
 
 class Component
 {
@@ -18,6 +20,16 @@ public:
 
     virtual void OnAttachComponent(Component* component) {}
     virtual void OnRemoveComponent(Component* component) {}
+
+    // OnCollisionEnter is called when this collider/rigidbody has begun touching another rigidbody/collider.
+    virtual void OnCollisionEnter(Collision const& collision) {}
+    // OnCollisionExit is called when this collider/rigidbody has stopped touching another rigidbody/collider.
+    virtual void OnCollisionExit(Collision const& collision) {}
+
+    // OnTriggerEnter is called when the Collider other enters the trigger.
+    virtual void OnTriggerEnter(ColliderComponent* other) {}
+    // OnTriggerExit is called when the Collider other has stopped touching the trigger.
+    virtual void OnTriggerExit(ColliderComponent* other) {}
 
     virtual void Update() {}
     virtual void LateUpdate() {}
