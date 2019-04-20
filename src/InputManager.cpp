@@ -17,3 +17,9 @@ bool InputManager::IsRightMouseButtonPressed() const
     std::unordered_map<int, bool>::const_iterator itr = mouseButtonPressed.find(GLFW_MOUSE_BUTTON_RIGHT);
     return itr != mouseButtonPressed.end() && itr->second;
 }
+
+bool InputManager::IsKeyPressed(int key) const
+{
+    std::unordered_map<int, bool>::const_iterator itr = keyPressed.find(key);
+    return itr != keyPressed.end() && itr->second;
+}

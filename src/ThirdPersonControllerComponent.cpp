@@ -4,8 +4,6 @@
 #include "GameObject.h"
 #include "InputManager.h"
 #include "glm/ext.hpp"
-#include <glm/gtc/constants.hpp>
-#include <iostream>
 
 ThirdPersonControllerComponent::ThirdPersonControllerComponent(GameObject* owner) :
     Component::Component(owner),
@@ -25,6 +23,8 @@ void ThirdPersonControllerComponent::OnStart()
     {
         cameraTransform = transform->GetChild(0);
     }
+
+    rigidDynamic = transform->GetParent()->GetOwner()->GetComponent<RigidDynamicComponent>();
 
     lastMousePositionX = sInputManager.GetMousePositionX();
     lastMousePositionY = sInputManager.GetMousePositionY();
@@ -51,6 +51,32 @@ void ThirdPersonControllerComponent::Update()
         float diffMouseScrollValue = sInputManager.GetMouseScrollValueY() - lastMouseScrollValue;
 
         cameraTransform->SetLocalPositionZ(cameraTransform->GetLocalPositionZ() - diffMouseScrollValue);
+    }
+    float velocity = 20.f;
+    float jumpVelocity = 20.f;
+    if (rigidDynamic && sInputManager.IsKeyPressed(GLFW_KEY_W))
+    {
+        rigidDynamic->AddForce(glm::vec3(0.f, 0.f, -velocity), physx::PxForceMode::eFORCE);
+    }
+
+    if (rigidDynamic && sInputManager.IsKeyPressed(GLFW_KEY_A))
+    {
+        rigidDynamic->AddForce(glm::vec3(-velocity, 0.f, 0.f), physx::PxForceMode::eFORCE);
+    }
+
+    if (rigidDynamic && sInputManager.IsKeyPressed(GLFW_KEY_S))
+    {
+        rigidDynamic->AddForce(glm::vec3(0.f, 0.f, velocity), physx::PxForceMode::eFORCE);
+    }
+
+    if (rigidDynamic && sInputManager.IsKeyPressed(GLFW_KEY_D))
+    {
+        rigidDynamic->AddForce(glm::vec3(velocity, 0.f, 0.f), physx::PxForceMode::eFORCE);
+    }
+
+    if (rigidDynamic && sInputManager.IsKeyPressed(GLFW_KEY_SPACE))
+    {
+        rigidDynamic->AddForce(glm::vec3(0.f, jumpVelocity, 0.f), physx::PxForceMode::eFORCE);
     }
 
     lastMousePositionX = sInputManager.GetMousePositionX();

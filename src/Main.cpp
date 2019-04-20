@@ -75,6 +75,8 @@ static void key_callback(GLFWwindow* window, int key, int scancode, int action, 
             gDisableCullFace = false;
         }
     }
+
+    KeyCallback(window, key, scancode, action, mods);
 }
 
 /* --------------------------------------------- */

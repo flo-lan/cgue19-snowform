@@ -1,8 +1,7 @@
 ﻿#pragma once
 
 #include "Component.h"
-#include <glm/detail/type_vec3.hpp>
-#include <glm/gtc/quaternion.hpp>
+#include "RigidDynamicComponent.h"
 
 class GameObject;
 class TransformComponent;
@@ -18,6 +17,7 @@ public:
 private:
     TransformComponent* transform;
     TransformComponent* cameraTransform;
+    RigidDynamicComponent* rigidDynamic;
 
     float lastMousePositionX;
     float lastMousePositionY;

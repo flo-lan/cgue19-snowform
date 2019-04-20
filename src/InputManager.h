@@ -3,6 +3,7 @@
 #include <GLFW\glfw3.h>
 #include <glm\glm.hpp>
 #include <unordered_map>
+#include <iostream>
 
 class InputManager
 {
@@ -31,6 +32,11 @@ public:
         mouseButtonPressed[button] = pressed;
     }
 
+    void SetKeyPressedState(int key, bool pressed)
+    {
+        keyPressed[key] = pressed;
+    }
+
     float GetMouseScrollValueX() const { return mouseScrollValues.x; }
     float GetMouseScrollValueY() const { return mouseScrollValues.y; }
 
@@ -40,6 +46,7 @@ public:
 
     bool IsLeftMouseButtonPressed() const;
     bool IsRightMouseButtonPressed() const;
+    bool IsKeyPressed(int key) const;
 
 private:
     InputManager();
@@ -47,6 +54,7 @@ private:
     glm::vec2 mouseScrollValues;
     glm::vec2 mousePosition;
     std::unordered_map<int /* Button */, bool> mouseButtonPressed;
+    std::unordered_map<int /* Key */, bool> keyPressed;
 };
 
 #define sInputManager InputManager::getInstance()
@@ -64,4 +72,9 @@ static void MouseCursorPositionCallback(GLFWwindow* window, double xpos, double 
 static void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
 {
     sInputManager.SetMouseButtonPressedState(button, action == GLFW_PRESS);
+}
+
+static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
+{           
+    sInputManager.SetKeyPressedState(key, action == GLFW_PRESS);
 }
