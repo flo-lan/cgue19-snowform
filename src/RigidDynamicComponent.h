@@ -2,6 +2,7 @@
 
 #include "RigidComponent.h"
 #include "PxRigidBody.h"
+#include "PxForceMode.h"
 
 class ColliderComponent;
 
@@ -19,6 +20,15 @@ public:
 
     physx::PxRigidBodyFlags GetPxRigidBodyFlags() const;
     void SetPxRigidBodyFlag(physx::PxRigidBodyFlag::Enum flag, bool value);
+
+    void SetMass(float mass);
+    void SetMassSpaceInertiaTensor(glm::vec3 const& m);
+
+    void SetLinearVelocity(glm::vec3 const& linearVelocity);
+    void SetAngularVelocity(glm::vec3 const& angularVelocity);
+
+    void AddForce(glm::vec3 const& force, physx::PxForceMode::Enum mode = physx::PxForceMode::eFORCE);
+    void AddTorque(glm::vec3 const& torque, physx::PxForceMode::Enum mode = physx::PxForceMode::eFORCE);
 
     virtual void SetGlobalPose(physx::PxTransform& globalPose);
 

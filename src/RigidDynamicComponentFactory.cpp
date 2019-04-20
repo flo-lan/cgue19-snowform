@@ -19,4 +19,10 @@ void RigidDynamicComponentFactory::Build(GameObject* gameObject, tinyxml2::XMLEl
         std::transform(kinematicValue.begin(), kinematicValue.end(), kinematicValue.begin(), ::tolower);
         rigidDynamic->SetPxRigidBodyFlag(physx::PxRigidBodyFlag::eKINEMATIC, kinematicValue == "true");
     }
+
+    if (element->Attribute("mass"))
+    {
+        std::string massValue = std::string(element->Attribute("mass"));
+        rigidDynamic->SetMass(std::strtof(massValue.c_str(), 0));
+    }
 }

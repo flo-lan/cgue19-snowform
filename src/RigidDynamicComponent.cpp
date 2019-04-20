@@ -54,6 +54,54 @@ void RigidDynamicComponent::SetPxRigidBodyFlag(physx::PxRigidBodyFlag::Enum flag
     }
 }
 
+void RigidDynamicComponent::SetMass(float mass)
+{
+    if (pxRigidDynamic)
+    {
+        pxRigidDynamic->setMass(mass);
+    }
+}
+
+void RigidDynamicComponent::SetMassSpaceInertiaTensor(glm::vec3 const& m)
+{
+    if (pxRigidDynamic)
+    {
+        pxRigidDynamic->setMassSpaceInertiaTensor(physx::PxVec3(m.x, m.y, m.z));
+    }
+}
+
+void RigidDynamicComponent::SetLinearVelocity(glm::vec3 const& linearVelocity)
+{
+    if (pxRigidDynamic)
+    {
+        pxRigidDynamic->setLinearVelocity(physx::PxVec3(linearVelocity.x, linearVelocity.y, linearVelocity.z));
+    }
+}
+
+void RigidDynamicComponent::SetAngularVelocity(glm::vec3 const& angularVelocity)
+{
+    if (pxRigidDynamic)
+    {
+        pxRigidDynamic->setAngularVelocity(physx::PxVec3(angularVelocity.x, angularVelocity.y, angularVelocity.z));
+    }
+}
+
+void RigidDynamicComponent::AddForce(glm::vec3 const& force, physx::PxForceMode::Enum mode)
+{
+    if (pxRigidDynamic)
+    {
+        pxRigidDynamic->addForce(physx::PxVec3(force.x, force.y, force.z), mode);
+    }
+}
+
+void RigidDynamicComponent::AddTorque(glm::vec3 const& torque, physx::PxForceMode::Enum mode)
+{
+    if (pxRigidDynamic)
+    {
+        pxRigidDynamic->addTorque(physx::PxVec3(torque.x, torque.y, torque.z), mode);
+    }
+}
+
 void RigidDynamicComponent::SetGlobalPose(physx::PxTransform& globalPose)
 {
     if (pxRigidDynamic)
