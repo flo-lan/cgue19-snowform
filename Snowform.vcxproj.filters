@@ -158,6 +158,12 @@
     <ClCompile Include="src\ArcBallControllerComponent.cpp">
       <Filter>Engine\Debug</Filter>
     </ClCompile>
+    <ClCompile Include="src\ThirdPersonControllerComponent.cpp">
+      <Filter>Game\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ThirdPersonControllerComponentFactory.cpp">
+      <Filter>Engine\Scene\ComponentFactories</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameObject.h">
@@ -321,6 +327,12 @@
     </ClInclude>
     <ClInclude Include="src\ArcBallControllerComponent.h">
       <Filter>Engine\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ThirdPersonControllerComponent.h">
+      <Filter>Game\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ThirdPersonControllerComponentFactory.h">
+      <Filter>Engine\Scene\ComponentFactories</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

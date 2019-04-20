@@ -9,6 +9,7 @@
 #include "ArcBallControllerComponentFactory.h"
 #include "CameraComponentFactory.h"
 #include "DebugComponentFactory.h"
+#include "ThirdPersonControllerComponentFactory.h"
 
 ComponentIndustry::ComponentIndustry()
 {
@@ -20,6 +21,7 @@ ComponentIndustry::ComponentIndustry()
     static BoxColliderComponentFactory boxColliderComponentFactory;
     static SphereColliderComponentFactory sphereColliderComponentFactory;
     static ArcBallControllerComponentFactory arcBallControllerComponentFactory;
+    static ThirdPersonControllerComponentFactory thirdPersonControllerComponentFactory;
     static CameraComponentFactory cameraComponentFactory;
     static DebugComponentFactory debugComponentFactory;
 
@@ -31,6 +33,7 @@ ComponentIndustry::ComponentIndustry()
     factories["BoxColliderComponent"] = &boxColliderComponentFactory;
     factories["SphereColliderComponent"] = &sphereColliderComponentFactory;
     factories["ArcBallControllerComponent"] = &arcBallControllerComponentFactory;
+    factories["ThirdPersonControllerComponent"] = &thirdPersonControllerComponentFactory;
     factories["CameraComponent"] = &cameraComponentFactory;
     factories["DebugComponent"] = &debugComponentFactory;
 }

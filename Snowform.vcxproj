@@ -47,6 +47,8 @@
     <ClCompile Include="src\SpotLightComponent.cpp" />
     <ClCompile Include="src\StringUtils.cpp" />
     <ClCompile Include="src\Texture2D.cpp" />
+    <ClCompile Include="src\ThirdPersonControllerComponent.cpp" />
+    <ClCompile Include="src\ThirdPersonControllerComponentFactory.cpp" />
     <ClCompile Include="src\Time.cpp" />
     <ClCompile Include="src\TransformComponent.cpp" />
     <ClCompile Include="src\TransformComponentFactory.cpp" />
@@ -102,6 +104,8 @@
     <ClInclude Include="src\SpotLightComponent.h" />
     <ClInclude Include="src\StringUtils.h" />
     <ClInclude Include="src\Texture2D.h" />
+    <ClInclude Include="src\ThirdPersonControllerComponent.h" />
+    <ClInclude Include="src\ThirdPersonControllerComponentFactory.h" />
     <ClInclude Include="src\Time.h" />
     <ClInclude Include="src\TransformComponent.h" />
     <ClInclude Include="src\TransformComponentFactory.h" />
