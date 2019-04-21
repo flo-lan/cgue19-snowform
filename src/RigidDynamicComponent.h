@@ -21,6 +21,9 @@ public:
     physx::PxRigidBodyFlags GetPxRigidBodyFlags() const;
     void SetPxRigidBodyFlag(physx::PxRigidBodyFlag::Enum flag, bool value);
 
+    bool IsCCDEnabled() const { return GetPxRigidBodyFlags() & physx::PxRigidBodyFlag::eENABLE_CCD; }
+    void EnableCCD(bool value) { SetPxRigidBodyFlag(physx::PxRigidBodyFlag::eENABLE_CCD, value); }
+
     void SetMass(float mass);
     void SetMassSpaceInertiaTensor(glm::vec3 const& m);
 

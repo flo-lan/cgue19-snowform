@@ -47,7 +47,8 @@ physx::PxFilterFlags SimulationFilterShader(
     retPairFlags = physx::PxPairFlag::eSOLVE_CONTACT |
         physx::PxPairFlag::eDETECT_DISCRETE_CONTACT |
         physx::PxPairFlag::eNOTIFY_TOUCH_FOUND |
-        physx::PxPairFlag::eNOTIFY_TOUCH_LOST;
+        physx::PxPairFlag::eNOTIFY_TOUCH_LOST |
+        physx::PxPairFlag::eDETECT_CCD_CONTACT;
 
     return physx::PxFilterFlag::eDEFAULT;
 }
@@ -122,7 +123,8 @@ bool PhysicsEngine::Start()
     pxSceneDesc.flags = physx::PxSceneFlags
     (
         physx::PxSceneFlag::eENABLE_ACTIVE_ACTORS |
-        physx::PxSceneFlag::eEXCLUDE_KINEMATICS_FROM_ACTIVE_ACTORS
+        physx::PxSceneFlag::eEXCLUDE_KINEMATICS_FROM_ACTIVE_ACTORS |
+        physx::PxSceneFlag::eENABLE_CCD
     );
     pxSceneDesc.simulationEventCallback = this;
     pxScene = pxPhysics->createScene(pxSceneDesc);

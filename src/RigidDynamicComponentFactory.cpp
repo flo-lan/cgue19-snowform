@@ -20,6 +20,11 @@ void RigidDynamicComponentFactory::Build(GameObject* gameObject, tinyxml2::XMLEl
         rigidDynamic->SetPxRigidBodyFlag(physx::PxRigidBodyFlag::eKINEMATIC, kinematicValue == "true");
     }
 
+    if (element->Attribute("CCD"))
+    {
+        rigidDynamic->EnableCCD(std::string(element->Attribute("CCD")) == "true");
+    }
+
     if (element->Attribute("mass"))
     {
         std::string massValue = std::string(element->Attribute("mass"));

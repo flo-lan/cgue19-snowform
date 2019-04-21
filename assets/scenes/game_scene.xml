@@ -83,7 +83,7 @@
         <Components>
           <TransformComponent localPosition="-2.89 20.2 4.53" localRotation="0 0 0" localScale="1 1 1" />
           <SphereColliderComponent physicsMaterial="Default" radius="0.5" />
-          <RigidDynamicComponent />
+          <RigidDynamicComponent CCD="true" />
         </Components>
         <Children>
           <GameObject name="SnowballMesh">
