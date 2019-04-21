@@ -44,9 +44,9 @@
   </GameObject>
   <GameObject name="Snowball">
     <Components>
-      <TransformComponent localPosition="-2.89 14.51 7.65" localRotation="0 0 0" localScale="1 1 1" />
+      <TransformComponent localPosition="-2.89 20.2 4.53" localRotation="0 0 0" localScale="1 1 1" />
       <SphereColliderComponent physicsMaterial="Default" radius="0.5" />
-      <RigidDynamicComponent />
+      <RigidDynamicComponent CCD="true" mass="1" />
     </Components>
     <Children>
       <GameObject name="SnowballMesh">
@@ -55,6 +55,21 @@
           <MeshRendererComponent material="Snowball" mesh="Snowball" />
         </Components>
         <Children />
+      </GameObject>
+      <GameObject name="Main Camera Focus">
+        <Components>
+          <TransformComponent localPosition="0 0 0" localRotation="0 0 0" localScale="1 1 1" />
+          <ThirdPersonControllerComponent />
+        </Components>
+        <Children>
+          <GameObject name="Main Camera">
+            <Components>
+              <TransformComponent localPosition="0 0 20" localRotation="-180 180 180" localScale="1 1 1" />
+              <CameraComponent />
+            </Components>
+            <Children />
+          </GameObject>
+        </Children>
       </GameObject>
     </Children>
   </GameObject>
@@ -71,44 +86,6 @@
           <RigidStaticComponent />
         </Components>
         <Children />
-      </GameObject>
-    </Children>
-  </GameObject>
-  <GameObject name="SnowBallTest">
-    <Components>
-      <TransformComponent localPosition="0 0 0" localRotation="0 0 0" localScale="1 1 1" />
-    </Components>
-    <Children>
-      <GameObject name="Snowball (1)">
-        <Components>
-          <TransformComponent localPosition="-2.89 20.2 4.53" localRotation="0 0 0" localScale="1 1 1" />
-          <SphereColliderComponent physicsMaterial="Default" radius="0.5" />
-          <RigidDynamicComponent CCD="true" />
-        </Components>
-        <Children>
-          <GameObject name="SnowballMesh">
-            <Components>
-              <TransformComponent localPosition="0 0 0" localRotation="0 0 0" localScale="0.003305583 0.003305583 0.003305583" />
-              <MeshRendererComponent material="Snowball" mesh="Snowball" />
-            </Components>
-            <Children />
-          </GameObject>
-          <GameObject name="Main Camera Focus">
-            <Components>
-              <TransformComponent localPosition="0 0 0" localRotation="0 0 0" localScale="1 1 1" />
-              <ThirdPersonControllerComponent />
-            </Components>
-            <Children>
-              <GameObject name="Main Camera">
-                <Components>
-                  <TransformComponent localPosition="0 0 20" localRotation="0 0 0" localScale="1 1 1" />
-                  <CameraComponent />
-                </Components>
-                <Children />
-              </GameObject>
-            </Children>
-          </GameObject>
-        </Children>
       </GameObject>
     </Children>
   </GameObject>
