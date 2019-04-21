@@ -26,6 +26,8 @@
     <ClCompile Include="src\MeshColliderComponentFactory.cpp" />
     <ClCompile Include="src\MeshRendererComponent.cpp" />
     <ClCompile Include="src\MeshRendererComponentFactory.cpp" />
+    <ClCompile Include="src\MovingPlatformComponent.cpp" />
+    <ClCompile Include="src\MovingPlatformComponentFactory.cpp" />
     <ClCompile Include="src\PhysicsEngine.cpp" />
     <ClCompile Include="src\RigidComponent.cpp" />
     <ClCompile Include="src\RigidDynamicComponent.cpp" />
@@ -83,6 +85,8 @@
     <ClInclude Include="src\MeshColliderComponentFactory.h" />
     <ClInclude Include="src\MeshRendererComponent.h" />
     <ClInclude Include="src\MeshRendererComponentFactory.h" />
+    <ClInclude Include="src\MovingPlatformComponent.h" />
+    <ClInclude Include="src\MovingPlatformComponentFactory.h" />
     <ClInclude Include="src\PhysicsEngine.h" />
     <ClInclude Include="src\RigidComponent.h" />
     <ClInclude Include="src\RigidDynamicComponent.h" />

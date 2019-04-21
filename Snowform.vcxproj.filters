@@ -164,6 +164,12 @@
     <ClCompile Include="src\ThirdPersonControllerComponentFactory.cpp">
       <Filter>Engine\Scene\ComponentFactories</Filter>
     </ClCompile>
+    <ClCompile Include="src\MovingPlatformComponent.cpp">
+      <Filter>Game\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MovingPlatformComponentFactory.cpp">
+      <Filter>Game\Scene\ComponentFactories</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameObject.h">
@@ -334,6 +340,12 @@
     <ClInclude Include="src\ThirdPersonControllerComponentFactory.h">
       <Filter>Engine\Scene\ComponentFactories</Filter>
     </ClInclude>
+    <ClInclude Include="src\MovingPlatformComponent.h">
+      <Filter>Game\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="src\MovingPlatformComponentFactory.h">
+      <Filter>Game\Scene\ComponentFactories</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">
@@ -407,6 +419,12 @@
     </Filter>
     <Filter Include="Engine\Debug">
       <UniqueIdentifier>{a0a43f54-f542-481c-a479-2e2dc21b8657}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Level">
+      <UniqueIdentifier>{758a60e9-7f5d-45d9-8000-577394634a9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Game\Scene\ComponentFactories">
+      <UniqueIdentifier>{b8669dd7-1036-421e-8085-b64d4a9ef1b4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

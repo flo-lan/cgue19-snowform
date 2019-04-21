@@ -75,6 +75,7 @@ bool GlobalAssetLoader::LoadAssets()
     sAssetManager.CreateSphereMesh("Sphere", 64, 32, 1.f);
     sAssetManager.CreateTorusMesh("Torus", 32, 8, 4.5f, 0.5f);
 
+    sAssetManager.CreateMeshFromFile("BlockMoving", "assets/meshes/block_moving.fbx");
     sAssetManager.CreateMeshFromFile("BlockSnow", "assets/meshes/block_snow.fbx");
     sAssetManager.CreateMeshFromFile("BlockSnowCliff", "assets/meshes/block_snow_cliff.fbx");
     sAssetManager.CreateMeshFromFile("BlockSnowCliffCorner", "assets/meshes/block_snow_cliff_corner.fbx");

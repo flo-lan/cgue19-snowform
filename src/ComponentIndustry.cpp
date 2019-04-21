@@ -10,6 +10,7 @@
 #include "CameraComponentFactory.h"
 #include "DebugComponentFactory.h"
 #include "ThirdPersonControllerComponentFactory.h"
+#include "MovingPlatformComponentFactory.h"
 
 ComponentIndustry::ComponentIndustry()
 {
@@ -24,6 +25,7 @@ ComponentIndustry::ComponentIndustry()
     static ThirdPersonControllerComponentFactory thirdPersonControllerComponentFactory;
     static CameraComponentFactory cameraComponentFactory;
     static DebugComponentFactory debugComponentFactory;
+    static MovingPlatformComponentFactory movingPlatformComponentFactory;
 
     factories["TransformComponent"] = &transformComponentFactory;
     factories["MeshRendererComponent"] = &meshRendererComponentFactory;
@@ -36,6 +38,7 @@ ComponentIndustry::ComponentIndustry()
     factories["ThirdPersonControllerComponent"] = &thirdPersonControllerComponentFactory;
     factories["CameraComponent"] = &cameraComponentFactory;
     factories["DebugComponent"] = &debugComponentFactory;
+    factories["MovingPlatformComponent"] = &movingPlatformComponentFactory;
 }
 
 void ComponentIndustry::AddFactory(std::string const& componentName, ComponentFactory* factory)
