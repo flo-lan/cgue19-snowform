@@ -28,6 +28,32 @@ void BoxColliderComponentFactory::Build(GameObject* gameObject, tinyxml2::XMLEle
         }
     }
 
+    if (element->Attribute("offset"))
+    {
+        std::string offsetString = std::string(element->Attribute("offset"));
+        std::vector<std::string> offsetStringSplit = split(offsetString, ' ');
+
+        glm::vec3 offset = glm::vec3(0.f, 0.f, 0.f);
+
+        switch (offsetStringSplit.size())
+        {
+        case 3:
+            offset.z = (float)::atof(offsetStringSplit[2].c_str());
+            // No break
+        case 2:
+            offset.y = (float)::atof(offsetStringSplit[1].c_str());
+            // No break
+        case 1:
+            offset.x = (float)::atof(offsetStringSplit[0].c_str());
+            break;
+        default:
+            fprintf(stderr, "Could not parse offset for box collider component of game object '%s'!\n", gameObject->GetName().c_str());
+            break;
+        }
+
+        boxCollider->SetOffset(offset);
+    }
+
     if (element->Attribute("halfExtent"))
     {
         std::string halfExtentString = std::string(element->Attribute("halfExtent"));

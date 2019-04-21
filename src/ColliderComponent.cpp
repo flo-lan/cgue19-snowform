@@ -21,7 +21,8 @@ ColliderComponent::ColliderComponent(GameObject* owner) :
     pxMaterial(nullptr),
     pxGeometry(nullptr),
     pxShape(nullptr),
-    pxShapeFlags(physx::PxShapeFlag::eSIMULATION_SHAPE | physx::PxShapeFlag::eSCENE_QUERY_SHAPE)
+    pxShapeFlags(physx::PxShapeFlag::eSIMULATION_SHAPE | physx::PxShapeFlag::eSCENE_QUERY_SHAPE),
+    offset(0.f, 0.f, 0.f)
 {
 }
 
@@ -50,6 +51,16 @@ void ColliderComponent::SetTrigger(bool value)
     {
         SetPxShapeFlag(physx::PxShapeFlag::eTRIGGER_SHAPE, false);
         SetPxShapeFlag(physx::PxShapeFlag::eSIMULATION_SHAPE, true);
+    }
+}
+
+void ColliderComponent::SetOffset(glm::vec3 const& value)
+{
+    offset = value;
+
+    if (pxShape)
+    {
+        pxShape->setLocalPose(physx::PxTransform(value.x, value.y, value.z));
     }
 }
 
@@ -171,6 +182,7 @@ void ColliderComponent::CreatePxShape()
     }
 
     pxShape->setFlags(pxShapeFlags);
+    pxShape->setLocalPose(physx::PxTransform(offset.x, offset.y, offset.z));
 
     if (RigidDynamicComponent* rigidDynamic = GetOwner()->GetComponent<RigidDynamicComponent>())
     {

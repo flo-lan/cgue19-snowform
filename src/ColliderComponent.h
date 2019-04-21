@@ -2,6 +2,7 @@
 
 #include "Component.h"
 #include "PxShape.h"
+#include <glm/glm.hpp>
 
 class GameObject;
 class TransformComponent;
@@ -23,6 +24,9 @@ public:
 
     void SetTrigger(bool value);
     bool IsTrigger() const { return pxShapeFlags & physx::PxShapeFlag::eTRIGGER_SHAPE; }
+
+    void SetOffset(glm::vec3 const& value);
+    glm::vec3 const& GetOffset() const { return offset; }
 
     physx::PxMaterial* GetPxMaterial() const { return pxMaterial; }
     void SetPxMaterial(physx::PxMaterial* value);
@@ -47,4 +51,6 @@ private:
     physx::PxGeometry* pxGeometry;
     physx::PxShape* pxShape;
     physx::PxShapeFlags pxShapeFlags;
+
+    glm::vec3 offset;
 };
