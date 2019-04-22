@@ -19,6 +19,8 @@ private:
     TransformComponent* cameraTransform;
     RigidDynamicComponent* rigidDynamic;
 
+    float velocity = 20.f;
+    float jumpVelocity = 20.f;
     float lastMousePositionX;
     float lastMousePositionY;
     float lastMouseScrollValue;

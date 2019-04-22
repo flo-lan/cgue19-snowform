@@ -52,26 +52,37 @@ void ThirdPersonControllerComponent::Update()
 
         cameraTransform->SetLocalPositionZ(cameraTransform->GetLocalPositionZ() - diffMouseScrollValue);
     }
-    float velocity = 20.f;
-    float jumpVelocity = 20.f;
+
     if (rigidDynamic && sInputManager.IsKeyPressed(GLFW_KEY_W))
     {
-        rigidDynamic->AddForce(glm::vec3(0.f, 0.f, -velocity), physx::PxForceMode::eFORCE);
+        glm::vec3 direction = cameraTransform->GetDirectionBackward();
+        direction.y = 0;
+        direction = glm::normalize(direction) * -1;
+        rigidDynamic->AddForce(direction * velocity, physx::PxForceMode::eFORCE);
     }
 
     if (rigidDynamic && sInputManager.IsKeyPressed(GLFW_KEY_A))
     {
-        rigidDynamic->AddForce(glm::vec3(-velocity, 0.f, 0.f), physx::PxForceMode::eFORCE);
+        glm::vec3 direction = cameraTransform->GetDirectionRight();
+        direction.y = 0;
+        direction = glm::normalize(direction) * -1;
+        rigidDynamic->AddForce(direction * velocity, physx::PxForceMode::eFORCE);
     }
 
     if (rigidDynamic && sInputManager.IsKeyPressed(GLFW_KEY_S))
     {
-        rigidDynamic->AddForce(glm::vec3(0.f, 0.f, velocity), physx::PxForceMode::eFORCE);
+        glm::vec3 direction = cameraTransform->GetDirectionBackward();
+        direction.y = 0;
+        direction = glm::normalize(direction);
+        rigidDynamic->AddForce(direction * velocity, physx::PxForceMode::eFORCE);
     }
 
     if (rigidDynamic && sInputManager.IsKeyPressed(GLFW_KEY_D))
     {
-        rigidDynamic->AddForce(glm::vec3(velocity, 0.f, 0.f), physx::PxForceMode::eFORCE);
+        glm::vec3 direction = cameraTransform->GetDirectionRight();
+        direction.y = 0;
+        direction = glm::normalize(direction);
+        rigidDynamic->AddForce(direction * velocity, physx::PxForceMode::eFORCE);
     }
 
     if (rigidDynamic && sInputManager.IsKeyPressed(GLFW_KEY_SPACE))
