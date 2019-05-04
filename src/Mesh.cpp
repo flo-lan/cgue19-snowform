@@ -31,6 +31,9 @@ Mesh* Mesh::CreateQuad(std::string const& name, float width, float height)
     mesh->Vertices.push_back(Vertex( width / 2.f, -height / 2.f, 0.f, 0.f, 0.f, 1.f, uv10));
     mesh->Vertices.push_back(Vertex( width / 2.f,  height / 2.f, 0.f, 0.f, 0.f, 1.f, uv11));
 
+    mesh->Indices.push_back(0);  mesh->Indices.push_back(2);  mesh->Indices.push_back(1);
+    mesh->Indices.push_back(2);  mesh->Indices.push_back(3);  mesh->Indices.push_back(1);
+
     return mesh;
 }
 
