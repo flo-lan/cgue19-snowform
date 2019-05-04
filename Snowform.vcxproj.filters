@@ -176,6 +176,9 @@
     <ClCompile Include="src\RotateComponentFactory.cpp">
       <Filter>Game\Scene\ComponentFactories</Filter>
     </ClCompile>
+    <ClCompile Include="src\ImageMaterial.cpp">
+      <Filter>Game\Render\Material</Filter>
+    </ClCompile>
     <ClCompile Include="src\Screen.cpp">
       <Filter>Game\Screen</Filter>
     </ClCompile>
@@ -360,6 +363,9 @@
     </ClInclude>
     <ClInclude Include="src\RotateComponentFactory.h">
       <Filter>Game\Scene\ComponentFactories</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ImageMaterial.h">
+      <Filter>Game\Render\Material</Filter>
     </ClInclude>
     <ClInclude Include="src\Screen.h">
       <Filter>Game\Screen</Filter>

@@ -19,6 +19,7 @@
     <ClCompile Include="src\GameObject.cpp" />
     <ClCompile Include="src\GameScene.cpp" />
     <ClCompile Include="src\GlobalAssetLoader.cpp" />
+    <ClCompile Include="src\ImageMaterial.cpp" />
     <ClCompile Include="src\InputManager.cpp" />
     <ClCompile Include="src\Material.cpp" />
     <ClCompile Include="src\Mesh.cpp" />
@@ -78,6 +79,7 @@
     <ClInclude Include="src\GameObject.h" />
     <ClInclude Include="src\GameScene.h" />
     <ClInclude Include="src\GlobalAssetLoader.h" />
+    <ClInclude Include="src\ImageMaterial.h" />
     <ClInclude Include="src\INIReader.h" />
     <ClCompile Include="src\AssetManager.cpp" />
     <ClCompile Include="src\Main.cpp" />
