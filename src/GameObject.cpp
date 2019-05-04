@@ -10,6 +10,7 @@
 #include <queue>
 
 GameObject::GameObject(std::string const& _name, Scene* _scene) :
+    id(""),
     name(_name),
     scene(_scene),
     destroyed(false)
@@ -41,6 +42,11 @@ GameObject::~GameObject()
 
     // Component list contains the same elements as component map
     componentList.clear();
+
+    if (id != "")
+    {
+        scene->RemoveGameObjectIdMapping(id);
+    }
 
     fprintf(stdout, "Deleted game object '%s' from scene '%s'!\n", name.c_str(), scene->GetName().c_str());
 }
@@ -269,4 +275,11 @@ void GameObject::TriggerExit(ColliderComponent* collider)
             component->OnTriggerExit(collider);
         }
     }
+}
+
+void GameObject::SetId(std::string const& id)
+{
+    scene->RemoveGameObjectIdMapping(this->id);
+    this->id = id;
+    scene->InsertGameObjectIdMapping(this, id);
 }

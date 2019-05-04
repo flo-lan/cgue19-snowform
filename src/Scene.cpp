@@ -86,6 +86,12 @@ bool Scene::LoadFromFile(std::string const& file)
             gameObjectElement.Parent ? gameObjectElement.Parent->GetComponent<TransformComponent>() : nullptr
         );
 
+        const char* gameObjectId = gameObjectElement.Element->Attribute("id");
+        if (gameObjectId)
+        {
+            gameObject->SetId(std::string(gameObjectId));
+        }
+
         if (tinyxml2::XMLNode* componentsNode = gameObjectElement.Element->FirstChildElement("Components"))
         {
             for (tinyxml2::XMLElement* componentElement = componentsNode->FirstChildElement(); componentElement != nullptr; componentElement = componentElement->NextSiblingElement())
@@ -212,6 +218,28 @@ void Scene::TraverseSceneGraphDFI(SceneGraphTraverser& traverser)
     {
         (*itr)->TraverseTransformGraphDFI(traverser, true);
     }
+}
+
+void Scene::InsertGameObjectById(GameObject* gameObject, std::string const& id)
+{
+    gameObjectsById[id] = gameObject;
+}
+
+void Scene::RemoveGameObjectById(std::string const& id)
+{
+    gameObjectsById.erase(id);
+}
+
+GameObject* Scene::GetGameObjectById(std::string const& id)
+{
+    GameObjectByIdMap::const_iterator itr = gameObjectsById.find(id);
+
+    if (itr != gameObjectsById.end())
+    {
+        return itr->second;
+    }
+
+    return nullptr;
 }
 
 GameObject* Scene::CreateGameObject(std::string const& name, TransformComponent* parent)

@@ -35,6 +35,8 @@ public:
     void TriggerEnter(ColliderComponent* collider);
     void TriggerExit(ColliderComponent* collider);
 
+    void SetId(std::string const& id);
+
     template<class T> T* AttachComponent()
     {
         T* component = new T(this);
@@ -98,6 +100,7 @@ private:
     typedef std::map<uint32_t /* Type Id */, ComponentList> ComponentMap;
 
 private:
+    std::string id;
     std::string name;
     ComponentMap componentWaitingMap;
     ComponentList componentWaitingList;

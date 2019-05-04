@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+#include <unordered_map>
 
 class GameObject;
 class TransformComponent;
@@ -29,6 +30,11 @@ public:
     // Traverse scene graph depth first inversed
     void TraverseSceneGraphDFI(SceneGraphTraverser& traverser);
 
+    void InsertGameObjectIdMapping(GameObject* gameObject, std::string const& id);
+    void RemoveGameObjectIdMapping(std::string const& id);
+    
+    GameObject* GetGameObjectById(std::string const& id);
+
     // Call this for creating a new game object in this scene
     GameObject* CreateGameObject(std::string const& name, TransformComponent* parent = nullptr);
 
@@ -46,7 +52,9 @@ protected:
 
 private:
     typedef std::vector<TransformComponent*> TransformList;
+    typedef std::unordered_map<std::string /* id */, GameObject*> GameObjectByIdMap;
 
     std::string name;
     TransformList sceneGraphRoots;
+    GameObjectByIdMap gameObjectsById;
 };
