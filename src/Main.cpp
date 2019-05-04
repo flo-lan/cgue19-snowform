@@ -15,6 +15,7 @@
 #include "GameScene.h"
 #include "Settings.h"
 #include "Time.h"
+#include "Screen.h"
 
 /* --------------------------------------------- */
 // Prototypes
@@ -140,6 +141,9 @@ int main(int argc, char** argv)
     glfwSetScrollCallback(window, MouseScrollCallback);
     glfwSetCursorPosCallback(window, MouseCursorPositionCallback);
     glfwSetMouseButtonCallback(window, MouseButtonCallback);
+
+    // Set screen window to access window properties globally
+    Screen::SetWindow(window);
 
     // To force GLEW to load all functions, the variable glewExperimental has to be modified
     glewExperimental = true;

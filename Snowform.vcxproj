@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="src\ArcBallControllerComponent.cpp" />
@@ -37,6 +37,7 @@
     <ClCompile Include="src\RotateComponent.cpp" />
     <ClCompile Include="src\RotateComponentFactory.cpp" />
     <ClCompile Include="src\SceneGraphTraverser.cpp" />
+    <ClCompile Include="src\Screen.cpp" />
     <ClCompile Include="src\Settings.cpp" />
     <ClCompile Include="src\SphereColliderComponent.cpp" />
     <ClCompile Include="src\SphereColliderComponentFactory.cpp" />
@@ -98,6 +99,7 @@
     <ClInclude Include="src\RotateComponent.h" />
     <ClInclude Include="src\RotateComponentFactory.h" />
     <ClInclude Include="src\SceneGraphTraverser.h" />
+    <ClInclude Include="src\Screen.h" />
     <ClInclude Include="src\Settings.h" />
     <ClInclude Include="src\SphereColliderComponent.h" />
     <ClInclude Include="src\SphereColliderComponentFactory.h" />
