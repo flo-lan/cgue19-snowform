@@ -66,6 +66,7 @@ public:
     Mesh(std::string const& name);
     ~Mesh();
 
+    static Mesh* CreateQuad(std::string const& name, float width, float height);
     static Mesh* CreateCube(std::string const& name, float width, float height, float depth);
     static Mesh* CreateCylinder(std::string const& name, uint32_t segments, float radius, float height);
     static Mesh* CreateSphere(std::string const& name, uint32_t segmentsLongitude, uint32_t segmentsLatitude, float radius);

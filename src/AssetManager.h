@@ -45,6 +45,7 @@ public:
     Shader* CreateShader(std::string const& name, GLenum type);
     ShaderProgram* CreateShaderProgram(std::string const& name);
     Texture2D* CreateTexture(std::string const& name);
+    Mesh* CreateQuadMesh(std::string const& name, float width, float height);
     Mesh* CreateCubeMesh(std::string const& name, float width, float height, float depth);
     Mesh* CreateCylinderMesh(std::string const& name, uint32_t segments, float radius, float height);
     Mesh* CreateSphereMesh(std::string const& name, uint32_t segmentsLongitude, uint32_t segmentsLatitude, float radius);

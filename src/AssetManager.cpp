@@ -129,6 +129,11 @@ void AssetManager::DeleteMaterials()
     materials.clear();
 }
 
+Mesh* AssetManager::CreateQuadMesh(std::string const& name, float width, float height)
+{
+    return meshes[name] = Mesh::CreateQuad(name, width, height);
+}
+
 Mesh* AssetManager::CreateCubeMesh(std::string const& name, float width, float height, float depth)
 {
     return meshes[name] = Mesh::CreateCube(name, width, height, depth);

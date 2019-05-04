@@ -17,6 +17,23 @@ Mesh::~Mesh()
     fprintf(stdout, "Deleted mesh '%s'!\n", Name.c_str());
 }
 
+Mesh* Mesh::CreateQuad(std::string const& name, float width, float height)
+{
+    Mesh* mesh = new Mesh(name);
+
+    glm::vec2 uv00 = glm::vec2(0.f, 0.f);
+    glm::vec2 uv10 = glm::vec2(1.f, 0.f);
+    glm::vec2 uv01 = glm::vec2(0.f, 1.f);
+    glm::vec2 uv11 = glm::vec2(1.f, 1.f);
+
+    mesh->Vertices.push_back(Vertex(-width / 2.f, -height / 2.f, 0.f, 0.f, 0.f, 1.f, uv00));
+    mesh->Vertices.push_back(Vertex(-width / 2.f,  height / 2.f, 0.f, 0.f, 0.f, 1.f, uv01));
+    mesh->Vertices.push_back(Vertex( width / 2.f, -height / 2.f, 0.f, 0.f, 0.f, 1.f, uv10));
+    mesh->Vertices.push_back(Vertex( width / 2.f,  height / 2.f, 0.f, 0.f, 0.f, 1.f, uv11));
+
+    return mesh;
+}
+
 Mesh* Mesh::CreateCube(std::string const& name, float width, float height, float depth)
 {
     Mesh* mesh = new Mesh(name);
