@@ -140,6 +140,7 @@ int main(int argc, char** argv)
     glfwSetScrollCallback(window, MouseScrollCallback);
     glfwSetCursorPosCallback(window, MouseCursorPositionCallback);
     glfwSetMouseButtonCallback(window, MouseButtonCallback);
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
     // To force GLEW to load all functions, the variable glewExperimental has to be modified
     glewExperimental = true;
