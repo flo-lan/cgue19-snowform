@@ -21,12 +21,14 @@ public:
 
     glm::vec3 GetPosition() const;
     glm::mat4 const& GetViewProjectionMatrix() const { return viewProjectionMatrix; }
+    glm::mat4 const& GetOrthographicProjectionMatrix() const { return orthographicProjectionMatrix; }
 
     static CameraComponent* GetMainCameraComponent() { return main; }
 
 private:
     TransformComponent* transform;
     glm::mat4 viewProjectionMatrix;
+    glm::mat4 orthographicProjectionMatrix;
     float fov;
     float aspectRatio;
     float nearPlane;
