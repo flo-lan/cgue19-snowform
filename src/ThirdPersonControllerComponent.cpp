@@ -38,12 +38,9 @@ void ThirdPersonControllerComponent::Update()
     if (transform)
     {
         float diffX = sInputManager.GetMousePositionX() - lastMousePositionX;
-        float diffY = sInputManager.GetMousePositionY() - lastMousePositionY;
-
-        float localRotationX = -glm::radians(diffY) * 0.5f /* Slow down */;
         float localRotationY = -glm::radians(diffX) * 0.5f /* Slow down */;
 
-        transform->Rotate(localRotationX, localRotationY, 0.f);
+        transform->Rotate(0.f, localRotationY, 0.f);
     }
 
     if (cameraTransform)
