@@ -21,35 +21,48 @@ bool GlobalAssetLoader::LoadAssets()
     Shader* simpleFragmentShader = sAssetManager.CreateShader("simple_fragment_shader", GL_FRAGMENT_SHADER);
     Shader* standardVertexShader = sAssetManager.CreateShader("standard_vertex_shader", GL_VERTEX_SHADER);
     Shader* standardFragmentShader = sAssetManager.CreateShader("standard_fragment_shader", GL_FRAGMENT_SHADER);
+    Shader* imageVertexShader = sAssetManager.CreateShader("image_vertex_shader", GL_VERTEX_SHADER);
+    Shader* imageFragmentShader = sAssetManager.CreateShader("image_fragment_shader", GL_FRAGMENT_SHADER);
 
     if (!simpleVertexShader) { return false; }
     if (!simpleFragmentShader) { return false; }
     if (!standardVertexShader) { return false; }
     if (!standardFragmentShader) { return false; }
+    if (!imageVertexShader) { return false; }
+    if (!imageFragmentShader) { return false; }
 
     if (!simpleVertexShader->LoadSourceFromFile("assets/shaders/simple_vertex.glsl")) { return false; }
     if (!simpleFragmentShader->LoadSourceFromFile("assets/shaders/simple_fragment.glsl")) { return false; }
     if (!standardVertexShader->LoadSourceFromFile("assets/shaders/standard_vertex.glsl")) { return false; }
     if (!standardFragmentShader->LoadSourceFromFile("assets/shaders/standard_fragment.glsl")) { return false; }
+    if (!imageVertexShader->LoadSourceFromFile("assets/shaders/image_vertex.glsl")) { return false; }
+    if (!imageFragmentShader->LoadSourceFromFile("assets/shaders/image_fragment.glsl")) { return false; }
 
     if (!simpleVertexShader->Compile()) { return false; }
     if (!simpleFragmentShader->Compile()) { return false; }
     if (!standardVertexShader->Compile()) { return false; }
     if (!standardFragmentShader->Compile()) { return false; }
+    if (!imageVertexShader->Compile()) { return false; }
+    if (!imageFragmentShader->Compile()) { return false; }
 
     ShaderProgram* simpleShaderProgram = sAssetManager.CreateShaderProgram("simple_shader_program");
     ShaderProgram* standardShaderProgram = sAssetManager.CreateShaderProgram("standard_shader_program");
+    ShaderProgram* imageShaderProgram = sAssetManager.CreateShaderProgram("image_shader_program");
 
     if (!simpleShaderProgram) { return false; }
     if (!standardShaderProgram) { return false; }
+    if (!imageShaderProgram) { return false; }
 
     if (!simpleShaderProgram->AttachShader(simpleVertexShader)) { return false; }
     if (!simpleShaderProgram->AttachShader(simpleFragmentShader)) { return false; }
     if (!standardShaderProgram->AttachShader(standardVertexShader)) { return false; }
     if (!standardShaderProgram->AttachShader(standardFragmentShader)) { return false; }
+    if (!imageShaderProgram->AttachShader(imageVertexShader)) { return false; }
+    if (!imageShaderProgram->AttachShader(imageFragmentShader)) { return false; }
 
     if (!simpleShaderProgram->Link()) { return false; }
     if (!standardShaderProgram->Link()) { return false; }
+    if (!imageShaderProgram->Link()) { return false; }
 
     if (Texture2D* texture = sAssetManager.CreateTexture("pixel_diffuse")) { texture->LoadFromFile("assets/textures/pixel_diffuse.dds"); }
     else { return false; }
