@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="src\Main.cpp" />
@@ -175,6 +175,9 @@
     </ClCompile>
     <ClCompile Include="src\RotateComponentFactory.cpp">
       <Filter>Game\Scene\ComponentFactories</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UserInterfaceScene.cpp">
+      <Filter>Game\Scene</Filter>
     </ClCompile>
     <ClCompile Include="src\ImageMaterial.cpp">
       <Filter>Game\Render\Material</Filter>
@@ -363,6 +366,9 @@
     </ClInclude>
     <ClInclude Include="src\RotateComponentFactory.h">
       <Filter>Game\Scene\ComponentFactories</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UserInterfaceScene.h">
+      <Filter>Game\Scene</Filter>
     </ClInclude>
     <ClInclude Include="src\ImageMaterial.h">
       <Filter>Game\Render\Material</Filter>

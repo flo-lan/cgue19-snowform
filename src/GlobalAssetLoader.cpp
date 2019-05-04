@@ -89,6 +89,7 @@ bool GlobalAssetLoader::LoadAssets()
         im->SetImageTexture(sAssetManager.GetTexture2D("wood_diffuse"));
     }
 
+    sAssetManager.CreateQuadMesh("Image", 1.f, 1.f);
     sAssetManager.CreateCubeMesh("Cube", 1.5f, 1.5f, 1.5f);
     sAssetManager.CreateCylinderMesh("Cylinder", 32, 1.f, 1.3f);
     sAssetManager.CreateSphereMesh("Sphere", 64, 32, 1.f);
