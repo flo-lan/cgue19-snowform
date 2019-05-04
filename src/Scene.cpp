@@ -220,12 +220,12 @@ void Scene::TraverseSceneGraphDFI(SceneGraphTraverser& traverser)
     }
 }
 
-void Scene::InsertGameObjectById(GameObject* gameObject, std::string const& id)
+void Scene::InsertGameObjectIdMapping(GameObject* gameObject, std::string const& id)
 {
     gameObjectsById[id] = gameObject;
 }
 
-void Scene::RemoveGameObjectById(std::string const& id)
+void Scene::RemoveGameObjectIdMapping(std::string const& id)
 {
     gameObjectsById.erase(id);
 }

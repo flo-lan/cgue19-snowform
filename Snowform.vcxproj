@@ -34,6 +34,8 @@
     <ClCompile Include="src\RigidDynamicComponentFactory.cpp" />
     <ClCompile Include="src\RigidStaticComponent.cpp" />
     <ClCompile Include="src\RigidStaticComponentFactory.cpp" />
+    <ClCompile Include="src\RotateComponent.cpp" />
+    <ClCompile Include="src\RotateComponentFactory.cpp" />
     <ClCompile Include="src\SceneGraphTraverser.cpp" />
     <ClCompile Include="src\Settings.cpp" />
     <ClCompile Include="src\SphereColliderComponent.cpp" />
@@ -93,6 +95,8 @@
     <ClInclude Include="src\RigidDynamicComponentFactory.h" />
     <ClInclude Include="src\RigidStaticComponent.h" />
     <ClInclude Include="src\RigidStaticComponentFactory.h" />
+    <ClInclude Include="src\RotateComponent.h" />
+    <ClInclude Include="src\RotateComponentFactory.h" />
     <ClInclude Include="src\SceneGraphTraverser.h" />
     <ClInclude Include="src\Settings.h" />
     <ClInclude Include="src\SphereColliderComponent.h" />

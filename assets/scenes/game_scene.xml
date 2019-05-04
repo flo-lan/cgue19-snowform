@@ -357,6 +357,7 @@
           <MeshRendererComponent material="StandardDefault" mesh="Coin" />
           <BoxColliderComponent physicsMaterial="Default" offset="0 0 0" halfExtent="2.5 2.5 2.5" trigger="true" />
           <RigidStaticComponent />
+          <RotateComponent rotationDirection="0 1 0" speed="5" />
         </Components>
         <Children />
       </GameObject>

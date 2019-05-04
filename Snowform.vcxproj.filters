@@ -170,6 +170,12 @@
     <ClCompile Include="src\MovingPlatformComponentFactory.cpp">
       <Filter>Game\Scene\ComponentFactories</Filter>
     </ClCompile>
+    <ClCompile Include="src\RotateComponent.cpp">
+      <Filter>Game\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="src\RotateComponentFactory.cpp">
+      <Filter>Game\Scene\ComponentFactories</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameObject.h">
@@ -344,6 +350,12 @@
       <Filter>Game\Level</Filter>
     </ClInclude>
     <ClInclude Include="src\MovingPlatformComponentFactory.h">
+      <Filter>Game\Scene\ComponentFactories</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RotateComponent.h">
+      <Filter>Game\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="src\RotateComponentFactory.h">
       <Filter>Game\Scene\ComponentFactories</Filter>
     </ClInclude>
   </ItemGroup>
