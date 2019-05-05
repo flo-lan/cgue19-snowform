@@ -15,6 +15,7 @@ void Settings::Load()
 	isFullscreen = reader.GetBoolean("window", "fullscreen", false);
 	title = reader.Get("window", "title", "Snowform");
 	maxFps = reader.GetInteger("window", "refresh_rate", 60);
+    brightness = static_cast<float>(reader.GetReal("window", "brightness", 1.f));
 	
 	cameraFov = static_cast<float>(glm::radians(reader.GetReal("camera", "fov", 60.f)));
 	cameraNear = static_cast<float>(reader.GetReal("camera", "near", 0.1f));
@@ -44,6 +45,11 @@ std::string Settings::getTitle() const
 int Settings::getMaxFps() const
 {
 	return maxFps;
+}
+
+float Settings::getBrightness() const
+{
+    return brightness;
 }
 
 float Settings::getCameraFov() const
