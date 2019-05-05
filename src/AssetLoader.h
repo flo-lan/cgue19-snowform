@@ -3,6 +3,7 @@
 #include <string>
 
 class Texture2D;
+class ShaderProgram;
 
 class AssetLoader
 {
@@ -10,6 +11,9 @@ public:
     AssetLoader();
     virtual ~AssetLoader();
 
+    ShaderProgram* LoadShaderProgramFromFiles(std::string const& name,
+        std::string const& vertexShaderName, std::string const& vertexShaderFile,
+        std::string const& fragmentShaderName, std::string const& fragmentShaderFile);
     Texture2D* LoadTextureFromFile(std::string const& name, std::string const& file);
 
     virtual bool LoadAssets() = 0;
