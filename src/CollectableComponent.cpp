@@ -10,5 +10,5 @@ CollectableComponent::CollectableComponent(GameObject* owner) :
 
 void CollectableComponent::OnTriggerEnter(ColliderComponent* other)
 {
-
+    GetOwner()->Destroy();
 }
