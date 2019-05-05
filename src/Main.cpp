@@ -129,8 +129,9 @@ int main(int argc, char** argv)
     {
         window = glfwCreateWindow(width, height, window_title.c_str(), glfwGetPrimaryMonitor(), NULL);
     }
-    else {
-       window = glfwCreateWindow(width, height, window_title.c_str(), NULL, NULL);
+    else 
+    {
+        window = glfwCreateWindow(width, height, window_title.c_str(), NULL, NULL);
     }
     
     if (!window)
