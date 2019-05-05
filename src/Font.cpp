@@ -3,6 +3,7 @@
 #include "Texture2D.h"
 #include "StringUtils.h"
 #include <fstream>
+#include <iostream>
 
 Font::Font(std::string const& _name, Texture2D* _atlas) :
     name(_name),
@@ -35,21 +36,89 @@ bool Font::LoadFromFile(std::string const & file)
     }
 
     std::string line = "";
+    std::unordered_map<std::string, std::string> m;
+    std::unordered_map<std::string, std::string>::const_iterator itr;
 
     while (std::getline(fileStream, line))
     {
         if (line.rfind("info", 0) == 0)
         {
-            LoadInfoLine(line);
+            read_key_value_pairs(line, m, 5 /* Offset: "info " */);
+
+            if ((itr = m.find("size")) != m.end())
+            {
+                size = (float)atof(itr->second.c_str());
+            }
         }
         else if (line.rfind("common", 0) == 0)
         {
-            LoadCommonLine(line);
+            read_key_value_pairs(line, m, 7 /* Offset: "common " */);
+
+            if ((itr = m.find("lineHeight")) != m.end())
+            {
+                lineHeight = (float)atof(itr->second.c_str());
+            }
+
+            if ((itr = m.find("scaleW")) != m.end())
+            {
+                scaleW = atoi(itr->second.c_str());
+            }
+
+            if ((itr = m.find("scaleH")) != m.end())
+            {
+                scaleH = atoi(itr->second.c_str());
+            }
         }
         else if (line.rfind("char id", 0) == 0)
         {
-            LoadCharLine(line);
+            read_key_value_pairs(line, m, 5 /* Offset: "char " */);
+
+            Glyph* glyph = new Glyph();
+
+            if ((itr = m.find("id")) != m.end())
+            {
+                glyph->id = atoi(itr->second.c_str());
+            }
+
+            if ((itr = m.find("x")) != m.end())
+            {
+                glyph->x = atoi(itr->second.c_str());
+            }
+
+            if ((itr = m.find("y")) != m.end())
+            {
+                glyph->y = atoi(itr->second.c_str());
+            }
+
+            if ((itr = m.find("width")) != m.end())
+            {
+                glyph->w = atoi(itr->second.c_str());
+            }
+
+            if ((itr = m.find("height")) != m.end())
+            {
+                glyph->h = atoi(itr->second.c_str());
+            }
+
+            if ((itr = m.find("xOffset")) != m.end())
+            {
+                glyph->xOffset = atoi(itr->second.c_str());
+            }
+
+            if ((itr = m.find("yOffset")) != m.end())
+            {
+                glyph->yOffset = atoi(itr->second.c_str());
+            }
+
+            if ((itr = m.find("xAdvance")) != m.end())
+            {
+                glyph->xAdvance = atoi(itr->second.c_str());
+            }
+
+            glyphs[glyph->id] = glyph;
         }
+
+        m.clear();
     }
 
     fprintf(stdout, "Loaded font '%s' and %i glyphs from file '%s'!\n", name.c_str(), (int)glyphs.size(), file.c_str());
@@ -57,113 +126,4 @@ bool Font::LoadFromFile(std::string const & file)
     fileStream.close();
 
     return true;
-}
-
-void Font::LoadInfoLine(std::string const& line)
-{
-    std::vector<std::string> pairs = split(combine_whitespaces(line), ' ');
-
-    for (std::vector<std::string>::const_iterator itr = pairs.begin(); itr != pairs.end(); ++itr)
-    {
-        std::vector<std::string> pair = split(*itr, '=');
-
-        if (pair.size() != 2)
-        {
-            continue;
-        }
-
-        std::string key = pair[0];
-        std::string value = pair[1];
-
-        if (key == "size")
-        {
-            size = atof(value.c_str());
-        }
-    }
-}
-
-void Font::LoadCommonLine(std::string const& line)
-{
-    std::vector<std::string> pairs = split(combine_whitespaces(line), ' ');
-
-    for (std::vector<std::string>::const_iterator itr = pairs.begin(); itr != pairs.end(); ++itr)
-    {
-        std::vector<std::string> pair = split(*itr, '=');
-
-        if (pair.size() != 2)
-        {
-            continue;
-        }
-
-        std::string key = pair[0];
-        std::string value = pair[1];
-
-        if (key == "lineHeight")
-        {
-            lineHeight = atof(value.c_str());
-        }
-        else if (key == "scaleW")
-        {
-            scaleW = atoi(value.c_str());
-        }
-        else if (key == "scaleH")
-        {
-            scaleH = atoi(value.c_str());
-        }
-    }
-}
-
-void Font::LoadCharLine(std::string const& line)
-{
-    std::vector<std::string> pairs = split(combine_whitespaces(line), ' ');
-
-    Glyph* glyph = new Glyph();
-
-    for (std::vector<std::string>::const_iterator itr = pairs.begin(); itr != pairs.end(); ++itr)
-    {
-        std::vector<std::string> pair = split(*itr, '=');
-
-        if (pair.size() != 2)
-        {
-            continue;
-        }
-
-        std::string key = pair[0];
-        std::string value = pair[1];
-
-        if (key == "id")
-        {
-            glyph->id = atoi(value.c_str());
-        }
-        else if (key == "x")
-        {
-            glyph->x = atoi(value.c_str());
-        }
-        else if (key == "y")
-        {
-            glyph->y = atoi(value.c_str());
-        }
-        else if (key == "width")
-        {
-            glyph->w = atoi(value.c_str());
-        }
-        else if (key == "height")
-        {
-            glyph->h = atoi(value.c_str());
-        }
-        else if (key == "xOffset")
-        {
-            glyph->xOffset = atoi(value.c_str());
-        }
-        else if (key == "yOffset")
-        {
-            glyph->yOffset = atoi(value.c_str());
-        }
-        else if (key == "xAdvance")
-        {
-            glyph->xAdvance = atoi(value.c_str());
-        }
-    }
-
-    glyphs[glyph->id] = glyph;
 }

@@ -15,10 +15,6 @@ public:
     bool LoadFromFile(std::string const& file);
 
 private:
-    void LoadInfoLine(std::string const& line);
-    void LoadCommonLine(std::string const& line);
-    void LoadCharLine(std::string const& line);
-
     typedef std::map<int /* id */, Glyph*> GlyphMap;
 
     std::string name;
