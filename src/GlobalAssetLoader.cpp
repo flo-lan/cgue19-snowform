@@ -65,16 +65,14 @@ bool GlobalAssetLoader::LoadAssets()
     if (!standardShaderProgram->Link()) { return false; }
     if (!imageShaderProgram->Link()) { return false; }
 
-    if (Texture2D* texture = sAssetManager.CreateTexture("pixel_diffuse")) { texture->LoadFromFile("assets/textures/pixel_diffuse.dds"); }
-    else { return false; }
-    if (Texture2D* texture = sAssetManager.CreateTexture("bricks_diffuse")) { texture->LoadFromFile("assets/textures/bricks_diffuse.dds"); }
-    else { return false; }
-    if (Texture2D* texture = sAssetManager.CreateTexture("bricks_specular")) { texture->LoadFromFile("assets/textures/bricks_specular.dds"); }
-    else { return false; }
-    if (Texture2D* texture = sAssetManager.CreateTexture("wood_diffuse")) { texture->LoadFromFile("assets/textures/wood_texture.dds"); }
-    else { return false; }
-    if (Texture2D* texture = sAssetManager.CreateTexture("snowball_diffuse")) { texture->LoadFromFile("assets/textures/snowball_diffuse.dds"); }
-    else { return false; }
+    if (!LoadTextureFromFile("pixel_diffuse", "assets/textures/pixel_diffuse.dds") ||
+        !LoadTextureFromFile("bricks_diffuse", "assets/textures/bricks_diffuse.dds") ||
+        !LoadTextureFromFile("bricks_specular", "assets/textures/bricks_specular.dds") ||
+        !LoadTextureFromFile("wood_diffuse", "assets/textures/wood_texture.dds") ||
+        !LoadTextureFromFile("snowball_diffuse", "assets/textures/snowball_diffuse.dds"))
+    {
+        return false;
+    }
 
     sAssetManager.CreateMaterial<SimpleMaterial>("SimpleDefault", simpleShaderProgram);
     sAssetManager.CreateMaterial<StandardMaterial>("StandardDefault", standardShaderProgram);
