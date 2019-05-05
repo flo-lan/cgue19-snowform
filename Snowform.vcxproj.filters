@@ -179,11 +179,11 @@
     <ClCompile Include="src\UserInterfaceScene.cpp">
       <Filter>Game\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="src\ImageMaterial.cpp">
-      <Filter>Game\Render\Material</Filter>
-    </ClCompile>
     <ClCompile Include="src\Screen.cpp">
       <Filter>Game\Screen</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ImageMaterial.cpp">
+      <Filter>Engine\Render\Material</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -370,11 +370,11 @@
     <ClInclude Include="src\UserInterfaceScene.h">
       <Filter>Game\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="src\ImageMaterial.h">
-      <Filter>Game\Render\Material</Filter>
-    </ClInclude>
     <ClInclude Include="src\Screen.h">
       <Filter>Game\Screen</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ImageMaterial.h">
+      <Filter>Engine\Render\Material</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
