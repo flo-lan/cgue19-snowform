@@ -176,6 +176,15 @@
     <ClCompile Include="src\RotateComponentFactory.cpp">
       <Filter>Game\Scene\ComponentFactories</Filter>
     </ClCompile>
+    <ClCompile Include="src\CollectableComponent.cpp">
+      <Filter>Game\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CoinComponent.cpp">
+      <Filter>Game\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CoinComponentFactory.cpp">
+      <Filter>Game\Scene\ComponentFactories</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameObject.h">
@@ -356,6 +365,15 @@
       <Filter>Game\Level</Filter>
     </ClInclude>
     <ClInclude Include="src\RotateComponentFactory.h">
+      <Filter>Game\Scene\ComponentFactories</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CollectableComponent.h">
+      <Filter>Game\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CoinComponent.h">
+      <Filter>Game\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CoinComponentFactory.h">
       <Filter>Game\Scene\ComponentFactories</Filter>
     </ClInclude>
   </ItemGroup>
