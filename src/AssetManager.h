@@ -12,6 +12,7 @@ class ShaderProgram;
 class Material;
 class Mesh;
 class Texture2D;
+class Font;
 
 class AssetManager
 {
@@ -32,6 +33,7 @@ private:
     typedef std::unordered_map<std::string /* Material Name */, Material*> MaterialMap;
     typedef std::unordered_map<uint32_t /* Type Id */, MaterialMap> MaterialTypeMap;
     typedef std::unordered_map<std::string /* Mesh Name */, Mesh*> MeshMap;
+    typedef std::unordered_map<std::string /* Font Name */, Font*> FontMap;
 
 public:
     // We want to make sure these two methods are unacceptable,
@@ -51,6 +53,7 @@ public:
     Mesh* CreateSphereMesh(std::string const& name, uint32_t segmentsLongitude, uint32_t segmentsLatitude, float radius);
     Mesh* CreateTorusMesh(std::string const& name, uint32_t tubeSegments, uint32_t crossSectionSegments, float r1, float r2);
     Mesh* CreateMeshFromFile(std::string const& name, std::string const& file);
+    Font* CreateFontFromFile(std::string const& name, std::string const& file, Texture2D* atlas);
 
     template<class T> T* CreateMaterial(std::string const& name, ShaderProgram* shaderProgram)
     {
@@ -65,6 +68,7 @@ public:
     Texture2D* GetTexture2D(std::string const& name);
     Mesh* GetMesh(std::string const& name);
     Material* GetMaterial(std::string const& name);
+    Font* GetFont(std::string const& name);
 
     template<class T> T* GetMaterial(std::string const& name)
     {
@@ -89,12 +93,14 @@ private:
     void DeleteTextures();
     void DeleteMaterials();
     void DeleteMeshes();
+    void DeleteFonts();
 
     ShaderMap shaders;
     ShaderProgramMap shaderPrograms;
     TextureMap textures;
     MaterialTypeMap materials;
     MeshMap meshes;
+    FontMap fonts;
 };
 
 #define sAssetManager AssetManager::getInstance()

@@ -185,6 +185,12 @@
     <ClCompile Include="src\ImageMaterial.cpp">
       <Filter>Engine\Render\Material</Filter>
     </ClCompile>
+    <ClCompile Include="src\Font.cpp">
+      <Filter>Engine\Render\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Glyph.cpp">
+      <Filter>Engine\Render\Text</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameObject.h">
@@ -376,6 +382,12 @@
     <ClInclude Include="src\ImageMaterial.h">
       <Filter>Engine\Render\Material</Filter>
     </ClInclude>
+    <ClInclude Include="src\Font.h">
+      <Filter>Engine\Render\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Glyph.h">
+      <Filter>Engine\Render\Text</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">
@@ -458,6 +470,9 @@
     </Filter>
     <Filter Include="Game\Screen">
       <UniqueIdentifier>{01917d20-da43-42c2-9b11-3aaa31b5cdc9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Render\Text">
+      <UniqueIdentifier>{5405f2d2-918e-4dad-9491-332af5cf9205}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -16,9 +16,11 @@
     <ClCompile Include="src\DebugComponent.cpp" />
     <ClCompile Include="src\DebugComponentFactory.cpp" />
     <ClCompile Include="src\DirectionalLightComponent.cpp" />
+    <ClCompile Include="src\Font.cpp" />
     <ClCompile Include="src\GameObject.cpp" />
     <ClCompile Include="src\GameScene.cpp" />
     <ClCompile Include="src\GlobalAssetLoader.cpp" />
+    <ClCompile Include="src\Glyph.cpp" />
     <ClCompile Include="src\ImageMaterial.cpp" />
     <ClCompile Include="src\InputManager.cpp" />
     <ClCompile Include="src\Material.cpp" />
@@ -77,9 +79,11 @@
     <ClInclude Include="src\DebugComponent.h" />
     <ClInclude Include="src\DebugComponentFactory.h" />
     <ClInclude Include="src\DirectionalLightComponent.h" />
+    <ClInclude Include="src\Font.h" />
     <ClInclude Include="src\GameObject.h" />
     <ClInclude Include="src\GameScene.h" />
     <ClInclude Include="src\GlobalAssetLoader.h" />
+    <ClInclude Include="src\Glyph.h" />
     <ClInclude Include="src\ImageMaterial.h" />
     <ClInclude Include="src\INIReader.h" />
     <ClCompile Include="src\AssetManager.cpp" />

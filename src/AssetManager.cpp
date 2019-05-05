@@ -7,6 +7,7 @@
 #include "StandardMaterial.h"
 #include "Mesh.h"
 #include "Texture2D.h"
+#include "Font.h"
 #include <fstream>
 
 void AssetManager::Unload()
@@ -16,6 +17,7 @@ void AssetManager::Unload()
     DeleteMaterials();
     DeleteTextures();
     DeleteMeshes();
+    DeleteFonts();
 }
 
 ShaderProgram* AssetManager::GetShaderProgram(std::string const& name)
@@ -34,6 +36,12 @@ Mesh* AssetManager::GetMesh(std::string const& name)
 {
     MeshMap::const_iterator itr = meshes.find(name);
     return itr != meshes.end() ? itr->second : nullptr;
+}
+
+Font* AssetManager::GetFont(std::string const& name)
+{
+    FontMap::const_iterator itr = fonts.find(name);
+    return itr != fonts.end() ? itr->second : nullptr;
 }
 
 Material* AssetManager::GetMaterial(std::string const& name)
@@ -166,6 +174,20 @@ Mesh* AssetManager::CreateMeshFromFile(std::string const& name, std::string cons
     return mesh;
 }
 
+Font* AssetManager::CreateFontFromFile(std::string const& name, std::string const& file, Texture2D* atlas)
+{
+    Font* font = new Font(name, atlas);
+
+    if (!font->LoadFromFile(file))
+    {
+        delete font;
+
+        return nullptr;
+    }
+
+    return fonts[name] = font;
+}
+
 void AssetManager::DeleteMeshes()
 {
     for (MeshMap::const_iterator itr = meshes.begin(); itr != meshes.end(); ++itr)
@@ -174,4 +196,14 @@ void AssetManager::DeleteMeshes()
     }
 
     meshes.clear();
+}
+
+void AssetManager::DeleteFonts()
+{
+    for (FontMap::const_iterator itr = fonts.begin(); itr != fonts.end(); ++itr)
+    {
+        delete itr->second;
+    }
+
+    fonts.clear();
 }

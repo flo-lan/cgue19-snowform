@@ -69,7 +69,13 @@ bool GlobalAssetLoader::LoadAssets()
         !LoadTextureFromFile("bricks_diffuse", "assets/textures/bricks_diffuse.dds") ||
         !LoadTextureFromFile("bricks_specular", "assets/textures/bricks_specular.dds") ||
         !LoadTextureFromFile("wood_diffuse", "assets/textures/wood_texture.dds") ||
-        !LoadTextureFromFile("snowball_diffuse", "assets/textures/snowball_diffuse.dds"))
+        !LoadTextureFromFile("snowball_diffuse", "assets/textures/snowball_diffuse.dds") ||
+        !LoadTextureFromFile("arial_atlas", "assets/fonts/arial.dds"))
+    {
+        return false;
+    }
+
+    if (!sAssetManager.CreateFontFromFile("Arial", "assets/fonts/arial.fnt", sAssetManager.GetTexture2D("arial_atlas")))
     {
         return false;
     }
