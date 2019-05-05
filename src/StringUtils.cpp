@@ -1,6 +1,7 @@
 #include "StringUtils.h"
 #include <iostream>
 #include <sstream>
+#include <regex>
 
 std::vector<std::string> split(const std::string& s, char delimiter)
 {
@@ -12,4 +13,10 @@ std::vector<std::string> split(const std::string& s, char delimiter)
         tokens.push_back(token);
     }
     return tokens;
+}
+
+std::string combine_whitespaces(std::string const& s)
+{
+    static std::regex re("\\s{2,}");
+    return std::regex_replace(s, re, " ");
 }
