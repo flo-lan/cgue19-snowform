@@ -124,7 +124,15 @@ int main(int argc, char** argv)
     // Enable antialiasing (4xMSAA)
     glfwWindowHint(GLFW_SAMPLES, 4);
 
-    GLFWwindow* window = glfwCreateWindow(width, height, window_title.c_str(), NULL, NULL);
+    GLFWwindow* window;
+    if (sSettings.getFullscreen())
+    {
+        window = glfwCreateWindow(width, height, window_title.c_str(), glfwGetPrimaryMonitor(), NULL);
+    }
+    else {
+       window = glfwCreateWindow(width, height, window_title.c_str(), NULL, NULL);
+    }
+    
     if (!window)
     {
         // Window or OpenGL context creation failed
