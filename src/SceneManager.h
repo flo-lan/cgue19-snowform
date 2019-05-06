@@ -12,7 +12,7 @@ class Scene;
 class SceneManager
 {
 private:
-    typedef std::unordered_map<uint32_t /* Type Id */, Scene*> SceneMap;
+    typedef std::unordered_map<uint32_t /* Type Id */, Scene*> SceneByTypeIdMap;
     typedef std::vector<Scene*> SceneList;
 
 public:
@@ -37,7 +37,10 @@ public:
         T* scene = new T();
 
         // Add the new scene object to the loaded scenes map
-        loadedScenes[UniqueTypeId<T>()] = scene;
+        loadedScenesByTypeId[UniqueTypeId<T>()] = scene;
+
+        // Add the new scene object to the ordered loaded scenes list
+        loadedScenes.push_back(scene);
 
         // Load() must be called here - do not move
         // it to the Scene constructor, because C++
@@ -57,7 +60,7 @@ public:
         T* scene = new T();
 
         // Add the new scene object to the loaded scenes map
-        loadedScenes[UniqueTypeId<T>()] = scene;
+        loadedScenesByTypeId[UniqueTypeId<T>()] = scene;
 
         // Load() must be called here - do not move
         // it to the Scene constructor, because C++
@@ -65,21 +68,24 @@ public:
         // inside the constructor
         if (!scene->LoadFromFile(file))
         {
-            loadedScenes.erase(UniqueTypeId<T>());
+            loadedScenesByTypeId.erase(UniqueTypeId<T>());
 
             delete scene;
 
             scene = nullptr;
         }
 
+        // Add the new scene object to the ordered loaded scenes list
+        loadedScenes.push_back(scene);
+
         return scene;
     }
 
     template<class T> T* GetScene()
     {
-        SceneMap::const_iterator itr = loadedScenes.find(UniqueTypeId<T>());
+        SceneByTypeIdMap::const_iterator itr = loadedScenesByTypeId.find(UniqueTypeId<T>());
 
-        if (itr == loadedScenes.end())
+        if (itr == loadedScenesByTypeId.end())
         {
             return nullptr;
         }
@@ -96,7 +102,8 @@ private:
     SceneManager();
     ~SceneManager();
 
-    SceneMap loadedScenes;
+    SceneByTypeIdMap loadedScenesByTypeId;
+    SceneList loadedScenes;
 };
 
 #define sSceneManager SceneManager::getInstance()

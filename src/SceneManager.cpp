@@ -11,12 +11,7 @@ SceneManager::~SceneManager()
 
 void SceneManager::Update()
 {
-    SceneList loadedScenesCopy;
-
-    for (SceneMap::const_iterator itr = loadedScenes.begin(); itr != loadedScenes.end(); ++itr)
-    {
-        loadedScenesCopy.push_back(itr->second);
-    }
+    SceneList loadedScenesCopy(loadedScenes);
 
     for (Scene* scene : loadedScenesCopy)
     {
@@ -26,18 +21,23 @@ void SceneManager::Update()
 
 void SceneManager::Render()
 {
-    for (SceneMap::const_iterator itr = loadedScenes.begin(); itr != loadedScenes.end(); ++itr)
+    SceneList loadedScenesCopy(loadedScenes);
+
+    for (Scene* scene : loadedScenesCopy)
     {
-        itr->second->Render();
+        scene->OnPreRender();
+        scene->Render();
+        scene->OnPostRender();
     }
 }
 
 void SceneManager::Unload()
 {
-    for (SceneMap::const_iterator itr = loadedScenes.begin(); itr != loadedScenes.end(); ++itr)
+    for (Scene* scene : loadedScenes)
     {
-        delete itr->second;
+        delete scene;
     }
 
+    loadedScenesByTypeId.clear();
     loadedScenes.clear();
 }

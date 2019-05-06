@@ -76,6 +76,7 @@ public:
     void SetRotation(glm::quat rq);
 
     void SetIgnoreParentRotation(bool _ignoreParentRotation) { ignoreParentRotation = _ignoreParentRotation; }
+    void SetIgnoreParentScale(bool _ignoreParentScale) { ignoreParentScale = _ignoreParentScale; }
 
     TransformComponent* GetParent() const { return parent; }
     TransformComponent* GetChild(uint32_t index) { return index < children.size() ? children[index] : nullptr; }

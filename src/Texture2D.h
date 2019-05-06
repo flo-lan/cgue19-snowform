@@ -11,7 +11,7 @@ public:
     Texture2D(std::string const& name);
     ~Texture2D();
 
-    bool LoadFromFile(std::string const& filePath);
+    bool LoadFromFile(std::string const& filePath, bool generateMipMaps = true);
 
     void ActivateAndBind(int unit);
 

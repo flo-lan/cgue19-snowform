@@ -13,8 +13,10 @@
 #include "PhysicsEngine.h"
 #include "GlobalAssetLoader.h"
 #include "GameScene.h"
+#include "UserInterfaceScene.h"
 #include "Settings.h"
 #include "Time.h"
+#include "Screen.h"
 
 /* --------------------------------------------- */
 // Prototypes
@@ -141,6 +143,9 @@ int main(int argc, char** argv)
     glfwSetCursorPosCallback(window, MouseCursorPositionCallback);
     glfwSetMouseButtonCallback(window, MouseButtonCallback);
 
+    // Set screen window to access window properties globally
+    Screen::SetWindow(window);
+
     // To force GLEW to load all functions, the variable glewExperimental has to be modified
     glewExperimental = true;
 
@@ -180,6 +185,11 @@ int main(int argc, char** argv)
     if (!sSceneManager.LoadSceneFromFile<GameScene>("assets/scenes/game_scene.xml"))
     {
         EXIT_WITH_ERROR("Failed to load game scene!")
+    }
+
+    if (!sSceneManager.LoadSceneFromFile<UserInterfaceScene>("assets/scenes/user_interface_scene.xml"))
+    {
+        EXIT_WITH_ERROR("Failed to load user interface scene!")
     }
 
     glEnable(GL_DEPTH_TEST);
