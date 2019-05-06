@@ -40,7 +40,7 @@ bool GlobalAssetLoader::LoadAssets()
         !LoadTextureFromFile("bricks_specular", "assets/textures/bricks_specular.dds") ||
         !LoadTextureFromFile("wood_diffuse", "assets/textures/wood_texture.dds") ||
         !LoadTextureFromFile("snowball_diffuse", "assets/textures/snowball_diffuse.dds") ||
-        !LoadTextureFromFile("arial_atlas", "assets/fonts/arial.dds"))
+        !LoadTextureFromFile("arial_atlas", "assets/fonts/arial.dds", false /* Disable mip maps */))
     {
         return false;
     }
