@@ -129,9 +129,12 @@ int main(int argc, char** argv)
     GLFWwindow* window;
     if (sSettings.getFullscreen())
     {
-        window = glfwCreateWindow(width, height, window_title.c_str(), glfwGetPrimaryMonitor(), NULL);
+        GLFWmonitor* primary = glfwGetPrimaryMonitor();
+        GLFWvidmode const* mode = glfwGetVideoMode(primary);
+
+        window = glfwCreateWindow(mode->width, mode->height, window_title.c_str(), primary, NULL);
     }
-    else 
+    else
     {
         window = glfwCreateWindow(width, height, window_title.c_str(), NULL, NULL);
     }
