@@ -1,2 +1,44 @@
 <Scene>
+    <GameObject name="CoinCountContainer">
+        <Components>
+            <TransformComponent rect="true" localPosition="15.0 -10.0" />
+        </Components>
+        <Children>
+            <GameObject id="CoinCount" name="CoinCount">
+                <Components>
+                    <TransformComponent rect="true" localPosition="0 1" />
+                    <TextComponent material="CoinCount" font="Arial" fontSize="32" text="0/3" textAlignment="TopLeft" textOverflowMode="Overflow" wordWrapping="false" />
+                </Components>
+                <Children />
+            </GameObject>
+        </Children>
+    </GameObject>
+    <GameObject name="FPSContainer">
+        <Components>
+            <TransformComponent rect="true" localPosition="-15.0 10.0" />
+        </Components>
+        <Children>
+            <GameObject id="FPS" name="FPS">
+                <Components>
+                    <TransformComponent rect="true" localPosition="1 0" />
+                    <TextComponent material="FPS" font="Arial" fontSize="32" text="60" textAlignment="BottomRight" textOverflowMode="Overflow" wordWrapping="false" />
+                </Components>
+                <Children />
+            </GameObject>
+        </Children>
+    </GameObject>
+    <GameObject name="RemainingTimeContainer">
+        <Components>
+            <TransformComponent rect="true" localPosition="-15.0 -10.0" />
+        </Components>
+        <Children>
+            <GameObject id="RemainingTime" name="RemainingTime">
+                <Components>
+                    <TransformComponent rect="true" localPosition="1 1" />
+                    <TextComponent material="RemainingTime" font="Arial" fontSize="32" text="01:60s" textAlignment="TopRight" textOverflowMode="Overflow" wordWrapping="false" />
+                </Components>
+                <Children />
+            </GameObject>
+        </Children>
+    </GameObject>
 </Scene>
