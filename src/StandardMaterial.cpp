@@ -9,7 +9,6 @@
 #include "DirectionalLightComponent.h"
 #include "PointLightComponent.h"
 #include "SpotLightComponent.h"
-#include "Settings.h"
 
 StandardMaterial::StandardMaterial(std::string const& _name, ShaderProgram* _shaderProgram) :
     Material(_name, _shaderProgram),
@@ -18,7 +17,7 @@ StandardMaterial::StandardMaterial(std::string const& _name, ShaderProgram* _sha
     defaultTexture(sAssetManager.GetTexture2D("pixel_diffuse")),
     diffuseTexture(nullptr),
     specularTexture(nullptr),
-    ambientReflectionConstant(1.f * sSettings.getBrightness()),
+    ambientReflectionConstant(1.f),
     diffuseReflectionConstant(1.f),
     specularReflectionConstant(1.f),
     shininess(32.f)
