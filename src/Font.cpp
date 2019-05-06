@@ -10,6 +10,7 @@ Font::Font(std::string const& _name, Texture2D* _atlas) :
     atlas(_atlas),
     size(0.f),
     lineHeight(0.f),
+    lineHeightNorm(0.f),
     scaleW(0),
     scaleH(0)
 {
@@ -57,6 +58,7 @@ bool Font::LoadFromFile(std::string const & file)
             if ((itr = m.find("lineHeight")) != m.end())
             {
                 lineHeight = (float)atof(itr->second.c_str());
+                lineHeightNorm = lineHeight / size;
             }
 
             if ((itr = m.find("scaleW")) != m.end())
@@ -93,27 +95,50 @@ bool Font::LoadFromFile(std::string const & file)
             if ((itr = m.find("width")) != m.end())
             {
                 glyph->w = atoi(itr->second.c_str());
+                glyph->wNorm = glyph->w / size;
             }
 
             if ((itr = m.find("height")) != m.end())
             {
                 glyph->h = atoi(itr->second.c_str());
+                glyph->hNorm = glyph->h / size;
             }
 
-            if ((itr = m.find("xOffset")) != m.end())
+            if ((itr = m.find("xoffset")) != m.end())
             {
                 glyph->xOffset = atoi(itr->second.c_str());
+                glyph->xOffsetNorm = glyph->xOffset / size;
             }
 
-            if ((itr = m.find("yOffset")) != m.end())
+            if ((itr = m.find("yoffset")) != m.end())
             {
                 glyph->yOffset = atoi(itr->second.c_str());
+                glyph->yOffsetNorm = glyph->yOffset / size;
             }
 
-            if ((itr = m.find("xAdvance")) != m.end())
+            if ((itr = m.find("xadvance")) != m.end())
             {
                 glyph->xAdvance = atoi(itr->second.c_str());
+                glyph->xAdvanceNorm = glyph->xAdvance / size;
             }
+            
+            float uvTopLeftX = (float)glyph->x;
+            float uvTopLeftY = (float)glyph->y + glyph->h;
+            
+            float uvTopRightX = (float)glyph->x + glyph->w;
+            float uvTopRightY = (float)glyph->y + glyph->h;
+            
+            float uvBottomLeftX = (float)glyph->x;
+            float uvBottomLeftY = (float)glyph->y;
+            
+            float uvBottomRightX = (float)glyph->x + glyph->w;
+            float uvBottomRightY = (float)glyph->y;
+
+            // OpenGL flips the texture vertically, so the uvs need to be flipped as well
+            glyph->uv00 = glm::vec2(uvTopLeftX / scaleW, uvTopLeftY / scaleH);
+            glyph->uv01 = glm::vec2(uvBottomLeftX / scaleW, uvBottomLeftY / scaleH);
+            glyph->uv10 = glm::vec2(uvTopRightX / scaleW, uvTopRightY / scaleH);
+            glyph->uv11 = glm::vec2(uvBottomRightX / scaleW, uvBottomRightY / scaleH);
 
             glyphs[glyph->id] = glyph;
         }
@@ -126,4 +151,10 @@ bool Font::LoadFromFile(std::string const & file)
     fileStream.close();
 
     return true;
+}
+
+Glyph* Font::GetGlyph(int id) const
+{
+    GlyphMap::const_iterator itr = glyphs.find(id);
+    return itr != glyphs.end() ? itr->second : nullptr;
 }

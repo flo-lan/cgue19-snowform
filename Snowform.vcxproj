@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="src\ArcBallControllerComponent.cpp" />
@@ -21,6 +21,7 @@
     <ClCompile Include="src\GameScene.cpp" />
     <ClCompile Include="src\GlobalAssetLoader.cpp" />
     <ClCompile Include="src\Glyph.cpp" />
+    <ClCompile Include="src\GlyphBlock.cpp" />
     <ClCompile Include="src\ImageMaterial.cpp" />
     <ClCompile Include="src\InputManager.cpp" />
     <ClCompile Include="src\Material.cpp" />
@@ -54,7 +55,9 @@
     <ClCompile Include="src\SimpleMaterial.cpp" />
     <ClCompile Include="src\SpotLightComponent.cpp" />
     <ClCompile Include="src\StringUtils.cpp" />
+    <ClCompile Include="src\TextComponentFactory.cpp" />
     <ClCompile Include="src\TextMaterial.cpp" />
+    <ClCompile Include="src\TextComponent.cpp" />
     <ClCompile Include="src\Texture2D.cpp" />
     <ClCompile Include="src\ThirdPersonControllerComponent.cpp" />
     <ClCompile Include="src\ThirdPersonControllerComponentFactory.cpp" />
@@ -85,6 +88,7 @@
     <ClInclude Include="src\GameScene.h" />
     <ClInclude Include="src\GlobalAssetLoader.h" />
     <ClInclude Include="src\Glyph.h" />
+    <ClInclude Include="src\GlyphBlock.h" />
     <ClInclude Include="src\ImageMaterial.h" />
     <ClInclude Include="src\INIReader.h" />
     <ClCompile Include="src\AssetManager.cpp" />
@@ -121,7 +125,9 @@
     <ClInclude Include="src\SimpleMaterial.h" />
     <ClInclude Include="src\SpotLightComponent.h" />
     <ClInclude Include="src\StringUtils.h" />
+    <ClInclude Include="src\TextComponentFactory.h" />
     <ClInclude Include="src\TextMaterial.h" />
+    <ClInclude Include="src\TextComponent.h" />
     <ClInclude Include="src\Texture2D.h" />
     <ClInclude Include="src\ThirdPersonControllerComponent.h" />
     <ClInclude Include="src\ThirdPersonControllerComponentFactory.h" />

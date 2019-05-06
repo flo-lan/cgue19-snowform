@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="src\Main.cpp" />
@@ -188,11 +188,20 @@
     <ClCompile Include="src\Glyph.cpp">
       <Filter>Engine\Render\Text</Filter>
     </ClCompile>
+    <ClCompile Include="src\GlyphBlock.cpp">
+      <Filter>Engine\Render\Text</Filter>
+    </ClCompile>
     <ClCompile Include="src\MeshRendererComponent.cpp">
       <Filter>Engine\Render\Renderer</Filter>
     </ClCompile>
     <ClCompile Include="src\TextMaterial.cpp">
       <Filter>Engine\Render\Material</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TextComponent.cpp">
+      <Filter>Engine\Render\Text</Filter>
+    </ClCompile>
+    <ClCompile Include="src\TextComponentFactory.cpp">
+      <Filter>Engine\Scene\ComponentFactories</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -388,11 +397,20 @@
     <ClInclude Include="src\Glyph.h">
       <Filter>Engine\Render\Text</Filter>
     </ClInclude>
+    <ClInclude Include="src\GlyphBlock.h">
+      <Filter>Engine\Render\Text</Filter>
+    </ClInclude>
     <ClInclude Include="src\MeshRendererComponent.h">
       <Filter>Engine\Render\Renderer</Filter>
     </ClInclude>
     <ClInclude Include="src\TextMaterial.h">
       <Filter>Engine\Render\Material</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TextComponent.h">
+      <Filter>Engine\Render\Text</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TextComponentFactory.h">
+      <Filter>Engine\Scene\ComponentFactories</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
