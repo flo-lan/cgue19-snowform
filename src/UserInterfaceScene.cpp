@@ -1,4 +1,7 @@
 #include "UserInterfaceScene.h"
+#include "TextComponent.h"
+#include "GameObject.h"
+#include "Time.h"
 #include <GL\glew.h>
 
 UserInterfaceScene::UserInterfaceScene() :
@@ -12,6 +15,18 @@ UserInterfaceScene::~UserInterfaceScene()
 
 void UserInterfaceScene::OnLoad()
 {
+}
+
+void UserInterfaceScene::OnUpdate()
+{
+    if (GameObject* fps = GetGameObjectById("FPS"))
+    {
+        if (TextComponent* textComponent = fps->GetComponent<TextComponent>())
+        {
+            std::string fps = std::to_string((int)round(sTime.GetFPS()));
+            textComponent->SetText(fps);
+        }
+    }
 }
 
 void UserInterfaceScene::OnPreRender()

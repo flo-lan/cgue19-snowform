@@ -11,6 +11,7 @@ protected:
     virtual ~UserInterfaceScene();
 
     virtual void OnLoad();
+    virtual void OnUpdate();
     virtual void OnPreRender();
     virtual void OnPostRender();
 };

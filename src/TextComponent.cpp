@@ -218,8 +218,12 @@ void TextComponent::RebuildTextMesh()
     }
 
     meshRenderer->SetMesh(nullptr); // Hack to switch static meshes; ToDo: Implement dynamic mesh drawing for better performance
-    meshRenderer->SetMesh(textMesh);
 
-    fprintf(stdout, "Rebuilt text mesh for text '%s' with %i quads and %i indices!\n",
-            glyphBlock->GetText().c_str(), (int)(mesh.Vertices.size() / 4), (int)mesh.Indices.size());
+    if (mesh.Vertices.size())
+    {
+        meshRenderer->SetMesh(textMesh);
+    }
+
+    //fprintf(stdout, "Rebuilt text mesh for text '%s' with %i quads and %i indices!\n",
+    //        glyphBlock->GetText().c_str(), (int)(mesh.Vertices.size() / 4), (int)mesh.Indices.size());
 }
