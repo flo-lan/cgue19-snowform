@@ -150,7 +150,7 @@ void MeshRendererComponent::AddLight(SpotLightComponent* light)
     }
 }
 
-CameraComponent* MeshRendererComponent::GetCamera()
+CameraComponent* MeshRendererComponent::GetCamera() const
 {
     return camera ? camera : CameraComponent::GetMainCameraComponent();
 }
