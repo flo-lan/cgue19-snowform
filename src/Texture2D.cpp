@@ -16,7 +16,7 @@ Texture2D::~Texture2D()
     delete image;
 }
 
-bool Texture2D::LoadFromFile(std::string const& filePath)
+bool Texture2D::LoadFromFile(std::string const& filePath, bool generateMipMaps)
 {
     if (image)
     {
@@ -42,13 +42,25 @@ bool Texture2D::LoadFromFile(std::string const& filePath)
     glCompressedTexImage2D(GL_TEXTURE_2D, 0 /* Mipmap level */, img.format, img.width, img.height, 0 /* Border */, img.size, img.image);
 
     // Texture parameters
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR); // When MINifying the image, use a LINEAR blend of two mipmaps, each filtered LINEARLY too
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);               // When MAGnifying the image (no bigger mipmap available), use LINEAR filtering
+    if (generateMipMaps)
+    {
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR); // When MINifying the image, use a LINEAR blend of two mipmaps, each filtered LINEARLY too
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);               // When MAGnifying the image (no bigger mipmap available), use LINEAR filtering
+    }
+    else
+    {
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR); // When MINifying the image, use LINEAR filtering
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR); // When MAGnifying the image, use LINEAR filtering
+    }
+
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
     glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
 
     // Generate Mipmaps
-    glGenerateMipmap(GL_TEXTURE_2D);
+    if (generateMipMaps)
+    {
+        glGenerateMipmap(GL_TEXTURE_2D);
+    }
 
     return image = new DDSImage(std::move(img));
 }

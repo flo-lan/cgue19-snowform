@@ -43,7 +43,7 @@ ShaderProgram* AssetLoader::LoadShaderProgramFromFiles(std::string const& name,
     return shaderProgram;
 }
 
-Texture2D* AssetLoader::LoadTextureFromFile(std::string const& name, std::string const& file)
+Texture2D* AssetLoader::LoadTextureFromFile(std::string const& name, std::string const& file, bool generateMipMaps)
 {
     Texture2D* texture = sAssetManager.CreateTexture(name);
 
@@ -52,7 +52,7 @@ Texture2D* AssetLoader::LoadTextureFromFile(std::string const& name, std::string
         return nullptr;
     }
 
-    if (!texture->LoadFromFile(file))
+    if (!texture->LoadFromFile(file, generateMipMaps))
     {
         return nullptr;
     }

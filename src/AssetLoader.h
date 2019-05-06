@@ -14,7 +14,7 @@ public:
     ShaderProgram* LoadShaderProgramFromFiles(std::string const& name,
         std::string const& vertexShaderName, std::string const& vertexShaderFile,
         std::string const& fragmentShaderName, std::string const& fragmentShaderFile);
-    Texture2D* LoadTextureFromFile(std::string const& name, std::string const& file);
+    Texture2D* LoadTextureFromFile(std::string const& name, std::string const& file, bool generateMipMaps = true);
 
     virtual bool LoadAssets() = 0;
     virtual void UnloadAssets() = 0;
