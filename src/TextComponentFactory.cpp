@@ -140,4 +140,9 @@ void TextComponentFactory::Build(GameObject* gameObject, tinyxml2::XMLElement* e
         std::string maxHeightValue = std::string(element->Attribute("maxHeight"));
         textComponent->SetMaxHeight(std::strtof(maxHeightValue.c_str(), 0));
     }
+
+    if (element->Attribute("enabled"))
+    {
+        textComponent->SetEnabled(std::string(element->Attribute("enabled")) == "true");
+    }
 }

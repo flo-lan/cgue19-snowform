@@ -15,6 +15,7 @@ MeshRendererComponent::MeshRendererComponent(GameObject* owner) :
     transform(nullptr),
     material(nullptr),
     mesh(nullptr),
+    enabled(true),
     VAO(0),
     VBO(0),
     EBO(0)
@@ -49,7 +50,7 @@ void MeshRendererComponent::OnStart()
 
 void MeshRendererComponent::Render()
 {
-    if (material && mesh)
+    if (material && mesh && enabled)
     {
         material->Use();
         material->SetUniforms(this);

@@ -2,7 +2,6 @@
 
 #include "Component.h"
 #include <GL\glew.h>
-#include <glm\glm.hpp>
 #include <vector>
 
 class CameraComponent;
@@ -25,6 +24,7 @@ public:
     void SetCamera(CameraComponent* value) { camera = value; }
     void SetMaterial(Material* value) { material = value; }
     void SetMesh(Mesh* value);
+    void SetEnabled(bool value) { enabled = value; }
 
     void AddLight(DirectionalLightComponent* light);
     void AddLight(PointLightComponent* light);
@@ -42,6 +42,7 @@ private:
     TransformComponent* transform;
     Material* material;
     Mesh* mesh;
+    bool enabled;
     GLuint VAO;
     GLuint VBO;
     GLuint EBO;

@@ -78,6 +78,11 @@ bool GlobalAssetLoader::LoadAssets()
         tm->SetAtlasTexture(sAssetManager.GetTexture2D("arial_atlas"));
     }
 
+    if (TextMaterial* tm = sAssetManager.CreateMaterial<TextMaterial>("LevelFinished", textShaderProgram))
+    {
+        tm->SetAtlasTexture(sAssetManager.GetTexture2D("arial_atlas"));
+    }
+
     sAssetManager.CreateQuadMesh("Image", 1.f, 1.f);
     sAssetManager.CreateCubeMesh("Cube", 1.5f, 1.5f, 1.5f);
     sAssetManager.CreateCylinderMesh("Cylinder", 32, 1.f, 1.3f);
