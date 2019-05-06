@@ -9,6 +9,7 @@
 #include "DirectionalLightComponent.h"
 #include "PointLightComponent.h"
 #include "SpotLightComponent.h"
+#include "Settings.h"
 
 StandardMaterial::StandardMaterial(std::string const& _name, ShaderProgram* _shaderProgram) :
     Material(_name, _shaderProgram),
@@ -72,7 +73,7 @@ void StandardMaterial::SetUniforms(MeshRendererComponent* renderer)
 
         shaderProgram->SetUniform1fv(shaderProgram->GetUniformLocation("material.shininess"), shininess);
 
-        shaderProgram->SetUniform3fv(shaderProgram->GetUniformLocation("ambientLight.ambient"), RenderSettings::AmbientColor * RenderSettings::AmbientIntensity);
+        shaderProgram->SetUniform3fv(shaderProgram->GetUniformLocation("ambientLight.ambient"), RenderSettings::AmbientColor * RenderSettings::AmbientIntensity * sSettings.getBrightness());
 
         uint32_t i = 0;
         for (std::vector<DirectionalLightComponent*>::const_iterator itr = renderer->GetDirectionalLights().begin(); itr != renderer->GetDirectionalLights().end(); itr++, i++)
