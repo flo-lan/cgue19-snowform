@@ -8,9 +8,6 @@
     <ClCompile Include="src\Component.cpp">
       <Filter>Engine\Component</Filter>
     </ClCompile>
-    <ClCompile Include="src\MeshRendererComponent.cpp">
-      <Filter>Engine\Render</Filter>
-    </ClCompile>
     <ClCompile Include="src\Shader.cpp">
       <Filter>Engine\Render\Shader</Filter>
     </ClCompile>
@@ -191,6 +188,9 @@
     <ClCompile Include="src\Glyph.cpp">
       <Filter>Engine\Render\Text</Filter>
     </ClCompile>
+    <ClCompile Include="src\MeshRendererComponent.cpp">
+      <Filter>Engine\Render\Renderer</Filter>
+    </ClCompile>
     <ClCompile Include="src\TextMaterial.cpp">
       <Filter>Engine\Render\Material</Filter>
     </ClCompile>
@@ -201,9 +201,6 @@
     </ClInclude>
     <ClInclude Include="src\Component.h">
       <Filter>Engine\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="src\MeshRendererComponent.h">
-      <Filter>Engine\Render</Filter>
     </ClInclude>
     <ClInclude Include="src\Shader.h">
       <Filter>Engine\Render\Shader</Filter>
@@ -391,6 +388,9 @@
     <ClInclude Include="src\Glyph.h">
       <Filter>Engine\Render\Text</Filter>
     </ClInclude>
+    <ClInclude Include="src\MeshRendererComponent.h">
+      <Filter>Engine\Render\Renderer</Filter>
+    </ClInclude>
     <ClInclude Include="src\TextMaterial.h">
       <Filter>Engine\Render\Material</Filter>
     </ClInclude>
@@ -479,6 +479,9 @@
     </Filter>
     <Filter Include="Engine\Render\Text">
       <UniqueIdentifier>{5405f2d2-918e-4dad-9491-332af5cf9205}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Render\Renderer">
+      <UniqueIdentifier>{f520dbbd-e813-4323-beec-ba52e1d2f863}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
