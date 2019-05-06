@@ -138,7 +138,7 @@
         <Children>
           <GameObject id="MainCamera" name="Main Camera">
             <Components>
-              <TransformComponent localPosition="0 0 20" localRotation="-180 180 180" localScale="1 1 1" />
+              <TransformComponent localPosition="0 3 20" localRotation="-200 180 180" localScale="1 1 1" />
               <CameraComponent />
             </Components>
             <Children />
@@ -358,6 +358,7 @@
           <BoxColliderComponent physicsMaterial="Default" offset="0 0 0" halfExtent="2.5 2.5 2.5" trigger="true" />
           <RigidStaticComponent />
           <RotateComponent rotationDirection="0 1 0" speed="5" />
+          <CoinComponent />
         </Components>
         <Children />
       </GameObject>

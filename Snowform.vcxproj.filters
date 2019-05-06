@@ -203,6 +203,15 @@
     <ClCompile Include="src\TextComponentFactory.cpp">
       <Filter>Engine\Scene\ComponentFactories</Filter>
     </ClCompile>
+    <ClCompile Include="src\CollectableComponent.cpp">
+      <Filter>Game\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CoinComponent.cpp">
+      <Filter>Game\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="src\CoinComponentFactory.cpp">
+      <Filter>Game\Scene\ComponentFactories</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameObject.h">
@@ -411,6 +420,15 @@
     </ClInclude>
     <ClInclude Include="src\TextComponentFactory.h">
       <Filter>Engine\Scene\ComponentFactories</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CollectableComponent.h">
+      <Filter>Game\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CoinComponent.h">
+      <Filter>Game\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="src\CoinComponentFactory.h">
+      <Filter>Game\Scene\ComponentFactories</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

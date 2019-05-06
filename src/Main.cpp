@@ -126,7 +126,16 @@ int main(int argc, char** argv)
     // Enable antialiasing (4xMSAA)
     glfwWindowHint(GLFW_SAMPLES, 4);
 
-    GLFWwindow* window = glfwCreateWindow(width, height, window_title.c_str(), NULL, NULL);
+    GLFWwindow* window;
+    if (sSettings.getFullscreen())
+    {
+        window = glfwCreateWindow(width, height, window_title.c_str(), glfwGetPrimaryMonitor(), NULL);
+    }
+    else 
+    {
+        window = glfwCreateWindow(width, height, window_title.c_str(), NULL, NULL);
+    }
+    
     if (!window)
     {
         // Window or OpenGL context creation failed
@@ -142,6 +151,7 @@ int main(int argc, char** argv)
     glfwSetScrollCallback(window, MouseScrollCallback);
     glfwSetCursorPosCallback(window, MouseCursorPositionCallback);
     glfwSetMouseButtonCallback(window, MouseButtonCallback);
+    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
     // Set screen window to access window properties globally
     Screen::SetWindow(window);

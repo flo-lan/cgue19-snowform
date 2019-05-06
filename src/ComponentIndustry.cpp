@@ -13,6 +13,7 @@
 #include "MovingPlatformComponentFactory.h"
 #include "RotateComponentFactory.h"
 #include "TextComponentFactory.h"
+#include "CoinComponentFactory.h"
 
 ComponentIndustry::ComponentIndustry()
 {
@@ -30,6 +31,7 @@ ComponentIndustry::ComponentIndustry()
     static MovingPlatformComponentFactory movingPlatformComponentFactory;
     static RotateComponentFactory rotateComponentFactory;
     static TextComponentFactory textComponentFactory;
+    static CoinComponentFactory coinComponentFactory;
 
     factories["TransformComponent"] = &transformComponentFactory;
     factories["MeshRendererComponent"] = &meshRendererComponentFactory;
@@ -45,6 +47,7 @@ ComponentIndustry::ComponentIndustry()
     factories["MovingPlatformComponent"] = &movingPlatformComponentFactory;
     factories["RotateComponent"] = &rotateComponentFactory;
     factories["TextComponent"] = &textComponentFactory;
+    factories["CoinComponent"] = &coinComponentFactory;
 }
 
 void ComponentIndustry::AddFactory(std::string const& componentName, ComponentFactory* factory)

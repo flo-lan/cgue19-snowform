@@ -8,6 +8,9 @@
     <ClCompile Include="src\BoxColliderComponentFactory.cpp" />
     <ClCompile Include="src\CameraComponent.cpp" />
     <ClCompile Include="src\CameraComponentFactory.cpp" />
+    <ClCompile Include="src\CoinComponent.cpp" />
+    <ClCompile Include="src\CoinComponentFactory.cpp" />
+    <ClCompile Include="src\CollectableComponent.cpp" />
     <ClCompile Include="src\ColliderComponent.cpp" />
     <ClCompile Include="src\Collision.cpp" />
     <ClCompile Include="src\Component.cpp" />
@@ -75,6 +78,9 @@
     <ClInclude Include="src\BoxColliderComponentFactory.h" />
     <ClInclude Include="src\CameraComponent.h" />
     <ClInclude Include="src\CameraComponentFactory.h" />
+    <ClInclude Include="src\CoinComponent.h" />
+    <ClInclude Include="src\CoinComponentFactory.h" />
+    <ClInclude Include="src\CollectableComponent.h" />
     <ClInclude Include="src\ColliderComponent.h" />
     <ClInclude Include="src\Collision.h" />
     <ClInclude Include="src\Component.h" />

@@ -1,7 +1,8 @@
 #include "GameScene.h"
 
 GameScene::GameScene() :
-    Scene::Scene("Game Scene")
+    Scene::Scene("Game Scene"),
+    coinCount(0)
 {
 }
 

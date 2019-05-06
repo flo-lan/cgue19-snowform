@@ -22,6 +22,7 @@ public:
 	bool getFullscreen() const;
 	std::string getTitle() const;
 	int getMaxFps() const;
+    float getBrightness() const;
 
 	float getCameraFov() const;
 	float getCameraNear() const;
@@ -35,6 +36,7 @@ private:
 	bool isFullscreen;
 	string title;
 	int maxFps;
+    float brightness;
 
 	float cameraFov;
 	float cameraNear;
