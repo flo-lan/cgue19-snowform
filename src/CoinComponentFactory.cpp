@@ -12,6 +12,4 @@ CoinComponentFactory::CoinComponentFactory() :
 void CoinComponentFactory::Build(GameObject* gameObject, tinyxml2::XMLElement* element)
 {
     gameObject->AttachComponent<CoinComponent>();
-    auto gameScene = static_cast<GameScene*>(gameObject->GetScene());
-    gameScene->SetCoinCount(gameScene->GetCoinCount() + 1);
 }

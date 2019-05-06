@@ -2,7 +2,8 @@
 
 GameScene::GameScene() :
     Scene::Scene("Game Scene"),
-    coinCount(0)
+    coinCount(0),
+    collectedCoinCount(0)
 {
 }
 

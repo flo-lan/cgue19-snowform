@@ -14,8 +14,12 @@ protected:
 
 public:
     void SetCoinCount(int coinCount) { this->coinCount = coinCount; }
+    void SetCollectedCoinCount(int collectedCoinCount) { this->collectedCoinCount = collectedCoinCount; }
+
     int GetCoinCount() { return coinCount; }
+    int GetCollectedCoinCount() { return collectedCoinCount; }
 
 private:
     int coinCount;
+    int collectedCoinCount;
 };

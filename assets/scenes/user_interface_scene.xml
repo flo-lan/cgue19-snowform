@@ -7,7 +7,7 @@
             <GameObject id="CoinCount" name="CoinCount">
                 <Components>
                     <TransformComponent rect="true" localPosition="0 1" />
-                    <TextComponent material="CoinCount" font="Arial" fontSize="32" text="0/3" textAlignment="TopLeft" textOverflowMode="Overflow" wordWrapping="false" />
+                    <TextComponent material="CoinCount" font="Arial" fontSize="32" text="0/1" textAlignment="TopLeft" textOverflowMode="Overflow" wordWrapping="false" />
                 </Components>
                 <Children />
             </GameObject>
