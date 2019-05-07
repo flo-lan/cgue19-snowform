@@ -49,7 +49,21 @@
             <GameObject id="LevelFinished" name="LevelFinished">
                 <Components>
                     <TransformComponent rect="true" localPosition="0.5 0.5" />
-                    <TextComponent material="LevelFinished" font="Arial" fontSize="64" enabled="false" text="Congratulations. You won!" textAlignment="CenterCenter" textOverflowMode="Ellipsis" maxWidth="500" maxHeight="300" />
+                    <TextComponent material="LevelFinished" font="Arial" fontSize="64" enabled="false" text="Congratulations  You won!" textAlignment="CenterCenter" wordWrapping="true" textOverflowMode="Ellipsis" maxWidth="500" maxHeight="300" />
+                </Components>
+                <Children />
+            </GameObject>
+        </Children>
+    </GameObject>
+    <GameObject name="CoinsLeftContainer">
+          <Components>
+            <TransformComponent rect="true" localPosition="-250 150" />
+        </Components>
+        <Children>
+            <GameObject id="CoinsLeft" name="CoinsLeft">
+                <Components>
+                    <TransformComponent rect="true" localPosition="0.5 0.5" />
+                    <TextComponent material="LevelFinished" font="Arial" fontSize="64" enabled="false" text="You haven't collected all coins yet." wordWrapping="true" textAlignment="CenterCenter" textOverflowMode="Ellipsis" maxWidth="500" maxHeight="300" />
                 </Components>
                 <Children />
             </GameObject>

@@ -1,4 +1,5 @@
 #include "GameScene.h"
+#include <iostream>
 
 GameScene::GameScene() :
     Scene::Scene("Game Scene"),
@@ -13,4 +14,13 @@ GameScene::~GameScene()
 
 void GameScene::OnLoad()
 {
+}
+
+void GameScene::OnGameWon()
+{
+}
+
+void GameScene::OnGameLost()
+{
+
 }

@@ -14,6 +14,7 @@
 #include "RotateComponentFactory.h"
 #include "TextComponentFactory.h"
 #include "CoinComponentFactory.h"
+#include "FlagComponentFactory.h"
 
 ComponentIndustry::ComponentIndustry()
 {
@@ -32,6 +33,7 @@ ComponentIndustry::ComponentIndustry()
     static RotateComponentFactory rotateComponentFactory;
     static TextComponentFactory textComponentFactory;
     static CoinComponentFactory coinComponentFactory;
+    static FlagComponentFactory flagComponentFactory;
 
     factories["TransformComponent"] = &transformComponentFactory;
     factories["MeshRendererComponent"] = &meshRendererComponentFactory;
@@ -48,6 +50,7 @@ ComponentIndustry::ComponentIndustry()
     factories["RotateComponent"] = &rotateComponentFactory;
     factories["TextComponent"] = &textComponentFactory;
     factories["CoinComponent"] = &coinComponentFactory;
+    factories["FlagComponent"] = &flagComponentFactory;
 }
 
 void ComponentIndustry::AddFactory(std::string const& componentName, ComponentFactory* factory)

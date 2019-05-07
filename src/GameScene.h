@@ -13,6 +13,9 @@ protected:
     virtual void OnLoad();
 
 public:
+    void OnGameWon();
+    void OnGameLost();
+
     void SetCoinCount(int coinCount) { this->coinCount = coinCount; }
     void SetCollectedCoinCount(int collectedCoinCount) { this->collectedCoinCount = collectedCoinCount; }
 

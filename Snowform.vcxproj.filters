@@ -212,6 +212,12 @@
     <ClCompile Include="src\CoinComponentFactory.cpp">
       <Filter>Game\Scene\ComponentFactories</Filter>
     </ClCompile>
+    <ClCompile Include="src\FlagComponentFactory.cpp">
+      <Filter>Game\Scene\ComponentFactories</Filter>
+    </ClCompile>
+    <ClCompile Include="src\FlagComponent.cpp">
+      <Filter>Game\Level</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameObject.h">
@@ -429,6 +435,12 @@
     </ClInclude>
     <ClInclude Include="src\CoinComponentFactory.h">
       <Filter>Game\Scene\ComponentFactories</Filter>
+    </ClInclude>
+    <ClInclude Include="src\FlagComponentFactory.h">
+      <Filter>Game\Scene\ComponentFactories</Filter>
+    </ClInclude>
+    <ClInclude Include="src\FlagComponent.h">
+      <Filter>Game\Level</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
