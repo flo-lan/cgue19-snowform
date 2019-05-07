@@ -34,8 +34,19 @@ public:
 
     void InsertGameObjectIdMapping(GameObject* gameObject, std::string const& id);
     void RemoveGameObjectIdMapping(std::string const& id);
-    
+
     GameObject* GetGameObjectById(std::string const& id);
+    template<class T> T* GetComponentByGameObjectId(std::string const& id)
+    {
+        GameObject* gameObject = GetGameObjectById(id);
+
+        if (!gameObject)
+        {
+            return nullptr;
+        }
+
+        return gameObject->GetComponent<T>();
+    }
 
     // Call this for creating a new game object in this scene
     GameObject* CreateGameObject(std::string const& name, TransformComponent* parent = nullptr);

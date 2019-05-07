@@ -16,30 +16,43 @@ FlagComponent::FlagComponent(GameObject* owner) :
 
 void FlagComponent::OnStart()
 {
-    levelFinishedTextComponent = sSceneManager.GetScene<UserInterfaceScene>()->GetGameObjectById("LevelFinished")->GetComponent<TextComponent>();
-    coinsLeftTextComponent = sSceneManager.GetScene<UserInterfaceScene>()->GetGameObjectById("CoinsLeft")->GetComponent<TextComponent>();
+    if (auto userInterfaceScene = sSceneManager.GetScene<UserInterfaceScene>())
+    {
+        levelFinishedTextComponent = userInterfaceScene->GetComponentByGameObjectId<TextComponent>("LevelFinished");
+        coinsLeftTextComponent = userInterfaceScene->GetComponentByGameObjectId<TextComponent>("CoinsLeft");
+    }
 }
 
 void FlagComponent::OnTriggerEnter(ColliderComponent* other)
 {
-    if (other->GetOwner()->GetName() != "Snowball") return;
-
-    auto gameScene = static_cast<GameScene*>(GetOwner()->GetScene());
-    const bool levelFinished = gameScene->GetCoinCount() == gameScene->GetCollectedCoinCount();
-
-    if (levelFinished)
+    if (other->GetOwner()->GetName() != "Snowball")
     {
-        levelFinishedTextComponent->SetEnabled(true);
-        gameScene->OnGameWon();
+        return;
     }
-    else
+
+    if (auto gameScene = static_cast<GameScene*>(GetOwner()->GetScene()))
     {
-        coinsLeftTextComponent->SetEnabled(true);
+        const bool levelFinished = gameScene->GetCoinCount() == gameScene->GetCollectedCoinCount();
+
+        if (levelFinished)
+        {
+            levelFinishedTextComponent->SetEnabled(true);
+
+            gameScene->OnGameWon();
+        }
+        else
+        {
+            coinsLeftTextComponent->SetEnabled(true);
+        }
     }
 }
 
 void FlagComponent::OnTriggerExit(ColliderComponent* other)
 {
-    if (other->GetOwner()->GetName() != "Snowball") return;
+    if (other->GetOwner()->GetName() != "Snowball")
+    {
+        return;
+    }
+
     coinsLeftTextComponent->SetEnabled(false);
 }

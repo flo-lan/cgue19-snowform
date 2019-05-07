@@ -21,10 +21,10 @@ public:
     virtual void OnStart();
     virtual void Render();
 
+    void SetEnabled(bool value) { enabled = value; }
     void SetCamera(CameraComponent* value) { camera = value; }
     void SetMaterial(Material* value) { material = value; }
     void SetMesh(Mesh* value);
-    void SetEnabled(bool value) { enabled = value; }
 
     void AddLight(DirectionalLightComponent* light);
     void AddLight(PointLightComponent* light);
@@ -38,11 +38,11 @@ public:
     std::vector<SpotLightComponent*> const& GetSpotLights() { return spotLights; }
 
 private:
+    bool enabled;
     CameraComponent* camera;
     TransformComponent* transform;
     Material* material;
     Mesh* mesh;
-    bool enabled;
     GLuint VAO;
     GLuint VBO;
     GLuint EBO;

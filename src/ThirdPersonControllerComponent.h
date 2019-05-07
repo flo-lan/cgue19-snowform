@@ -2,8 +2,8 @@
 
 #include "Component.h"
 #include "RigidDynamicComponent.h"
-#include "GameScene.h"
 
+class GameScene;
 class GameObject;
 class TransformComponent;
 
@@ -16,10 +16,10 @@ public:
     virtual void Update();
 
 private:
+    GameScene* gameScene;
     TransformComponent* transform;
     TransformComponent* cameraTransform;
     RigidDynamicComponent* rigidDynamic;
-    GameScene* gameScene;
 
     float velocity = 20.f;
     float jumpVelocity = 20.f;

@@ -11,11 +11,11 @@
 
 MeshRendererComponent::MeshRendererComponent(GameObject* owner) :
     Component::Component(owner),
+    enabled(true),
     camera(nullptr),
     transform(nullptr),
     material(nullptr),
     mesh(nullptr),
-    enabled(true),
     VAO(0),
     VBO(0),
     EBO(0)

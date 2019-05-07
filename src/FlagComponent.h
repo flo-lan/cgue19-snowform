@@ -1,9 +1,9 @@
 ﻿#pragma once
 
 #include "Component.h"
-#include "TextComponent.h"
 
 class TransformComponent;
+class TextComponent;
 
 class FlagComponent : public Component
 {

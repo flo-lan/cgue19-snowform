@@ -3,11 +3,11 @@
 #include "Component.h"
 #include "GlyphBlock.h"
 #include <string>
-#include "MeshRendererComponent.h"
 
 class GlyphBlock;
 class Material;
 class Mesh;
+class MeshRendererComponent;
 class TransformComponent;
 
 enum TextAlignment
@@ -43,7 +43,7 @@ public:
     void SetWordWrapping(bool enable) { glyphBlock->SetWordWrapping(enable); isDirty = true; }
     void SetMaxWidth(float maxWidth) { glyphBlock->SetMaxWidth(maxWidth); isDirty = true; }
     void SetMaxHeight(float maxHeight) { glyphBlock->SetMaxHeight(maxHeight); isDirty = true; }
-    void SetEnabled(bool enable) { meshRenderer->SetEnabled(enable); }
+    void SetEnabled(bool enable);
 
     Material* GetMaterial() const;
     Font* GetFont() const { return glyphBlock->GetFont(); }

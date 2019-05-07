@@ -55,6 +55,14 @@ void TextComponent::LateUpdate()
     }
 }
 
+void TextComponent::SetEnabled(bool enable)
+{
+    if (meshRenderer)
+    {
+        meshRenderer->SetEnabled(enable);
+    }
+}
+
 void TextComponent::SetMaterial(Material* material)
 {
     if (!meshRenderer)

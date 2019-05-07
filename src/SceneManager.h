@@ -93,6 +93,22 @@ public:
         return (T*)itr->second;
     }
 
+    template<class T> bool UnloadScene()
+    {
+        SceneByTypeIdMap::const_iterator itr = loadedScenesByTypeId.find(UniqueTypeId<T>());
+
+        if (itr == loadedScenesByTypeId.end())
+        {
+            return false;
+        }
+
+        loadedScenes.erase(std::remove(loadedScenes.begin(), loadedScenes.end(), itr->second), loadedScenes.end());
+
+        delete itr->second;
+
+        loadedScenesByTypeId.erase(itr);
+    }
+
     void Update();
     void Render();
 

@@ -1,11 +1,13 @@
 ﻿#include "ThirdPersonControllerComponent.h"
 #include "TransformComponent.h"
+#include "GameScene.h"
 #include "GameObject.h"
 #include "InputManager.h"
 #include "glm/ext.hpp"
 
 ThirdPersonControllerComponent::ThirdPersonControllerComponent(GameObject* owner) :
     Component::Component(owner),
+    gameScene(nullptr),
     transform(nullptr),
     cameraTransform(nullptr),
     lastMousePositionX(0.f),
@@ -39,6 +41,7 @@ void ThirdPersonControllerComponent::Update()
     {
         gameScene->OnGameLost();
     }
+
     if (transform)
     {
         float diffX = sInputManager.GetMousePositionX() - lastMousePositionX;
