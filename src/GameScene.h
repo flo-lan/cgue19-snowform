@@ -14,9 +14,6 @@ protected:
     virtual void OnUpdate();
 
 public:
-    void OnGameWon();
-    void OnGameLost();
-
     virtual void SetOption(std::string const& key, std::string const& value);
 
     void SetCoinCount(int coinCount) { this->coinCount = coinCount; }
@@ -24,6 +21,9 @@ public:
 
     int GetCoinCount() { return coinCount; }
     int GetCollectedCoinCount() { return collectedCoinCount; }
+
+    void CompleteLevel();
+    void RestartLevel();
 
 private:
     int coinCount;

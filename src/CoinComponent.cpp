@@ -23,11 +23,8 @@ void CoinComponent::OnTriggerEnter(ColliderComponent* other)
 
         if (UserInterfaceScene* userInterfaceScene = sSceneManager.GetScene<UserInterfaceScene>())
         {
-            if (TextComponent* textComponent = userInterfaceScene->GetComponentByGameObjectId<TextComponent>("CoinCount"))
-            {
-                std::string coinCountString = std::to_string(newCollectedCoinCount) + "/" + std::to_string(gameScene->GetCoinCount());
-                textComponent->SetText(coinCountString);
-            }
+            std::string coinCountString = std::to_string(newCollectedCoinCount) + "/" + std::to_string(gameScene->GetCoinCount());
+            userInterfaceScene->SetCoinCountText(coinCountString);
         }
     }
 

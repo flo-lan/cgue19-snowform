@@ -3,7 +3,6 @@
 #include "Component.h"
 
 class TransformComponent;
-class TextComponent;
 
 class FlagComponent : public Component
 {
@@ -16,6 +15,4 @@ public:
 
 private:
     TransformComponent* transform;
-    TextComponent* levelFinishedTextComponent;
-    TextComponent* coinsLeftTextComponent;
 };

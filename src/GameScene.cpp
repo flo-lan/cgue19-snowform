@@ -33,32 +33,25 @@ void GameScene::OnUpdate()
         {
             remainingTimeInSeconds = 0.f;
 
-            OnGameLost();
+            if (UserInterfaceScene* userInterfaceScene = sSceneManager.GetScene<UserInterfaceScene>())
+            {
+                userInterfaceScene->EnableTimeIsUpText(true);
+            }
+
+            RestartLevel();
         }
 
         if (UserInterfaceScene* userInterfaceScene = sSceneManager.GetScene<UserInterfaceScene>())
         {
-            if (TextComponent* textComponent = userInterfaceScene->GetComponentByGameObjectId<TextComponent>("RemainingTime"))
-            {
-                int minutesLeft = ((int)remainingTimeInSeconds) / 60;
-                int secondsLeft = ((int)remainingTimeInSeconds) % 60;
+            int minutesLeft = ((int)remainingTimeInSeconds) / 60;
+            int secondsLeft = ((int)remainingTimeInSeconds) % 60;
 
-                std::string minutesLeftString = minutesLeft < 10 ? "0" + std::to_string(minutesLeft) : std::to_string(minutesLeft);
-                std::string secondsLeftString = secondsLeft < 10 ? "0" + std::to_string(secondsLeft) : std::to_string(secondsLeft);
-                std::string timeLeft = minutesLeftString + ":" + secondsLeftString;
-                textComponent->SetText(timeLeft);
-            }
+            std::string minutesLeftString = minutesLeft < 10 ? "0" + std::to_string(minutesLeft) : std::to_string(minutesLeft);
+            std::string secondsLeftString = secondsLeft < 10 ? "0" + std::to_string(secondsLeft) : std::to_string(secondsLeft);
+            std::string timeLeft = minutesLeftString + ":" + secondsLeftString;
+            userInterfaceScene->SetRemainingTimeText(timeLeft);
         }
     }
-}
-
-void GameScene::OnGameWon()
-{
-}
-
-void GameScene::OnGameLost()
-{
-
 }
 
 void GameScene::SetOption(std::string const& key, std::string const& value)
@@ -83,4 +76,18 @@ void GameScene::SetOption(std::string const& key, std::string const& value)
     }
 
     fprintf(stdout, "Set game scene option '%s' with value '%s'!\n", key.c_str(), value.c_str());
+}
+
+void GameScene::CompleteLevel()
+{
+    fprintf(stdout, "Complete Level!\n");
+
+    sTime.Pause();
+}
+
+void GameScene::RestartLevel()
+{
+    fprintf(stdout, "Restart level!\n");
+
+    sTime.Pause();
 }

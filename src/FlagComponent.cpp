@@ -8,19 +8,12 @@
 
 FlagComponent::FlagComponent(GameObject* owner) :
     Component::Component(owner),
-    transform(owner->GetComponent<TransformComponent>()),
-    levelFinishedTextComponent(nullptr),
-    coinsLeftTextComponent(nullptr)
+    transform(owner->GetComponent<TransformComponent>())
 {
 }
 
 void FlagComponent::OnStart()
 {
-    if (auto userInterfaceScene = sSceneManager.GetScene<UserInterfaceScene>())
-    {
-        levelFinishedTextComponent = userInterfaceScene->GetComponentByGameObjectId<TextComponent>("LevelFinished");
-        coinsLeftTextComponent = userInterfaceScene->GetComponentByGameObjectId<TextComponent>("CoinsLeft");
-    }
 }
 
 void FlagComponent::OnTriggerEnter(ColliderComponent* other)
@@ -32,17 +25,18 @@ void FlagComponent::OnTriggerEnter(ColliderComponent* other)
 
     if (auto gameScene = static_cast<GameScene*>(GetOwner()->GetScene()))
     {
-        const bool levelFinished = gameScene->GetCoinCount() == gameScene->GetCollectedCoinCount();
-
-        if (levelFinished)
+        if (auto userInterfaceScene = sSceneManager.GetScene<UserInterfaceScene>())
         {
-            levelFinishedTextComponent->SetEnabled(true);
+            if (gameScene->GetCoinCount() == gameScene->GetCollectedCoinCount())
+            {
+                userInterfaceScene->EnableLevelFinishedText(true);
 
-            gameScene->OnGameWon();
-        }
-        else
-        {
-            coinsLeftTextComponent->SetEnabled(true);
+                gameScene->CompleteLevel();
+            }
+            else
+            {
+                userInterfaceScene->EnableCoinsLeftText(true);
+            }
         }
     }
 }
@@ -54,5 +48,8 @@ void FlagComponent::OnTriggerExit(ColliderComponent* other)
         return;
     }
 
-    coinsLeftTextComponent->SetEnabled(false);
+    if (auto userInterfaceScene = sSceneManager.GetScene<UserInterfaceScene>())
+    {
+        userInterfaceScene->EnableCoinsLeftText(false);
+    }
 }

@@ -1,6 +1,8 @@
 ﻿#include "ThirdPersonControllerComponent.h"
 #include "TransformComponent.h"
+#include "UserInterfaceScene.h"
 #include "GameScene.h"
+#include "SceneManager.h"
 #include "GameObject.h"
 #include "InputManager.h"
 #include "glm/ext.hpp"
@@ -12,7 +14,8 @@ ThirdPersonControllerComponent::ThirdPersonControllerComponent(GameObject* owner
     cameraTransform(nullptr),
     lastMousePositionX(0.f),
     lastMousePositionY(0.f),
-    lastMouseScrollValue(0.f)
+    lastMouseScrollValue(0.f),
+    dead(false)
 {
 }
 
@@ -37,9 +40,17 @@ void ThirdPersonControllerComponent::OnStart()
 
 void ThirdPersonControllerComponent::Update()
 {
-    if (transform->GetPosition().y < -20.f)
+    // ToDo: Move to PlayerComponent
+    if (!dead && transform->GetPosition().y < -20.f)
     {
-        gameScene->OnGameLost();
+        dead = true;
+
+        if (auto userInterfaceScene = sSceneManager.GetScene<UserInterfaceScene>())
+        {
+            userInterfaceScene->EnableFallenToDeathText(true);
+        }
+
+        gameScene->RestartLevel();
     }
 
     if (transform)

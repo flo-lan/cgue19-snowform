@@ -26,4 +26,6 @@ private:
     float lastMousePositionX;
     float lastMousePositionY;
     float lastMouseScrollValue;
+
+    bool dead; // ToDo: Move to PlayerComponent
 };

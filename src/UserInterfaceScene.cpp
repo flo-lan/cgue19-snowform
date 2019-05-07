@@ -38,3 +38,51 @@ void UserInterfaceScene::OnPostRender()
     glDisable(GL_BLEND);
     glEnable(GL_DEPTH_TEST);
 }
+
+void UserInterfaceScene::SetCoinCountText(std::string const& text)
+{
+    if (TextComponent* textComponent = GetComponentByGameObjectId<TextComponent>("CoinCount"))
+    {
+        textComponent->SetText(text);
+    }
+}
+
+void UserInterfaceScene::SetRemainingTimeText(std::string const& text)
+{
+    if (TextComponent* textComponent = GetComponentByGameObjectId<TextComponent>("RemainingTime"))
+    {
+        textComponent->SetText(text);
+    }
+}
+
+void UserInterfaceScene::EnableLevelFinishedText(bool enable)
+{
+    if (TextComponent* textComponent = GetComponentByGameObjectId<TextComponent>("LevelFinished"))
+    {
+        textComponent->SetEnabled(enable);
+    }
+}
+
+void UserInterfaceScene::EnableCoinsLeftText(bool enable)
+{
+    if (TextComponent* textComponent = GetComponentByGameObjectId<TextComponent>("CoinsLeft"))
+    {
+        textComponent->SetEnabled(enable);
+    }
+}
+
+void UserInterfaceScene::EnableFallenToDeathText(bool enable)
+{
+    if (TextComponent* textComponent = GetComponentByGameObjectId<TextComponent>("FallenToDeath"))
+    {
+        textComponent->SetEnabled(enable);
+    }
+}
+
+void UserInterfaceScene::EnableTimeIsUpText(bool enable)
+{
+    if (TextComponent* textComponent = GetComponentByGameObjectId<TextComponent>("TimeIsUp"))
+    {
+        textComponent->SetEnabled(enable);
+    }
+}
