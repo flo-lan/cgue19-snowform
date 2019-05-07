@@ -16,6 +16,11 @@ Scene::Scene(std::string const& _name) :
 
 Scene::~Scene()
 {
+    Unload();
+}
+
+void Scene::Unload()
+{
     static struct DeleteSceneGraphTraverser : public SceneGraphTraverser
     {
         virtual void Visit(TransformComponent* transform)
@@ -27,6 +32,9 @@ Scene::~Scene()
     } t;
 
     TraverseSceneGraphDFI(t);
+
+    sceneGraphRoots.clear();
+    gameObjectsById.clear();
 }
 
 struct GameObjectElement

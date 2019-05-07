@@ -20,6 +20,8 @@ public:
     void Update();
     void Render();
 
+    void Unload();
+
     std::string const& GetName() const { return name; }
 
     void InsertSceneGraphRoot(TransformComponent* transform);
