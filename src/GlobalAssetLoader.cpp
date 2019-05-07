@@ -5,6 +5,7 @@
 #include "SimpleMaterial.h"
 #include "StandardMaterial.h"
 #include "ImageMaterial.h"
+#include "ImageCutOffMaterial.h"
 #include "TextMaterial.h"
 #include "AssetManager.h"
 #include "PhysicsEngine.h"
@@ -22,6 +23,7 @@ bool GlobalAssetLoader::LoadAssets()
     ShaderProgram* simpleShaderProgram = nullptr;
     ShaderProgram* standardShaderProgram = nullptr;
     ShaderProgram* imageShaderProgram = nullptr;
+    ShaderProgram* imageCutOffShaderProgram = nullptr;
     ShaderProgram* textShaderProgram = nullptr;
 
     if (!(simpleShaderProgram = LoadShaderProgramFromFiles("simple_shader_program",
@@ -33,6 +35,9 @@ bool GlobalAssetLoader::LoadAssets()
         !(imageShaderProgram = LoadShaderProgramFromFiles("image_shader_program",
             "image_vertex_shader", "assets/shaders/image_vertex.glsl",
             "image_fragment_shader", "assets/shaders/image_fragment.glsl")) ||
+        !(imageCutOffShaderProgram = LoadShaderProgramFromFiles("image_cutoff_shader_program",
+            "image_cutoff_vertex_shader", "assets/shaders/image_cutoff_vertex.glsl",
+            "image_cutoff_fragment_shader", "assets/shaders/image_cutoff_fragment.glsl")) ||
         !(textShaderProgram = LoadShaderProgramFromFiles("text_shader_program",
             "text_vertex_shader", "assets/shaders/text_vertex.glsl",
             "text_fragment_shader", "assets/shaders/text_fragment.glsl")))
