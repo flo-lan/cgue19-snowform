@@ -15,6 +15,11 @@ void MeshRendererComponentFactory::Build(GameObject* gameObject, tinyxml2::XMLEl
 {
     MeshRendererComponent* meshRenderer = gameObject->AttachComponent<MeshRendererComponent>();
 
+    if (element->Attribute("enabled"))
+    {
+        meshRenderer->SetEnabled(std::string(element->Attribute("enabled")) == "true");
+    }
+
     if (element->Attribute("material"))
     {
         std::string materialName = std::string(element->Attribute("material"));
