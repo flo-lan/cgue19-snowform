@@ -156,6 +156,11 @@ void PhysicsEngine::Update()
         return;
     }
 
+    if (sTime.GetDeltaTime() <= 0.f)
+    {
+        return;
+    }
+
     pxScene->simulate(sTime.GetDeltaTime());
     pxScene->fetchResults(true /* block */);
 
