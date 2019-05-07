@@ -218,6 +218,9 @@
     <ClCompile Include="src\FlagComponent.cpp">
       <Filter>Game\Level</Filter>
     </ClCompile>
+    <ClCompile Include="src\SceneOptionComponentFactory.cpp">
+      <Filter>Engine\Scene\ComponentFactories</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameObject.h">
@@ -441,6 +444,9 @@
     </ClInclude>
     <ClInclude Include="src\FlagComponent.h">
       <Filter>Game\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SceneOptionComponentFactory.h">
+      <Filter>Engine\Scene\ComponentFactories</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

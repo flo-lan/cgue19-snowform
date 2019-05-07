@@ -24,6 +24,7 @@
     <ClCompile Include="src\Font.cpp" />
     <ClCompile Include="src\GameObject.cpp" />
     <ClCompile Include="src\GameScene.cpp" />
+    <ClCompile Include="src\SceneOptionComponentFactory.cpp" />
     <ClCompile Include="src\GlobalAssetLoader.cpp" />
     <ClCompile Include="src\Glyph.cpp" />
     <ClCompile Include="src\GlyphBlock.cpp" />
@@ -96,6 +97,7 @@
     <ClInclude Include="src\Font.h" />
     <ClInclude Include="src\GameObject.h" />
     <ClInclude Include="src\GameScene.h" />
+    <ClInclude Include="src\SceneOptionComponentFactory.h" />
     <ClInclude Include="src\GlobalAssetLoader.h" />
     <ClInclude Include="src\Glyph.h" />
     <ClInclude Include="src\GlyphBlock.h" />

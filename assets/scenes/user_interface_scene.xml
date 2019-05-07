@@ -35,7 +35,7 @@
             <GameObject id="RemainingTime" name="RemainingTime">
                 <Components>
                     <TransformComponent rect="true" localPosition="1 1" />
-                    <TextComponent material="RemainingTime" font="Arial" fontSize="32" text="02:00" textAlignment="TopRight" textOverflowMode="Overflow" wordWrapping="false" />
+                    <TextComponent material="RemainingTime" font="Arial" fontSize="32" text="00:00" textAlignment="TopRight" textOverflowMode="Overflow" wordWrapping="false" />
                 </Components>
                 <Children />
             </GameObject>

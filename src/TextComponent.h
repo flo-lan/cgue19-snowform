@@ -34,6 +34,7 @@ public:
 
     virtual void LateUpdate();
 
+    void SetEnabled(bool enable);
     void SetMaterial(Material* material);
     void SetFont(Font* font) { glyphBlock->SetFont(font); isDirty = true; }
     void SetFontSize(float fontSize);
@@ -43,7 +44,6 @@ public:
     void SetWordWrapping(bool enable) { glyphBlock->SetWordWrapping(enable); isDirty = true; }
     void SetMaxWidth(float maxWidth) { glyphBlock->SetMaxWidth(maxWidth); isDirty = true; }
     void SetMaxHeight(float maxHeight) { glyphBlock->SetMaxHeight(maxHeight); isDirty = true; }
-    void SetEnabled(bool enable);
 
     Material* GetMaterial() const;
     Font* GetFont() const { return glyphBlock->GetFont(); }

@@ -1,4 +1,11 @@
 <Scene>
+  <GameObject name="Scene Options">
+    <Components>
+      <TransformComponent localPosition="0 0 0" localRotation="0 0 0" localScale="1 1 1" />
+      <SceneOptionComponent key="RemainingTime" value="02:00" />
+    </Components>
+    <Children />
+  </GameObject>
   <GameObject name="Trees">
     <Components>
       <TransformComponent localPosition="0 0 0" localRotation="0 0 0" localScale="1 1 1" />
@@ -195,6 +202,7 @@
             <Components>
               <TransformComponent localPosition="-2.09 2.5 7.55" localRotation="0 -90.12739 0" localScale="0.5000001 0.5 0.5000001" />
               <MeshRendererComponent material="StandardDefault" mesh="Flag" />
+              <MeshColliderComponent physicsMaterial="Default" collisionMesh="Flag" offset="0 0 0" />
               <BoxColliderComponent physicsMaterial="Default" offset="0 0 0" halfExtent="2.5 2.5 2.5" trigger="true" />
               <RigidStaticComponent />
               <FlagComponent />
@@ -356,7 +364,7 @@
         <Components>
           <TransformComponent localPosition="-5 1.5 35" localRotation="0 0 0" localScale="0.5 0.5 0.5" />
           <MeshRendererComponent material="StandardDefault" mesh="Coin" />
-          <BoxColliderComponent physicsMaterial="Default" offset="0 0 0" halfExtent="0 0 0" trigger="true" />
+          <BoxColliderComponent physicsMaterial="Default" offset="0 0 0" halfExtent="2.5 2.5 2.5" trigger="true" />
           <RigidStaticComponent />
           <RotateComponent rotationDirection="0 1 0" speed="5" />
           <CoinComponent />

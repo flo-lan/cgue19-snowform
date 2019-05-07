@@ -16,13 +16,11 @@ public:
 
     void Pause() { timeScale = 0; }
     void Resume() { timeScale = 1; }
-    float GetCountdownTime() const { return countdownTime; }
     float GetFPS() const { return fps; }
     float GetUnscaledDeltaTime() { return unscaledDeltaTime; }
     float GetDeltaTime() { return deltaTime; }
 
     void Update();
-    void StartCountdown(float durationInSeconds);
 
 private:
     Time();
@@ -33,9 +31,6 @@ private:
     float deltaTime;
     float currentTime;
     float lastTime;
-
-    float countdownTime;
-    bool countdownRunning;
 
     float fps;
     float fpsLimit;

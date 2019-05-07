@@ -10,9 +10,6 @@ Time::Time()
     currentTime = glfwGetTime();
     lastTime = currentTime;
 
-    countdownTime = 0.f;
-    countdownRunning = false;
-
     fps = 0.f;
     fpsLimit = 1.f / sSettings.getMaxFps(); // max ms per update
     timeScale = 1;
@@ -38,20 +35,4 @@ void Time::Update()
     UpdateDeltaTime();
 
     fps = 1.f / unscaledDeltaTime;
-
-    if (countdownRunning)
-    {
-        countdownTime -= deltaTime;
-        if (countdownTime <= 0.f)
-        {
-            countdownRunning = false;
-            countdownTime = 0.f;
-        }
-    }
-}
-
-void Time::StartCountdown(float durationInSeconds)
-{
-    countdownTime = durationInSeconds;
-    countdownRunning = true;
 }
