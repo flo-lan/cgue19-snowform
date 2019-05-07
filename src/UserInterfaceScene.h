@@ -22,4 +22,6 @@ public:
     void EnableCoinsLeftText(bool enable);
     void EnableFallenToDeathText(bool enable);
     void EnableTimeIsUpText(bool enable);
+    void EnableTransitionOverlay(bool enable);
+    void SetTransitionOverlayCutOff(float cutOff);
 };

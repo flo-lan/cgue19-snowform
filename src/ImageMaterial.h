@@ -16,7 +16,7 @@ public:
     void SetImageTexture(Texture2D* value) { imageTexture = value; }
     void SetImageColor(glm::vec4 value) { imageColor = value; }
 
-private:
+protected:
     Texture2D* defaultTexture;
     Texture2D* imageTexture;
     glm::vec4 imageColor;

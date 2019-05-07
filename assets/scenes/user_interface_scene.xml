@@ -41,6 +41,13 @@
             </GameObject>
         </Children>
     </GameObject>
+    <GameObject id="TransitionOverlay" name="TransitionOverlay">
+        <Components>
+            <TransformComponent rect="true" localPosition="0.5 0.5" localScale="1 1" />
+            <MeshRendererComponent enabled="false" material="TransitionOverlay" mesh="Image" />
+        </Components>
+        <Children />
+    </GameObject>
     <GameObject name="LevelFinishedContainer">
           <Components>
             <TransformComponent rect="true" localPosition="-250 150" />
@@ -77,7 +84,7 @@
             <GameObject id="FallenToDeath" name="FallenToDeath">
                 <Components>
                     <TransformComponent rect="true" localPosition="0.5 0.5" />
-                    <TextComponent material="LevelFinished" font="Arial" fontSize="64" enabled="false" text="You have fallen to death! Game over" wordWrapping="true" textAlignment="CenterCenter" textOverflowMode="Ellipsis" maxWidth="500" maxHeight="300" />
+                    <TextComponent material="LevelFinished" font="Arial" fontSize="64" enabled="false" text="You have fallen to death!" wordWrapping="true" textAlignment="CenterCenter" textOverflowMode="Ellipsis" maxWidth="500" maxHeight="300" />
                 </Components>
                 <Children />
             </GameObject>
@@ -91,7 +98,7 @@
             <GameObject id="TimeIsUp" name="TimeIsUp">
                 <Components>
                     <TransformComponent rect="true" localPosition="0.5 0.5" />
-                    <TextComponent material="LevelFinished" font="Arial" fontSize="64" enabled="false" text="Time is up! Game over" wordWrapping="true" textAlignment="CenterCenter" textOverflowMode="Ellipsis" maxWidth="500" maxHeight="300" />
+                    <TextComponent material="LevelFinished" font="Arial" fontSize="64" enabled="false" text="Time is up!" wordWrapping="true" textAlignment="CenterCenter" textOverflowMode="Ellipsis" maxWidth="500" maxHeight="300" />
                 </Components>
                 <Children />
             </GameObject>

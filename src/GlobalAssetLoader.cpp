@@ -50,7 +50,9 @@ bool GlobalAssetLoader::LoadAssets()
         !LoadTextureFromFile("bricks_specular", "assets/textures/bricks_specular.dds") ||
         !LoadTextureFromFile("wood_diffuse", "assets/textures/wood_texture.dds") ||
         !LoadTextureFromFile("snowball_diffuse", "assets/textures/snowball_diffuse.dds") ||
-        !LoadTextureFromFile("arial_atlas", "assets/fonts/arial.dds", false /* Disable mip maps */))
+        !LoadTextureFromFile("arial_atlas", "assets/fonts/arial.dds", false /* Disable mip maps */) ||
+        !LoadTextureFromFile("transition_overlay", "assets/textures/transition_overlay.dds", false /* Disable mip maps */) ||
+        !LoadTextureFromFile("transition_overlay_cutoff", "assets/textures/transition_overlay_cutoff.dds", false /* Disable mip maps */))
     {
         return false;
     }
@@ -91,6 +93,12 @@ bool GlobalAssetLoader::LoadAssets()
     if (TextMaterial* tm = sAssetManager.CreateMaterial<TextMaterial>("CoinsLeft", textShaderProgram))
     {
         tm->SetAtlasTexture(sAssetManager.GetTexture2D("arial_atlas"));
+    }
+
+    if (ImageCutOffMaterial* im = sAssetManager.CreateMaterial<ImageCutOffMaterial>("TransitionOverlay", imageCutOffShaderProgram))
+    {
+        im->SetCutOffTexture(sAssetManager.GetTexture2D("transition_overlay_cutoff"));
+        im->SetImageTexture(sAssetManager.GetTexture2D("transition_overlay"));
     }
 
     sAssetManager.CreateQuadMesh("Image", 1.f, 1.f);

@@ -1,5 +1,8 @@
 #include "UserInterfaceScene.h"
+#include "MeshRendererComponent.h"
+#include "ImageCutOffMaterial.h"
 #include "TextComponent.h"
+#include "AssetManager.h"
 #include "GameObject.h"
 #include "Time.h"
 #include <GL\glew.h>
@@ -84,5 +87,24 @@ void UserInterfaceScene::EnableTimeIsUpText(bool enable)
     if (TextComponent* textComponent = GetComponentByGameObjectId<TextComponent>("TimeIsUp"))
     {
         textComponent->SetEnabled(enable);
+    }
+}
+
+void UserInterfaceScene::EnableTransitionOverlay(bool enable)
+{
+    if (MeshRendererComponent* meshRenderer = GetComponentByGameObjectId<MeshRendererComponent>("TransitionOverlay"))
+    {
+        meshRenderer->SetEnabled(enable);
+    }
+}
+
+void UserInterfaceScene::SetTransitionOverlayCutOff(float cutOff)
+{
+    if (MeshRendererComponent* meshRenderer = GetComponentByGameObjectId<MeshRendererComponent>("TransitionOverlay"))
+    {
+        if (ImageCutOffMaterial* im = static_cast<ImageCutOffMaterial*>(meshRenderer->GetMaterial()))
+        {
+            im->SetCutOff(cutOff);
+        }
     }
 }
