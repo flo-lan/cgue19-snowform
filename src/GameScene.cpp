@@ -10,7 +10,9 @@ GameScene::GameScene() :
     coinCount(0),
     collectedCoinCount(0),
     remainingTimeInSecondsOption(0.f),
-    remainingTimeInSeconds(0.f)
+    remainingTimeInSeconds(0.f),
+    transitionTimeInSecondsOption(0.f),
+    transitionTimeInSeconds(0.f)
 {
 }
 
@@ -52,6 +54,23 @@ void GameScene::OnUpdate()
             userInterfaceScene->SetRemainingTimeText(timeLeft);
         }
     }
+
+    if (transitionTimeInSeconds > 0.f)
+    {
+        transitionTimeInSeconds -= sTime.GetUnscaledDeltaTime();
+
+        if (transitionTimeInSeconds < 0.f)
+        {
+            transitionTimeInSeconds = 0.f;
+
+            // Restart or load next level
+        }
+
+        if (auto userInterfaceScene = sSceneManager.GetScene<UserInterfaceScene>())
+        {
+            userInterfaceScene->SetTransitionOverlayCutOff(transitionTimeInSeconds / transitionTimeInSecondsOption);
+        }
+    }
 }
 
 void GameScene::SetOption(std::string const& key, std::string const& value)
@@ -69,6 +88,10 @@ void GameScene::SetOption(std::string const& key, std::string const& value)
 
         remainingTimeInSecondsOption = (float)(std::stoi(minutes) * 60 + std::stoi(seconds));
     }
+    else if (key == "TransitionTime")
+    {
+        transitionTimeInSecondsOption = (float)std::atof(value.c_str());
+    }
     else
     {
         fprintf(stderr, "Could not set unknown game scene option '%s'!\n", key.c_str());
@@ -83,6 +106,14 @@ void GameScene::CompleteLevel()
     fprintf(stdout, "Complete Level!\n");
 
     sTime.Pause();
+
+    if (auto userInterfaceScene = sSceneManager.GetScene<UserInterfaceScene>())
+    {
+        userInterfaceScene->EnableTransitionOverlay(true);
+        userInterfaceScene->SetTransitionOverlayCutOff(1.f);
+    }
+
+    transitionTimeInSeconds = transitionTimeInSecondsOption;
 }
 
 void GameScene::RestartLevel()
@@ -90,4 +121,12 @@ void GameScene::RestartLevel()
     fprintf(stdout, "Restart level!\n");
 
     sTime.Pause();
+
+    if (auto userInterfaceScene = sSceneManager.GetScene<UserInterfaceScene>())
+    {
+        userInterfaceScene->EnableTransitionOverlay(true);
+        userInterfaceScene->SetTransitionOverlayCutOff(1.f);
+    }
+
+    transitionTimeInSeconds = transitionTimeInSecondsOption;
 }

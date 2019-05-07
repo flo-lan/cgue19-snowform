@@ -31,4 +31,7 @@ private:
 
     float remainingTimeInSecondsOption;
     float remainingTimeInSeconds;
+
+    float transitionTimeInSecondsOption;
+    float transitionTimeInSeconds;
 };
