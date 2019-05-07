@@ -1,4 +1,4 @@
-﻿#include "Time.h"
+#include "Time.h"
 #include <GLFW\glfw3.h>
 #include "Settings.h"
 #include <windows.h>
@@ -53,5 +53,5 @@ void Time::Update()
 void Time::StartCountdown(float durationInSeconds)
 {
     countdownTime = durationInSeconds;
-    countdownTime = true;
+    countdownRunning = true;
 }
