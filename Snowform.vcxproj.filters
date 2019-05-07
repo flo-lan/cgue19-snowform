@@ -221,6 +221,9 @@
     <ClCompile Include="src\SceneOptionComponentFactory.cpp">
       <Filter>Engine\Scene\ComponentFactories</Filter>
     </ClCompile>
+    <ClCompile Include="src\ImageCutOffMaterial.cpp">
+      <Filter>Engine\Render\Material</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameObject.h">
@@ -447,6 +450,9 @@
     </ClInclude>
     <ClInclude Include="src\SceneOptionComponentFactory.h">
       <Filter>Engine\Scene\ComponentFactories</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ImageCutOffMaterial.h">
+      <Filter>Engine\Render\Material</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
