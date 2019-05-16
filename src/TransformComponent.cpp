@@ -306,7 +306,7 @@ void TransformComponent::Rotate(glm::vec3 angles)
 
 void TransformComponent::LookAt(glm::vec3 const& center, glm::vec3 const& worldUp)
 {
-    localRotationQ = glm::toQuat(glm::lookAt(position, center, worldUp));
+    localRotationQ = glm::conjugate(glm::toQuat(glm::lookAt(position, center, worldUp)));
     localRotation = glm::eulerAngles(localRotationQ);
 
     static struct UpdateChildTransformTraverser : public TransformGraphTraverser
