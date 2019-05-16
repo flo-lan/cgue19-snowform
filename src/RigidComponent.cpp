@@ -154,7 +154,7 @@ ColliderComponent* RigidComponent::GetAttachedColliderByPxShape(physx::PxShape* 
 void RigidComponent::SetTransform(physx::PxTransform& globalPose)
 {
     lastPosition = glm::vec3(globalPose.p.x, globalPose.p.y, globalPose.p.z);
-    lastRotation = glm::quat(globalPose.q.x, globalPose.q.y, globalPose.q.z, globalPose.q.w);
+    lastRotation = glm::quat(-globalPose.q.z, globalPose.q.y, -globalPose.q.x, globalPose.q.w);
 
     transform->SetPosition(lastPosition);
     transform->SetRotation(lastRotation);
