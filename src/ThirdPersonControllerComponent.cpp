@@ -1,13 +1,22 @@
 ﻿#include "ThirdPersonControllerComponent.h"
 #include "TransformComponent.h"
+#include "RigidDynamicComponent.h"
+#include "GameScene.h"
 #include "GameObject.h"
 #include "InputManager.h"
+#include "Time.h"
 #include "glm/ext.hpp"
 
 ThirdPersonControllerComponent::ThirdPersonControllerComponent(GameObject* owner) :
     Component::Component(owner),
     transform(owner->GetComponent<TransformComponent>()),
-    cameraTransform(nullptr),
+    target(nullptr),
+    targetTransform(nullptr),
+    targetRigid(nullptr),
+    angle(0.f),
+    distance(0.f),
+    velocity(20.f),
+    jumpVelocity(20.f),
     lastMousePositionX(0.f),
     lastMousePositionY(0.f),
     lastMouseScrollValue(0.f)
@@ -16,72 +25,73 @@ ThirdPersonControllerComponent::ThirdPersonControllerComponent(GameObject* owner
 
 void ThirdPersonControllerComponent::OnStart()
 {
-    if (transform && transform->GetChildCount() > 0)
+    if (target = GetOwner()->GetScene()->GetGameObjectById(targetId))
     {
-        cameraTransform = transform->GetChild(0);
+        targetTransform = target->GetComponent<TransformComponent>();
+        targetRigid = target->GetComponent<RigidDynamicComponent>();
     }
-
-    rigidDynamic = transform->GetParent()->GetOwner()->GetComponent<RigidDynamicComponent>();
+    else
+    {
+        fprintf(stderr, "Could not set target of third person controller, because target id '%s' could not be found!\n", targetId.c_str());
+    }
 
     lastMousePositionX = sInputManager.GetMousePositionX();
     lastMousePositionY = sInputManager.GetMousePositionY();
     lastMouseScrollValue = sInputManager.GetMouseScrollValueY();
-
-    transform->SetIgnoreParentRotation(true);
 }
 
 void ThirdPersonControllerComponent::Update()
 {
-    if (transform)
+    if (!target ||
+        !targetTransform ||
+        !targetRigid)
     {
-        float diffX = sInputManager.GetMousePositionX() - lastMousePositionX;
-        float localRotationY = -glm::radians(diffX) * 0.5f /* Slow down */;
-
-        transform->Rotate(0.f, localRotationY, 0.f);
+        return;
     }
 
-    if (cameraTransform)
-    {
-        float diffMouseScrollValue = sInputManager.GetMouseScrollValueY() - lastMouseScrollValue;
+    angle += glm::radians(sInputManager.GetMousePositionX() - lastMousePositionX) * 0.5f /* Slow down */;
 
-        cameraTransform->SetLocalPositionZ(cameraTransform->GetLocalPositionZ() - diffMouseScrollValue);
-    }
+    glm::vec3 direction = glm::vec3(sin(angle), -0.5f, -cos(angle));
+    glm::vec3 position = targetTransform->GetPosition() - direction * distance;
 
-    if (rigidDynamic && sInputManager.IsKeyPressed(GLFW_KEY_W))
+    transform->SetPosition(glm::lerp(transform->GetPosition(), position, 0.3f));
+    transform->LookAt(targetTransform);
+
+    if (sInputManager.IsKeyPressed(GLFW_KEY_W))
     {
-        glm::vec3 direction = cameraTransform->GetDirectionBackward();
+        glm::vec3 direction = transform->GetDirectionBackward();
         direction.y = 0;
         direction = glm::normalize(direction) * -1;
-        rigidDynamic->AddForce(direction * velocity, physx::PxForceMode::eFORCE);
+        targetRigid->AddForce(direction * velocity, physx::PxForceMode::eFORCE);
     }
 
-    if (rigidDynamic && sInputManager.IsKeyPressed(GLFW_KEY_A))
+    if (sInputManager.IsKeyPressed(GLFW_KEY_A))
     {
-        glm::vec3 direction = cameraTransform->GetDirectionRight();
+        glm::vec3 direction = transform->GetDirectionRight();
         direction.y = 0;
         direction = glm::normalize(direction) * -1;
-        rigidDynamic->AddForce(direction * velocity, physx::PxForceMode::eFORCE);
+        targetRigid->AddForce(direction * velocity, physx::PxForceMode::eFORCE);
     }
 
-    if (rigidDynamic && sInputManager.IsKeyPressed(GLFW_KEY_S))
+    if (sInputManager.IsKeyPressed(GLFW_KEY_S))
     {
-        glm::vec3 direction = cameraTransform->GetDirectionBackward();
+        glm::vec3 direction = transform->GetDirectionBackward();
         direction.y = 0;
         direction = glm::normalize(direction);
-        rigidDynamic->AddForce(direction * velocity, physx::PxForceMode::eFORCE);
+        targetRigid->AddForce(direction * velocity, physx::PxForceMode::eFORCE);
     }
 
-    if (rigidDynamic && sInputManager.IsKeyPressed(GLFW_KEY_D))
+    if (sInputManager.IsKeyPressed(GLFW_KEY_D))
     {
-        glm::vec3 direction = cameraTransform->GetDirectionRight();
+        glm::vec3 direction = transform->GetDirectionRight();
         direction.y = 0;
         direction = glm::normalize(direction);
-        rigidDynamic->AddForce(direction * velocity, physx::PxForceMode::eFORCE);
+        targetRigid->AddForce(direction * velocity, physx::PxForceMode::eFORCE);
     }
 
-    if (rigidDynamic && sInputManager.IsKeyPressed(GLFW_KEY_SPACE))
+    if (sInputManager.IsKeyPressed(GLFW_KEY_SPACE))
     {
-        rigidDynamic->AddForce(glm::vec3(0.f, jumpVelocity, 0.f), physx::PxForceMode::eFORCE);
+        targetRigid->AddForce(glm::vec3(0.f, jumpVelocity, 0.f), physx::PxForceMode::eFORCE);
     }
 
     lastMousePositionX = sInputManager.GetMousePositionX();

@@ -10,5 +10,17 @@ ThirdPersonControllerComponentFactory::ThirdPersonControllerComponentFactory() :
 
 void ThirdPersonControllerComponentFactory::Build(GameObject* gameObject, tinyxml2::XMLElement* element)
 {
-    gameObject->AttachComponent<ThirdPersonControllerComponent>();
+    ThirdPersonControllerComponent* thirdPersonController = gameObject->AttachComponent<ThirdPersonControllerComponent>();
+
+    if (element->Attribute("targetId"))
+    {
+        std::string targetId = std::string(element->Attribute("targetId"));
+        thirdPersonController->SetTargetId(targetId);
+    }
+
+    if (element->Attribute("distance"))
+    {
+        std::string distanceValue = std::string(element->Attribute("distance"));
+        thirdPersonController->SetDistance(std::strtof(distanceValue.c_str(), 0));
+    }
 }
