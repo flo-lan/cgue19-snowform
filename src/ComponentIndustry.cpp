@@ -16,6 +16,7 @@
 #include "CoinComponentFactory.h"
 #include "FlagComponentFactory.h"
 #include "SceneOptionComponentFactory.h"
+#include "PlayerComponentFactory.h"
 
 ComponentIndustry::ComponentIndustry()
 {
@@ -36,6 +37,7 @@ ComponentIndustry::ComponentIndustry()
     static CoinComponentFactory coinComponentFactory;
     static FlagComponentFactory flagComponentFactory;
     static SceneOptionComponentFactory sceneOptionComponentFactory;
+    static PlayerComponentFactory playerComponentFactory;
 
     factories["TransformComponent"] = &transformComponentFactory;
     factories["MeshRendererComponent"] = &meshRendererComponentFactory;
@@ -54,6 +56,7 @@ ComponentIndustry::ComponentIndustry()
     factories["CoinComponent"] = &coinComponentFactory;
     factories["FlagComponent"] = &flagComponentFactory;
     factories["SceneOptionComponent"] = &sceneOptionComponentFactory;
+    factories["PlayerComponent"] = &playerComponentFactory;
 }
 
 void ComponentIndustry::AddFactory(std::string const& componentName, ComponentFactory* factory)

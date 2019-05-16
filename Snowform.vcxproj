@@ -25,6 +25,8 @@
     <ClCompile Include="src\GameObject.cpp" />
     <ClCompile Include="src\GameScene.cpp" />
     <ClCompile Include="src\ImageCutOffMaterial.cpp" />
+    <ClCompile Include="src\PlayerComponent.cpp" />
+    <ClCompile Include="src\PlayerComponentFactory.cpp" />
     <ClCompile Include="src\SceneOptionComponentFactory.cpp" />
     <ClCompile Include="src\GlobalAssetLoader.cpp" />
     <ClCompile Include="src\Glyph.cpp" />
@@ -99,6 +101,8 @@
     <ClInclude Include="src\GameObject.h" />
     <ClInclude Include="src\GameScene.h" />
     <ClInclude Include="src\ImageCutOffMaterial.h" />
+    <ClInclude Include="src\PlayerComponent.h" />
+    <ClInclude Include="src\PlayerComponentFactory.h" />
     <ClInclude Include="src\SceneOptionComponentFactory.h" />
     <ClInclude Include="src\GlobalAssetLoader.h" />
     <ClInclude Include="src\Glyph.h" />

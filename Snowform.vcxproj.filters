@@ -224,6 +224,12 @@
     <ClCompile Include="src\ImageCutOffMaterial.cpp">
       <Filter>Engine\Render\Material</Filter>
     </ClCompile>
+    <ClCompile Include="src\PlayerComponent.cpp">
+      <Filter>Game\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PlayerComponentFactory.cpp">
+      <Filter>Game\Scene\ComponentFactories</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameObject.h">
@@ -453,6 +459,12 @@
     </ClInclude>
     <ClInclude Include="src\ImageCutOffMaterial.h">
       <Filter>Engine\Render\Material</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PlayerComponent.h">
+      <Filter>Game\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PlayerComponentFactory.h">
+      <Filter>Game\Scene\ComponentFactories</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

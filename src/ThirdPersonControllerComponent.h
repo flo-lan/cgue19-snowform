@@ -3,7 +3,6 @@
 #include "Component.h"
 #include "RigidDynamicComponent.h"
 
-class GameScene;
 class GameObject;
 class TransformComponent;
 
@@ -16,7 +15,6 @@ public:
     virtual void Update();
 
 private:
-    GameScene* gameScene;
     TransformComponent* transform;
     TransformComponent* cameraTransform;
     RigidDynamicComponent* rigidDynamic;
@@ -26,6 +24,4 @@ private:
     float lastMousePositionX;
     float lastMousePositionY;
     float lastMouseScrollValue;
-
-    bool dead; // ToDo: Move to PlayerComponent
 };
