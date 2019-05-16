@@ -36,6 +36,9 @@ public:
         Rotate(axis * angle);
     }
 
+    void LookAt(glm::vec3 const& center, glm::vec3 const& worldUp = glm::vec3(0.f, 1.f, 0.f));
+    void LookAt(TransformComponent* target, glm::vec3 const& worldUp = glm::vec3(0.f, 1.f, 0.f));
+
     void SetLocalPositionX(float localPositionX);
     void SetLocalPositionY(float localPositionY);
     void SetLocalPositionZ(float localPositionZ);

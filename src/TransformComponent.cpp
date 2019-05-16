@@ -304,6 +304,33 @@ void TransformComponent::Rotate(glm::vec3 angles)
     TraverseTransformGraphDF(t, true);
 }
 
+void TransformComponent::LookAt(glm::vec3 const& center, glm::vec3 const& worldUp)
+{
+    localRotationQ = glm::toQuat(glm::lookAt(position, center, worldUp));
+    localRotation = glm::eulerAngles(localRotationQ);
+
+    static struct UpdateChildTransformTraverser : public TransformGraphTraverser
+    {
+        virtual void Visit(TransformComponent* child)
+        {
+            child->UpdateRotation();
+            child->UpdatePosition();
+        }
+    } t;
+
+    TraverseTransformGraphDF(t, true);
+}
+
+void TransformComponent::LookAt(TransformComponent* target, glm::vec3 const& worldUp)
+{
+    if (!target)
+    {
+        return;
+    }
+
+    LookAt(target->GetPosition(), worldUp);
+}
+
 void TransformComponent::SetLocalPositionX(float localPositionX)
 {
     localPosition.x = localPositionX;
