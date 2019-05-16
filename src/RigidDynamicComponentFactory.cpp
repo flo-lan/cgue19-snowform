@@ -30,4 +30,16 @@ void RigidDynamicComponentFactory::Build(GameObject* gameObject, tinyxml2::XMLEl
         std::string massValue = std::string(element->Attribute("mass"));
         rigidDynamic->SetMass(std::strtof(massValue.c_str(), 0));
     }
+
+    if (element->Attribute("maxLinearVelocity"))
+    {
+        std::string maxLinearVelocityValue = std::string(element->Attribute("maxLinearVelocity"));
+        rigidDynamic->SetMaxLinearVelocity(std::strtof(maxLinearVelocityValue.c_str(), 0));
+    }
+
+    if (element->Attribute("maxAngularVelocity"))
+    {
+        std::string maxAngularVelocityValue = std::string(element->Attribute("maxAngularVelocity"));
+        rigidDynamic->SetMaxAngularVelocity(std::strtof(maxAngularVelocityValue.c_str(), 0));
+    }
 }

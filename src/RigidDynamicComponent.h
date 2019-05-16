@@ -30,6 +30,9 @@ public:
     void SetLinearVelocity(glm::vec3 const& linearVelocity);
     void SetAngularVelocity(glm::vec3 const& angularVelocity);
 
+    void SetMaxLinearVelocity(float maxLinearVelocity);
+    void SetMaxAngularVelocity(float maxAngularVelocity);
+
     void AddForce(glm::vec3 const& force, physx::PxForceMode::Enum mode = physx::PxForceMode::eFORCE);
     void AddTorque(glm::vec3 const& torque, physx::PxForceMode::Enum mode = physx::PxForceMode::eFORCE);
 

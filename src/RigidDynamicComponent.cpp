@@ -86,6 +86,22 @@ void RigidDynamicComponent::SetAngularVelocity(glm::vec3 const& angularVelocity)
     }
 }
 
+void RigidDynamicComponent::SetMaxLinearVelocity(float maxLinearVelocity)
+{
+    if (pxRigidDynamic)
+    {
+        pxRigidDynamic->setMaxLinearVelocity(maxLinearVelocity);
+    }
+}
+
+void RigidDynamicComponent::SetMaxAngularVelocity(float maxAngularVelocity)
+{
+    if (pxRigidDynamic)
+    {
+        pxRigidDynamic->setMaxAngularVelocity(maxAngularVelocity);
+    }
+}
+
 void RigidDynamicComponent::AddForce(glm::vec3 const& force, physx::PxForceMode::Enum mode)
 {
     if (pxRigidDynamic)
