@@ -18,8 +18,8 @@
   <GameObject id="Snowball" name="Snowball">
     <Components>
       <TransformComponent localPosition="-5 15 75" localRotation="0 0 0" localScale="1 1 1" />
-      <SphereColliderComponent physicsMaterial="Default" offset="0 0 0" radius="0.5" trigger="false" />
-      <RigidDynamicComponent CCD="true" kinematic="false" mass="1" />
+      <SphereColliderComponent physicsMaterial="Snowball" offset="0 0 0" radius="0.5" trigger="false" />
+      <RigidDynamicComponent CCD="true" kinematic="false" mass="1" maxLinearVelocity="80" maxAngularVelocity="100" />
       <PlayerComponent />
     </Components>
     <Children>
@@ -172,7 +172,7 @@
               <TransformComponent localPosition="0 0 0" localRotation="0 0 0" localScale="1 1 1" />
               <MeshRendererComponent material="StandardDefault" mesh="BlockMoving" />
               <BoxColliderComponent physicsMaterial="Default" offset="-5 1.25 5" halfExtent="5 1.25 5" trigger="false" />
-              <RigidDynamicComponent CCD="false" kinematic="true" mass="999999" />
+              <RigidDynamicComponent CCD="false" kinematic="true" mass="999999" maxLinearVelocity="100000" maxAngularVelocity="100" />
             </Components>
             <Children />
           </GameObject>
@@ -189,7 +189,7 @@
               <TransformComponent localPosition="0 0 0" localRotation="0 0 0" localScale="1 1 1" />
               <MeshRendererComponent material="StandardDefault" mesh="BlockMoving" />
               <BoxColliderComponent physicsMaterial="Default" offset="-5 1.25 5" halfExtent="5 1.25 5" trigger="false" />
-              <RigidDynamicComponent CCD="false" kinematic="true" mass="999999" />
+              <RigidDynamicComponent CCD="false" kinematic="true" mass="999999" maxLinearVelocity="100000" maxAngularVelocity="100" />
             </Components>
             <Children />
           </GameObject>

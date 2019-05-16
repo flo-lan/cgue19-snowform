@@ -15,8 +15,8 @@ ThirdPersonControllerComponent::ThirdPersonControllerComponent(GameObject* owner
     targetRigid(nullptr),
     angle(0.f),
     distance(0.f),
-    velocity(20.f),
-    jumpVelocity(20.f),
+    velocity(30.f),
+    jumpVelocity(40.f),
     lastMousePositionX(0.f),
     lastMousePositionY(0.f),
     lastMouseScrollValue(0.f)
@@ -54,7 +54,7 @@ void ThirdPersonControllerComponent::Update()
     glm::vec3 direction = glm::vec3(sin(angle), -0.5f, -cos(angle));
     glm::vec3 position = targetTransform->GetPosition() - direction * distance;
 
-    transform->SetPosition(glm::lerp(transform->GetPosition(), position, 0.3f));
+    transform->SetPosition(position);
     transform->LookAt(targetTransform);
 
     if (sInputManager.IsKeyPressed(GLFW_KEY_W))
@@ -62,7 +62,7 @@ void ThirdPersonControllerComponent::Update()
         glm::vec3 direction = transform->GetDirectionBackward();
         direction.y = 0;
         direction = glm::normalize(direction) * -1;
-        targetRigid->AddForce(direction * velocity, physx::PxForceMode::eFORCE);
+        targetRigid->AddForce(direction * velocity * sTime.GetDeltaTime(), physx::PxForceMode::eIMPULSE);
     }
 
     if (sInputManager.IsKeyPressed(GLFW_KEY_A))
@@ -70,7 +70,7 @@ void ThirdPersonControllerComponent::Update()
         glm::vec3 direction = transform->GetDirectionRight();
         direction.y = 0;
         direction = glm::normalize(direction) * -1;
-        targetRigid->AddForce(direction * velocity, physx::PxForceMode::eFORCE);
+        targetRigid->AddForce(direction * velocity * sTime.GetDeltaTime(), physx::PxForceMode::eIMPULSE);
     }
 
     if (sInputManager.IsKeyPressed(GLFW_KEY_S))
@@ -78,7 +78,7 @@ void ThirdPersonControllerComponent::Update()
         glm::vec3 direction = transform->GetDirectionBackward();
         direction.y = 0;
         direction = glm::normalize(direction);
-        targetRigid->AddForce(direction * velocity, physx::PxForceMode::eFORCE);
+        targetRigid->AddForce(direction * velocity * sTime.GetDeltaTime(), physx::PxForceMode::eIMPULSE);
     }
 
     if (sInputManager.IsKeyPressed(GLFW_KEY_D))
@@ -86,12 +86,12 @@ void ThirdPersonControllerComponent::Update()
         glm::vec3 direction = transform->GetDirectionRight();
         direction.y = 0;
         direction = glm::normalize(direction);
-        targetRigid->AddForce(direction * velocity, physx::PxForceMode::eFORCE);
+        targetRigid->AddForce(direction * velocity * sTime.GetDeltaTime(), physx::PxForceMode::eIMPULSE);
     }
 
     if (sInputManager.IsKeyPressed(GLFW_KEY_SPACE))
     {
-        targetRigid->AddForce(glm::vec3(0.f, jumpVelocity, 0.f), physx::PxForceMode::eFORCE);
+        targetRigid->AddForce(glm::vec3(0.f, jumpVelocity * sTime.GetDeltaTime(), 0.f), physx::PxForceMode::eIMPULSE);
     }
 
     lastMousePositionX = sInputManager.GetMousePositionX();

@@ -123,6 +123,7 @@ bool GlobalAssetLoader::LoadAssets()
     sAssetManager.CreateMeshFromFile("TreePineSnow", "assets/meshes/tree_pine_snow.fbx");
 
     sPhysicsEngine.CreatePxMaterial("Default", 0.5f, 0.5f, 0.5f);
+    sPhysicsEngine.CreatePxMaterial("Snowball", 5.0f, 5.0f, 0.5f);
 
     return true;
 }
