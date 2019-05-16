@@ -5,6 +5,8 @@
 #include <unordered_map>
 #include <iostream>
 
+struct GLFWwindow;
+
 class InputManager
 {
 public:
@@ -14,6 +16,8 @@ public:
         static InputManager instance;
         return instance;
     }
+
+    void Initialize(GLFWwindow* window);
 
     void SetMouseScrollValues(float x, float y)
     {

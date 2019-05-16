@@ -156,6 +156,9 @@ int main(int argc, char** argv)
     // Set screen window to access window properties globally
     Screen::SetWindow(window);
 
+    // Initialize input manager
+    sInputManager.Initialize(window);
+
     // To force GLEW to load all functions, the variable glewExperimental has to be modified
     glewExperimental = true;
 

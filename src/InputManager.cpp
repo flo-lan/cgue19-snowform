@@ -1,9 +1,21 @@
 #include "InputManager.h"
+#include <GLFW\glfw3.h>
 
 InputManager::InputManager() :
     mouseScrollValues(0.f, 0.f),
     mousePosition(0.f, 0.f)
 {
+}
+
+void InputManager::Initialize(GLFWwindow* window)
+{
+    double mousePositionX = 0.f;
+    double mousePositionY = 0.f;
+
+    glfwGetCursorPos(window, &mousePositionX, &mousePositionY);
+
+    mousePosition.x = (float)mousePositionX;
+    mousePosition.y = (float)mousePositionY;
 }
 
 bool InputManager::IsLeftMouseButtonPressed() const
