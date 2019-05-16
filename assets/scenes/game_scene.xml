@@ -198,7 +198,7 @@
               <TransformComponent localPosition="-2.09 2.5 7.55" localRotation="0 -90.12739 0" localScale="0.5000001 0.5 0.5000001" />
               <MeshRendererComponent material="StandardDefault" mesh="Flag" />
               <MeshColliderComponent physicsMaterial="Default" collisionMesh="Flag" offset="0 0 0" />
-              <BoxColliderComponent physicsMaterial="Default" offset="0 0 0" halfExtent="2.5 2.5 2.5" trigger="true" />
+              <BoxColliderComponent physicsMaterial="Default" offset="-3 3 3" halfExtent="3 3 3" trigger="true" />
               <RigidStaticComponent />
               <FlagComponent />
             </Components>
