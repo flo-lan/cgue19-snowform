@@ -5,6 +5,7 @@
 #include "foundation/PxErrors.h"
 #include "foundation/Px.h"
 #include "PxSimulationEventCallback.h"
+#include <glm/glm.hpp>
 
 #include <string>
 #include <unordered_map>
@@ -34,6 +35,14 @@ namespace physx
     class PxTransform;
 }
 
+struct RaycastHit
+{
+    float Distance;
+};
+
+#define RAYCAST_LAYER_NONE    0
+#define RAYCAST_LAYER_DEFAULT 1
+
 class PhysicsEngine : public physx::PxSimulationEventCallback
 {
 public:
@@ -53,6 +62,8 @@ public:
     bool Start();
     void Update();
     void Stop();
+
+    bool Raycast(glm::vec3 const& origin, glm::vec3 const& direction, float maxDistance, RaycastHit& hit, uint32_t layerMask = RAYCAST_LAYER_DEFAULT);
 
     void InsertRigidActor(physx::PxRigidActor* pxRigidActor);
     void RemoveRigidActor(physx::PxRigidActor* pxRigidActor);

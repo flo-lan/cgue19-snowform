@@ -19,7 +19,7 @@
     <Components>
       <TransformComponent localPosition="-5 15 75" localRotation="0 0 0" localScale="1 1 1" />
       <SphereColliderComponent physicsMaterial="Snowball" offset="0 0 0" radius="0.5" trigger="false" />
-      <RigidDynamicComponent CCD="true" kinematic="false" mass="1" maxLinearVelocity="80" maxAngularVelocity="100" />
+      <RigidDynamicComponent CCD="true" kinematic="false" mass="1" maxLinearVelocity="80" maxAngularVelocity="100" raycastLayerMask="2" />
       <PlayerComponent />
     </Components>
     <Children>
@@ -42,7 +42,7 @@
           <TransformComponent localPosition="-2.71 10 8.23" localRotation="0 -45 0" localScale="0.2455 0.2455 0.2455" />
           <MeshRendererComponent material="StandardDefault" mesh="TreePineSnow" />
           <MeshColliderComponent physicsMaterial="Default" collisionMesh="TreePineSnow" offset="0 0 0" />
-          <RigidStaticComponent />
+          <RigidStaticComponent raycastLayerMask="1" />
         </Components>
         <Children />
       </GameObject>
@@ -51,7 +51,7 @@
           <TransformComponent localPosition="-4.03 10.015 7.78" localRotation="0 -79.4 0" localScale="0.18167 0.18167 0.18167" />
           <MeshRendererComponent material="StandardDefault" mesh="TreePineSnow" />
           <MeshColliderComponent physicsMaterial="Default" collisionMesh="TreePineSnow" offset="0 0 0" />
-          <RigidStaticComponent />
+          <RigidStaticComponent raycastLayerMask="1" />
         </Components>
         <Children />
       </GameObject>
@@ -60,7 +60,7 @@
           <TransformComponent localPosition="-3.75 10.015 9.1" localRotation="0 -191.6 0" localScale="0.1816701 0.18167 0.1816701" />
           <MeshRendererComponent material="StandardDefault" mesh="TreePineSnow" />
           <MeshColliderComponent physicsMaterial="Default" collisionMesh="TreePineSnow" offset="0 0 0" />
-          <RigidStaticComponent />
+          <RigidStaticComponent raycastLayerMask="1" />
         </Components>
         <Children />
       </GameObject>
@@ -69,7 +69,7 @@
           <TransformComponent localPosition="-7.68 9.97 3.52" localRotation="0 -6.5 0" localScale="0.4033075 0.4033074 0.4033075" />
           <MeshRendererComponent material="StandardDefault" mesh="TreePineSnow" />
           <MeshColliderComponent physicsMaterial="Default" collisionMesh="TreePineSnow" offset="0 0 0" />
-          <RigidStaticComponent />
+          <RigidStaticComponent raycastLayerMask="1" />
         </Components>
         <Children />
       </GameObject>
@@ -78,7 +78,7 @@
           <TransformComponent localPosition="0 10 86.25" localRotation="0 0 0" localScale="0.2455 0.2455 0.2455" />
           <MeshRendererComponent material="StandardDefault" mesh="TreePineSnow" />
           <MeshColliderComponent physicsMaterial="Default" collisionMesh="TreePineSnow" offset="0 0 0" />
-          <RigidStaticComponent />
+          <RigidStaticComponent raycastLayerMask="1" />
         </Components>
         <Children />
       </GameObject>
@@ -87,7 +87,7 @@
           <TransformComponent localPosition="-3.58 10 87.16" localRotation="0 -43.66 0" localScale="0.4041666 0.4041666 0.4041666" />
           <MeshRendererComponent material="StandardDefault" mesh="TreePineSnow" />
           <MeshColliderComponent physicsMaterial="Default" collisionMesh="TreePineSnow" offset="0 0 0" />
-          <RigidStaticComponent />
+          <RigidStaticComponent raycastLayerMask="1" />
         </Components>
         <Children />
       </GameObject>
@@ -96,7 +96,7 @@
           <TransformComponent localPosition="-1.85 10 84.67" localRotation="0 -355.95 0" localScale="0.1848099 0.1848099 0.1848099" />
           <MeshRendererComponent material="StandardDefault" mesh="TreePineSnow" />
           <MeshColliderComponent physicsMaterial="Default" collisionMesh="TreePineSnow" offset="0 0 0" />
-          <RigidStaticComponent />
+          <RigidStaticComponent raycastLayerMask="1" />
         </Components>
         <Children />
       </GameObject>
@@ -105,7 +105,7 @@
           <TransformComponent localPosition="-13.8 10 80.8" localRotation="0 -10.64 0" localScale="0.223731 0.223731 0.223731" />
           <MeshRendererComponent material="StandardDefault" mesh="TreePineSnow" />
           <MeshColliderComponent physicsMaterial="Default" collisionMesh="TreePineSnow" offset="0 0 0" />
-          <RigidStaticComponent />
+          <RigidStaticComponent raycastLayerMask="1" />
         </Components>
         <Children />
       </GameObject>
@@ -114,7 +114,7 @@
           <TransformComponent localPosition="-15.93 10 75.38" localRotation="0 -1.989995 0" localScale="0.40417 0.40417 0.40417" />
           <MeshRendererComponent material="StandardDefault" mesh="TreePineSnow" />
           <MeshColliderComponent physicsMaterial="Default" collisionMesh="TreePineSnow" offset="0 0 0" />
-          <RigidStaticComponent />
+          <RigidStaticComponent raycastLayerMask="1" />
         </Components>
         <Children />
       </GameObject>
@@ -123,7 +123,7 @@
           <TransformComponent localPosition="6.06 10 78.49" localRotation="0 -116.7 0" localScale="0.40417 0.40417 0.40417" />
           <MeshRendererComponent material="StandardDefault" mesh="TreePineSnow" />
           <MeshColliderComponent physicsMaterial="Default" collisionMesh="TreePineSnow" offset="0 0 0" />
-          <RigidStaticComponent />
+          <RigidStaticComponent raycastLayerMask="1" />
         </Components>
         <Children />
       </GameObject>
@@ -132,7 +132,7 @@
           <TransformComponent localPosition="7.91 10 75.71" localRotation="0 -51.84 0" localScale="0.22373 0.22373 0.22373" />
           <MeshRendererComponent material="StandardDefault" mesh="TreePineSnow" />
           <MeshColliderComponent physicsMaterial="Default" collisionMesh="TreePineSnow" offset="0 0 0" />
-          <RigidStaticComponent />
+          <RigidStaticComponent raycastLayerMask="1" />
         </Components>
         <Children />
       </GameObject>
@@ -141,7 +141,7 @@
           <TransformComponent localPosition="4.84 10 75.89" localRotation="0 -91.3 0" localScale="0.18481 0.18481 0.18481" />
           <MeshRendererComponent material="StandardDefault" mesh="TreePineSnow" />
           <MeshColliderComponent physicsMaterial="Default" collisionMesh="TreePineSnow" offset="0 0 0" />
-          <RigidStaticComponent />
+          <RigidStaticComponent raycastLayerMask="1" />
         </Components>
         <Children />
       </GameObject>
@@ -150,7 +150,7 @@
           <TransformComponent localPosition="5.38 10 70.52" localRotation="0 -116.7 0" localScale="0.5109118 0.5109112 0.5109118" />
           <MeshRendererComponent material="StandardDefault" mesh="TreePineSnow" />
           <MeshColliderComponent physicsMaterial="Default" collisionMesh="TreePineSnow" offset="0 0 0" />
-          <RigidStaticComponent />
+          <RigidStaticComponent raycastLayerMask="1" />
         </Components>
         <Children />
       </GameObject>
@@ -172,7 +172,7 @@
               <TransformComponent localPosition="0 0 0" localRotation="0 0 0" localScale="1 1 1" />
               <MeshRendererComponent material="StandardDefault" mesh="BlockMoving" />
               <BoxColliderComponent physicsMaterial="Default" offset="-5 1.25 5" halfExtent="5 1.25 5" trigger="false" />
-              <RigidDynamicComponent CCD="false" kinematic="true" mass="999999" maxLinearVelocity="100000" maxAngularVelocity="100" />
+              <RigidDynamicComponent CCD="false" kinematic="true" mass="999999" maxLinearVelocity="100000" maxAngularVelocity="100" raycastLayerMask="1" />
             </Components>
             <Children />
           </GameObject>
@@ -189,7 +189,7 @@
               <TransformComponent localPosition="0 0 0" localRotation="0 0 0" localScale="1 1 1" />
               <MeshRendererComponent material="StandardDefault" mesh="BlockMoving" />
               <BoxColliderComponent physicsMaterial="Default" offset="-5 1.25 5" halfExtent="5 1.25 5" trigger="false" />
-              <RigidDynamicComponent CCD="false" kinematic="true" mass="999999" maxLinearVelocity="100000" maxAngularVelocity="100" />
+              <RigidDynamicComponent CCD="false" kinematic="true" mass="999999" maxLinearVelocity="100000" maxAngularVelocity="100" raycastLayerMask="1" />
             </Components>
             <Children />
           </GameObject>
@@ -199,7 +199,7 @@
               <MeshRendererComponent material="StandardDefault" mesh="Flag" />
               <MeshColliderComponent physicsMaterial="Default" collisionMesh="Flag" offset="0 0 0" />
               <BoxColliderComponent physicsMaterial="Default" offset="-3 3 3" halfExtent="3 3 3" trigger="true" />
-              <RigidStaticComponent />
+              <RigidStaticComponent raycastLayerMask="1" />
               <FlagComponent />
             </Components>
             <Children />
@@ -218,7 +218,7 @@
           <TransformComponent localPosition="0 0 10" localRotation="0 0 0" localScale="1 1 1" />
           <MeshRendererComponent material="StandardDefault" mesh="BlockSnowSlope" />
           <MeshColliderComponent physicsMaterial="Default" collisionMesh="BlockSnowSlope" offset="0 0 0" />
-          <RigidStaticComponent />
+          <RigidStaticComponent raycastLayerMask="1" />
         </Components>
         <Children />
       </GameObject>
@@ -227,7 +227,7 @@
           <TransformComponent localPosition="0 0 0" localRotation="0 0 0" localScale="1 1 1" />
           <MeshRendererComponent material="StandardDefault" mesh="BlockSnow" />
           <MeshColliderComponent physicsMaterial="Default" collisionMesh="BlockSnow" offset="0 0 0" />
-          <RigidStaticComponent />
+          <RigidStaticComponent raycastLayerMask="1" />
         </Components>
         <Children />
       </GameObject>
@@ -236,7 +236,7 @@
           <TransformComponent localPosition="0 -10 20" localRotation="0 0 0" localScale="1 1 1" />
           <MeshRendererComponent material="StandardDefault" mesh="BlockSnow" />
           <MeshColliderComponent physicsMaterial="Default" collisionMesh="BlockSnow" offset="0 0 0" />
-          <RigidStaticComponent />
+          <RigidStaticComponent raycastLayerMask="1" />
         </Components>
         <Children />
       </GameObject>
@@ -245,7 +245,7 @@
           <TransformComponent localPosition="0 -10 30" localRotation="0 0 0" localScale="1 1 1" />
           <MeshRendererComponent material="StandardDefault" mesh="BlockSnow" />
           <MeshColliderComponent physicsMaterial="Default" collisionMesh="BlockSnow" offset="0 0 0" />
-          <RigidStaticComponent />
+          <RigidStaticComponent raycastLayerMask="1" />
         </Components>
         <Children />
       </GameObject>
@@ -254,7 +254,7 @@
           <TransformComponent localPosition="0 -10 40" localRotation="0 0 0" localScale="1 1 1" />
           <MeshRendererComponent material="StandardDefault" mesh="BlockSnow" />
           <MeshColliderComponent physicsMaterial="Default" collisionMesh="BlockSnow" offset="0 0 0" />
-          <RigidStaticComponent />
+          <RigidStaticComponent raycastLayerMask="1" />
         </Components>
         <Children />
       </GameObject>
@@ -263,7 +263,7 @@
           <TransformComponent localPosition="-10 0 60" localRotation="0 -180 0" localScale="1 1 1" />
           <MeshRendererComponent material="StandardDefault" mesh="BlockSnowSlope" />
           <MeshColliderComponent physicsMaterial="Default" collisionMesh="BlockSnowSlope" offset="0 0 0" />
-          <RigidStaticComponent />
+          <RigidStaticComponent raycastLayerMask="1" />
         </Components>
         <Children />
       </GameObject>
@@ -272,7 +272,7 @@
           <TransformComponent localPosition="0 0 60" localRotation="0 0 0" localScale="1 1 1" />
           <MeshRendererComponent material="StandardDefault" mesh="BlockSnow" />
           <MeshColliderComponent physicsMaterial="Default" collisionMesh="BlockSnow" offset="0 0 0" />
-          <RigidStaticComponent />
+          <RigidStaticComponent raycastLayerMask="1" />
         </Components>
         <Children />
       </GameObject>
@@ -281,7 +281,7 @@
           <TransformComponent localPosition="-10 0 70" localRotation="0 -90 0" localScale="1 1 1" />
           <MeshRendererComponent material="StandardDefault" mesh="BlockSnowCornerLarge" />
           <MeshColliderComponent physicsMaterial="Default" collisionMesh="BlockSnowCornerLarge" offset="0 0 0" />
-          <RigidStaticComponent />
+          <RigidStaticComponent raycastLayerMask="1" />
         </Components>
         <Children />
       </GameObject>
@@ -290,7 +290,7 @@
           <TransformComponent localPosition="0 0 70" localRotation="0 -180 0" localScale="1 1 1" />
           <MeshRendererComponent material="StandardDefault" mesh="BlockSnowCornerLarge" />
           <MeshColliderComponent physicsMaterial="Default" collisionMesh="BlockSnowCornerLarge" offset="0 0 0" />
-          <RigidStaticComponent />
+          <RigidStaticComponent raycastLayerMask="1" />
         </Components>
         <Children />
       </GameObject>
@@ -299,7 +299,7 @@
           <TransformComponent localPosition="0 0 70" localRotation="0 0 0" localScale="1 1 1" />
           <MeshRendererComponent material="StandardDefault" mesh="BlockSnow" />
           <MeshColliderComponent physicsMaterial="Default" collisionMesh="BlockSnow" offset="0 0 0" />
-          <RigidStaticComponent />
+          <RigidStaticComponent raycastLayerMask="1" />
         </Components>
         <Children />
       </GameObject>
@@ -308,7 +308,7 @@
           <TransformComponent localPosition="10 0 70" localRotation="0 0 0" localScale="1 1 1" />
           <MeshRendererComponent material="StandardDefault" mesh="BlockSnow" />
           <MeshColliderComponent physicsMaterial="Default" collisionMesh="BlockSnow" offset="0 0 0" />
-          <RigidStaticComponent />
+          <RigidStaticComponent raycastLayerMask="1" />
         </Components>
         <Children />
       </GameObject>
@@ -317,7 +317,7 @@
           <TransformComponent localPosition="-10 0 70" localRotation="0 0 0" localScale="1 1 1" />
           <MeshRendererComponent material="StandardDefault" mesh="BlockSnow" />
           <MeshColliderComponent physicsMaterial="Default" collisionMesh="BlockSnow" offset="0 0 0" />
-          <RigidStaticComponent />
+          <RigidStaticComponent raycastLayerMask="1" />
         </Components>
         <Children />
       </GameObject>
@@ -326,7 +326,7 @@
           <TransformComponent localPosition="0 0 80" localRotation="0 0 0" localScale="1 1 1" />
           <MeshRendererComponent material="StandardDefault" mesh="BlockSnow" />
           <MeshColliderComponent physicsMaterial="Default" collisionMesh="BlockSnow" offset="0 0 0" />
-          <RigidStaticComponent />
+          <RigidStaticComponent raycastLayerMask="1" />
         </Components>
         <Children />
       </GameObject>
@@ -335,7 +335,7 @@
           <TransformComponent localPosition="0 0 80" localRotation="0 -270 0" localScale="1 1 1" />
           <MeshRendererComponent material="StandardDefault" mesh="BlockSnowCornerLarge" />
           <MeshColliderComponent physicsMaterial="Default" collisionMesh="BlockSnowCornerLarge" offset="0 0 0" />
-          <RigidStaticComponent />
+          <RigidStaticComponent raycastLayerMask="1" />
         </Components>
         <Children />
       </GameObject>
@@ -344,7 +344,7 @@
           <TransformComponent localPosition="-10 0 80" localRotation="0 0 0" localScale="1 1 1" />
           <MeshRendererComponent material="StandardDefault" mesh="BlockSnowCornerLarge" />
           <MeshColliderComponent physicsMaterial="Default" collisionMesh="BlockSnowCornerLarge" offset="0 0 0" />
-          <RigidStaticComponent />
+          <RigidStaticComponent raycastLayerMask="1" />
         </Components>
         <Children />
       </GameObject>
@@ -360,7 +360,7 @@
           <TransformComponent localPosition="-5 1.5 35" localRotation="0 0 0" localScale="0.5 0.5 0.5" />
           <MeshRendererComponent material="StandardDefault" mesh="Coin" />
           <BoxColliderComponent physicsMaterial="Default" offset="0 0 0" halfExtent="2.5 2.5 2.5" trigger="true" />
-          <RigidStaticComponent />
+          <RigidStaticComponent raycastLayerMask="1" />
           <RotateComponent rotationDirection="0 1 0" speed="5" />
           <CoinComponent />
         </Components>
@@ -371,7 +371,7 @@
           <TransformComponent localPosition="-12.28 10 67.72" localRotation="0 -135 0" localScale="0.5000002 0.5 0.5000002" />
           <MeshRendererComponent material="StandardDefault" mesh="Snowman" />
           <MeshColliderComponent physicsMaterial="Default" collisionMesh="Snowman" offset="0 0 0" />
-          <RigidStaticComponent />
+          <RigidStaticComponent raycastLayerMask="1" />
         </Components>
         <Children />
       </GameObject>
@@ -380,7 +380,7 @@
           <TransformComponent localPosition="-12.88 10 87.92" localRotation="0 -180 0" localScale="1 1 1" />
           <MeshRendererComponent material="StandardDefault" mesh="Rocks" />
           <MeshColliderComponent physicsMaterial="Default" collisionMesh="Rocks" offset="0 0 0" />
-          <RigidStaticComponent />
+          <RigidStaticComponent raycastLayerMask="1" />
         </Components>
         <Children />
       </GameObject>
@@ -389,7 +389,7 @@
           <TransformComponent localPosition="-2.7 10 83.84" localRotation="0 0 0" localScale="0.2 0.2 0.2" />
           <MeshRendererComponent material="StandardDefault" mesh="Mushrooms" />
           <MeshColliderComponent physicsMaterial="Default" collisionMesh="Mushrooms" offset="0 0 0" />
-          <RigidStaticComponent />
+          <RigidStaticComponent raycastLayerMask="1" />
         </Components>
         <Children />
       </GameObject>
@@ -398,7 +398,7 @@
           <TransformComponent localPosition="7.64 10 74.91" localRotation="0 -63.61 0" localScale="0.2 0.2 0.2" />
           <MeshRendererComponent material="StandardDefault" mesh="Mushrooms" />
           <MeshColliderComponent physicsMaterial="Default" collisionMesh="Mushrooms" offset="0 0 0" />
-          <RigidStaticComponent />
+          <RigidStaticComponent raycastLayerMask="1" />
         </Components>
         <Children />
       </GameObject>

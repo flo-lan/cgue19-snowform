@@ -222,6 +222,40 @@ void PhysicsEngine::Stop()
     }
 }
 
+bool PhysicsEngine::Raycast(glm::vec3 const& origin, glm::vec3 const& direction, float maxDistance, RaycastHit& hit, uint32_t layerMask)
+{
+    if (!pxScene)
+    {
+        return false;
+    }
+
+    physx::PxRaycastBuffer pxRaycastBuffer;
+    physx::PxHitFlags pxHitFlags = physx::PxHitFlags(physx::PxHitFlag::eDEFAULT);
+    physx::PxQueryFilterData pxQueryFilterData = physx::PxQueryFilterData();
+
+    pxQueryFilterData.data.word0 = layerMask;
+
+    bool status = pxScene->raycast
+    (
+        physx::PxVec3(origin.x, origin.y, origin.z),
+        physx::PxVec3(direction.x, direction.y, direction.z),
+        maxDistance,
+        pxRaycastBuffer,
+        pxHitFlags,
+        pxQueryFilterData
+    );
+
+    uint32_t hits = pxRaycastBuffer.getNbAnyHits();
+
+    if (status && hits == 1)
+    {
+        physx::PxRaycastHit const& pxRaycastHit = pxRaycastBuffer.getAnyHit(0);
+        hit.Distance = pxRaycastHit.distance;
+    }
+
+    return status;
+}
+
 void PhysicsEngine::InsertRigidActor(physx::PxRigidActor* pxRigidActor)
 {
     if (!pxRigidActor)

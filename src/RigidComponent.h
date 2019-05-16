@@ -36,6 +36,9 @@ public:
 
     ColliderComponent* GetAttachedColliderByPxShape(physx::PxShape* pxShape) const;
 
+    uint32_t GetRaycastLayerMask() const { return raycastLayerMask; }
+    void SetRaycastLayerMask(uint32_t raycastLayerMask);
+
     void SetTransform(physx::PxTransform& globalPose);
     void SetGlobalPose(glm::vec3 const& position, glm::quat const& rotation);
     virtual void SetGlobalPose(physx::PxTransform& globalPose) = 0;
@@ -48,6 +51,7 @@ protected:
 
     TransformComponent* transform;
     std::vector<ColliderComponent*> attachedColliders;
+    uint32_t raycastLayerMask;
 
     glm::vec3 lastPosition;
     glm::quat lastRotation;

@@ -42,4 +42,10 @@ void RigidDynamicComponentFactory::Build(GameObject* gameObject, tinyxml2::XMLEl
         std::string maxAngularVelocityValue = std::string(element->Attribute("maxAngularVelocity"));
         rigidDynamic->SetMaxAngularVelocity(std::strtof(maxAngularVelocityValue.c_str(), 0));
     }
+
+    if (element->Attribute("raycastLayerMask"))
+    {
+        std::string raycastLayerMaskValue = std::string(element->Attribute("raycastLayerMask"));
+        rigidDynamic->SetRaycastLayerMask(std::stoul(raycastLayerMaskValue.c_str()));
+    }
 }

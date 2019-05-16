@@ -1,4 +1,5 @@
 #include "RigidComponent.h"
+#include "PhysicsEngine.h"
 #include "GameObject.h"
 #include "TransformComponent.h"
 #include "BoxColliderComponent.h"
@@ -10,6 +11,7 @@
 RigidComponent::RigidComponent(GameObject* owner) :
     Component::Component(owner),
     transform(owner->GetComponent<TransformComponent>()),
+    raycastLayerMask(RAYCAST_LAYER_DEFAULT),
     lastPosition(owner->GetComponent<TransformComponent>()->GetPosition()),
     lastRotation(owner->GetComponent<TransformComponent>()->GetRotationQ())
 {
@@ -80,6 +82,10 @@ void RigidComponent::AttachColliderComponent(ColliderComponent* collider)
         return;
     }
 
+    physx::PxFilterData pxFilterData = physx::PxFilterData();
+    pxFilterData.word0 = raycastLayerMask;
+    pxShape->setQueryFilterData(pxFilterData);
+
     attachedColliders.push_back(collider);
 
     AttachShape(pxShape);
@@ -149,6 +155,20 @@ ColliderComponent* RigidComponent::GetAttachedColliderByPxShape(physx::PxShape* 
     }
 
     return nullptr;
+}
+
+void RigidComponent::SetRaycastLayerMask(uint32_t raycastLayerMask)
+{
+    this->raycastLayerMask = raycastLayerMask;
+
+    for (auto itr = attachedColliders.begin(); itr != attachedColliders.end(); ++itr)
+    {
+        ColliderComponent* collider = *itr;
+
+        physx::PxFilterData pxFilterData = physx::PxFilterData();
+        pxFilterData.word0 = raycastLayerMask;
+        collider->GetPxShape()->setQueryFilterData(pxFilterData);
+    }
 }
 
 void RigidComponent::SetTransform(physx::PxTransform& globalPose)

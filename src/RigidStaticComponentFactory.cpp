@@ -10,5 +10,11 @@ RigidStaticComponentFactory::RigidStaticComponentFactory() :
 
 void RigidStaticComponentFactory::Build(GameObject* gameObject, tinyxml2::XMLElement* element)
 {
-    gameObject->AttachComponent<RigidStaticComponent>();
+    RigidStaticComponent* rigidStatic = gameObject->AttachComponent<RigidStaticComponent>();
+
+    if (element->Attribute("raycastLayerMask"))
+    {
+        std::string raycastLayerMaskValue = std::string(element->Attribute("raycastLayerMask"));
+        rigidStatic->SetRaycastLayerMask(std::stoul(raycastLayerMaskValue.c_str()));
+    }
 }
