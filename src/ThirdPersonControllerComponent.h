@@ -28,6 +28,7 @@ private:
     float distance;
     float velocity;
     float jumpVelocity;
+    float jumpTimer;
     float lastMousePositionX;
     float lastMousePositionY;
     float lastMouseScrollValue;
