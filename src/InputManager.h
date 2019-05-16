@@ -75,10 +75,32 @@ static void MouseCursorPositionCallback(GLFWwindow* window, double xpos, double 
 
 static void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
 {
-    sInputManager.SetMouseButtonPressedState(button, action == GLFW_PRESS);
+    switch (action)
+    {
+        case GLFW_PRESS:
+            sInputManager.SetMouseButtonPressedState(button, true);
+            break;
+        case GLFW_REPEAT:
+            // Do nothing
+            break;
+        case GLFW_RELEASE:
+            sInputManager.SetMouseButtonPressedState(button, false);
+            break;
+    }
 }
 
 static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
-{           
-    sInputManager.SetKeyPressedState(key, action == GLFW_PRESS);
+{
+    switch (action)
+    {
+        case GLFW_PRESS:
+            sInputManager.SetKeyPressedState(key, true);
+            break;
+        case GLFW_REPEAT:
+            // Do nothing
+            break;
+        case GLFW_RELEASE:
+            sInputManager.SetKeyPressedState(key, false);
+            break;
+    }
 }
