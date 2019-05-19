@@ -122,10 +122,10 @@ void RigidComponent::LateUpdate()
     glm::vec3 positionDiff = lastPosition - transform->GetPosition();
     glm::quat rotationDiff = glm::quat
     (
+        lastRotation.w - transform->GetRotationQ().w,
         lastRotation.x - transform->GetRotationQ().x,
         lastRotation.y - transform->GetRotationQ().y,
-        lastRotation.z - transform->GetRotationQ().z,
-        lastRotation.w - transform->GetRotationQ().w
+        lastRotation.z - transform->GetRotationQ().z
     );
 
     const float epsilon = 0.01f;
@@ -174,7 +174,7 @@ void RigidComponent::SetRaycastLayerMask(uint32_t raycastLayerMask)
 void RigidComponent::SetTransform(physx::PxTransform& globalPose)
 {
     lastPosition = glm::vec3(globalPose.p.x, globalPose.p.y, globalPose.p.z);
-    lastRotation = glm::quat(-globalPose.q.z, globalPose.q.y, -globalPose.q.x, globalPose.q.w);
+    lastRotation = glm::quat(globalPose.q.w, globalPose.q.x, globalPose.q.y, globalPose.q.z);
 
     transform->SetPosition(lastPosition);
     transform->SetRotation(lastRotation);
