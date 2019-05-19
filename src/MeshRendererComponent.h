@@ -20,7 +20,8 @@ public:
     virtual ~MeshRendererComponent();
 
     virtual void OnStart();
-    virtual void Render();
+
+    void Render();
 
     void SetEnabled(bool value) { enabled = value; }
     void SetCamera(CameraComponent* value) { camera = value; }

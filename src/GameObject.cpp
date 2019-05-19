@@ -5,6 +5,7 @@
 #include "Scene.h"
 #include "TransformComponent.h"
 #include "TransformGraphTraverser.h"
+#include "MeshRendererComponent.h"
 #include <algorithm>
 #include <stack>
 #include <queue>
@@ -219,7 +220,7 @@ void GameObject::Update()
 
 void GameObject::Render()
 {
-    for (ComponentList::const_iterator itr = componentList.begin(); itr != componentList.end(); ++itr)
+    for (MeshRendererComponentList::const_iterator itr = meshRenderers.begin(); itr != meshRenderers.end(); ++itr)
     {
         (*itr)->Render();
     }
@@ -287,4 +288,19 @@ void GameObject::SetId(std::string const& id)
     {
         scene->InsertGameObjectIdMapping(this, id);
     }
+}
+
+void GameObject::InsertMeshRendererComponent(MeshRendererComponent* meshRendererComponent)
+{
+    if (std::find(meshRenderers.begin(), meshRenderers.end(), meshRendererComponent) != meshRenderers.end())
+    {
+        return;
+    }
+
+    meshRenderers.push_back(meshRendererComponent);
+}
+
+void GameObject::RemoveMeshRendererComponent(MeshRendererComponent* meshRendererComponent)
+{
+    meshRenderers.erase(std::remove(meshRenderers.begin(), meshRenderers.end(), meshRendererComponent), meshRenderers.end());
 }

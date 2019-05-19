@@ -22,11 +22,15 @@ MeshRendererComponent::MeshRendererComponent(GameObject* owner) :
     EBO(0)
 {
     fprintf(stdout, "Attached mesh renderer component to game object '%s'!\n", GetOwner()->GetName().c_str());
+
+    GetOwner()->InsertMeshRendererComponent(this);
 }
 
 MeshRendererComponent::~MeshRendererComponent()
 {
     fprintf(stdout, "Deleted mesh renderer component from game object '%s'!\n", GetOwner()->GetName().c_str());
+
+    GetOwner()->RemoveMeshRendererComponent(this);
 
     if (VAO)
     {

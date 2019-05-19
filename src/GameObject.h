@@ -9,6 +9,7 @@
 class Component;
 class Collision;
 class ColliderComponent;
+class MeshRendererComponent;
 class Scene;
 
 class GameObject
@@ -89,6 +90,9 @@ public:
         }
     }
 
+    void InsertMeshRendererComponent(MeshRendererComponent* meshRendererComponent);
+    void RemoveMeshRendererComponent(MeshRendererComponent* meshRendererComponent);
+
     std::string const& GetName() const { return name; }
     Scene* GetScene() const { return scene; }
 
@@ -98,6 +102,7 @@ public:
 private:
     typedef std::vector<Component*> ComponentList;
     typedef std::map<uint32_t /* Type Id */, ComponentList> ComponentMap;
+    typedef std::vector<MeshRendererComponent*> MeshRendererComponentList;
 
 private:
     std::string id;
@@ -106,6 +111,7 @@ private:
     ComponentList componentWaitingList;
     ComponentMap componentMap;
     ComponentList componentList;
+    MeshRendererComponentList meshRenderers;
     Scene* scene;
     bool destroyed;
 };
