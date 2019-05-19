@@ -1,13 +1,13 @@
 #pragma once
 
-#include "Component.h"
+#include "LightComponent.h"
 #include <glm\glm.hpp>
 
 class TransformComponent;
 
 #define MAX_POINT_LIGHT_COUNT 4
 
-class PointLightComponent : public Component
+class PointLightComponent : public LightComponent
 {
 public:
     PointLightComponent(GameObject* owner);

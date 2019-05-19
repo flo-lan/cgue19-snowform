@@ -27,13 +27,13 @@
       <Filter>Engine\Render\Material</Filter>
     </ClCompile>
     <ClCompile Include="src\PointLightComponent.cpp">
-      <Filter>Engine\Render\Light</Filter>
+      <Filter>Engine\Render\Illumination</Filter>
     </ClCompile>
     <ClCompile Include="src\SpotLightComponent.cpp">
-      <Filter>Engine\Render\Light</Filter>
+      <Filter>Engine\Render\Illumination</Filter>
     </ClCompile>
     <ClCompile Include="src\DirectionalLightComponent.cpp">
-      <Filter>Engine\Render\Light</Filter>
+      <Filter>Engine\Render\Illumination</Filter>
     </ClCompile>
     <ClCompile Include="src\InputManager.cpp">
       <Filter>Engine\Input</Filter>
@@ -242,6 +242,9 @@
     <ClCompile Include="src\ShadowMapMaterial.cpp">
       <Filter>Engine\Render\Material</Filter>
     </ClCompile>
+    <ClCompile Include="src\LightComponent.cpp">
+      <Filter>Engine\Render\Illumination</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameObject.h">
@@ -269,13 +272,13 @@
       <Filter>Engine\Render\Material</Filter>
     </ClInclude>
     <ClInclude Include="src\PointLightComponent.h">
-      <Filter>Engine\Render\Light</Filter>
+      <Filter>Engine\Render\Illumination</Filter>
     </ClInclude>
     <ClInclude Include="src\SpotLightComponent.h">
-      <Filter>Engine\Render\Light</Filter>
+      <Filter>Engine\Render\Illumination</Filter>
     </ClInclude>
     <ClInclude Include="src\DirectionalLightComponent.h">
-      <Filter>Engine\Render\Light</Filter>
+      <Filter>Engine\Render\Illumination</Filter>
     </ClInclude>
     <ClInclude Include="src\Utils.h">
       <Filter>Engine\Util</Filter>
@@ -490,6 +493,9 @@
     <ClInclude Include="src\ShadowMapMaterial.h">
       <Filter>Engine\Render\Material</Filter>
     </ClInclude>
+    <ClInclude Include="src\LightComponent.h">
+      <Filter>Engine\Render\Illumination</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">
@@ -518,9 +524,6 @@
     </Filter>
     <Filter Include="Engine\Render\Camera">
       <UniqueIdentifier>{1e306c68-f3a3-4189-8343-442148b08a78}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Render\Light">
-      <UniqueIdentifier>{26d434c3-f296-422c-ad30-0a971e555af3}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\Render\Material">
       <UniqueIdentifier>{d3e146fd-9adb-4cfd-a12f-1975400b6400}</UniqueIdentifier>
@@ -578,6 +581,9 @@
     </Filter>
     <Filter Include="Engine\Render\Renderer">
       <UniqueIdentifier>{f520dbbd-e813-4323-beec-ba52e1d2f863}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Render\Illumination">
+      <UniqueIdentifier>{26d434c3-f296-422c-ad30-0a971e555af3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

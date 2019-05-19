@@ -1,19 +1,17 @@
 #pragma once
 
-#include "Component.h"
+#include "LightComponent.h"
 #include <glm\glm.hpp>
 
 class TransformComponent;
 
 #define MAX_SPOT_LIGHT_COUNT 2
 
-class SpotLightComponent : public Component
+class SpotLightComponent : public LightComponent
 {
 public:
     SpotLightComponent(GameObject* owner);
     virtual ~SpotLightComponent();
-
-    virtual void OnStart();
 
     glm::vec3 GetPosition() const;
     glm::vec3 GetDirection() const { return direction; }

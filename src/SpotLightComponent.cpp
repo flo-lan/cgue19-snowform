@@ -3,7 +3,8 @@
 #include "TransformComponent.h"
 
 SpotLightComponent::SpotLightComponent(GameObject* owner) :
-    Component::Component(owner),
+    LightComponent::LightComponent(owner),
+    transform(owner->GetComponent<TransformComponent>()),
     direction(0.f, 0.f, 0.f),
     color(1.f, 1.f, 1.f),
     intensity(1.f),
@@ -17,11 +18,6 @@ SpotLightComponent::SpotLightComponent(GameObject* owner) :
 
 SpotLightComponent::~SpotLightComponent()
 {
-}
-
-void SpotLightComponent::OnStart()
-{
-    transform = GetOwner()->GetComponent<TransformComponent>();
 }
 
 glm::vec3 SpotLightComponent::GetPosition() const

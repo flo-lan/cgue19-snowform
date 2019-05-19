@@ -1,11 +1,11 @@
 #pragma once
 
-#include "Component.h"
+#include "LightComponent.h"
 #include <glm\glm.hpp>
 
 #define MAX_DIRECTIONAL_LIGHT_COUNT 4
 
-class DirectionalLightComponent : public Component
+class DirectionalLightComponent : public LightComponent
 {
 public:
     DirectionalLightComponent(GameObject* owner);
