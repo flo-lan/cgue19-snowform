@@ -102,7 +102,7 @@ void MeshRendererComponent::OnStart()
     initialLights.clear();
 }
 
-void MeshRendererComponent::Render()
+void MeshRendererComponent::Render(Material* material)
 {
     if (material && mesh && enabled)
     {

@@ -21,7 +21,8 @@ public:
 
     virtual void OnStart();
 
-    void Render();
+    void Render() { Render(material); }
+    void Render(Material* material);
 
     void SetEnabled(bool value) { enabled = value; }
     void SetCamera(CameraComponent* value) { camera = value; }
