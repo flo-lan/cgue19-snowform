@@ -64,7 +64,6 @@ protected:
     virtual void OnLoad() {}
     virtual void OnUpdate() {}
     virtual void OnPreRender() {}
-    virtual void OnRender() {}
     virtual void OnPostRender() {}
 
 private:

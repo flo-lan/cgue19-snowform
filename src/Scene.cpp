@@ -179,8 +179,6 @@ void Scene::Render()
     } t;
 
     TraverseSceneGraphDF(t);
-
-    OnRender();
 }
 
 void Scene::InsertSceneGraphRoot(TransformComponent* transform)
