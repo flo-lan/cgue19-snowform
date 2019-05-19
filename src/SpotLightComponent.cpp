@@ -18,9 +18,9 @@ SpotLightComponent::SpotLightComponent(GameObject* owner) :
 
 SpotLightComponent::~SpotLightComponent()
 {
-    for (auto itr = affectedMeshRenderers.begin(); itr != affectedMeshRenderers.end(); ++itr)
+    while (affectedMeshRenderers.size())
     {
-        (*itr)->RemoveLight(this);
+        affectedMeshRenderers[0]->RemoveLight(this);
     }
 }
 
