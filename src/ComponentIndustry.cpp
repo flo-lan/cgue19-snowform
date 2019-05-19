@@ -17,6 +17,9 @@
 #include "FlagComponentFactory.h"
 #include "SceneOptionComponentFactory.h"
 #include "PlayerComponentFactory.h"
+#include "DirectionalLightComponentFactory.h"
+#include "PointLightComponentFactory.h"
+#include "SpotLightComponentFactory.h"
 
 ComponentIndustry::ComponentIndustry()
 {
@@ -38,6 +41,9 @@ ComponentIndustry::ComponentIndustry()
     static FlagComponentFactory flagComponentFactory;
     static SceneOptionComponentFactory sceneOptionComponentFactory;
     static PlayerComponentFactory playerComponentFactory;
+    static DirectionalLightComponentFactory directionalLightComponentFactory;
+    static PointLightComponentFactory pointLightComponentFactory;
+    static SpotLightComponentFactory spotLightComponentFactory;
 
     factories["TransformComponent"] = &transformComponentFactory;
     factories["MeshRendererComponent"] = &meshRendererComponentFactory;
@@ -57,6 +63,9 @@ ComponentIndustry::ComponentIndustry()
     factories["FlagComponent"] = &flagComponentFactory;
     factories["SceneOptionComponent"] = &sceneOptionComponentFactory;
     factories["PlayerComponent"] = &playerComponentFactory;
+    factories["DirectionalLightComponent"] = &directionalLightComponentFactory;
+    factories["PointLightComponent"] = &pointLightComponentFactory;
+    factories["SpotLightComponent"] = &spotLightComponentFactory;
 }
 
 void ComponentIndustry::AddFactory(std::string const& componentName, ComponentFactory* factory)

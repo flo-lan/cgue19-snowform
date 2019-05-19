@@ -230,6 +230,15 @@
     <ClCompile Include="src\ThirdPersonControllerComponentFactory.cpp">
       <Filter>Game\Scene\ComponentFactories</Filter>
     </ClCompile>
+    <ClCompile Include="src\DirectionalLightComponentFactory.cpp">
+      <Filter>Engine\Scene\ComponentFactories</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PointLightComponentFactory.cpp">
+      <Filter>Engine\Scene\ComponentFactories</Filter>
+    </ClCompile>
+    <ClCompile Include="src\SpotLightComponentFactory.cpp">
+      <Filter>Engine\Scene\ComponentFactories</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameObject.h">
@@ -465,6 +474,15 @@
     </ClInclude>
     <ClInclude Include="src\ThirdPersonControllerComponentFactory.h">
       <Filter>Game\Scene\ComponentFactories</Filter>
+    </ClInclude>
+    <ClInclude Include="src\DirectionalLightComponentFactory.h">
+      <Filter>Engine\Scene\ComponentFactories</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PointLightComponentFactory.h">
+      <Filter>Engine\Scene\ComponentFactories</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SpotLightComponentFactory.h">
+      <Filter>Engine\Scene\ComponentFactories</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

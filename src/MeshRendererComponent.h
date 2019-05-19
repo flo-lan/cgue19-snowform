@@ -3,6 +3,7 @@
 #include "Component.h"
 #include <GL\glew.h>
 #include <vector>
+#include <string>
 
 class CameraComponent;
 class TransformComponent;
@@ -25,6 +26,8 @@ public:
     void SetCamera(CameraComponent* value) { camera = value; }
     void SetMaterial(Material* value) { material = value; }
     void SetMesh(Mesh* value);
+
+    void AddInitialLight(std::string const& gameObjectId); // ToDo: Should be handled inside MeshRendererComponentFactory
 
     void AddLight(DirectionalLightComponent* light);
     void AddLight(PointLightComponent* light);
@@ -49,4 +52,5 @@ private:
     std::vector<DirectionalLightComponent*> directionalLights;
     std::vector<PointLightComponent*> pointLights;
     std::vector<SpotLightComponent*> spotLights;
+    std::vector<std::string> initialLights; // ToDo: Should be handled inside MeshRendererComponentFactory
 };

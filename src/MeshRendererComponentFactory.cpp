@@ -47,4 +47,26 @@ void MeshRendererComponentFactory::Build(GameObject* gameObject, tinyxml2::XMLEl
             fprintf(stderr, "Could not find mesh '%s' of mesh renderer component for game object '%s'!\n", meshName.c_str(), gameObject->GetName().c_str());
         }
     }
+
+    for (tinyxml2::XMLElement* childElement = element->FirstChildElement(); childElement != nullptr; childElement = childElement->NextSiblingElement())
+    {
+        std::string childName = std::string(childElement->Name());
+
+        if (childName == "Light")
+        {
+            if (childElement->Attribute("gameObjectId"))
+            {
+                std::string gameObjectId = std::string(childElement->Attribute("gameObjectId"));
+                meshRenderer->AddInitialLight(gameObjectId);
+            }
+            else
+            {
+                fprintf(stderr, "Could not find game object id attribute of light element of mesh renderer component for game object '%s'!\n", gameObject->GetName().c_str());
+            }
+        }
+        else
+        {
+            fprintf(stderr, "Could not parse XML child '%s' of mesh renderer component for game object '%s'!\n", childName.c_str(), gameObject->GetName().c_str());
+        }
+    }
 }

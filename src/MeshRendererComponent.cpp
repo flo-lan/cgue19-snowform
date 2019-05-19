@@ -5,6 +5,7 @@
 #include "PointLightComponent.h"
 #include "SpotLightComponent.h"
 #include "GameObject.h"
+#include "Scene.h"
 #include "Material.h"
 #include "Mesh.h"
 #include "Utils.h"
@@ -13,7 +14,7 @@ MeshRendererComponent::MeshRendererComponent(GameObject* owner) :
     Component::Component(owner),
     enabled(true),
     camera(nullptr),
-    transform(nullptr),
+    transform(owner->GetComponent<TransformComponent>()),
     material(nullptr),
     mesh(nullptr),
     VAO(0),
@@ -45,7 +46,36 @@ MeshRendererComponent::~MeshRendererComponent()
 
 void MeshRendererComponent::OnStart()
 {
-    transform = GetOwner()->GetComponent<TransformComponent>();
+    // ToDo: Should be handled inside MeshRendererComponentFactory,
+    // but must be processed _after_ all light game objects are de-
+    // serialized, so the light component can be found inside scene.
+    for (auto itr = initialLights.begin(); itr != initialLights.end(); ++itr)
+    {
+        GameObject* light = GetOwner()->GetScene()->GetGameObjectById(*itr);
+
+        if (light == nullptr)
+        {
+            fprintf(stderr, "Could not find light game object with id '%s' for mesh renderer component of game object '%s'!\n", (*itr).c_str(), GetOwner()->GetName().c_str());
+            continue;
+        }
+
+        if (DirectionalLightComponent* lightComponent = light->GetComponent<DirectionalLightComponent>())
+        {
+            AddLight(lightComponent);
+        }
+
+        if (PointLightComponent* lightComponent = light->GetComponent<PointLightComponent>())
+        {
+            AddLight(lightComponent);
+        }
+
+        if (SpotLightComponent* lightComponent = light->GetComponent<SpotLightComponent>())
+        {
+            AddLight(lightComponent);
+        }
+    }
+
+    initialLights.clear();
 }
 
 void MeshRendererComponent::Render()
@@ -107,6 +137,11 @@ void MeshRendererComponent::SetMesh(Mesh* value)
         glBindBuffer(GL_ARRAY_BUFFER, 0);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
     }
+}
+
+void MeshRendererComponent::AddInitialLight(std::string const & gameObjectId)
+{
+    initialLights.push_back(gameObjectId);
 }
 
 void MeshRendererComponent::AddLight(DirectionalLightComponent* light)

@@ -19,6 +19,7 @@
     <ClCompile Include="src\DebugComponent.cpp" />
     <ClCompile Include="src\DebugComponentFactory.cpp" />
     <ClCompile Include="src\DirectionalLightComponent.cpp" />
+    <ClCompile Include="src\DirectionalLightComponentFactory.cpp" />
     <ClCompile Include="src\FlagComponent.cpp" />
     <ClCompile Include="src\FlagComponentFactory.cpp" />
     <ClCompile Include="src\Font.cpp" />
@@ -27,6 +28,7 @@
     <ClCompile Include="src\ImageCutOffMaterial.cpp" />
     <ClCompile Include="src\PlayerComponent.cpp" />
     <ClCompile Include="src\PlayerComponentFactory.cpp" />
+    <ClCompile Include="src\PointLightComponentFactory.cpp" />
     <ClCompile Include="src\SceneOptionComponentFactory.cpp" />
     <ClCompile Include="src\GlobalAssetLoader.cpp" />
     <ClCompile Include="src\Glyph.cpp" />
@@ -54,6 +56,7 @@
     <ClCompile Include="src\Settings.cpp" />
     <ClCompile Include="src\SphereColliderComponent.cpp" />
     <ClCompile Include="src\SphereColliderComponentFactory.cpp" />
+    <ClCompile Include="src\SpotLightComponentFactory.cpp" />
     <ClCompile Include="src\StandardMaterial.cpp" />
     <ClCompile Include="src\PointLightComponent.cpp" />
     <ClCompile Include="src\RenderSettings.cpp" />
@@ -95,6 +98,7 @@
     <ClInclude Include="src\DebugComponent.h" />
     <ClInclude Include="src\DebugComponentFactory.h" />
     <ClInclude Include="src\DirectionalLightComponent.h" />
+    <ClInclude Include="src\DirectionalLightComponentFactory.h" />
     <ClInclude Include="src\FlagComponent.h" />
     <ClInclude Include="src\FlagComponentFactory.h" />
     <ClInclude Include="src\Font.h" />
@@ -103,6 +107,7 @@
     <ClInclude Include="src\ImageCutOffMaterial.h" />
     <ClInclude Include="src\PlayerComponent.h" />
     <ClInclude Include="src\PlayerComponentFactory.h" />
+    <ClInclude Include="src\PointLightComponentFactory.h" />
     <ClInclude Include="src\SceneOptionComponentFactory.h" />
     <ClInclude Include="src\GlobalAssetLoader.h" />
     <ClInclude Include="src\Glyph.h" />
@@ -133,6 +138,7 @@
     <ClInclude Include="src\Settings.h" />
     <ClInclude Include="src\SphereColliderComponent.h" />
     <ClInclude Include="src\SphereColliderComponentFactory.h" />
+    <ClInclude Include="src\SpotLightComponentFactory.h" />
     <ClInclude Include="src\StandardMaterial.h" />
     <ClInclude Include="src\PointLightComponent.h" />
     <ClInclude Include="src\RenderSettings.h" />
