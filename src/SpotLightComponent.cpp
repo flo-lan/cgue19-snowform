@@ -1,6 +1,7 @@
 #include "SpotLightComponent.h"
 #include "GameObject.h"
 #include "TransformComponent.h"
+#include "MeshRendererComponent.h"
 
 SpotLightComponent::SpotLightComponent(GameObject* owner) :
     LightComponent::LightComponent(owner),
@@ -18,6 +19,10 @@ SpotLightComponent::SpotLightComponent(GameObject* owner) :
 
 SpotLightComponent::~SpotLightComponent()
 {
+    for (auto itr = affectedMeshRenderers.begin(); itr != affectedMeshRenderers.end(); ++itr)
+    {
+        (*itr)->RemoveLight(this);
+    }
 }
 
 glm::vec3 SpotLightComponent::GetPosition() const

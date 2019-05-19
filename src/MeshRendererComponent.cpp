@@ -9,6 +9,7 @@
 #include "Material.h"
 #include "Mesh.h"
 #include "Utils.h"
+#include <algorithm>
 
 MeshRendererComponent::MeshRendererComponent(GameObject* owner) :
     Component::Component(owner),
@@ -29,6 +30,25 @@ MeshRendererComponent::MeshRendererComponent(GameObject* owner) :
 MeshRendererComponent::~MeshRendererComponent()
 {
     fprintf(stdout, "Deleted mesh renderer component from game object '%s'!\n", GetOwner()->GetName().c_str());
+
+    for (auto itr = directionalLights.begin(); itr != directionalLights.end(); itr++)
+    {
+        (*itr)->RemoveAffectedMeshRendererComponent(this);
+    }
+
+    for (auto itr = pointLights.begin(); itr != pointLights.end(); itr++)
+    {
+        (*itr)->RemoveAffectedMeshRendererComponent(this);
+    }
+
+    for (auto itr = spotLights.begin(); itr != spotLights.end(); itr++)
+    {
+        (*itr)->RemoveAffectedMeshRendererComponent(this);
+    }
+
+    directionalLights.clear();
+    pointLights.clear();
+    spotLights.clear();
 
     GetOwner()->RemoveMeshRendererComponent(this);
 
@@ -158,6 +178,7 @@ void MeshRendererComponent::AddLight(DirectionalLightComponent* light)
 
     if (light)
     {
+        light->InsertAffectedMeshRendererComponent(this);
         directionalLights.push_back(light);
     }
 }
@@ -172,6 +193,7 @@ void MeshRendererComponent::AddLight(PointLightComponent* light)
 
     if (light)
     {
+        light->InsertAffectedMeshRendererComponent(this);
         pointLights.push_back(light);
     }
 }
@@ -186,7 +208,35 @@ void MeshRendererComponent::AddLight(SpotLightComponent* light)
 
     if (light)
     {
+        light->InsertAffectedMeshRendererComponent(this);
         spotLights.push_back(light);
+    }
+}
+
+void MeshRendererComponent::RemoveLight(DirectionalLightComponent* light)
+{
+    if (light)
+    {
+        light->RemoveAffectedMeshRendererComponent(this);
+        directionalLights.erase(std::remove(directionalLights.begin(), directionalLights.end(), light), directionalLights.end());
+    }
+}
+
+void MeshRendererComponent::RemoveLight(PointLightComponent* light)
+{
+    if (light)
+    {
+        light->RemoveAffectedMeshRendererComponent(this);
+        pointLights.erase(std::remove(pointLights.begin(), pointLights.end(), light), pointLights.end());
+    }
+}
+
+void MeshRendererComponent::RemoveLight(SpotLightComponent* light)
+{
+    if (light)
+    {
+        light->RemoveAffectedMeshRendererComponent(this);
+        spotLights.erase(std::remove(spotLights.begin(), spotLights.end(), light), spotLights.end());
     }
 }
 

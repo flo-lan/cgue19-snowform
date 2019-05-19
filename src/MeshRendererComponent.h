@@ -34,6 +34,10 @@ public:
     void AddLight(PointLightComponent* light);
     void AddLight(SpotLightComponent* light);
 
+    void RemoveLight(DirectionalLightComponent* light);
+    void RemoveLight(PointLightComponent* light);
+    void RemoveLight(SpotLightComponent* light);
+
     CameraComponent* GetCamera() const;
     TransformComponent* GetTransform() const { return transform; }
     Material* GetMaterial() const { return material; }

@@ -10,4 +10,9 @@ DirectionalLightComponent::DirectionalLightComponent(GameObject* owner) :
 
 DirectionalLightComponent::~DirectionalLightComponent()
 {
+    for (auto itr = affectedMeshRenderers.begin(); itr != affectedMeshRenderers.end(); ++itr)
+    {
+        (*itr)->RemoveLight(this);
+    }
+
 }

@@ -1,6 +1,7 @@
 #include "PointLightComponent.h"
 #include "GameObject.h"
 #include "TransformComponent.h"
+#include "MeshRendererComponent.h"
 
 PointLightComponent::PointLightComponent(GameObject* owner) :
     LightComponent::LightComponent(owner),
@@ -14,6 +15,10 @@ PointLightComponent::PointLightComponent(GameObject* owner) :
 
 PointLightComponent::~PointLightComponent()
 {
+    for (auto itr = affectedMeshRenderers.begin(); itr != affectedMeshRenderers.end(); ++itr)
+    {
+        (*itr)->RemoveLight(this);
+    }
 }
 
 void PointLightComponent::OnStart()
