@@ -164,17 +164,19 @@ void Scene::PreRender()
     OnPreRender();
 }
 
+struct RenderSceneGraphTraverser : public SceneGraphTraverser
+{
+    virtual void Visit(TransformComponent* transform)
+    {
+        transform->GetOwner()->Render();
+    }
+};
+
 void Scene::Render()
 {
-    static struct RenderSceneGraphTraverser : public SceneGraphTraverser
-    {
-        virtual void Visit(TransformComponent* transform)
-        {
-            transform->GetOwner()->Render();
-        }
-    } t;
+    static RenderSceneGraphTraverser traverser;
 
-    TraverseSceneGraphDF(t);
+    TraverseSceneGraphDF(traverser);
 }
 
 void Scene::PostRender()
