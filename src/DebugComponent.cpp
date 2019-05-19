@@ -58,10 +58,6 @@ void DebugComponent::LateUpdate()
 {
 }
 
-void DebugComponent::Render()
-{
-}
-
 void DebugComponent::OnDestroy()
 {
     fprintf(stdout, "[DebugComponent][%s] OnDestroy\n", GetOwner()->GetName().c_str());

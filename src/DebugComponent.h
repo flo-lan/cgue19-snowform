@@ -22,7 +22,6 @@ public:
 
     virtual void Update();
     virtual void LateUpdate();
-    virtual void Render();
 
     virtual void OnDestroy();
 };
