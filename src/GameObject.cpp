@@ -280,6 +280,11 @@ void GameObject::TriggerExit(ColliderComponent* collider)
 void GameObject::SetId(std::string const& id)
 {
     scene->RemoveGameObjectIdMapping(this->id);
+
     this->id = id;
-    scene->InsertGameObjectIdMapping(this, id);
+
+    if (id != "")
+    {
+        scene->InsertGameObjectIdMapping(this, id);
+    }
 }
