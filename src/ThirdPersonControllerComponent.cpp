@@ -6,7 +6,8 @@
 #include "GameObject.h"
 #include "InputManager.h"
 #include "Time.h"
-#include "glm/ext.hpp"
+#include <GLFW/glfw3.h>
+#include <glm/ext.hpp>
 
 ThirdPersonControllerComponent::ThirdPersonControllerComponent(GameObject* owner) :
     Component::Component(owner),

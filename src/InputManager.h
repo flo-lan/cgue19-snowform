@@ -1,6 +1,5 @@
 #pragma once
 
-#include <GLFW\glfw3.h>
 #include <glm\glm.hpp>
 #include <unordered_map>
 #include <iostream>
@@ -73,34 +72,5 @@ static void MouseCursorPositionCallback(GLFWwindow* window, double xpos, double 
     sInputManager.SetMousePosition((float)xpos, (float)ypos);
 }
 
-static void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
-{
-    switch (action)
-    {
-        case GLFW_PRESS:
-            sInputManager.SetMouseButtonPressedState(button, true);
-            break;
-        case GLFW_REPEAT:
-            // Do nothing
-            break;
-        case GLFW_RELEASE:
-            sInputManager.SetMouseButtonPressedState(button, false);
-            break;
-    }
-}
-
-static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
-{
-    switch (action)
-    {
-        case GLFW_PRESS:
-            sInputManager.SetKeyPressedState(key, true);
-            break;
-        case GLFW_REPEAT:
-            // Do nothing
-            break;
-        case GLFW_RELEASE:
-            sInputManager.SetKeyPressedState(key, false);
-            break;
-    }
-}
+void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods);
+void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods);

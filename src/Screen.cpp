@@ -1,4 +1,5 @@
 #include "Screen.h"
+#include <GLFW/glfw3.h>
 
 int Screen::width = 0;
 int Screen::height = 0;

@@ -35,3 +35,35 @@ bool InputManager::IsKeyPressed(int key) const
     std::unordered_map<int, bool>::const_iterator itr = keyPressed.find(key);
     return itr != keyPressed.end() && itr->second;
 }
+
+void MouseButtonCallback(GLFWwindow * window, int button, int action, int mods)
+{
+    switch (action)
+    {
+        case GLFW_PRESS:
+            sInputManager.SetMouseButtonPressedState(button, true);
+            break;
+        case GLFW_REPEAT:
+            // Do nothing
+            break;
+        case GLFW_RELEASE:
+            sInputManager.SetMouseButtonPressedState(button, false);
+            break;
+    }
+}
+
+void KeyCallback(GLFWwindow * window, int key, int scancode, int action, int mods)
+{
+    switch (action)
+    {
+        case GLFW_PRESS:
+            sInputManager.SetKeyPressedState(key, true);
+            break;
+        case GLFW_REPEAT:
+            // Do nothing
+            break;
+        case GLFW_RELEASE:
+            sInputManager.SetKeyPressedState(key, false);
+            break;
+    }
+}
