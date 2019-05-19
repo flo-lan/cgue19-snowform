@@ -3,13 +3,14 @@
 #include "Component.h"
 #include <vector>
 
+class TransformComponent;
 class MeshRendererComponent;
 
 class LightComponent : public Component
 {
     friend class MeshRendererComponent;
 
-public:
+protected:
     LightComponent(GameObject* owner);
     virtual ~LightComponent();
 
@@ -18,5 +19,6 @@ private:
     void RemoveAffectedMeshRendererComponent(MeshRendererComponent* meshRendererComponent);
 
 protected:
+    TransformComponent* transform;
     std::vector<MeshRendererComponent*> affectedMeshRenderers;
 };

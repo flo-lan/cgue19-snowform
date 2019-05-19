@@ -1,11 +1,13 @@
 #include "LightComponent.h"
+#include "TransformComponent.h"
 #include "MeshRendererComponent.h"
 #include "GameObject.h"
 #include <algorithm>
 #include <assert.h>
 
 LightComponent::LightComponent(GameObject* owner) :
-    Component::Component(owner)
+    Component::Component(owner),
+    transform(owner->GetComponent<TransformComponent>())
 {
 }
 

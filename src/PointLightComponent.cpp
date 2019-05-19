@@ -21,11 +21,6 @@ PointLightComponent::~PointLightComponent()
     }
 }
 
-void PointLightComponent::OnStart()
-{
-    transform = GetOwner()->GetComponent<TransformComponent>();
-}
-
 glm::vec3 PointLightComponent::GetPosition() const
 {
     return transform ? transform->GetPosition() : glm::vec3(0.f);

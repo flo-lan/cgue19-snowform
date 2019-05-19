@@ -3,8 +3,6 @@
 #include "LightComponent.h"
 #include <glm\glm.hpp>
 
-class TransformComponent;
-
 #define MAX_SPOT_LIGHT_COUNT 2
 
 class SpotLightComponent : public LightComponent
@@ -33,7 +31,6 @@ public:
     void SetQuadratic(float value) { quadratic = value; }
 
 private:
-    TransformComponent* transform;
     glm::vec3 direction;
     glm::vec3 color;
     float intensity;

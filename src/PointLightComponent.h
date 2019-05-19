@@ -3,8 +3,6 @@
 #include "LightComponent.h"
 #include <glm\glm.hpp>
 
-class TransformComponent;
-
 #define MAX_POINT_LIGHT_COUNT 4
 
 class PointLightComponent : public LightComponent
@@ -12,8 +10,6 @@ class PointLightComponent : public LightComponent
 public:
     PointLightComponent(GameObject* owner);
     virtual ~PointLightComponent();
-
-    virtual void OnStart();
 
     glm::vec3 GetPosition() const;
     glm::vec3 GetColor() const { return color; }
@@ -29,7 +25,6 @@ public:
     void SetQuadratic(float value) { quadratic = value; }
 
 private:
-    TransformComponent* transform;
     glm::vec3 color;
     float intensity;
     float constant;
