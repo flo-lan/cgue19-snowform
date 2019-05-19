@@ -13,7 +13,12 @@ Texture2D::~Texture2D()
 {
     fprintf(stdout, "Deleted texture '%s'!\n", name.c_str());
 
-    delete image;
+    if (image)
+    {
+        glDeleteTextures(1, &handle);
+
+        delete image;
+    }
 }
 
 bool Texture2D::LoadFromFile(std::string const& filePath, bool generateMipMaps)
