@@ -1,4 +1,6 @@
 #include "DirectionalLightComponent.h"
+#include "GameObject.h"
+#include "Scene.h"
 
 DirectionalLightComponent::DirectionalLightComponent(GameObject* owner) :
     LightComponent::LightComponent(owner),
@@ -6,6 +8,7 @@ DirectionalLightComponent::DirectionalLightComponent(GameObject* owner) :
     direction(0.f, 0.f, 0.f),
     intensity(1.f)
 {
+    GetOwner()->GetScene()->InsertDirectionalLightComponent(this);
 }
 
 DirectionalLightComponent::~DirectionalLightComponent()
@@ -15,4 +18,5 @@ DirectionalLightComponent::~DirectionalLightComponent()
         affectedMeshRenderers[0]->RemoveLight(this);
     }
 
+    GetOwner()->GetScene()->RemoveDirectionalLightComponent(this);
 }

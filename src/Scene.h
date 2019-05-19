@@ -6,6 +6,7 @@
 
 class GameObject;
 class TransformComponent;
+class DirectionalLightComponent;
 struct SceneGraphTraverser;
 
 class Scene
@@ -52,6 +53,9 @@ public:
         return gameObject->GetComponent<T>();
     }
 
+    void InsertDirectionalLightComponent(DirectionalLightComponent* light);
+    void RemoveDirectionalLightComponent(DirectionalLightComponent* light);
+
     // Call this for creating a new game object in this scene
     GameObject* CreateGameObject(std::string const& name, TransformComponent* parent = nullptr);
 
@@ -71,8 +75,10 @@ protected:
 private:
     typedef std::vector<TransformComponent*> TransformList;
     typedef std::unordered_map<std::string /* id */, GameObject*> GameObjectByIdMap;
+    typedef std::vector<DirectionalLightComponent*> DirectionalLightList;
 
     std::string name;
     TransformList sceneGraphRoots;
     GameObjectByIdMap gameObjectsById;
+    DirectionalLightList directionalLights;
 };

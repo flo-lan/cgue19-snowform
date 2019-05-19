@@ -2,6 +2,7 @@
 #include "SceneGraphTraverser.h"
 #include "GameObject.h"
 #include "TransformComponent.h"
+#include "DirectionalLightComponent.h"
 #include "ComponentIndustry.h"
 #include "ComponentFactory.h"
 #include "tinyxml2.h"
@@ -246,6 +247,21 @@ GameObject* Scene::GetGameObjectById(std::string const& id)
     }
 
     return nullptr;
+}
+
+void Scene::InsertDirectionalLightComponent(DirectionalLightComponent* light)
+{
+    if (std::find(directionalLights.begin(), directionalLights.end(), light) != directionalLights.end())
+    {
+        return;
+    }
+
+    directionalLights.push_back(light);
+}
+
+void Scene::RemoveDirectionalLightComponent(DirectionalLightComponent* light)
+{
+    directionalLights.erase(std::remove(directionalLights.begin(), directionalLights.end(), light), directionalLights.end());
 }
 
 GameObject* Scene::CreateGameObject(std::string const& name, TransformComponent* parent)
