@@ -2,10 +2,11 @@
 #include "Component.h"
 #include "Collision.h"
 #include "ColliderComponent.h"
+#include "Material.h"
+#include "MeshRendererComponent.h"
 #include "Scene.h"
 #include "TransformComponent.h"
 #include "TransformGraphTraverser.h"
-#include "MeshRendererComponent.h"
 #include <algorithm>
 #include <stack>
 #include <queue>
@@ -228,6 +229,19 @@ void GameObject::Render()
     for (MeshRendererComponentList::const_iterator itr = meshRenderers.begin(); itr != meshRenderers.end(); ++itr)
     {
         (*itr)->Render();
+    }
+}
+
+void GameObject::Render(Material* material)
+{
+    if (destroyed)
+    {
+        return;
+    }
+
+    for (MeshRendererComponentList::const_iterator itr = meshRenderers.begin(); itr != meshRenderers.end(); ++itr)
+    {
+        (*itr)->Render(material);
     }
 }
 
