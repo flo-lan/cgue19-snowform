@@ -7,6 +7,7 @@
 #include "ImageMaterial.h"
 #include "ImageCutOffMaterial.h"
 #include "TextMaterial.h"
+#include "ShadowMapMaterial.h"
 #include "AssetManager.h"
 #include "PhysicsEngine.h"
 
@@ -25,6 +26,7 @@ bool GlobalAssetLoader::LoadAssets()
     ShaderProgram* imageShaderProgram = nullptr;
     ShaderProgram* imageCutOffShaderProgram = nullptr;
     ShaderProgram* textShaderProgram = nullptr;
+    ShaderProgram* shadowMapShaderProgram = nullptr;
 
     if (!(simpleShaderProgram = LoadShaderProgramFromFiles("simple_shader_program",
             "simple_vertex_shader", "assets/shaders/simple_vertex.glsl",
@@ -40,7 +42,10 @@ bool GlobalAssetLoader::LoadAssets()
             "image_cutoff_fragment_shader", "assets/shaders/image_cutoff_fragment.glsl")) ||
         !(textShaderProgram = LoadShaderProgramFromFiles("text_shader_program",
             "text_vertex_shader", "assets/shaders/text_vertex.glsl",
-            "text_fragment_shader", "assets/shaders/text_fragment.glsl")))
+            "text_fragment_shader", "assets/shaders/text_fragment.glsl")) ||
+        !(shadowMapShaderProgram = LoadShaderProgramFromFiles("shadow_map_shader_program",
+            "shadow_map_vertex_shader", "assets/shaders/shadow_map_vertex.glsl",
+            "shadow_map_fragment_shader", "assets/shaders/shadow_map_fragment.glsl")))
     {
         return false;
     }
@@ -67,8 +72,12 @@ bool GlobalAssetLoader::LoadAssets()
     sAssetManager.CreateMaterial<StandardMaterial>("Cube", standardShaderProgram);
     sAssetManager.CreateMaterial<StandardMaterial>("Cylinder", standardShaderProgram);
     sAssetManager.CreateMaterial<StandardMaterial>("Sphere", standardShaderProgram);
-    auto snowballMaterial = sAssetManager.CreateMaterial<StandardMaterial>("Snowball", standardShaderProgram);
-    snowballMaterial->SetDiffuseTexture(sAssetManager.GetTexture2D("snowball_diffuse"));
+    sAssetManager.CreateMaterial<ShadowMapMaterial>("ShadowMapDefault", shadowMapShaderProgram);
+
+    if (auto m = sAssetManager.CreateMaterial<StandardMaterial>("Snowball", standardShaderProgram))
+    {
+        m->SetDiffuseTexture(sAssetManager.GetTexture2D("snowball_diffuse"));
+    }
 
     if (TextMaterial* tm = sAssetManager.CreateMaterial<TextMaterial>("CoinCount", textShaderProgram))
     {
