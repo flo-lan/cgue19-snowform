@@ -25,9 +25,9 @@ void SceneManager::Render()
 
     for (Scene* scene : loadedScenesCopy)
     {
-        scene->OnPreRender();
+        scene->PreRender();
         scene->Render();
-        scene->OnPostRender();
+        scene->PostRender();
     }
 }
 

@@ -20,7 +20,9 @@ public:
     virtual void SetOption(std::string const& key, std::string const& value) {}
 
     void Update();
+    void PreRender();
     void Render();
+    void PostRender();
 
     void Unload();
 

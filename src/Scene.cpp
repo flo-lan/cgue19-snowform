@@ -158,27 +158,27 @@ void Scene::Update()
     OnUpdate();
 }
 
+void Scene::PreRender()
+{
+    OnPreRender();
+}
+
 void Scene::Render()
 {
     static struct RenderSceneGraphTraverser : public SceneGraphTraverser
     {
         virtual void Visit(TransformComponent* transform)
         {
-            GameObject* gameObject = transform->GetOwner();
-
-            if (!gameObject->IsDestroyed())
-            {
-                gameObject->Render();
-            }
-
-            if (gameObject->IsDestroyed())
-            {
-                gameObject->GetScene()->DeleteGameObject(gameObject);
-            }
+            transform->GetOwner()->Render();
         }
     } t;
 
     TraverseSceneGraphDF(t);
+}
+
+void Scene::PostRender()
+{
+    OnPostRender();
 }
 
 void Scene::InsertSceneGraphRoot(TransformComponent* transform)

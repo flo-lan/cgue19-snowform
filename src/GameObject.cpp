@@ -220,6 +220,11 @@ void GameObject::Update()
 
 void GameObject::Render()
 {
+    if (destroyed)
+    {
+        return;
+    }
+
     for (MeshRendererComponentList::const_iterator itr = meshRenderers.begin(); itr != meshRenderers.end(); ++itr)
     {
         (*itr)->Render();
