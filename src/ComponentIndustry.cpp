@@ -20,6 +20,7 @@
 #include "DirectionalLightComponentFactory.h"
 #include "PointLightComponentFactory.h"
 #include "SpotLightComponentFactory.h"
+#include "FollowComponentFactory.h"
 
 ComponentIndustry::ComponentIndustry()
 {
@@ -44,6 +45,7 @@ ComponentIndustry::ComponentIndustry()
     static DirectionalLightComponentFactory directionalLightComponentFactory;
     static PointLightComponentFactory pointLightComponentFactory;
     static SpotLightComponentFactory spotLightComponentFactory;
+    static FollowComponentFactory followComponentFactory;
 
     factories["TransformComponent"] = &transformComponentFactory;
     factories["MeshRendererComponent"] = &meshRendererComponentFactory;
@@ -66,6 +68,7 @@ ComponentIndustry::ComponentIndustry()
     factories["DirectionalLightComponent"] = &directionalLightComponentFactory;
     factories["PointLightComponent"] = &pointLightComponentFactory;
     factories["SpotLightComponent"] = &spotLightComponentFactory;
+    factories["FollowComponent"] = &followComponentFactory;
 }
 
 void ComponentIndustry::AddFactory(std::string const& componentName, ComponentFactory* factory)

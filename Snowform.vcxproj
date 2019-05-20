@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="src\ArcBallControllerComponent.cpp" />
@@ -22,6 +22,8 @@
     <ClCompile Include="src\DirectionalLightComponentFactory.cpp" />
     <ClCompile Include="src\FlagComponent.cpp" />
     <ClCompile Include="src\FlagComponentFactory.cpp" />
+    <ClCompile Include="src\FollowComponent.cpp" />
+    <ClCompile Include="src\FollowComponentFactory.cpp" />
     <ClCompile Include="src\Font.cpp" />
     <ClCompile Include="src\GameObject.cpp" />
     <ClCompile Include="src\GameScene.cpp" />
@@ -103,6 +105,8 @@
     <ClInclude Include="src\DirectionalLightComponentFactory.h" />
     <ClInclude Include="src\FlagComponent.h" />
     <ClInclude Include="src\FlagComponentFactory.h" />
+    <ClInclude Include="src\FollowComponent.h" />
+    <ClInclude Include="src\FollowComponentFactory.h" />
     <ClInclude Include="src\Font.h" />
     <ClInclude Include="src\GameObject.h" />
     <ClInclude Include="src\GameScene.h" />

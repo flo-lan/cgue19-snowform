@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="src\Main.cpp" />
@@ -244,6 +244,12 @@
     </ClCompile>
     <ClCompile Include="src\LightComponent.cpp">
       <Filter>Engine\Render\Illumination</Filter>
+    </ClCompile>
+    <ClCompile Include="src\FollowComponent.cpp">
+      <Filter>Game\Level</Filter>
+    </ClCompile>
+    <ClCompile Include="src\FollowComponentFactory.cpp">
+      <Filter>Game\Scene\ComponentFactories</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -495,6 +501,12 @@
     </ClInclude>
     <ClInclude Include="src\LightComponent.h">
       <Filter>Engine\Render\Illumination</Filter>
+    </ClInclude>
+    <ClInclude Include="src\FollowComponent.h">
+      <Filter>Game\Level</Filter>
+    </ClInclude>
+    <ClInclude Include="src\FollowComponentFactory.h">
+      <Filter>Game\Scene\ComponentFactories</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
