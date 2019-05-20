@@ -80,6 +80,21 @@ void StandardMaterial::SetUniforms(MeshRendererComponent* renderer)
         {
             DirectionalLightComponent* light = *itr;
 
+            shaderProgram->SetUniformMatrix4fv(shaderProgram->GetUniformLocation(std::string("directionalLights[" + std::to_string(i) + "].shadowMapSpace").c_str()), light->GetShadowMapLightSpace());
+
+            if (light->IsShadowEnabled())
+            {
+                shaderProgram->SetUniform1i(shaderProgram->GetUniformLocation(std::string("directionalLights[" + std::to_string(i) + "].shadowMapTexture").c_str()), 3 + i /* Unit */);
+                shaderProgram->SetUniform1fv(shaderProgram->GetUniformLocation(std::string("directionalLights[" + std::to_string(i) + "].shadowMapIntensity").c_str()), 1.0f);
+
+                light->ActivateAndBindShadowMap(3 + i /* Unit */);
+            }
+            else
+            {
+                shaderProgram->SetUniform1i(shaderProgram->GetUniformLocation(std::string("directionalLights[" + std::to_string(i) + "].shadowMapTexture").c_str()), 0 /* Unit */);
+                shaderProgram->SetUniform1fv(shaderProgram->GetUniformLocation(std::string("directionalLights[" + std::to_string(i) + "].shadowMapIntensity").c_str()), 0.0f);
+            }
+
             shaderProgram->SetUniform3fv(shaderProgram->GetUniformLocation(std::string("directionalLights[" + std::to_string(i) + "].direction").c_str()), light->GetDirection());
 
             shaderProgram->SetUniform3fv(shaderProgram->GetUniformLocation(std::string("directionalLights[" + std::to_string(i) + "].diffuse").c_str()),  light->GetColor() * light->GetIntensity());

@@ -1,5 +1,6 @@
 #include "Scene.h"
 #include "SceneGraphTraverser.h"
+#include "Screen.h"
 #include "GameObject.h"
 #include "TransformComponent.h"
 #include "DirectionalLightComponent.h"
@@ -161,6 +162,18 @@ void Scene::Update()
 
 void Scene::PreRender()
 {
+    for (auto itr = directionalLights.begin(); itr != directionalLights.end(); ++itr)
+    {
+        DirectionalLightComponent* light = *itr;
+
+        if (light->IsShadowEnabled())
+        {
+            light->RenderShadowMap();
+        }
+    }
+
+    glViewport(0, 0, Screen::GetWidth(), Screen::GetHeight());
+
     OnPreRender();
 }
 
