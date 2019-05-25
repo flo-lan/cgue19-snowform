@@ -2,9 +2,8 @@
 #include "TransformComponent.h"
 #include "GameObject.h"
 #include "Screen.h"
+#include "Scene.h"
 #include <glm/gtc/matrix_transform.hpp> // glm::translate, glm::rotate, glm::scale, glm::perspective
-
-CameraComponent* CameraComponent::main = nullptr;
 
 CameraComponent::CameraComponent(GameObject* owner) :
     Component::Component(owner),
@@ -16,17 +15,14 @@ CameraComponent::CameraComponent(GameObject* owner) :
     nearPlane(0.1f),
     farPlane(100.f)
 {
-    if (main == nullptr)
-    {
-        main = this;
-    }
+    GetOwner()->GetScene()->SetCamera(this);
 }
 
 CameraComponent::~CameraComponent()
 {
-    if (main == this)
+    if (GetOwner()->GetScene()->GetCamera() == this)
     {
-        main = nullptr;
+        GetOwner()->GetScene()->SetCamera(nullptr);
     }
 }
 

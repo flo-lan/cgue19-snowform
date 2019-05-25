@@ -1,5 +1,6 @@
 #include "Material.h"
 #include "ShaderProgram.h"
+#include "CameraComponent.h"
 #include "MeshRendererComponent.h"
 
 Material::Material(std::string const& _name, ShaderProgram* _shaderProgram) :

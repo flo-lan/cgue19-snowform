@@ -14,7 +14,6 @@
 MeshRendererComponent::MeshRendererComponent(GameObject* owner) :
     Component::Component(owner),
     enabled(true),
-    camera(nullptr),
     transform(owner->GetComponent<TransformComponent>()),
     material(nullptr),
     mesh(nullptr),
@@ -102,12 +101,12 @@ void MeshRendererComponent::OnStart()
     initialLights.clear();
 }
 
-void MeshRendererComponent::Render(Material* material)
+void MeshRendererComponent::Render(CameraComponent* camera, Material* material)
 {
-    if (material && mesh && enabled)
+    if (camera && material && mesh && enabled)
     {
         material->Use();
-        material->SetUniforms(this);
+        material->SetUniforms(camera, this);
 
         glBindVertexArray(VAO);
         glDrawElements(GL_TRIANGLES, mesh->Indices.size(), GL_UNSIGNED_INT, (void*)0);
@@ -238,9 +237,4 @@ void MeshRendererComponent::RemoveLight(SpotLightComponent* light)
         light->RemoveAffectedMeshRendererComponent(this);
         spotLights.erase(std::remove(spotLights.begin(), spotLights.end(), light), spotLights.end());
     }
-}
-
-CameraComponent* MeshRendererComponent::GetCamera() const
-{
-    return camera ? camera : CameraComponent::GetMainCameraComponent();
 }

@@ -1,4 +1,5 @@
 #include "GameObject.h"
+#include "CameraComponent.h"
 #include "Component.h"
 #include "Collision.h"
 #include "ColliderComponent.h"
@@ -219,7 +220,7 @@ void GameObject::Update()
     }
 }
 
-void GameObject::Render()
+void GameObject::Render(CameraComponent* camera)
 {
     if (destroyed)
     {
@@ -228,11 +229,11 @@ void GameObject::Render()
 
     for (MeshRendererComponentList::const_iterator itr = meshRenderers.begin(); itr != meshRenderers.end(); ++itr)
     {
-        (*itr)->Render();
+        (*itr)->Render(camera);
     }
 }
 
-void GameObject::Render(Material* material)
+void GameObject::Render(CameraComponent* camera, Material* material)
 {
     if (destroyed)
     {
@@ -241,7 +242,7 @@ void GameObject::Render(Material* material)
 
     for (MeshRendererComponentList::const_iterator itr = meshRenderers.begin(); itr != meshRenderers.end(); ++itr)
     {
-        (*itr)->Render(material);
+        (*itr)->Render(camera, material);
     }
 }
 

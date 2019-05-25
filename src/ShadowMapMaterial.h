@@ -9,7 +9,7 @@ public:
     ShadowMapMaterial(std::string const& name, ShaderProgram* shaderProgram);
     virtual ~ShadowMapMaterial();
 
-    virtual void SetUniforms(MeshRendererComponent* renderer);
+    virtual void SetUniforms(CameraComponent* camera, MeshRendererComponent* renderer);
 
     void SetLightSpaceMatrix(glm::mat4 const& lightSpaceMatrix) { this->lightSpaceMatrix = lightSpaceMatrix; }
 

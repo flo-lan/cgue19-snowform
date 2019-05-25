@@ -16,12 +16,12 @@ ImageCutOffMaterial::~ImageCutOffMaterial()
 {
 }
 
-void ImageCutOffMaterial::SetUniforms(MeshRendererComponent* renderer)
+void ImageCutOffMaterial::SetUniforms(CameraComponent* camera, MeshRendererComponent* renderer)
 {
     if (shaderProgram)
     {
-        shaderProgram->SetUniformMatrix4fv(shaderProgram->GetUniformLocation("projection"), renderer->GetCamera() ? renderer->GetCamera()->GetOrthographicProjectionMatrix() : glm::mat4(1.f));
-        shaderProgram->SetUniformMatrix4fv(shaderProgram->GetUniformLocation("model"), renderer->GetTransform() ? renderer->GetTransform()->GetModelMatrix() : glm::mat4(1.f));
+        shaderProgram->SetUniformMatrix4fv(shaderProgram->GetUniformLocation("projection"), camera->GetOrthographicProjectionMatrix());
+        shaderProgram->SetUniformMatrix4fv(shaderProgram->GetUniformLocation("model"), renderer->GetTransform()->GetModelMatrix());
 
         if (defaultTexture)
         {

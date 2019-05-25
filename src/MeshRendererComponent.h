@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Component.h"
-#include <GL\glew.h>
+#include <GL/glew.h>
 #include <vector>
 #include <string>
 
@@ -21,11 +21,10 @@ public:
 
     virtual void OnStart();
 
-    void Render() { Render(material); }
-    void Render(Material* material);
+    void Render(CameraComponent* camera) { Render(camera, material); }
+    void Render(CameraComponent* camera, Material* material);
 
     void SetEnabled(bool value) { enabled = value; }
-    void SetCamera(CameraComponent* value) { camera = value; }
     void SetMaterial(Material* value) { material = value; }
     void SetMesh(Mesh* value);
 
@@ -39,7 +38,6 @@ public:
     void RemoveLight(PointLightComponent* light);
     void RemoveLight(SpotLightComponent* light);
 
-    CameraComponent* GetCamera() const;
     TransformComponent* GetTransform() const { return transform; }
     Material* GetMaterial() const { return material; }
     std::vector<DirectionalLightComponent*> const& GetDirectionalLights() { return directionalLights; }
@@ -48,7 +46,6 @@ public:
 
 private:
     bool enabled;
-    CameraComponent* camera;
     TransformComponent* transform;
     Material* material;
     Mesh* mesh;

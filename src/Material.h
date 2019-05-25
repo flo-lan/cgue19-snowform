@@ -3,6 +3,7 @@
 #include <string>
 
 class ShaderProgram;
+class CameraComponent;
 class MeshRendererComponent;
 
 class Material
@@ -15,7 +16,7 @@ public:
 
     void Use();
 
-    virtual void SetUniforms(MeshRendererComponent* renderer) {}
+    virtual void SetUniforms(CameraComponent* camera, MeshRendererComponent* renderer) {}
 
 protected:
     std::string name;

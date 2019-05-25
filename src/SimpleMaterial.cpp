@@ -14,12 +14,12 @@ SimpleMaterial::~SimpleMaterial()
 {
 }
 
-void SimpleMaterial::SetUniforms(MeshRendererComponent* renderer)
+void SimpleMaterial::SetUniforms(CameraComponent* camera, MeshRendererComponent* renderer)
 {
     if (shaderProgram)
     {
         shaderProgram->SetUniform3fv(0 /* Color */, color);
-        shaderProgram->SetUniformMatrix4fv(1 /* Model Matrix */, renderer->GetTransform() ? renderer->GetTransform()->GetModelMatrix() : glm::mat4(1.f));
-        shaderProgram->SetUniformMatrix4fv(2 /* View Projection Matrix */, renderer->GetCamera() ? renderer->GetCamera()->GetViewProjectionMatrix() : glm::mat4(1.f));
+        shaderProgram->SetUniformMatrix4fv(1 /* Model Matrix */, renderer->GetTransform()->GetModelMatrix());
+        shaderProgram->SetUniformMatrix4fv(2 /* View Projection Matrix */, camera->GetViewProjectionMatrix());
     }
 }

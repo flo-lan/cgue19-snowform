@@ -8,7 +8,7 @@ public:
     ImageCutOffMaterial(std::string const& name, ShaderProgram* shaderProgram);
     virtual ~ImageCutOffMaterial();
 
-    virtual void SetUniforms(MeshRendererComponent* renderer);
+    virtual void SetUniforms(CameraComponent* camera, MeshRendererComponent* renderer);
 
     void SetCutOffTexture(Texture2D* value) { cutOffTexture = value; }
     void SetCutOff(float value) { cutOff = value; }

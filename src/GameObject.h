@@ -6,6 +6,7 @@
 #include <vector>
 #include <map>
 
+class CameraComponent;
 class Component;
 class Collision;
 class ColliderComponent;
@@ -29,8 +30,8 @@ private:
 
 public:
     void Update();
-    void Render();
-    void Render(Material* material); // Primary used to render shadow maps
+    void Render(CameraComponent* camera);
+    void Render(CameraComponent* camera, Material* material); // Primary used to render shadow maps
 
     void CollisionEnter(Collision const& collision);
     void CollisionExit(Collision const& collision);

@@ -5,6 +5,7 @@
 #include <unordered_map>
 
 class GameObject;
+class CameraComponent;
 class TransformComponent;
 class DirectionalLightComponent;
 struct SceneGraphTraverser;
@@ -28,6 +29,9 @@ public:
     void Unload();
 
     std::string const& GetName() const { return name; }
+
+    CameraComponent* GetCamera() const { return camera; }
+    void SetCamera(CameraComponent* camera) { this->camera = camera; }
 
     void InsertSceneGraphRoot(TransformComponent* transform);
     void RemoveSceneGraphRoot(TransformComponent* transform);
@@ -78,6 +82,7 @@ private:
     typedef std::vector<DirectionalLightComponent*> DirectionalLightList;
 
     std::string name;
+    CameraComponent* camera;
     TransformList sceneGraphRoots;
     GameObjectByIdMap gameObjectsById;
     DirectionalLightList directionalLights;

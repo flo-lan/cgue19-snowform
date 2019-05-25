@@ -12,7 +12,7 @@ public:
     StandardMaterial(std::string const& name, ShaderProgram* shaderProgram);
     virtual ~StandardMaterial();
 
-    virtual void SetUniforms(MeshRendererComponent* renderer);
+    virtual void SetUniforms(CameraComponent* camera, MeshRendererComponent* renderer);
 
     void SetDiffuseColor(glm::vec3 value) { diffuseColor = value; }
     void SetSpecularColor(glm::vec3 value) { specularColor = value; }

@@ -1,4 +1,5 @@
 #include "DirectionalLightComponent.h"
+#include "CameraComponent.h"
 #include "TransformComponent.h"
 #include "MeshRendererComponent.h"
 #include "ShadowMapMaterial.h"
@@ -87,7 +88,7 @@ void DirectionalLightComponent::InitializeShadowMap()
     fprintf(stdout, "Initialized directional shadow map for directional light component of game object '%s'!\n", GetOwner()->GetName().c_str());
 }
 
-void DirectionalLightComponent::RenderShadowMap()
+void DirectionalLightComponent::RenderShadowMap(CameraComponent* camera)
 {
     _ShadowMapLightSpace = glm::ortho
     (
@@ -114,7 +115,7 @@ void DirectionalLightComponent::RenderShadowMap()
 
             for (auto itr = affectedMeshRenderers.begin(); itr != affectedMeshRenderers.end(); ++itr)
             {
-                (*itr)->Render(_ShadowMapMaterial);
+                (*itr)->Render(camera, _ShadowMapMaterial);
             }
         }
         glBindFramebuffer(GL_FRAMEBUFFER, 0);

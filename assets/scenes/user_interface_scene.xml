@@ -1,4 +1,11 @@
 <Scene>
+    <GameObject name="UICamera">
+        <Components>
+            <TransformComponent />
+            <CameraComponent />
+        </Components>
+        <Children />
+    </GameObject>
     <GameObject name="CoinCountContainer">
         <Components>
             <TransformComponent rect="true" localPosition="15.0 -10.0" />

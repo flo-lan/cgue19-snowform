@@ -29,13 +29,13 @@ StandardMaterial::~StandardMaterial()
 {
 }
 
-void StandardMaterial::SetUniforms(MeshRendererComponent* renderer)
+void StandardMaterial::SetUniforms(CameraComponent* camera, MeshRendererComponent* renderer)
 {
     if (shaderProgram)
     {
-        shaderProgram->SetUniformMatrix4fv(shaderProgram->GetUniformLocation("model"), renderer->GetTransform() ? renderer->GetTransform()->GetModelMatrix() : glm::mat4(1.f));
-        shaderProgram->SetUniformMatrix4fv(shaderProgram->GetUniformLocation("viewProjection"), renderer->GetCamera() ? renderer->GetCamera()->GetViewProjectionMatrix() : glm::mat4(1.f));
-        shaderProgram->SetUniform3fv(shaderProgram->GetUniformLocation("viewPosition"), renderer->GetCamera() ? renderer->GetCamera()->GetPosition() : glm::vec3(0.f));
+        shaderProgram->SetUniformMatrix4fv(shaderProgram->GetUniformLocation("model"), renderer->GetTransform()->GetModelMatrix());
+        shaderProgram->SetUniformMatrix4fv(shaderProgram->GetUniformLocation("viewProjection"), camera->GetViewProjectionMatrix());
+        shaderProgram->SetUniform3fv(shaderProgram->GetUniformLocation("viewPosition"), camera->GetPosition());
 
         shaderProgram->SetUniform3fv(shaderProgram->GetUniformLocation("material.diffuse"), diffuseColor);
         shaderProgram->SetUniform3fv(shaderProgram->GetUniformLocation("material.specular"), specularColor);

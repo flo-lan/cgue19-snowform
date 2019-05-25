@@ -4,6 +4,7 @@
 #include <glm\glm.hpp>
 #include <GL/glew.h>
 
+class CameraComponent;
 class ShadowMapMaterial;
 
 #define MAX_DIRECTIONAL_LIGHT_COUNT 4
@@ -15,7 +16,7 @@ public:
     virtual ~DirectionalLightComponent();
 
     void InitializeShadowMap();
-    void RenderShadowMap();
+    void RenderShadowMap(CameraComponent* camera);
     void ActivateAndBindShadowMap(int unit);
 
     glm::vec3 GetDirection() const;

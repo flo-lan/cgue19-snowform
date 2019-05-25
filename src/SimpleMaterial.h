@@ -9,7 +9,7 @@ public:
     SimpleMaterial(std::string const& name, ShaderProgram* shaderProgram);
     virtual ~SimpleMaterial();
 
-    virtual void SetUniforms(MeshRendererComponent* renderer);
+    virtual void SetUniforms(CameraComponent* camera, MeshRendererComponent* renderer);
 
     void SetColor(glm::vec3 value) { color = value; }
 

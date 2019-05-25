@@ -162,34 +162,46 @@ void Scene::Update()
 
 void Scene::PreRender()
 {
-    for (auto itr = directionalLights.begin(); itr != directionalLights.end(); ++itr)
+    if (camera)
     {
-        DirectionalLightComponent* light = *itr;
-
-        if (light->IsShadowEnabled())
+        for (auto itr = directionalLights.begin(); itr != directionalLights.end(); ++itr)
         {
-            light->RenderShadowMap();
-        }
-    }
+            DirectionalLightComponent* light = *itr;
 
-    glViewport(0, 0, Screen::GetWidth(), Screen::GetHeight());
+            if (light->IsShadowEnabled())
+            {
+                light->RenderShadowMap(camera);
+            }
+        }
+
+        glViewport(0, 0, Screen::GetWidth(), Screen::GetHeight());
+    }
 
     OnPreRender();
 }
 
 struct RenderSceneGraphTraverser : public SceneGraphTraverser
 {
+    CameraComponent* Camera;
+
+    RenderSceneGraphTraverser(CameraComponent* camera) :
+        Camera(camera)
+    {}
+
     virtual void Visit(TransformComponent* transform)
     {
-        transform->GetOwner()->Render();
+        transform->GetOwner()->Render(Camera);
     }
 };
 
 void Scene::Render()
 {
-    static RenderSceneGraphTraverser traverser;
+    if (camera)
+    {
+        RenderSceneGraphTraverser traverser(camera);
 
-    TraverseSceneGraphDF(traverser);
+        TraverseSceneGraphDF(traverser);
+    }
 }
 
 void Scene::PostRender()
