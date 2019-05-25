@@ -11,7 +11,7 @@ CameraComponent::CameraComponent(GameObject* owner) :
     viewProjectionMatrix(1.f),
     orthographicProjectionMatrix(glm::ortho(0.0f, (float)Screen::GetWidth(), 0.0f, (float)Screen::GetHeight())),
     fov(60.f),
-    aspectRatio(16.f / 9.f),
+    aspectRatio(Screen::GetWidth() / (float)Screen::GetHeight()),
     nearPlane(0.1f),
     farPlane(100.f)
 {
