@@ -20,7 +20,7 @@ void ImageCutOffMaterial::SetUniforms(CameraComponent* camera, MeshRendererCompo
 {
     if (shaderProgram)
     {
-        shaderProgram->SetUniformMatrix4fv(shaderProgram->GetUniformLocation("projection"), camera->GetOrthographicProjectionMatrix());
+        shaderProgram->SetUniformMatrix4fv(shaderProgram->GetUniformLocation("projection"), camera->GetOrthProjectionMatrix());
         shaderProgram->SetUniformMatrix4fv(shaderProgram->GetUniformLocation("model"), renderer->GetTransform()->GetModelMatrix());
 
         if (defaultTexture)

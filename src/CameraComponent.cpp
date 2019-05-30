@@ -8,13 +8,16 @@
 CameraComponent::CameraComponent(GameObject* owner) :
     Component::Component(owner),
     transform(GetOwner()->GetComponent<TransformComponent>()),
+    persProjectionMatrix(1.f),
     viewProjectionMatrix(1.f),
-    orthographicProjectionMatrix(glm::ortho(0.0f, (float)Screen::GetWidth(), 0.0f, (float)Screen::GetHeight())),
-    fov(60.f),
+    orthProjectionMatrix(glm::ortho(0.0f, (float)Screen::GetWidth(), 0.0f, (float)Screen::GetHeight())),
+    fov(glm::radians(60.f)),
     aspectRatio(Screen::GetWidth() / (float)Screen::GetHeight()),
     nearPlane(0.1f),
     farPlane(100.f)
 {
+    UpdatePerspectiveProjectionMatrix();
+
     GetOwner()->GetScene()->SetCamera(this);
 }
 
@@ -28,13 +31,30 @@ CameraComponent::~CameraComponent()
 
 void CameraComponent::LateUpdate()
 {
-    glm::mat4 projMatrix = glm::perspective(fov, aspectRatio, nearPlane, farPlane);
-    glm::mat4 viewMatrix = glm::inverse(transform->GetModelMatrix());
-
-    viewProjectionMatrix = projMatrix * viewMatrix;
+    viewProjectionMatrix = persProjectionMatrix * glm::inverse(transform->GetModelMatrix());
 }
 
 glm::vec3 CameraComponent::GetPosition() const
 {
-    return transform ? transform->GetPosition() : glm::vec3(0.f);
+    return transform->GetPosition();
+}
+
+glm::quat CameraComponent::GetRotation() const
+{
+    return transform->GetRotationQ();
+}
+
+glm::vec3 CameraComponent::GetDirection() const
+{
+    return -transform->GetDirectionBackward();
+}
+
+glm::mat4 const& CameraComponent::GetModelMatrix() const
+{
+    return transform->GetModelMatrix();
+}
+
+void CameraComponent::UpdatePerspectiveProjectionMatrix()
+{
+    persProjectionMatrix = glm::perspective(fov, aspectRatio, nearPlane, farPlane);
 }

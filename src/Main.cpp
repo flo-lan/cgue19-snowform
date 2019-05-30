@@ -151,7 +151,7 @@ int main(int argc, char** argv)
     glfwSetScrollCallback(window, MouseScrollCallback);
     glfwSetCursorPosCallback(window, MouseCursorPositionCallback);
     glfwSetMouseButtonCallback(window, MouseButtonCallback);
-    glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+    //glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
     // Set screen window to access window properties globally
     Screen::SetWindow(window);

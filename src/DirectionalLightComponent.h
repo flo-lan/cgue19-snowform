@@ -7,7 +7,9 @@
 class CameraComponent;
 class ShadowMapMaterial;
 
-#define MAX_DIRECTIONAL_LIGHT_COUNT 4
+#define MAX_DIRECTIONAL_LIGHT_COUNT 1
+#define NUM_DIRECTIONAL_SHADOW_CASCADES 3
+#define NUM_FRUSTUM_CORNERS 8
 
 class DirectionalLightComponent : public LightComponent
 {
@@ -15,9 +17,9 @@ public:
     DirectionalLightComponent(GameObject* owner);
     virtual ~DirectionalLightComponent();
 
-    void InitializeShadowMap();
-    void RenderShadowMap(CameraComponent* camera);
-    void ActivateAndBindShadowMap(int unit);
+    void InitializeShadowMaps();
+    void RenderShadowMaps(CameraComponent* camera);
+    void ActivateAndBindShadowMap(int unit, int cascadeIndex);
 
     glm::vec3 GetDirection() const;
 
@@ -33,44 +35,23 @@ public:
     int GetShadowMapHeight() const { return (int)_ShadowMapHeight; }
     void SetShadowMapHeight(int shadowMapHeight) { _ShadowMapHeight = (GLsizei)shadowMapHeight; }
 
-    float GetShadowMapOrthoLeft() const { return _ShadowMapOrthoLeft; }
-    void SetShadowMapOrthoLeft(float shadowMapOrthoLeft) { _ShadowMapOrthoLeft = shadowMapOrthoLeft; }
-
-    float GetShadowMapOrthoRight() const { return _ShadowMapOrthoRight; }
-    void SetShadowMapOrthoRight(float shadowMapOrthoRight) { _ShadowMapOrthoRight = shadowMapOrthoRight; }
-
-    float GetShadowMapOrthoBottom() const { return _ShadowMapOrthoBottom; }
-    void SetShadowMapOrthoBottom(float shadowMapOrthoBottom) { _ShadowMapOrthoBottom = shadowMapOrthoBottom; }
-
-    float GetShadowMapOrthoTop() const { return _ShadowMapOrthoTop; }
-    void SetShadowMapOrthoTop(float shadowMapOrthoTop) { _ShadowMapOrthoTop = shadowMapOrthoTop; }
-
-    float GetShadowMapOrthoNear() const { return _ShadowMapOrthoNear; }
-    void SetShadowMapOrthoNear(float shadowMapOrthoNear) { _ShadowMapOrthoNear = shadowMapOrthoNear; }
-
-    float GetShadowMapOrthoFar() const { return _ShadowMapOrthoFar; }
-    void SetShadowMapOrthoFar(float shadowMapOrthoFar) { _ShadowMapOrthoFar = shadowMapOrthoFar; }
-
-    glm::mat4 const& GetShadowMapLightSpace() const { return _ShadowMapLightSpace; }
+    glm::mat4 const& GetShadowMapProjection(int cascadeIndex) const { return _ShadowMapProjections[cascadeIndex]; }
+    glm::vec4 const& GetShadowMapCascadeBounds(int cascadeIndex) const { return _ShadowMapCascadeBounds[cascadeIndex]; }
 
     bool IsShadowEnabled() const { return _ShadowEnabled; }
     void EnableShadow(bool enable);
 
 private:
+    TransformComponent* _FrustumDebugSpheres[8*3];
     glm::vec3 color;
     float intensity;
-    GLuint _ShadowMapFBO; // Frame Buffer Object
-    GLuint _ShadowMapDBO; // Depth Buffer Object
+    GLuint _ShadowMapFBO;
+    GLuint _ShadowMapDBO[NUM_DIRECTIONAL_SHADOW_CASCADES];
     GLsizei _ShadowMapWidth;
     GLsizei _ShadowMapHeight;
-    float _ShadowMapOrthoLeft;
-    float _ShadowMapOrthoRight;
-    float _ShadowMapOrthoBottom;
-    float _ShadowMapOrthoTop;
-    float _ShadowMapOrthoNear;
-    float _ShadowMapOrthoFar;
     ShadowMapMaterial* _ShadowMapMaterial;
-    glm::mat4 _ShadowMapLightSpace;
+    glm::mat4 _ShadowMapProjections[NUM_DIRECTIONAL_SHADOW_CASCADES];
+    glm::vec4 _ShadowMapCascadeBounds[NUM_DIRECTIONAL_SHADOW_CASCADES];
     bool _ShadowInitialized;
     bool _ShadowEnabled;
 };

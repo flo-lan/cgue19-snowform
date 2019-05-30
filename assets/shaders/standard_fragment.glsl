@@ -1,13 +1,15 @@
 // Fragment Shader
 #version 430
 
+#define NUM_DIRECTIONAL_CASCADES 3
+#define MAX_DIRECTIONAL_LIGHT_COUNT 1
+#define MAX_POINT_LIGHT_COUNT 2
+#define MAX_SPOT_LIGHT_COUNT 2
+
 struct Material
 {
     vec3 diffuse;
     vec3 specular;
-
-    sampler2D diffuseTexture;
-    sampler2D specularTexture;
 
     float ambientReflectionConstant;
     float diffuseReflectionConstant;
@@ -28,9 +30,7 @@ struct DirectionalLight
     vec3 diffuse;
     vec3 specular;
 
-	mat4 shadowMapSpace;
-	sampler2D shadowMapTexture;
-	float shadowMapIntensity;
+	int shadowEnabled;
 };
 
 struct PointLight
@@ -61,53 +61,96 @@ struct SpotLight
     vec3 specular;
 };
 
-#define MAX_DIRECTIONAL_LIGHT_COUNT 4
-#define MAX_POINT_LIGHT_COUNT 4
-#define MAX_SPOT_LIGHT_COUNT 2
-
 in vec3 fragPosition;
 in vec3 fragNormal;
 in vec2 fragUV;
 in vec3 fragColor;
-//in vec4 fragDirectionalShadowMapSpacePositions[MAX_DIRECTIONAL_LIGHT_COUNT];
+in float fragClipSpacePosZ;
 
 out vec4 colorOut;
 
 uniform vec3 viewPosition;
 uniform Material material;
+uniform sampler2D diffuseTexture;
+uniform sampler2D specularTexture;
 uniform AmbientLight ambientLight;
 uniform DirectionalLight directionalLights[MAX_DIRECTIONAL_LIGHT_COUNT];
+uniform sampler2D directionalShadowMaps[MAX_DIRECTIONAL_LIGHT_COUNT * NUM_DIRECTIONAL_CASCADES];
+uniform mat4 directionalShadowMapProjections[MAX_DIRECTIONAL_LIGHT_COUNT * NUM_DIRECTIONAL_CASCADES];
+uniform vec4 directionalShadowMapCascadeBounds[MAX_DIRECTIONAL_LIGHT_COUNT * NUM_DIRECTIONAL_CASCADES];
 uniform PointLight pointLights[MAX_POINT_LIGHT_COUNT];
 uniform SpotLight spotLights[MAX_SPOT_LIGHT_COUNT];
 
+int CalculateCascadeIndex(int lightIndex)
+{
+	int cascadeIndex = lightIndex * NUM_DIRECTIONAL_CASCADES;
+
+	if (fragPosition.x >= directionalShadowMapCascadeBounds[cascadeIndex].x &&
+		fragPosition.x <= directionalShadowMapCascadeBounds[cascadeIndex].y &&
+		fragPosition.z >= directionalShadowMapCascadeBounds[cascadeIndex].z &&
+		fragPosition.z <= directionalShadowMapCascadeBounds[cascadeIndex].w)
+	{
+		return cascadeIndex;
+	}
+
+	cascadeIndex++;
+
+	if (fragPosition.x >= directionalShadowMapCascadeBounds[cascadeIndex].x &&
+		fragPosition.x <= directionalShadowMapCascadeBounds[cascadeIndex].y &&
+		fragPosition.z >= directionalShadowMapCascadeBounds[cascadeIndex].z &&
+		fragPosition.z <= directionalShadowMapCascadeBounds[cascadeIndex].w)
+	{
+		return cascadeIndex;
+	}
+
+	cascadeIndex++;
+
+	/*if (fragPosition.x >= directionalShadowMapCascadeBounds[cascadeIndex].x &&
+		fragPosition.x <= directionalShadowMapCascadeBounds[cascadeIndex].y &&
+		fragPosition.z >= directionalShadowMapCascadeBounds[cascadeIndex].z &&
+		fragPosition.z <= directionalShadowMapCascadeBounds[cascadeIndex].w)
+	{
+		return cascadeIndex;
+	}*/
+
+	return cascadeIndex;
+}
+
 // Credits: https://learnopengl.com/Advanced-Lighting/Shadows/Shadow-Mapping
 
-float CalculateDirectionalShadow(int i, vec3 normal, vec3 lightDir)
+float CalculateDirectionalShadow(int lightIndex, vec3 normal, vec3 lightDir)
 {
-	vec4 shadowMapSpacePosition = directionalLights[i].shadowMapSpace * vec4(fragPosition, 1.0);
+	if (directionalLights[lightIndex].shadowEnabled == 0)
+	{
+		return 0.0;
+	}
+
+	int cascadeIndex = CalculateCascadeIndex(lightIndex);
+
+	vec4 shadowMapSpacePosition = directionalShadowMapProjections[cascadeIndex] * vec4(fragPosition, 1.0);
 	// Perform perspective divide
 	vec3 projCoords = shadowMapSpacePosition.xyz / shadowMapSpacePosition.w;
 	// Transform to [0,1] range
 	projCoords = projCoords * 0.5 + 0.5;
 	// Get closest depth value from light's perspective (using [0,1] range proj coords)
-	float closestDepth = texture(directionalLights[i].shadowMapTexture, projCoords.xy).r; 
+	float closestDepth = texture(directionalShadowMaps[cascadeIndex], projCoords.xy).r; 
 	// Get depth of current fragment from light's perspective
 	float currentDepth = projCoords.z;
 	// Calculate shadow bias to avoid shadow acne
 	float bias = max(0.05 * (1.0 - dot(normal, lightDir)), 0.005);
 	// PCF
 	float shadow = 0.0;
-	vec2 texelSize = 1.0 / textureSize(directionalLights[i].shadowMapTexture, 0);
+	vec2 texelSize = 1.0 / textureSize(directionalShadowMaps[cascadeIndex], 0);
 	
 	for (int x = -1; x <= 1; ++x)
 	{
 		for (int y = -1; y <= 1; ++y)
 		{
-			float pcfDepth = texture(directionalLights[i].shadowMapTexture, projCoords.xy + vec2(x, y) * texelSize).r;
+			float pcfDepth = texture(directionalShadowMaps[cascadeIndex], projCoords.xy + vec2(x, y) * texelSize).r;
 			shadow += currentDepth - bias > pcfDepth ? 1.0 : 0.0;
 		}
 	}
-	
+
 	shadow /= 9.0;
 
 	// Keep the shadow at 0.0 when outside the far plane region of the lights frustum
@@ -117,24 +160,23 @@ float CalculateDirectionalShadow(int i, vec3 normal, vec3 lightDir)
 	}
 
 	// Return shadow value
-	return shadow * directionalLights[i].shadowMapIntensity;
+	return shadow;
 }
 
 // Credits: https://learnopengl.com/Lighting/Multiple-lights
 
-vec3 CalculateDirectionalLight(int i, vec3 normal, vec3 viewDirection, vec4 diffuseTextureColor, vec4 specularTextureColor)
+vec3 CalculateDirectionalLight(int lightIndex, vec3 normal, vec3 viewDirection, vec4 diffuseTextureColor, vec4 specularTextureColor)
 {
-    vec3 lightDirection = normalize(-directionalLights[i].direction);
+    vec3 lightDirection = normalize(-directionalLights[lightIndex].direction);
     // Diffuse shading
     float diff = max(dot(normal, lightDirection), 0.0);
     // Specular shading
     vec3 reflectDirection = reflect(-lightDirection, normal);
     float spec = pow(max(dot(viewDirection, reflectDirection), 0.0), material.shininess);
     // Combine results
-    vec3 diffuse  = directionalLights[i].diffuse  * material.diffuseReflectionConstant  * material.diffuse  * diff * diffuseTextureColor.rgb * fragColor;
-    vec3 specular = directionalLights[i].specular * material.specularReflectionConstant * material.specular * spec * specularTextureColor.rgb;
-	// Shadow
-	float shadow = CalculateDirectionalShadow(i, normal, lightDirection);
+    vec3 diffuse  = directionalLights[lightIndex].diffuse  * material.diffuseReflectionConstant  * material.diffuse  * diff * diffuseTextureColor.rgb * fragColor;
+    vec3 specular = directionalLights[lightIndex].specular * material.specularReflectionConstant * material.specular * spec * specularTextureColor.rgb;
+	float shadow  = CalculateDirectionalShadow(lightIndex, normal, lightDirection);
     return (1.0 - shadow) * (diffuse + specular);
 }
 
@@ -180,8 +222,8 @@ vec3 CalculateSpotLight(SpotLight light, vec3 normal, vec3 viewDirection, vec4 d
 
 void main()
 {
-    vec4 diffuseTextureColor = texture(material.diffuseTexture, fragUV);
-    vec4 specularTextureColor = texture(material.specularTexture, fragUV);
+    vec4 diffuseTextureColor = texture(diffuseTexture, fragUV);
+    vec4 specularTextureColor = texture(specularTexture, fragUV);
     vec3 result = ambientLight.ambient * material.ambientReflectionConstant * material.diffuse * diffuseTextureColor.rgb * fragColor;
     vec3 normal = normalize(fragNormal); // Important, because length of fragNormal can be != 1 after interpolation
     vec3 viewDirection = normalize(viewPosition - fragPosition);
@@ -201,5 +243,27 @@ void main()
         result += CalculateSpotLight(spotLights[i], normal, viewDirection, diffuseTextureColor, specularTextureColor);
     }
 
-    colorOut = vec4(result, 1.0);
+	if (fragPosition.x >= directionalShadowMapCascadeBounds[0].x &&
+		fragPosition.x <= directionalShadowMapCascadeBounds[0].y &&
+		fragPosition.z >= directionalShadowMapCascadeBounds[0].z &&
+		fragPosition.z <= directionalShadowMapCascadeBounds[0].w)
+	{
+		colorOut = vec4(result, 1.0) * vec4(0.6, 0.0, 0.0, 1.0);
+	}
+	else if (fragPosition.x >= directionalShadowMapCascadeBounds[1].x &&
+		fragPosition.x <= directionalShadowMapCascadeBounds[1].y &&
+		fragPosition.z >= directionalShadowMapCascadeBounds[1].z &&
+		fragPosition.z <= directionalShadowMapCascadeBounds[1].w)
+	{
+		colorOut = vec4(result, 1.0) * vec4(0.0, 0.6, 0.0, 1.0);
+	}
+	else if (fragPosition.x >= directionalShadowMapCascadeBounds[2].x &&
+		fragPosition.x <= directionalShadowMapCascadeBounds[2].y &&
+		fragPosition.z >= directionalShadowMapCascadeBounds[2].z &&
+		fragPosition.z <= directionalShadowMapCascadeBounds[2].w)
+	{
+		colorOut = vec4(result, 1.0) * vec4(0.0, 0.0, 0.6, 1.0);
+	}
+    else
+		colorOut = vec4(result, 1.0);
 }

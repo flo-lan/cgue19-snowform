@@ -40,31 +40,39 @@ void StandardMaterial::SetUniforms(CameraComponent* camera, MeshRendererComponen
         shaderProgram->SetUniform3fv(shaderProgram->GetUniformLocation("material.diffuse"), diffuseColor);
         shaderProgram->SetUniform3fv(shaderProgram->GetUniformLocation("material.specular"), specularColor);
 
+        int textureUnit = 0;
+
         if (defaultTexture)
         {
-            defaultTexture->ActivateAndBind(0 /* Unit */);
+            defaultTexture->ActivateAndBind(textureUnit);
+
+            ++textureUnit;
         }
 
         if (diffuseTexture)
         {
-            shaderProgram->SetUniform1i(shaderProgram->GetUniformLocation("material.diffuseTexture"), 1 /* Unit */);
+            shaderProgram->SetUniform1i(shaderProgram->GetUniformLocation("diffuseTexture"), textureUnit);
 
-            diffuseTexture->ActivateAndBind(1 /* Unit */);
+            diffuseTexture->ActivateAndBind(textureUnit);
+
+            ++textureUnit;
         }
         else
         {
-            shaderProgram->SetUniform1i(shaderProgram->GetUniformLocation("material.diffuseTexture"), 0 /* Unit */);
+            shaderProgram->SetUniform1i(shaderProgram->GetUniformLocation("diffuseTexture"), 0 /* Unit */);
         }
 
         if (specularTexture)
         {
-            shaderProgram->SetUniform1i(shaderProgram->GetUniformLocation("material.specularTexture"), 2 /* Unit */);
+            shaderProgram->SetUniform1i(shaderProgram->GetUniformLocation("specularTexture"), textureUnit);
 
-            specularTexture->ActivateAndBind(2 /* Unit */);
+            specularTexture->ActivateAndBind(textureUnit);
+
+            ++textureUnit;
         }
         else
         {
-            shaderProgram->SetUniform1i(shaderProgram->GetUniformLocation("material.specularTexture"), 0 /* Unit */);
+            shaderProgram->SetUniform1i(shaderProgram->GetUniformLocation("specularTexture"), 0 /* Unit */);
         }
 
         shaderProgram->SetUniform1fv(shaderProgram->GetUniformLocation("material.ambientReflectionConstant"), ambientReflectionConstant);
@@ -80,19 +88,24 @@ void StandardMaterial::SetUniforms(CameraComponent* camera, MeshRendererComponen
         {
             DirectionalLightComponent* light = *itr;
 
-            shaderProgram->SetUniformMatrix4fv(shaderProgram->GetUniformLocation(std::string("directionalLights[" + std::to_string(i) + "].shadowMapSpace").c_str()), light->GetShadowMapLightSpace());
-
             if (light->IsShadowEnabled())
             {
-                shaderProgram->SetUniform1i(shaderProgram->GetUniformLocation(std::string("directionalLights[" + std::to_string(i) + "].shadowMapTexture").c_str()), 3 + i /* Unit */);
-                shaderProgram->SetUniform1fv(shaderProgram->GetUniformLocation(std::string("directionalLights[" + std::to_string(i) + "].shadowMapIntensity").c_str()), 1.0f);
+                shaderProgram->SetUniform1i(shaderProgram->GetUniformLocation(std::string("directionalLights[" + std::to_string(i) + "].shadowEnabled").c_str()), 1);
 
-                light->ActivateAndBindShadowMap(3 + i /* Unit */);
+                for (int cascadeIndex = 0; cascadeIndex < NUM_DIRECTIONAL_SHADOW_CASCADES; cascadeIndex++)
+                {
+                    shaderProgram->SetUniformMatrix4fv(shaderProgram->GetUniformLocation(std::string("directionalShadowMapProjections[" + std::to_string(i * NUM_DIRECTIONAL_SHADOW_CASCADES + cascadeIndex) + "]").c_str()), light->GetShadowMapProjection(cascadeIndex));
+                    shaderProgram->SetUniform4fv(shaderProgram->GetUniformLocation(std::string("directionalShadowMapCascadeBounds[" + std::to_string(i * NUM_DIRECTIONAL_SHADOW_CASCADES + cascadeIndex) + "]").c_str()), light->GetShadowMapCascadeBounds(cascadeIndex));
+                    shaderProgram->SetUniform1i(shaderProgram->GetUniformLocation(std::string("directionalShadowMaps[" + std::to_string(i * NUM_DIRECTIONAL_SHADOW_CASCADES + cascadeIndex) + "]").c_str()), textureUnit);
+
+                    light->ActivateAndBindShadowMap(textureUnit, cascadeIndex);
+
+                    ++textureUnit;
+                }
             }
             else
             {
-                shaderProgram->SetUniform1i(shaderProgram->GetUniformLocation(std::string("directionalLights[" + std::to_string(i) + "].shadowMapTexture").c_str()), 0 /* Unit */);
-                shaderProgram->SetUniform1fv(shaderProgram->GetUniformLocation(std::string("directionalLights[" + std::to_string(i) + "].shadowMapIntensity").c_str()), 0.0f);
+                shaderProgram->SetUniform1i(shaderProgram->GetUniformLocation(std::string("directionalLights[" + std::to_string(i) + "].shadowEnabled").c_str()), 0);
             }
 
             shaderProgram->SetUniform3fv(shaderProgram->GetUniformLocation(std::string("directionalLights[" + std::to_string(i) + "].direction").c_str()), light->GetDirection());

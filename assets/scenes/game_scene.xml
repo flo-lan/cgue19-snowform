@@ -18,7 +18,7 @@
   <GameObject id="DirectionalLight1" name="Directional Light">
     <Components>
       <TransformComponent localPosition="0 3 0" localRotation="50 -330 0" localScale="1 1 1" />
-      <DirectionalLightComponent direction="-0.3213938 -0.7660444 0.5566705" color="1 0.9568627 0.8392157" intensity="1" />
+      <DirectionalLightComponent direction="-0.3213938 -0.7660444 0.5566705" color="1 0.9568627 0.8392157" intensity="1" shadow="true" shadowMapWidth="1024" shadowMapHeight="1024" />
     </Components>
     <Children />
   </GameObject>
