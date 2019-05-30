@@ -15,27 +15,15 @@
     </Components>
     <Children />
   </GameObject>
-  <GameObject id="DirectionalLight1" name="Directional Light">
+  <GameObject name="Lights">
     <Components>
-      <TransformComponent localPosition="0 3 0" localRotation="50 -330 0" localScale="1 1 1" />
-      <DirectionalLightComponent direction="-0.3213938 -0.7660444 0.5566705" color="1 0.9568627 0.8392157" intensity="1" />
-    </Components>
-    <Children />
-  </GameObject>
-  <GameObject id="Snowball" name="Snowball">
-    <Components>
-      <TransformComponent localPosition="-5 15 75" localRotation="0 0 0" localScale="1 1 1" />
-      <SphereColliderComponent physicsMaterial="Snowball" offset="0 0 0" radius="0.5" trigger="false" />
-      <RigidDynamicComponent CCD="true" kinematic="false" mass="1" maxLinearVelocity="80" maxAngularVelocity="100" raycastLayerMask="2" />
-      <PlayerComponent />
+      <TransformComponent localPosition="0 0 0" localRotation="0 0 0" localScale="1 1 1" />
     </Components>
     <Children>
-      <GameObject name="SnowballMesh">
+      <GameObject id="DirectionalLight1" name="Directional Light 1">
         <Components>
-          <TransformComponent localPosition="0 0 0" localRotation="0 0 0" localScale="0.003305583 0.003305583 0.003305583" />
-          <MeshRendererComponent material="Snowball" mesh="Snowball">
-            <Light gameObjectId="DirectionalLight1" />
-          </MeshRendererComponent>
+          <TransformComponent localPosition="-29.1 21 25" localRotation="50 -270 0" localScale="30 1 40" />
+          <DirectionalLightComponent color="1 1 1" intensity="1" shadow="true" shadowMapWidth="4096" shadowMapHeight="4096" shadowMapOrthoLeft="-50" shadowMapOrthoRight="90" shadowMapOrthoBottom="-25" shadowMapOrthoTop="30" shadowMapOrthoNear="1" shadowMapOrthoFar="60" />
         </Components>
         <Children />
       </GameObject>
@@ -186,6 +174,25 @@
           </MeshRendererComponent>
           <MeshColliderComponent physicsMaterial="Default" collisionMesh="TreePineSnow" offset="0 0 0" />
           <RigidStaticComponent raycastLayerMask="1" />
+        </Components>
+        <Children />
+      </GameObject>
+    </Children>
+  </GameObject>
+  <GameObject id="Snowball" name="Snowball">
+    <Components>
+      <TransformComponent localPosition="-5 15 75" localRotation="0 0 0" localScale="1 1 1" />
+      <SphereColliderComponent physicsMaterial="Snowball" offset="0 0 0" radius="0.5" trigger="false" />
+      <RigidDynamicComponent CCD="true" kinematic="false" mass="1" maxLinearVelocity="80" maxAngularVelocity="100" raycastLayerMask="2" />
+      <PlayerComponent />
+    </Components>
+    <Children>
+      <GameObject name="SnowballMesh">
+        <Components>
+          <TransformComponent localPosition="0 0 0" localRotation="0 0 0" localScale="0.003305583 0.003305583 0.003305583" />
+          <MeshRendererComponent material="Snowball" mesh="Snowball">
+            <Light gameObjectId="DirectionalLight1" />
+          </MeshRendererComponent>
         </Components>
         <Children />
       </GameObject>

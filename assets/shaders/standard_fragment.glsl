@@ -69,7 +69,6 @@ in vec3 fragPosition;
 in vec3 fragNormal;
 in vec2 fragUV;
 in vec3 fragColor;
-//in vec4 fragDirectionalShadowMapSpacePositions[MAX_DIRECTIONAL_LIGHT_COUNT];
 
 out vec4 colorOut;
 
