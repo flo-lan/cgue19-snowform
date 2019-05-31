@@ -29,6 +29,8 @@
     <ClCompile Include="src\GameScene.cpp" />
     <ClCompile Include="src\ImageCutOffMaterial.cpp" />
     <ClCompile Include="src\LightComponent.cpp" />
+    <ClCompile Include="src\ParticleSystemComponent.cpp" />
+    <ClCompile Include="src\ParticleSystemComponentFactory.cpp" />
     <ClCompile Include="src\PlayerComponent.cpp" />
     <ClCompile Include="src\PlayerComponentFactory.cpp" />
     <ClCompile Include="src\PointLightComponentFactory.cpp" />
@@ -112,6 +114,8 @@
     <ClInclude Include="src\GameScene.h" />
     <ClInclude Include="src\ImageCutOffMaterial.h" />
     <ClInclude Include="src\LightComponent.h" />
+    <ClInclude Include="src\ParticleSystemComponent.h" />
+    <ClInclude Include="src\ParticleSystemComponentFactory.h" />
     <ClInclude Include="src\PlayerComponent.h" />
     <ClInclude Include="src\PlayerComponentFactory.h" />
     <ClInclude Include="src\PointLightComponentFactory.h" />

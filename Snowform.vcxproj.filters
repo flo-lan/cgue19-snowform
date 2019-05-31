@@ -251,6 +251,12 @@
     <ClCompile Include="src\FollowComponentFactory.cpp">
       <Filter>Game\Scene\ComponentFactories</Filter>
     </ClCompile>
+    <ClCompile Include="src\ParticleSystemComponent.cpp">
+      <Filter>Engine\Render\ParticleSystem</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ParticleSystemComponentFactory.cpp">
+      <Filter>Engine\Scene\ComponentFactories</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameObject.h">
@@ -508,6 +514,12 @@
     <ClInclude Include="src\FollowComponentFactory.h">
       <Filter>Game\Scene\ComponentFactories</Filter>
     </ClInclude>
+    <ClInclude Include="src\ParticleSystemComponent.h">
+      <Filter>Engine\Render\ParticleSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ParticleSystemComponentFactory.h">
+      <Filter>Engine\Scene\ComponentFactories</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">
@@ -596,6 +608,9 @@
     </Filter>
     <Filter Include="Engine\Render\Illumination">
       <UniqueIdentifier>{26d434c3-f296-422c-ad30-0a971e555af3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Render\ParticleSystem">
+      <UniqueIdentifier>{01055331-4b4e-4622-a520-e2518f44ddb5}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
