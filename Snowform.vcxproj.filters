@@ -257,6 +257,9 @@
     <ClCompile Include="src\ParticleSystemComponentFactory.cpp">
       <Filter>Engine\Scene\ComponentFactories</Filter>
     </ClCompile>
+    <ClCompile Include="src\ParticleBillboardMaterial.cpp">
+      <Filter>Engine\Render\Material</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameObject.h">
@@ -519,6 +522,9 @@
     </ClInclude>
     <ClInclude Include="src\ParticleSystemComponentFactory.h">
       <Filter>Engine\Scene\ComponentFactories</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ParticleBillboardMaterial.h">
+      <Filter>Engine\Render\Material</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

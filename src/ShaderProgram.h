@@ -15,6 +15,7 @@ public:
     bool AttachShader(Shader* shader);
     bool Link();
     void Use();
+    void DispatchCompute(GLuint num_groups_x, GLuint num_groups_y, GLuint num_groups_z);
 
     GLuint GetUniformLocation(const GLchar* name);
 

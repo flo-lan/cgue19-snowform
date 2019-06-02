@@ -198,6 +198,15 @@
       </GameObject>
     </Children>
   </GameObject>
+  <GameObject name="ParticleSystem">
+    <Components>
+      <TransformComponent localPosition="-5 30 75" localRotation="0 0 0" localScale="1 1 1" />
+      <ParticleSystemComponent enabled="true" particleCount="2000" particleMaterial="SnowParticle" particleMesh="SnowParticle" minRelativeEmitPosition="-15 0 -15" maxRelativeEmitPosition="15 0 15" minParticleVelocity="0 -1 0" maxParticleVelocity="0 -3 0" minParticleSize="0.01" maxParticleSize="0.2" minParticleLifetime="5" maxParticleLifetime="15" />
+      <PlayerComponent />
+    </Components>
+    <Children>
+    </Children>
+  </GameObject>
   <GameObject name="Moving Blocks">
     <Components>
       <TransformComponent localPosition="0 0 0" localRotation="0 0 0" localScale="1 1 1" />

@@ -8,6 +8,7 @@
 #include "ImageCutOffMaterial.h"
 #include "TextMaterial.h"
 #include "ShadowMapMaterial.h"
+#include "ParticleBillboardMaterial.h"
 #include "AssetManager.h"
 #include "PhysicsEngine.h"
 
@@ -27,6 +28,7 @@ bool GlobalAssetLoader::LoadAssets()
     ShaderProgram* imageCutOffShaderProgram = nullptr;
     ShaderProgram* textShaderProgram = nullptr;
     ShaderProgram* shadowMapShaderProgram = nullptr;
+    ShaderProgram* particleBillboardShaderProgram = nullptr;
 
     if (!(simpleShaderProgram = LoadShaderProgramFromFiles("simple_shader_program",
             "simple_vertex_shader", "assets/shaders/simple_vertex.glsl",
@@ -45,7 +47,16 @@ bool GlobalAssetLoader::LoadAssets()
             "text_fragment_shader", "assets/shaders/text_fragment.glsl")) ||
         !(shadowMapShaderProgram = LoadShaderProgramFromFiles("shadow_map_shader_program",
             "shadow_map_vertex_shader", "assets/shaders/shadow_map_vertex.glsl",
-            "shadow_map_fragment_shader", "assets/shaders/shadow_map_fragment.glsl")))
+            "shadow_map_fragment_shader", "assets/shaders/shadow_map_fragment.glsl")) ||
+        !(particleBillboardShaderProgram = LoadShaderProgramFromFiles("particle_billboard_shader_program",
+            "particle_billboard_vertex_shader", "assets/shaders/particle_billboard_vertex.glsl",
+            "particle_billboard_fragment_shader", "assets/shaders/particle_billboard_fragment.glsl")))
+    {
+        return false;
+    }
+
+    if (!LoadComputeShaderProgramFromFile("particle_system_compute_shader_program",
+        "particle_system_compute_shader", "assets/shaders/particle_system_compute.glsl"))
     {
         return false;
     }
@@ -110,7 +121,13 @@ bool GlobalAssetLoader::LoadAssets()
         im->SetImageTexture(sAssetManager.GetTexture2D("transition_overlay"));
     }
 
+    if (ParticleBillboardMaterial* pbm = sAssetManager.CreateMaterial<ParticleBillboardMaterial>("SnowParticle", particleBillboardShaderProgram))
+    {
+        pbm->SetDiffuseColor(glm::vec3(1.f));
+    }
+
     sAssetManager.CreateQuadMesh("Image", 1.f, 1.f);
+    sAssetManager.CreateQuadMesh("SnowParticle", 1.f, 1.f);
     sAssetManager.CreateCubeMesh("Cube", 1.5f, 1.5f, 1.5f);
     sAssetManager.CreateCylinderMesh("Cylinder", 32, 1.f, 1.3f);
     sAssetManager.CreateSphereMesh("Sphere", 64, 32, 1.f);

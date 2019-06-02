@@ -69,6 +69,11 @@ void ShaderProgram::Use()
     glUseProgram(handle);
 }
 
+void ShaderProgram::DispatchCompute(GLuint num_groups_x, GLuint num_groups_y, GLuint num_groups_z)
+{
+    glDispatchCompute(num_groups_x, num_groups_y, num_groups_z);
+}
+
 GLuint ShaderProgram::GetUniformLocation(const GLchar* name)
 {
     return glGetUniformLocation(handle, name);
