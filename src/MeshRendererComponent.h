@@ -27,6 +27,7 @@ public:
     void SetEnabled(bool value) { enabled = value; }
     void SetMaterial(Material* value) { material = value; }
     void SetMesh(Mesh* value);
+    void SetInstanceCount(GLsizei instanceCount) { this->instanceCount = instanceCount; }
 
     void AddInitialLight(std::string const& gameObjectId); // ToDo: Should be handled inside MeshRendererComponentFactory
 
@@ -49,9 +50,7 @@ private:
     TransformComponent* transform;
     Material* material;
     Mesh* mesh;
-    GLuint VAO;
-    GLuint VBO;
-    GLuint EBO;
+    GLsizei instanceCount;
     std::vector<DirectionalLightComponent*> directionalLights;
     std::vector<PointLightComponent*> pointLights;
     std::vector<SpotLightComponent*> spotLights;

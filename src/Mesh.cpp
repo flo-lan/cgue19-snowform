@@ -7,7 +7,10 @@
 #include <glm/gtc/constants.hpp>
 
 Mesh::Mesh(std::string const& name) :
-    Name(name)
+    Name(name),
+    VAO(0),
+    VBO(0),
+    EBO(0)
 {
     fprintf(stdout, "Created mesh '%s'!\n", Name.c_str());
 }
@@ -15,6 +18,82 @@ Mesh::Mesh(std::string const& name) :
 Mesh::~Mesh()
 {
     fprintf(stdout, "Deleted mesh '%s'!\n", Name.c_str());
+
+    if (VAO)
+    {
+        glDeleteVertexArrays(1, &VAO);
+        VAO = 0;
+    }
+
+    if (VBO)
+    {
+        glDeleteBuffers(1, &VBO);
+        VBO = 0;
+    }
+
+    if (EBO)
+    {
+        glDeleteBuffers(1, &EBO);
+        EBO = 0;
+    }
+}
+
+void Mesh::Upload()
+{
+    if (VAO)
+    {
+        glDeleteVertexArrays(1, &VAO);
+        glDeleteBuffers(1, &VBO);
+        glDeleteBuffers(1, &EBO);
+
+        VAO = 0;
+        VBO = 0;
+        EBO = 0;
+    }
+
+    if (Vertices.size() == 0)
+    {
+        return;
+    }
+
+    glGenVertexArrays(1, &VAO);
+
+    glBindVertexArray(VAO);
+    {
+        glGenBuffers(1, &VBO);
+        glBindBuffer(GL_ARRAY_BUFFER, VBO);
+        glBufferData(GL_ARRAY_BUFFER, Vertices.size() * sizeof(Vertex), &Vertices[0], GL_STATIC_DRAW);
+
+        glGenBuffers(1, &EBO);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER, Indices.size() * sizeof(uint32_t), &Indices[0], GL_STATIC_DRAW);
+
+        glEnableVertexAttribArray(0 /* Vertex Position */);
+        glVertexAttribPointer(0 /* Vertex Position */, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
+
+        glEnableVertexAttribArray(1 /* Vertex Normal */);
+        glVertexAttribPointer(1 /* Vertex Normal */, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Normal));
+
+        glEnableVertexAttribArray(2 /* Vertex UV */);
+        glVertexAttribPointer(2 /* Vertex UV */, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, UV));
+
+        glEnableVertexAttribArray(3 /* Vertex Color */);
+        glVertexAttribPointer(3 /* Vertex Color */, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Color));
+    }
+    glBindVertexArray(0);
+
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+}
+
+void Mesh::Bind()
+{
+    glBindVertexArray(VAO);
+}
+
+void Mesh::Unbind()
+{
+    glBindVertexArray(0);
 }
 
 Mesh* Mesh::CreateQuad(std::string const& name, float width, float height)

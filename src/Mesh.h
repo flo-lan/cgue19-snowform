@@ -1,6 +1,7 @@
 #pragma once
 
-#include <glm\glm.hpp>
+#include <glm/glm.hpp>
+#include <GL/glew.h>
 #include <string>
 #include <vector>
 
@@ -66,6 +67,17 @@ public:
     Mesh(std::string const& name);
     ~Mesh();
 
+    void Upload();
+    bool IsUploaded() const { return VAO != 0; }
+
+    void Bind();
+    void Unbind();
+
+    std::string const& GetName() const { return Name; }
+
+    size_t GetVertexCount() const { return Vertices.size(); }
+    size_t GetIndexCount() const { return Indices.size(); }
+
     static Mesh* CreateQuad(std::string const& name, float width, float height);
     static Mesh* CreateCube(std::string const& name, float width, float height, float depth);
     static Mesh* CreateCylinder(std::string const& name, uint32_t segments, float radius, float height);
@@ -73,7 +85,12 @@ public:
     static Mesh* CreateTorus(std::string const& name, uint32_t tubeSegments, uint32_t crossSectionSegments, float r1, float r2);
     static Mesh* CreateFromFile(std::string const& name, std::string const& file);
 
-    std::string Name;
     std::vector<Vertex> Vertices;
     std::vector<uint32_t> Indices;
+
+private:
+    std::string Name;
+    GLuint VAO;
+    GLuint VBO;
+    GLuint EBO;
 };

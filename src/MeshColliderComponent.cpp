@@ -25,12 +25,12 @@ void MeshColliderComponent::SetMesh(Mesh* value)
         return;
     }
 
-    physx::PxTriangleMesh* pxTriangleMesh = sPhysicsEngine.GetPxTriangleMesh(value->Name);
+    physx::PxTriangleMesh* pxTriangleMesh = sPhysicsEngine.GetPxTriangleMesh(value->GetName());
 
     if (!pxTriangleMesh)
     {
-        fprintf(stdout, "Warning: PhysX triangle mesh '%s' was created in mesh collider component. Consider preloading it in asset loader!\n", value->Name.c_str());
-        pxTriangleMesh = sPhysicsEngine.CreatePxTriangleMesh(value->Name, value->Vertices, value->Indices);
+        fprintf(stdout, "Warning: PhysX triangle mesh '%s' was created in mesh collider component. Consider preloading it in asset loader!\n", value->GetName().c_str());
+        pxTriangleMesh = sPhysicsEngine.CreatePxTriangleMesh(value->GetName(), value->Vertices, value->Indices);
     }
 
     SetMesh(pxTriangleMesh);

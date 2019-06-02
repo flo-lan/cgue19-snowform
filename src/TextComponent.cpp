@@ -225,11 +225,14 @@ void TextComponent::RebuildTextMesh()
         glyphLineOffsetY += lineHeightNorm;
     }
 
-    meshRenderer->SetMesh(nullptr); // Hack to switch static meshes; ToDo: Implement dynamic mesh drawing for better performance
-
     if (mesh.Vertices.size())
     {
+        textMesh->Upload(); // Hack to update static meshes; ToDo: Implement dynamic mesh drawing for better performance
         meshRenderer->SetMesh(textMesh);
+    }
+    else
+    {
+        meshRenderer->SetMesh(nullptr);
     }
 
     //fprintf(stdout, "Rebuilt text mesh for text '%s' with %i quads and %i indices!\n",

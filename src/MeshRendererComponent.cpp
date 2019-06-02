@@ -17,9 +17,7 @@ MeshRendererComponent::MeshRendererComponent(GameObject* owner) :
     transform(owner->GetComponent<TransformComponent>()),
     material(nullptr),
     mesh(nullptr),
-    VAO(0),
-    VBO(0),
-    EBO(0)
+    instanceCount(0)
 {
     fprintf(stdout, "Attached mesh renderer component to game object '%s'!\n", GetOwner()->GetName().c_str());
 
@@ -50,21 +48,6 @@ MeshRendererComponent::~MeshRendererComponent()
     spotLights.clear();
 
     GetOwner()->RemoveMeshRendererComponent(this);
-
-    if (VAO)
-    {
-        glDeleteVertexArrays(1, &VAO);
-    }
-
-    if (VBO)
-    {
-        glDeleteBuffers(1, &VBO);
-    }
-
-    if (EBO)
-    {
-        glDeleteBuffers(1, &EBO);
-    }
 }
 
 void MeshRendererComponent::OnStart()
@@ -108,57 +91,28 @@ void MeshRendererComponent::Render(CameraComponent* camera, Material* material)
         material->Use();
         material->SetUniforms(camera, this);
 
-        glBindVertexArray(VAO);
-        glDrawElements(GL_TRIANGLES, mesh->Indices.size(), GL_UNSIGNED_INT, (void*)0);
-        glBindVertexArray(0);
+        mesh->Bind();
+
+        if (instanceCount > 0)
+        {
+            glDrawElementsInstanced(GL_TRIANGLES, (GLsizei)mesh->GetIndexCount(), GL_UNSIGNED_INT, (void*)0, instanceCount);
+        }
+        else
+        {
+            glDrawElements(GL_TRIANGLES, (GLsizei)mesh->GetIndexCount(), GL_UNSIGNED_INT, (void*)0);
+        }
+
+        mesh->Unbind();
     }
 }
 
 void MeshRendererComponent::SetMesh(Mesh* value)
 {
-    // Delete mesh from GPU
-    if (mesh)
-    {
-        glDeleteVertexArrays(1, &VAO);
-        glDeleteBuffers(1, &VBO);
-        glDeleteBuffers(1, &EBO);
-
-        VBO = 0;
-        VAO = 0;
-        EBO = 0;
-    }
-
     mesh = value;
 
-    // Upload mesh to GPU
-    if (mesh)
+    if (mesh && !mesh->IsUploaded())
     {
-        glGenVertexArrays(1, &VAO);
-        glBindVertexArray(VAO);
-
-        glGenBuffers(1, &VBO);
-        glBindBuffer(GL_ARRAY_BUFFER, VBO);
-        glBufferData(GL_ARRAY_BUFFER, mesh->Vertices.size() * sizeof(Vertex), &mesh->Vertices[0], GL_STATIC_DRAW);
-
-        glGenBuffers(1, &EBO);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, mesh->Indices.size() * sizeof(uint32_t), &mesh->Indices[0], GL_STATIC_DRAW);
-
-        glEnableVertexAttribArray(0 /* Vertex Position */);
-        glVertexAttribPointer(0 /* Vertex Position */, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)0);
-
-        glEnableVertexAttribArray(1 /* Vertex Normal */);
-        glVertexAttribPointer(1 /* Vertex Normal */, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Normal));
-
-        glEnableVertexAttribArray(2 /* Vertex UV */);
-        glVertexAttribPointer(2 /* Vertex UV */, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, UV));
-
-        glEnableVertexAttribArray(3 /* Vertex Color */);
-        glVertexAttribPointer(3 /* Vertex Color */, 3, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, Color));
-
-        glBindVertexArray(0);
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+        mesh->Upload();
     }
 }
 
