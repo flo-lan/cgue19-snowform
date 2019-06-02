@@ -26,6 +26,9 @@ TransformComponent::TransformComponent(GameObject* owner) :
     directionRight(rotationQ * gAxisDirectionX),
     directionUp(rotationQ * gAxisDirectionY),
     directionBackward(rotationQ * gAxisDirectionZ),
+    translationMatrix(1.f),
+    rotationMatrix(1.f),
+    scaleMatrix(1.f),
     modelMatrix(1.f),
     ignoreParentPosition(false),
     ignoreParentRotation(false),
@@ -55,10 +58,9 @@ TransformComponent::~TransformComponent()
 
 void TransformComponent::LateUpdate()
 {
-    glm::mat4 translationMatrix = glm::translate(glm::mat4(1.f), position);
-    glm::mat4 rotationMatrix = glm::toMat4(rotationQ);
-    glm::mat4 scaleMatrix = glm::scale(glm::mat4(1.f), scale);
-
+    translationMatrix = glm::translate(glm::mat4(1.f), position);
+    rotationMatrix = glm::toMat4(rotationQ);
+    scaleMatrix = glm::scale(glm::mat4(1.f), scale);
     modelMatrix = translationMatrix * rotationMatrix * scaleMatrix;
 }
 

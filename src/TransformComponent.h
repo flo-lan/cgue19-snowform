@@ -85,6 +85,9 @@ public:
     TransformComponent* GetChild(uint32_t index) { return index < children.size() ? children[index] : nullptr; }
     uint32_t GetChildCount() const { return children.size(); }
 
+    glm::mat4 const& GetTranslationMatrix() const { return translationMatrix; }
+    glm::mat4 const& GetRotationMatrix() const { return rotationMatrix; }
+    glm::mat4 const& GetScaleMatrix() const { return scaleMatrix; }
     glm::mat4 const& GetModelMatrix() const { return modelMatrix; }
 
     float GetLocalPositionX() const { return localPosition.x; }
@@ -146,6 +149,9 @@ private:
     glm::vec3 directionUp;
     glm::vec3 directionBackward;
 
+    glm::mat4 translationMatrix;
+    glm::mat4 rotationMatrix;
+    glm::mat4 scaleMatrix;
     glm::mat4 modelMatrix;
 
     bool ignoreParentPosition;
