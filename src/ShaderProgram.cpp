@@ -84,6 +84,11 @@ void ShaderProgram::SetUniform1fv(GLint location, float value)
     glUniform1fv(location, 1, &value);
 }
 
+void ShaderProgram::SetUniform2fv(GLint location, glm::vec2 value)
+{
+    glUniform2fv(location, 1, glm::value_ptr(value));
+}
+
 void ShaderProgram::SetUniform3fv(GLint location, glm::vec3 value)
 {
     glUniform3fv(location, 1, glm::value_ptr(value));

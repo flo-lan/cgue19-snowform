@@ -20,6 +20,7 @@ public:
 
     void SetUniform1i(GLint location, int value);
     void SetUniform1fv(GLint location, float value);
+    void SetUniform2fv(GLint location, glm::vec2 value);
     void SetUniform3fv(GLint location, glm::vec3 value);
     void SetUniform4fv(GLint location, glm::vec4 value);
     void SetUniformMatrix4fv(GLint location, glm::mat4 value);
