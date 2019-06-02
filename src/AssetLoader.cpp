@@ -43,6 +43,45 @@ ShaderProgram* AssetLoader::LoadShaderProgramFromFiles(std::string const& name,
     return shaderProgram;
 }
 
+ShaderProgram* AssetLoader::LoadComputeShaderProgramFromFile(std::string const& name, std::string const& computeShaderName, std::string const& computeShaderFile)
+{
+    Shader* computeShader = sAssetManager.CreateShader(computeShaderName, GL_COMPUTE_SHADER);
+
+    if (!computeShader)
+    {
+        return nullptr;
+    }
+
+    if (!computeShader->LoadSourceFromFile(computeShaderFile))
+    {
+        return nullptr;
+    }
+
+    if (!computeShader->Compile())
+    {
+        return nullptr;
+    }
+
+    ShaderProgram* computeShaderProgram = sAssetManager.CreateShaderProgram(name);
+
+    if (!computeShaderProgram)
+    {
+        return nullptr;
+    }
+
+    if (!computeShaderProgram->AttachShader(computeShader))
+    {
+        return nullptr;
+    }
+
+    if (!computeShaderProgram->Link())
+    {
+        return nullptr;
+    }
+
+    return computeShaderProgram;
+}
+
 Texture2D* AssetLoader::LoadTextureFromFile(std::string const& name, std::string const& file, bool generateMipMaps)
 {
     Texture2D* texture = sAssetManager.CreateTexture(name);
