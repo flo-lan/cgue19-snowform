@@ -14,6 +14,7 @@ ParticleSystemComponent::ParticleSystemComponent(GameObject* owner) :
     VAO(0),
     PBO(0),
     enabled(false),
+    prewarmTime(0.f),
     minRelativeEmitPosition(0.f),
     maxRelativeEmitPosition(0.f),
     minParticleVelocity(-1.f),
@@ -38,32 +39,24 @@ ParticleSystemComponent::~ParticleSystemComponent()
     DeleteVAOAndPBO();
 }
 
+void ParticleSystemComponent::OnStart()
+{
+    float remainingPrewarmTime = prewarmTime;
+
+    for (; remainingPrewarmTime >= 1.f; remainingPrewarmTime -= 1.f)
+    {
+        Simulate(1.f);
+    }
+
+    if (remainingPrewarmTime > 0.f)
+    {
+        Simulate(remainingPrewarmTime);
+    }
+}
+
 void ParticleSystemComponent::LateUpdate()
 {
-    if (computeShaderProgram && particleCount)
-    {
-        glBindVertexArray(VAO);
-        {
-            computeShaderProgram->Use();
-
-            computeShaderProgram->SetUniform1fv( 0, sTime.GetDeltaTime());
-            computeShaderProgram->SetUniform1i ( 1, particleCount);
-            computeShaderProgram->SetUniform3fv( 2, minRelativeEmitPosition);
-            computeShaderProgram->SetUniform3fv( 3, maxRelativeEmitPosition);
-            computeShaderProgram->SetUniform3fv( 4, minParticleVelocity);
-            computeShaderProgram->SetUniform3fv( 5, maxParticleVelocity);
-            computeShaderProgram->SetUniform1fv( 6, minParticleSize);
-            computeShaderProgram->SetUniform1fv( 7, maxParticleSize);
-            computeShaderProgram->SetUniform1fv( 8, minParticleLifetime);
-            computeShaderProgram->SetUniform1fv( 9, maxParticleLifetime);
-            computeShaderProgram->SetUniform2fv(10, glm::vec2((float)rand() / RAND_MAX, (float)rand() / RAND_MAX));
-
-            computeShaderProgram->DispatchCompute(particleCount / WORK_GROUP_SIZE + 1, 1, 1);
-
-            glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT | GL_VERTEX_ATTRIB_ARRAY_BARRIER_BIT);
-        }
-        glBindVertexArray(0);
-    }
+    Simulate(sTime.GetDeltaTime());
 }
 
 void ParticleSystemComponent::OnDestroy()
@@ -174,5 +167,33 @@ void ParticleSystemComponent::DeleteVAOAndPBO()
     {
         glDeleteBuffers(1, &PBO);
         PBO = 0;
+    }
+}
+
+void ParticleSystemComponent::Simulate(float deltaTime)
+{
+    if (computeShaderProgram && particleCount)
+    {
+        glBindVertexArray(VAO);
+        {
+            computeShaderProgram->Use();
+
+            computeShaderProgram->SetUniform1fv(0, deltaTime);
+            computeShaderProgram->SetUniform1i(1, particleCount);
+            computeShaderProgram->SetUniform3fv(2, minRelativeEmitPosition);
+            computeShaderProgram->SetUniform3fv(3, maxRelativeEmitPosition);
+            computeShaderProgram->SetUniform3fv(4, minParticleVelocity);
+            computeShaderProgram->SetUniform3fv(5, maxParticleVelocity);
+            computeShaderProgram->SetUniform1fv(6, minParticleSize);
+            computeShaderProgram->SetUniform1fv(7, maxParticleSize);
+            computeShaderProgram->SetUniform1fv(8, minParticleLifetime);
+            computeShaderProgram->SetUniform1fv(9, maxParticleLifetime);
+            computeShaderProgram->SetUniform2fv(10, glm::vec2((float)rand() / RAND_MAX, (float)rand() / RAND_MAX));
+
+            computeShaderProgram->DispatchCompute(particleCount / WORK_GROUP_SIZE + 1, 1, 1);
+
+            glMemoryBarrier(GL_SHADER_STORAGE_BARRIER_BIT | GL_VERTEX_ATTRIB_ARRAY_BARRIER_BIT);
+        }
+        glBindVertexArray(0);
     }
 }

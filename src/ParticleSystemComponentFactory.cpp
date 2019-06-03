@@ -20,6 +20,12 @@ void ParticleSystemComponentFactory::Build(GameObject* gameObject, tinyxml2::XML
         particleSystem->SetEnabled(std::string(element->Attribute("enabled")) == "true");
     }
 
+    if (element->Attribute("prewarmTime"))
+    {
+        std::string value = std::string(element->Attribute("prewarmTime"));
+        particleSystem->SetPrewarmTime(std::strtof(value.c_str(), 0));
+    }
+
     if (element->Attribute("particleCount"))
     {
         std::string particleCountValue = std::string(element->Attribute("particleCount"));

@@ -31,12 +31,13 @@ public:
     ParticleSystemComponent(GameObject* owner);
     virtual ~ParticleSystemComponent();
 
+    virtual void OnStart();
     virtual void LateUpdate();
     virtual void OnDestroy();
 
     bool IsEnabled() const { return enabled; }
     void SetEnabled(bool enable) { this->enabled = enable; }
-
+    void SetPrewarmTime(float prewarmTime) { this->prewarmTime = prewarmTime; }
     void SetMinRelativeEmitPosition(glm::vec3 const& minRelativeEmitPosition) { this->minRelativeEmitPosition = minRelativeEmitPosition; }
     void SetMaxRelativeEmitPosition(glm::vec3 const& maxRelativeEmitPosition) { this->maxRelativeEmitPosition = maxRelativeEmitPosition; }
     void SetMinParticleVelocity(glm::vec3 const& minParticleVelocity) { this->minParticleVelocity = minParticleVelocity; }
@@ -52,8 +53,11 @@ public:
 private:
     void CreateMeshRenderer();
     void DestroyMeshRenderer();
+
     void CreateVAOAndPBO();
     void DeleteVAOAndPBO();
+
+    void Simulate(float deltaTime);
 
     ShaderProgram* computeShaderProgram;
     MeshRendererComponent* meshRenderer;
@@ -62,6 +66,7 @@ private:
     GLuint PBO;
 
     bool enabled;
+    float prewarmTime;
     glm::vec3 minRelativeEmitPosition;
     glm::vec3 maxRelativeEmitPosition;
     glm::vec3 minParticleVelocity;
