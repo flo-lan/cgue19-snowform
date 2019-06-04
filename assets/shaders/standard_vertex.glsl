@@ -11,8 +11,8 @@ out vec3 fragNormal;
 out vec2 fragUV;
 out vec3 fragColor;
 
-uniform mat4 model;
-uniform mat4 viewProjection;
+layout(location = 0) uniform mat4 model;
+layout(location = 1) uniform mat4 viewProjection;
 
 void main()
 {

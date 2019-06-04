@@ -22,8 +22,8 @@ void TextMaterial::SetUniforms(CameraComponent* camera, MeshRendererComponent* r
 {
     if (shaderProgram)
     {
-        shaderProgram->SetUniformMatrix4fv(shaderProgram->GetUniformLocation("projection"), camera->GetOrthographicProjectionMatrix());
-        shaderProgram->SetUniformMatrix4fv(shaderProgram->GetUniformLocation("model"), renderer->GetTransform()->GetModelMatrix());
+        shaderProgram->SetUniformMatrix4fv(0, camera->GetOrthographicProjectionMatrix());
+        shaderProgram->SetUniformMatrix4fv(1, renderer->GetTransform()->GetModelMatrix());
 
         if (defaultTexture)
         {
@@ -32,15 +32,15 @@ void TextMaterial::SetUniforms(CameraComponent* camera, MeshRendererComponent* r
 
         if (atlasTexture)
         {
-            shaderProgram->SetUniform1i(shaderProgram->GetUniformLocation("atlasTexture"), 1 /* Unit */);
+            shaderProgram->SetUniform1i(2, 1 /* Unit */);
 
             atlasTexture->ActivateAndBind(1 /* Unit */);
         }
         else
         {
-            shaderProgram->SetUniform1i(shaderProgram->GetUniformLocation("atlasTexture"), 0 /* Unit */);
+            shaderProgram->SetUniform1i(2, 0 /* Unit */);
         }
 
-        shaderProgram->SetUniform4fv(shaderProgram->GetUniformLocation("textColor"), textColor);
+        shaderProgram->SetUniform4fv(3, textColor);
     }
 }

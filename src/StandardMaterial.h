@@ -1,7 +1,9 @@
 #pragma once
 
 #include "Material.h"
-#include <glm\glm.hpp>
+#include "LightConstants.h"
+#include <glm/glm.hpp>
+#include <GL/glew.h>
 #include <vector>
 
 class Texture2D;
@@ -27,6 +29,38 @@ public:
     void SetShininess(float value) { shininess = value; }
 
 private:
+    GLuint locViewPosition;
+    GLuint locMaterialDiffuse;
+    GLuint locMaterialSpecular;
+    GLuint locMaterialDiffuseTexture;
+    GLuint locMaterialSpecularTexture;
+    GLuint locMaterialAmbientReflectionConstant;
+    GLuint locMaterialDiffuseReflectionConstant;
+    GLuint locMaterialSpecularReflectionConstant;
+    GLuint locMaterialShininess;
+    GLuint locAmbientLightAmbient;
+    GLuint locDirectionalLightDirection[MAX_DIRECTIONAL_LIGHT_COUNT];
+    GLuint locDirectionalLightDiffuse[MAX_DIRECTIONAL_LIGHT_COUNT];
+    GLuint locDirectionalLightSpecular[MAX_DIRECTIONAL_LIGHT_COUNT];
+    GLuint locDirectionalLightShadowMapSpace[MAX_DIRECTIONAL_LIGHT_COUNT];
+    GLuint locDirectionalLightShadowMapTexture[MAX_DIRECTIONAL_LIGHT_COUNT];
+    GLuint locDirectionalLightShadowMapIntensity[MAX_DIRECTIONAL_LIGHT_COUNT];
+    GLuint locPointLightPosition[MAX_POINT_LIGHT_COUNT];
+    GLuint locPointLightConstant[MAX_POINT_LIGHT_COUNT];
+    GLuint locPointLightLinear[MAX_POINT_LIGHT_COUNT];
+    GLuint locPointLightQuadratic[MAX_POINT_LIGHT_COUNT];
+    GLuint locPointLightDiffuse[MAX_POINT_LIGHT_COUNT];
+    GLuint locPointLightSpecular[MAX_POINT_LIGHT_COUNT];
+    GLuint locSpotLightPosition[MAX_SPOT_LIGHT_COUNT];
+    GLuint locSpotLightDirection[MAX_SPOT_LIGHT_COUNT];
+    GLuint locSpotLightInnerCutOff[MAX_SPOT_LIGHT_COUNT];
+    GLuint locSpotLightOuterCutOff[MAX_SPOT_LIGHT_COUNT];
+    GLuint locSpotLightConstant[MAX_SPOT_LIGHT_COUNT];
+    GLuint locSpotLightLinear[MAX_SPOT_LIGHT_COUNT];
+    GLuint locSpotLightQuadratic[MAX_SPOT_LIGHT_COUNT];
+    GLuint locSpotLightDiffuse[MAX_SPOT_LIGHT_COUNT];
+    GLuint locSpotLightSpecular[MAX_SPOT_LIGHT_COUNT];
+
     glm::vec3 diffuseColor;
     glm::vec3 specularColor;
 

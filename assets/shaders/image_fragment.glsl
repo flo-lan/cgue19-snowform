@@ -1,8 +1,8 @@
 // Fragment Shader
 #version 430
 
-uniform sampler2D imageTexture;
-uniform vec4 imageColor;
+layout(location = 2) uniform sampler2D imageTexture;
+layout(location = 3) uniform vec4 imageColor;
 
 in vec2 fragUV;
 

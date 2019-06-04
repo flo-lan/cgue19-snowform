@@ -22,8 +22,8 @@ void ImageMaterial::SetUniforms(CameraComponent* camera, MeshRendererComponent* 
 {
     if (shaderProgram)
     {
-        shaderProgram->SetUniformMatrix4fv(shaderProgram->GetUniformLocation("projection"), camera->GetOrthographicProjectionMatrix());
-        shaderProgram->SetUniformMatrix4fv(shaderProgram->GetUniformLocation("model"), renderer->GetTransform()->GetModelMatrix());
+        shaderProgram->SetUniformMatrix4fv(0, camera->GetOrthographicProjectionMatrix());
+        shaderProgram->SetUniformMatrix4fv(1, renderer->GetTransform()->GetModelMatrix());
 
         if (defaultTexture)
         {
@@ -32,15 +32,15 @@ void ImageMaterial::SetUniforms(CameraComponent* camera, MeshRendererComponent* 
 
         if (imageTexture)
         {
-            shaderProgram->SetUniform1i(shaderProgram->GetUniformLocation("imageTexture"), 1 /* Unit */);
+            shaderProgram->SetUniform1i(2, 1 /* Unit */);
 
             imageTexture->ActivateAndBind(1 /* Unit */);
         }
         else
         {
-            shaderProgram->SetUniform1i(shaderProgram->GetUniformLocation("imageTexture"), 0 /* Unit */);
+            shaderProgram->SetUniform1i(2, 0 /* Unit */);
         }
 
-        shaderProgram->SetUniform4fv(shaderProgram->GetUniformLocation("imageColor"), imageColor);
+        shaderProgram->SetUniform4fv(3, imageColor);
     }
 }

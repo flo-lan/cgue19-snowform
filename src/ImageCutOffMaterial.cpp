@@ -20,8 +20,8 @@ void ImageCutOffMaterial::SetUniforms(CameraComponent* camera, MeshRendererCompo
 {
     if (shaderProgram)
     {
-        shaderProgram->SetUniformMatrix4fv(shaderProgram->GetUniformLocation("projection"), camera->GetOrthographicProjectionMatrix());
-        shaderProgram->SetUniformMatrix4fv(shaderProgram->GetUniformLocation("model"), renderer->GetTransform()->GetModelMatrix());
+        shaderProgram->SetUniformMatrix4fv(0, camera->GetOrthographicProjectionMatrix());
+        shaderProgram->SetUniformMatrix4fv(1, renderer->GetTransform()->GetModelMatrix());
 
         if (defaultTexture)
         {
@@ -30,27 +30,27 @@ void ImageCutOffMaterial::SetUniforms(CameraComponent* camera, MeshRendererCompo
 
         if (cutOffTexture)
         {
-            shaderProgram->SetUniform1i(shaderProgram->GetUniformLocation("cutOffTexture"), 1 /* Unit */);
+            shaderProgram->SetUniform1i(2, 1 /* Unit */);
 
             cutOffTexture->ActivateAndBind(1 /* Unit */);
         }
         else
         {
-            shaderProgram->SetUniform1i(shaderProgram->GetUniformLocation("cutOffTexture"), 0 /* Unit */);
+            shaderProgram->SetUniform1i(2, 0 /* Unit */);
         }
 
         if (imageTexture)
         {
-            shaderProgram->SetUniform1i(shaderProgram->GetUniformLocation("imageTexture"), 2 /* Unit */);
+            shaderProgram->SetUniform1i(3, 2 /* Unit */);
 
             imageTexture->ActivateAndBind(2 /* Unit */);
         }
         else
         {
-            shaderProgram->SetUniform1i(shaderProgram->GetUniformLocation("imageTexture"), 0 /* Unit */);
+            shaderProgram->SetUniform1i(3, 0 /* Unit */);
         }
 
-        shaderProgram->SetUniform4fv(shaderProgram->GetUniformLocation("imageColor"), imageColor);
-        shaderProgram->SetUniform1fv(shaderProgram->GetUniformLocation("cutOff"), cutOff);
+        shaderProgram->SetUniform4fv(4, imageColor);
+        shaderProgram->SetUniform1fv(5, cutOff);
     }
 }

@@ -3,8 +3,8 @@
 
 const float smoothing = 1.0 / 16.0;
 
-uniform sampler2D atlasTexture;
-uniform vec4 textColor;
+layout(location = 2) uniform sampler2D atlasTexture;
+layout(location = 3) uniform vec4 textColor;
 
 in vec2 fragUV;
 
