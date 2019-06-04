@@ -115,7 +115,10 @@ void DirectionalLightComponent::RenderShadowMap(CameraComponent* camera)
 
             for (auto itr = affectedMeshRenderers.begin(); itr != affectedMeshRenderers.end(); ++itr)
             {
-                (*itr)->Render(camera, _ShadowMapMaterial);
+                if ((*itr)->IsCastShadowsEnabled())
+                {
+                    (*itr)->Render(camera, _ShadowMapMaterial);
+                }
             }
         }
         glBindFramebuffer(GL_FRAMEBUFFER, 0);

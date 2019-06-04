@@ -25,6 +25,7 @@ public:
     void Render(CameraComponent* camera, Material* material);
 
     void SetEnabled(bool value) { enabled = value; }
+    void SetCastShadows(bool castShadows) { this->castShadows = castShadows; }
     void SetMaterial(Material* value) { material = value; }
     void SetMesh(Mesh* value);
     void SetInstanceCount(GLsizei instanceCount) { this->instanceCount = instanceCount; }
@@ -39,6 +40,7 @@ public:
     void RemoveLight(PointLightComponent* light);
     void RemoveLight(SpotLightComponent* light);
 
+    bool IsCastShadowsEnabled() const { return castShadows; }
     TransformComponent* GetTransform() const { return transform; }
     Material* GetMaterial() const { return material; }
     std::vector<DirectionalLightComponent*> const& GetDirectionalLights() { return directionalLights; }
@@ -47,6 +49,7 @@ public:
 
 private:
     bool enabled;
+    bool castShadows;
     TransformComponent* transform;
     Material* material;
     Mesh* mesh;

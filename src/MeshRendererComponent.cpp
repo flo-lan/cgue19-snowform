@@ -14,6 +14,7 @@
 MeshRendererComponent::MeshRendererComponent(GameObject* owner) :
     Component::Component(owner),
     enabled(true),
+    castShadows(true),
     transform(owner->GetComponent<TransformComponent>()),
     material(nullptr),
     mesh(nullptr),
