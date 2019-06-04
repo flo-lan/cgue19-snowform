@@ -526,6 +526,9 @@
     <ClInclude Include="src\ParticleBillboardMaterial.h">
       <Filter>Engine\Render\Material</Filter>
     </ClInclude>
+    <ClInclude Include="src\LightConstants.h">
+      <Filter>Engine\Render\Illumination</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">

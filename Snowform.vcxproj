@@ -115,6 +115,7 @@
     <ClInclude Include="src\GameScene.h" />
     <ClInclude Include="src\ImageCutOffMaterial.h" />
     <ClInclude Include="src\LightComponent.h" />
+    <ClInclude Include="src\LightConstants.h" />
     <ClInclude Include="src\ParticleBillboardMaterial.h" />
     <ClInclude Include="src\ParticleSystemComponent.h" />
     <ClInclude Include="src\ParticleSystemComponentFactory.h" />

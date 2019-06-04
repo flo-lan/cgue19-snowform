@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Component.h"
+#include "LightConstants.h"
 #include <vector>
 
 class TransformComponent;

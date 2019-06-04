@@ -3,8 +3,6 @@
 #include "LightComponent.h"
 #include <glm\glm.hpp>
 
-#define MAX_POINT_LIGHT_COUNT 4
-
 class PointLightComponent : public LightComponent
 {
 public:

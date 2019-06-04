@@ -7,8 +7,6 @@
 class CameraComponent;
 class ShadowMapMaterial;
 
-#define MAX_DIRECTIONAL_LIGHT_COUNT 4
-
 class DirectionalLightComponent : public LightComponent
 {
 public:
