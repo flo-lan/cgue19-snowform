@@ -32,12 +32,26 @@ public:
 
     void SetMouseButtonPressedState(int button, bool pressed)
     {
-        mouseButtonPressed[button] = pressed;
+        if (pressed)
+        {
+            mouseButtonPressed[button] = true;
+        }
+        else
+        {
+            mouseButtonPressed.erase(button);
+        }
     }
 
     void SetKeyPressedState(int key, bool pressed)
     {
-        keyPressed[key] = pressed;
+        if (pressed)
+        {
+            keyPressed[key] = true;
+        }
+        else
+        {
+            keyPressed.erase(key);
+        }
     }
 
     float GetMouseScrollValueX() const { return mouseScrollValues.x; }
@@ -49,7 +63,9 @@ public:
 
     bool IsLeftMouseButtonPressed() const;
     bool IsRightMouseButtonPressed() const;
+    bool IsAnyMouseButtonPressed() const { return mouseButtonPressed.size() > 0; }
     bool IsKeyPressed(int key) const;
+    bool IsAnyKeyPressed() const { return keyPressed.size() > 0; }
 
 private:
     InputManager();
