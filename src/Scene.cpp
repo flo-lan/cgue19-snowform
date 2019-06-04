@@ -12,7 +12,8 @@
 #include <queue>
 
 Scene::Scene(std::string const& _name) :
-    name(_name)
+    name(_name),
+    file("")
 {
 }
 
@@ -130,9 +131,25 @@ bool Scene::LoadFromFile(std::string const& file)
         }
     }
 
+    this->file = file;
+
     OnLoad();
 
     return true;
+}
+
+void Scene::Reload()
+{
+    Unload();
+
+    if (file.empty())
+    {
+        Load();
+    }
+    else
+    {
+        LoadFromFile(file);
+    }
 }
 
 void Scene::Update()

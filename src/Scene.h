@@ -29,6 +29,7 @@ public:
     void Unload();
 
     std::string const& GetName() const { return name; }
+    std::string const& GetFile() const { return file; }
 
     CameraComponent* GetCamera() const { return camera; }
     void SetCamera(CameraComponent* camera) { this->camera = camera; }
@@ -67,10 +68,11 @@ private:
     // Outside usage forbidden - if you want to delete a game object call GameObject::Destroy()
     void DeleteGameObject(GameObject* gameObject);
 
+protected:
     void Load() { OnLoad(); }
     bool LoadFromFile(std::string const& file);
+    void Reload();
 
-protected:
     virtual void OnLoad() {}
     virtual void OnUpdate() {}
     virtual void OnPreRender() {}
@@ -82,6 +84,7 @@ private:
     typedef std::vector<DirectionalLightComponent*> DirectionalLightList;
 
     std::string name;
+    std::string file;
     CameraComponent* camera;
     TransformList sceneGraphRoots;
     GameObjectByIdMap gameObjectsById;
