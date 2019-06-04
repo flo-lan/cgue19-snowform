@@ -9,5 +9,6 @@ class CoinComponent : public CollectableComponent
 public:
     CoinComponent(GameObject* owner);
 
+    virtual void OnStart();
     virtual void OnTriggerEnter(ColliderComponent* other);
 };

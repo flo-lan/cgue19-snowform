@@ -1,12 +1,15 @@
 #include "GameScene.h"
 #include "UserInterfaceScene.h"
 #include "SceneManager.h"
+#include "InputManager.h"
 #include "GameObject.h"
 #include "TextComponent.h"
 #include "Time.h"
 
 GameScene::GameScene() :
     Scene::Scene("Game Scene"),
+    gameState(GAME_STATE_INGAME_PLAYING),
+    won(false),
     coinCount(0),
     collectedCoinCount(0),
     remainingTimeInSecondsOption(0.f),
@@ -22,10 +25,41 @@ GameScene::~GameScene()
 
 void GameScene::OnLoad()
 {
+    won = false;
     remainingTimeInSeconds = remainingTimeInSecondsOption;
 }
 
 void GameScene::OnUpdate()
+{
+    switch (gameState)
+    {
+        case GAME_STATE_INGAME_PLAYING:
+        {
+            UpdateRemainingTime();
+            break;
+        }
+        case GAME_STATE_OVERLAY_TRANSITION:
+        {
+            UpdateOverlayTransition();
+            break;
+        }
+        case GAME_STATE_OVERLAY_PAUSE:
+        {
+            if (sInputManager.IsAnyKeyPressed())
+            {
+                EnableOverlay(false);
+
+                if (auto userInterfaceScene = sSceneManager.GetScene<UserInterfaceScene>())
+                {
+                    userInterfaceScene->DisableOverlayTexts();
+                }
+            }
+            break;
+        }
+    }
+}
+
+void GameScene::UpdateRemainingTime()
 {
     if (remainingTimeInSeconds > 0.f)
     {
@@ -54,21 +88,61 @@ void GameScene::OnUpdate()
             userInterfaceScene->SetRemainingTimeText(timeLeft);
         }
     }
+}
 
+void GameScene::UpdateOverlayTransition()
+{
     if (transitionTimeInSeconds > 0.f)
     {
         transitionTimeInSeconds -= sTime.GetUnscaledDeltaTime();
 
-        if (transitionTimeInSeconds < 0.f)
+        if (transitionTimeInSeconds <= 0.f)
         {
             transitionTimeInSeconds = 0.f;
 
-            // Restart or load next level
+            SetCoinCount(0);
+            SetCollectedCoinCount(0);
+
+            if (won) // Load next level
+            {
+                Unload();
+
+                // ToDo: Implement loading of next level
+            }
+            else // Restart level
+            {
+                Reload();
+            }
+
+            gameState = GAME_STATE_OVERLAY_PAUSE;
         }
 
         if (auto userInterfaceScene = sSceneManager.GetScene<UserInterfaceScene>())
         {
             userInterfaceScene->SetTransitionOverlayCutOff(transitionTimeInSeconds / transitionTimeInSecondsOption);
+        }
+    }
+    else if (transitionTimeInSeconds < 0.f)
+    {
+        transitionTimeInSeconds += sTime.GetUnscaledDeltaTime();
+
+        if (transitionTimeInSeconds >= 0.f)
+        {
+            transitionTimeInSeconds = 0.f;
+
+            if (auto userInterfaceScene = sSceneManager.GetScene<UserInterfaceScene>())
+            {
+                userInterfaceScene->EnableTransitionOverlay(false);
+            }
+
+            gameState = GAME_STATE_INGAME_PLAYING;
+
+            sTime.Resume();
+        }
+
+        if (auto userInterfaceScene = sSceneManager.GetScene<UserInterfaceScene>())
+        {
+            userInterfaceScene->SetTransitionOverlayCutOff((transitionTimeInSecondsOption + transitionTimeInSeconds) / transitionTimeInSecondsOption);
         }
     }
 }
@@ -101,19 +175,37 @@ void GameScene::SetOption(std::string const& key, std::string const& value)
     fprintf(stdout, "Set game scene option '%s' with value '%s'!\n", key.c_str(), value.c_str());
 }
 
+void GameScene::SetCoinCount(int coinCount)
+{
+    this->coinCount = coinCount;
+
+    if (UserInterfaceScene* userInterfaceScene = sSceneManager.GetScene<UserInterfaceScene>())
+    {
+        std::string coinCountString = std::to_string(collectedCoinCount) + "/" + std::to_string(coinCount);
+        userInterfaceScene->SetCoinCountText(coinCountString);
+    }
+}
+
+void GameScene::SetCollectedCoinCount(int collectedCoinCount)
+{
+    this->collectedCoinCount = collectedCoinCount;
+
+    if (UserInterfaceScene* userInterfaceScene = sSceneManager.GetScene<UserInterfaceScene>())
+    {
+        std::string coinCountString = std::to_string(collectedCoinCount) + "/" + std::to_string(coinCount);
+        userInterfaceScene->SetCoinCountText(coinCountString);
+    }
+}
+
 void GameScene::CompleteLevel()
 {
     fprintf(stdout, "Complete Level!\n");
 
+    won = true;
+
     sTime.Pause();
 
-    if (auto userInterfaceScene = sSceneManager.GetScene<UserInterfaceScene>())
-    {
-        userInterfaceScene->EnableTransitionOverlay(true);
-        userInterfaceScene->SetTransitionOverlayCutOff(1.f);
-    }
-
-    transitionTimeInSeconds = transitionTimeInSecondsOption;
+    EnableOverlay(true);
 }
 
 void GameScene::RestartLevel()
@@ -122,11 +214,18 @@ void GameScene::RestartLevel()
 
     sTime.Pause();
 
+    EnableOverlay(true);
+}
+
+void GameScene::EnableOverlay(bool enable)
+{
+    gameState = GAME_STATE_OVERLAY_TRANSITION;
+
     if (auto userInterfaceScene = sSceneManager.GetScene<UserInterfaceScene>())
     {
         userInterfaceScene->EnableTransitionOverlay(true);
-        userInterfaceScene->SetTransitionOverlayCutOff(1.f);
+        userInterfaceScene->SetTransitionOverlayCutOff(enable ? 1.f : 0.f);
     }
 
-    transitionTimeInSeconds = transitionTimeInSecondsOption;
+    transitionTimeInSeconds = enable ? transitionTimeInSecondsOption : -transitionTimeInSecondsOption;
 }

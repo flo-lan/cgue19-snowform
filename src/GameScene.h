@@ -2,6 +2,13 @@
 
 #include "Scene.h"
 
+enum GameState
+{
+    GAME_STATE_INGAME_PLAYING,
+    GAME_STATE_OVERLAY_TRANSITION,
+    GAME_STATE_OVERLAY_PAUSE,
+};
+
 class GameScene : public Scene
 {
     friend class SceneManager;
@@ -16,8 +23,8 @@ protected:
 public:
     virtual void SetOption(std::string const& key, std::string const& value);
 
-    void SetCoinCount(int coinCount) { this->coinCount = coinCount; }
-    void SetCollectedCoinCount(int collectedCoinCount) { this->collectedCoinCount = collectedCoinCount; }
+    void SetCoinCount(int coinCount);
+    void SetCollectedCoinCount(int collectedCoinCount);
 
     int GetCoinCount() { return coinCount; }
     int GetCollectedCoinCount() { return collectedCoinCount; }
@@ -26,6 +33,13 @@ public:
     void RestartLevel();
 
 private:
+    void UpdateRemainingTime();
+    void UpdateOverlayTransition();
+    void EnableOverlay(bool enable);
+
+    GameState gameState;
+    bool won;
+
     int coinCount;
     int collectedCoinCount;
 
