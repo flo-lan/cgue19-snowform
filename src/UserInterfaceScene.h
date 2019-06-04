@@ -24,4 +24,5 @@ public:
     void EnableTimeIsUpText(bool enable);
     void EnableTransitionOverlay(bool enable);
     void SetTransitionOverlayCutOff(float cutOff);
+    void DisableOverlayTexts();
 };

@@ -108,3 +108,11 @@ void UserInterfaceScene::SetTransitionOverlayCutOff(float cutOff)
         }
     }
 }
+
+void UserInterfaceScene::DisableOverlayTexts()
+{
+    EnableLevelFinishedText(false);
+    EnableCoinsLeftText(false);
+    EnableFallenToDeathText(false);
+    EnableTimeIsUpText(false);
+}
