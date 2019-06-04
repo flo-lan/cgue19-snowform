@@ -105,6 +105,8 @@ private:
 
     PhysicsEngine();
 
+    void Simulate(float deltaTime);
+
     physx::PxFoundation* pxFoundation;
     physx::PxPvd* pxPvd;
     physx::PxPhysics* pxPhysics;

@@ -161,7 +161,23 @@ void PhysicsEngine::Update()
         return;
     }
 
-    pxScene->simulate(sTime.GetDeltaTime());
+    #define MAX_DELTA_TIME 0.2f
+    float remainingDeltaTime = sTime.GetDeltaTime();
+
+    for (; remainingDeltaTime >= MAX_DELTA_TIME; remainingDeltaTime -= MAX_DELTA_TIME)
+    {
+        Simulate(MAX_DELTA_TIME);
+    }
+
+    if (remainingDeltaTime > 0.f)
+    {
+        Simulate(remainingDeltaTime);
+    }
+}
+
+void PhysicsEngine::Simulate(float deltaTime)
+{
+    pxScene->simulate(deltaTime);
     pxScene->fetchResults(true /* block */);
 
     physx::PxU32 pxActiveActorCount = 0;
