@@ -39,6 +39,7 @@ private:
 
     GameState gameState;
     bool won;
+    std::string nextLevelScene;
 
     int coinCount;
     int collectedCoinCount;

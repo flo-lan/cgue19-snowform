@@ -10,6 +10,7 @@ GameScene::GameScene() :
     Scene::Scene("Game Scene"),
     gameState(GAME_STATE_INGAME_PLAYING),
     won(false),
+    nextLevelScene(""),
     coinCount(0),
     collectedCoinCount(0),
     remainingTimeInSecondsOption(0.f),
@@ -107,7 +108,14 @@ void GameScene::UpdateOverlayTransition()
             {
                 Unload();
 
-                // ToDo: Implement loading of next level
+                if (!nextLevelScene.empty())
+                {
+                    LoadFromFile(nextLevelScene);
+                }
+                else // Load credits scene
+                {
+                    // ToDo
+                }
             }
             else // Restart level
             {
@@ -149,7 +157,11 @@ void GameScene::UpdateOverlayTransition()
 
 void GameScene::SetOption(std::string const& key, std::string const& value)
 {
-    if (key == "RemainingTime")
+    if (key == "NextLevelScene")
+    {
+        nextLevelScene = value;
+    }
+    else if (key == "RemainingTime")
     {
         if (value.size() != 5)
         {
