@@ -26,6 +26,9 @@ public:
     void Render();
     void PostRender();
 
+    void Load() { OnLoad(); }
+    bool LoadFromFile(std::string file);
+    void Reload();
     void Unload();
 
     std::string const& GetName() const { return name; }
@@ -69,10 +72,6 @@ private:
     void DeleteGameObject(GameObject* gameObject);
 
 protected:
-    void Load() { OnLoad(); }
-    bool LoadFromFile(std::string const& file);
-    void Reload();
-
     virtual void OnLoad() {}
     virtual void OnUpdate() {}
     virtual void OnPreRender() {}

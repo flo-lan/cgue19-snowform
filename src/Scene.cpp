@@ -51,7 +51,7 @@ struct GameObjectElement
     {}
 };
 
-bool Scene::LoadFromFile(std::string const& file)
+bool Scene::LoadFromFile(std::string file)
 {
     tinyxml2::XMLDocument doc;
 
