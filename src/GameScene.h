@@ -36,6 +36,7 @@ private:
     void UpdateRemainingTime();
     void UpdateOverlayTransition();
     void EnableOverlay(bool enable);
+    void UpdateDebugCommands();
 
     GameState gameState;
     bool won;

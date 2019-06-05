@@ -5,6 +5,7 @@
 #include "GameObject.h"
 #include "TextComponent.h"
 #include "Time.h"
+#include <GLFW/glfw3.h>
 
 GameScene::GameScene() :
     Scene::Scene("Game Scene"),
@@ -37,6 +38,7 @@ void GameScene::OnUpdate()
         case GAME_STATE_INGAME_PLAYING:
         {
             UpdateRemainingTime();
+            UpdateDebugCommands();
             break;
         }
         case GAME_STATE_OVERLAY_TRANSITION:
@@ -240,4 +242,16 @@ void GameScene::EnableOverlay(bool enable)
     }
 
     transitionTimeInSeconds = enable ? transitionTimeInSecondsOption : -transitionTimeInSecondsOption;
+}
+
+void GameScene::UpdateDebugCommands()
+{
+    if (sInputManager.IsKeyPressed(GLFW_KEY_F10))
+    {
+        CompleteLevel();
+    }
+    else if (sInputManager.IsKeyPressed(GLFW_KEY_F11))
+    {
+        RestartLevel();
+    }
 }
