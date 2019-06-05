@@ -25,4 +25,5 @@ public:
     void EnableTransitionOverlay(bool enable);
     void SetTransitionOverlayCutOff(float cutOff);
     void DisableOverlayTexts();
+    void ScrollCredits(float yScroll);
 };

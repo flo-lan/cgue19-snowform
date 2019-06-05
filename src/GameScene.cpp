@@ -59,6 +59,11 @@ void GameScene::OnUpdate()
             }
             break;
         }
+        case GAME_STATE_CREDITS:
+        {
+            UpdateCredits();
+            break;
+        }
     }
 }
 
@@ -113,18 +118,23 @@ void GameScene::UpdateOverlayTransition()
                 if (!nextLevelScene.empty())
                 {
                     LoadFromFile(nextLevelScene);
+
+                    gameState = GAME_STATE_OVERLAY_PAUSE;
                 }
-                else // Load credits scene
+                else if (auto userInterfaceScene = sSceneManager.GetScene<UserInterfaceScene>())
                 {
-                    // ToDo
+                    userInterfaceScene->Unload();
+                    userInterfaceScene->LoadFromFile("assets/scenes/credits_scene.xml");
+
+                    gameState = GAME_STATE_CREDITS;
                 }
             }
             else // Restart level
             {
                 Reload();
-            }
 
-            gameState = GAME_STATE_OVERLAY_PAUSE;
+                gameState = GAME_STATE_OVERLAY_PAUSE;
+            }
         }
 
         if (auto userInterfaceScene = sSceneManager.GetScene<UserInterfaceScene>())
@@ -213,17 +223,36 @@ void GameScene::SetCollectedCoinCount(int collectedCoinCount)
 
 void GameScene::CompleteLevel()
 {
+    if (gameState != GAME_STATE_INGAME_PLAYING)
+    {
+        return;
+    }
+
     fprintf(stdout, "Complete Level!\n");
 
     won = true;
 
     sTime.Pause();
 
+    if (nextLevelScene.empty())
+    {
+        // Disable overlay texts, because next scene is credits scene
+        if (auto userInterfaceScene = sSceneManager.GetScene<UserInterfaceScene>())
+        {
+            userInterfaceScene->DisableOverlayTexts();
+        }
+    }
+
     EnableOverlay(true);
 }
 
 void GameScene::RestartLevel()
 {
+    if (gameState != GAME_STATE_INGAME_PLAYING)
+    {
+        return;
+    }
+
     fprintf(stdout, "Restart level!\n");
 
     sTime.Pause();
@@ -253,5 +282,13 @@ void GameScene::UpdateDebugCommands()
     else if (sInputManager.IsKeyPressed(GLFW_KEY_F11))
     {
         RestartLevel();
+    }
+}
+
+void GameScene::UpdateCredits()
+{
+    if (auto userInterfaceScene = sSceneManager.GetScene<UserInterfaceScene>())
+    {
+        userInterfaceScene->ScrollCredits(40.f * sTime.GetUnscaledDeltaTime());
     }
 }

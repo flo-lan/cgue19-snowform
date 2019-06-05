@@ -115,6 +115,11 @@ bool GlobalAssetLoader::LoadAssets()
         tm->SetAtlasTexture(sAssetManager.GetTexture2D("arial_atlas"));
     }
 
+    if (TextMaterial* tm = sAssetManager.CreateMaterial<TextMaterial>("Credits", textShaderProgram))
+    {
+        tm->SetAtlasTexture(sAssetManager.GetTexture2D("arial_atlas"));
+    }
+
     if (ImageCutOffMaterial* im = sAssetManager.CreateMaterial<ImageCutOffMaterial>("TransitionOverlay", imageCutOffShaderProgram))
     {
         im->SetCutOffTexture(sAssetManager.GetTexture2D("transition_overlay_cutoff"));

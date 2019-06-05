@@ -7,6 +7,7 @@ enum GameState
     GAME_STATE_INGAME_PLAYING,
     GAME_STATE_OVERLAY_TRANSITION,
     GAME_STATE_OVERLAY_PAUSE,
+    GAME_STATE_CREDITS,
 };
 
 class GameScene : public Scene
@@ -37,6 +38,7 @@ private:
     void UpdateOverlayTransition();
     void EnableOverlay(bool enable);
     void UpdateDebugCommands();
+    void UpdateCredits();
 
     GameState gameState;
     bool won;

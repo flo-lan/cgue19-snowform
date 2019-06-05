@@ -1,4 +1,5 @@
 #include "UserInterfaceScene.h"
+#include "TransformComponent.h"
 #include "MeshRendererComponent.h"
 #include "ImageCutOffMaterial.h"
 #include "TextComponent.h"
@@ -115,4 +116,12 @@ void UserInterfaceScene::DisableOverlayTexts()
     EnableCoinsLeftText(false);
     EnableFallenToDeathText(false);
     EnableTimeIsUpText(false);
+}
+
+void UserInterfaceScene::ScrollCredits(float yScroll)
+{
+    if (TransformComponent* transform = GetComponentByGameObjectId<TransformComponent>("CreditsContainer"))
+    {
+        transform->SetLocalPositionY(transform->GetLocalPositionY() + yScroll);
+    }
 }
