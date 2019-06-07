@@ -17,7 +17,7 @@ void Settings::Load()
 	maxFps = reader.GetInteger("window", "refresh_rate", 60);
     brightness = static_cast<float>(reader.GetReal("window", "brightness", 1.f));
 	
-	cameraFov = static_cast<float>(glm::radians(reader.GetReal("camera", "fov", 60.f)));
+	cameraFovInDegrees = static_cast<float>(reader.GetReal("camera", "fov", 60.f));
 	cameraNear = static_cast<float>(reader.GetReal("camera", "near", 0.1f));
 	cameraFar = static_cast<float>(reader.GetReal("camera", "far", 100.1f));
 }
@@ -52,9 +52,9 @@ float Settings::getBrightness() const
     return brightness;
 }
 
-float Settings::getCameraFov() const
+float Settings::getCameraFovInDegrees() const
 {
-	return cameraFov;
+	return cameraFovInDegrees;
 }
 float Settings::getCameraNear() const
 {

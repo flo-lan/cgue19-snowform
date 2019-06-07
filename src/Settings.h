@@ -24,7 +24,7 @@ public:
 	int getMaxFps() const;
     float getBrightness() const;
 
-	float getCameraFov() const;
+	float getCameraFovInDegrees() const;
 	float getCameraNear() const;
 	float getCameraFar() const;
 
@@ -38,7 +38,7 @@ private:
 	int maxFps;
     float brightness;
 
-	float cameraFov;
+	float cameraFovInDegrees;
 	float cameraNear;
 	float cameraFar;
 };

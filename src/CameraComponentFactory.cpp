@@ -21,11 +21,11 @@ void CameraComponentFactory::Build(GameObject* gameObject, tinyxml2::XMLElement*
     if (element->Attribute("fov"))
     {
         std::string fovValue = std::string(element->Attribute("fov"));
-        cameraComponent->SetFov((float)atof(fovValue.c_str()));
+        cameraComponent->SetFovInDegrees((float)atof(fovValue.c_str()));
     }
     else
     {
-        cameraComponent->SetFov(sSettings.getCameraFov());
+        cameraComponent->SetFovInDegrees(sSettings.getCameraFovInDegrees());
     }
 
     if (element->Attribute("near"))

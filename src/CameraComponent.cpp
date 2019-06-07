@@ -12,7 +12,7 @@ CameraComponent::CameraComponent(GameObject* owner) :
     viewMatrix(1.f),
     viewProjectionMatrix(1.f),
     orthographicProjectionMatrix(glm::ortho(0.0f, (float)Screen::GetWidth(), 0.0f, (float)Screen::GetHeight())),
-    fov(60.f),
+    fovInRadians(glm::radians(60.f)),
     aspectRatio(Screen::GetWidth() / (float)Screen::GetHeight()),
     nearPlane(0.1f),
     farPlane(100.f)
@@ -30,7 +30,7 @@ CameraComponent::~CameraComponent()
 
 void CameraComponent::LateUpdate()
 {
-    projMatrix = glm::perspective(fov, aspectRatio, nearPlane, farPlane);
+    projMatrix = glm::perspective(fovInRadians, aspectRatio, nearPlane, farPlane);
     viewMatrix = glm::inverse(transform->GetModelMatrix());
 
     viewProjectionMatrix = projMatrix * viewMatrix;

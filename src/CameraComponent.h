@@ -14,7 +14,7 @@ public:
 
     virtual void LateUpdate();
 
-    void SetFov(float value) { fov = value; }
+    void SetFovInDegrees(float value) { fovInRadians = glm::radians(value); }
     void SetAspectRatio(float value) { aspectRatio = value; }
     void SetNearPlane(float value) { nearPlane = value; }
     void SetFarPlane(float value) { farPlane = value; }
@@ -32,7 +32,7 @@ private:
     glm::mat4 viewMatrix;
     glm::mat4 viewProjectionMatrix;
     glm::mat4 orthographicProjectionMatrix;
-    float fov;
+    float fovInRadians;
     float aspectRatio;
     float nearPlane;
     float farPlane;
