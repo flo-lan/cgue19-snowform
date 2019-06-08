@@ -57,42 +57,6 @@ void DirectionalLightComponentFactory::Build(GameObject* gameObject, tinyxml2::X
         directionalLight->SetShadowMapHeight(std::atoi(shadowMapHeightValue.c_str()));
     }
 
-    if (element->Attribute("shadowMapOrthoLeft"))
-    {
-        std::string shadowMapOrthoLeftValue = std::string(element->Attribute("shadowMapOrthoLeft"));
-        directionalLight->SetShadowMapOrthoLeft(std::strtof(shadowMapOrthoLeftValue.c_str(), 0));
-    }
-
-    if (element->Attribute("shadowMapOrthoRight"))
-    {
-        std::string shadowMapOrthoRightValue = std::string(element->Attribute("shadowMapOrthoRight"));
-        directionalLight->SetShadowMapOrthoRight(std::strtof(shadowMapOrthoRightValue.c_str(), 0));
-    }
-
-    if (element->Attribute("shadowMapOrthoBottom"))
-    {
-        std::string shadowMapOrthoBottomValue = std::string(element->Attribute("shadowMapOrthoBottom"));
-        directionalLight->SetShadowMapOrthoBottom(std::strtof(shadowMapOrthoBottomValue.c_str(), 0));
-    }
-
-    if (element->Attribute("shadowMapOrthoTop"))
-    {
-        std::string shadowMapOrthoTopValue = std::string(element->Attribute("shadowMapOrthoTop"));
-        directionalLight->SetShadowMapOrthoTop(std::strtof(shadowMapOrthoTopValue.c_str(), 0));
-    }
-
-    if (element->Attribute("shadowMapOrthoNear"))
-    {
-        std::string shadowMapOrthoNearValue = std::string(element->Attribute("shadowMapOrthoNear"));
-        directionalLight->SetShadowMapOrthoNear(std::strtof(shadowMapOrthoNearValue.c_str(), 0));
-    }
-
-    if (element->Attribute("shadowMapOrthoFar"))
-    {
-        std::string shadowMapOrthoFarValue = std::string(element->Attribute("shadowMapOrthoFar"));
-        directionalLight->SetShadowMapOrthoFar(std::strtof(shadowMapOrthoFarValue.c_str(), 0));
-    }
-
     if (element->Attribute("shadow"))
     {
         directionalLight->EnableShadow(std::string(element->Attribute("shadow")) == "true");
