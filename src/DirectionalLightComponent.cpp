@@ -13,7 +13,7 @@ DirectionalLightComponent::DirectionalLightComponent(GameObject* owner) :
     color(1.f, 1.f, 1.f),
     intensity(1.f),
     _ShadowMapFBO(0),
-    _ShadowMapDBO(0),
+    _ShadowMapDBO{0},
     _ShadowMapWidth(1024),
     _ShadowMapHeight(1024),
     _ShadowMapMaterial(sAssetManager.GetMaterial<ShadowMapMaterial>("ShadowMapDefault")),
@@ -28,7 +28,7 @@ DirectionalLightComponent::~DirectionalLightComponent()
 {
     if (_ShadowInitialized)
     {
-        glDeleteTextures(1, &_ShadowMapDBO);
+        glDeleteTextures(NUM_DIRECTIONAL_SHADOW_CASCADES, _ShadowMapDBO);
         glDeleteFramebuffers(1, &_ShadowMapFBO);
     }
 
@@ -44,34 +44,37 @@ void DirectionalLightComponent::InitializeShadowMap()
 {
     if (_ShadowInitialized)
     {
-        glDeleteTextures(1, &_ShadowMapDBO);
+        glDeleteTextures(NUM_DIRECTIONAL_SHADOW_CASCADES, _ShadowMapDBO);
         glDeleteFramebuffers(1, &_ShadowMapFBO);
     }
 
     // Create framebuffer object for rendering the depth texture
     glGenFramebuffers(1, &_ShadowMapFBO);
 
-    // Create 2D texture that we will use as the framebuffers depth texture
-    glGenTextures(1, &_ShadowMapDBO);
+    // Create 2D textures that we will be used as the framebuffers depth textures
+    glGenTextures(NUM_DIRECTIONAL_SHADOW_CASCADES, _ShadowMapDBO);
 
-    glBindTexture(GL_TEXTURE_2D, _ShadowMapDBO);
+    for (int i = 0; i < NUM_DIRECTIONAL_SHADOW_CASCADES; ++i)
     {
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT,
-            _ShadowMapWidth, _ShadowMapHeight,
-            0, GL_DEPTH_COMPONENT, GL_FLOAT, nullptr);
+        glBindTexture(GL_TEXTURE_2D, _ShadowMapDBO[i]);
+        {
+            glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT,
+                _ShadowMapWidth, _ShadowMapHeight,
+                0, GL_DEPTH_COMPONENT, GL_FLOAT, nullptr);
 
-        static float BorderColor[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+            static float BorderColor[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
-        glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, BorderColor);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+            glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, BorderColor);
+        }
     }
 
     glBindFramebuffer(GL_FRAMEBUFFER, _ShadowMapFBO);
     {
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, _ShadowMapDBO, 0);
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, _ShadowMapDBO[0], 0);
         glDrawBuffer(GL_NONE); // Tell OpenGL we are not going to render any color data
         glReadBuffer(GL_NONE); // Tell OpenGL we are not going to render any color data
     }
@@ -79,11 +82,16 @@ void DirectionalLightComponent::InitializeShadowMap()
 
     _ShadowInitialized = true;
 
-    fprintf(stdout, "Initialized directional shadow map for directional light component of game object '%s'!\n", GetOwner()->GetName().c_str());
+    fprintf(stdout, "Initialized directional shadow maps for directional light component of game object '%s'!\n", GetOwner()->GetName().c_str());
 }
 
 void DirectionalLightComponent::RenderShadowMap(CameraComponent* camera)
 {
+    if (!_ShadowMapMaterial)
+    {
+        return;
+    }
+
     _ShadowMapLightSpace = glm::ortho
     (
         _ShadowMapOrthoLeft, _ShadowMapOrthoRight,

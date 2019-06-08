@@ -39,8 +39,8 @@ public:
 private:
     glm::vec3 color;
     float intensity;
-    GLuint _ShadowMapFBO; // Frame Buffer Object
-    GLuint _ShadowMapDBO; // Depth Buffer Object
+    GLuint _ShadowMapFBO;
+    GLuint _ShadowMapDBO[NUM_DIRECTIONAL_SHADOW_CASCADES];
     GLsizei _ShadowMapWidth;
     GLsizei _ShadowMapHeight;
     ShadowMapMaterial* _ShadowMapMaterial;
