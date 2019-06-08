@@ -187,7 +187,7 @@ void Scene::PreRender()
 
             if (light->IsShadowEnabled())
             {
-                light->RenderShadowMap(camera);
+                light->RenderShadowMaps(camera);
             }
         }
 

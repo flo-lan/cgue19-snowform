@@ -40,7 +40,7 @@ DirectionalLightComponent::~DirectionalLightComponent()
     GetOwner()->GetScene()->RemoveDirectionalLightComponent(this);
 }
 
-void DirectionalLightComponent::InitializeShadowMap()
+void DirectionalLightComponent::InitializeShadowMaps()
 {
     if (_ShadowInitialized)
     {
@@ -85,7 +85,7 @@ void DirectionalLightComponent::InitializeShadowMap()
     fprintf(stdout, "Initialized directional shadow maps for directional light component of game object '%s'!\n", GetOwner()->GetName().c_str());
 }
 
-void DirectionalLightComponent::RenderShadowMap(CameraComponent* camera)
+void DirectionalLightComponent::RenderShadowMaps(CameraComponent* camera)
 {
     if (!_ShadowMapMaterial)
     {
@@ -149,7 +149,7 @@ void DirectionalLightComponent::EnableShadow(bool enable)
 
     if (enable && !_ShadowInitialized)
     {
-        InitializeShadowMap();
+        InitializeShadowMaps();
     }
 
     _ShadowEnabled = enable;

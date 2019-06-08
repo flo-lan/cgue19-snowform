@@ -13,8 +13,8 @@ public:
     DirectionalLightComponent(GameObject* owner);
     virtual ~DirectionalLightComponent();
 
-    void InitializeShadowMap();
-    void RenderShadowMap(CameraComponent* camera);
+    void InitializeShadowMaps();
+    void RenderShadowMaps(CameraComponent* camera);
     void ActivateAndBindShadowMap(int unit);
 
     glm::vec3 GetDirection() const;
