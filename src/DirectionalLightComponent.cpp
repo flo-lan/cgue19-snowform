@@ -17,7 +17,7 @@ DirectionalLightComponent::DirectionalLightComponent(GameObject* owner) :
     _ShadowMapWidth(1024),
     _ShadowMapHeight(1024),
     _ShadowMapMaterial(sAssetManager.GetMaterial<ShadowMapMaterial>("ShadowMapDefault")),
-    _ShadowMapLightSpace(1.f),
+    _ShadowMapProjections{glm::mat4(1.f)},
     _ShadowInitialized(false),
     _ShadowEnabled(false)
 {
@@ -92,7 +92,7 @@ void DirectionalLightComponent::RenderShadowMaps(CameraComponent* camera)
         return;
     }
 
-    _ShadowMapLightSpace = glm::ortho
+    _ShadowMapProjections = glm::ortho
     (
         _ShadowMapOrthoLeft, _ShadowMapOrthoRight,
         _ShadowMapOrthoBottom, _ShadowMapOrthoTop,
@@ -113,7 +113,7 @@ void DirectionalLightComponent::RenderShadowMaps(CameraComponent* camera)
         {
             glClear(GL_DEPTH_BUFFER_BIT);
 
-            _ShadowMapMaterial->SetLightSpaceMatrix(_ShadowMapLightSpace);
+            _ShadowMapMaterial->SetLightSpaceMatrix(_ShadowMapProjections);
 
             for (auto itr = affectedMeshRenderers.begin(); itr != affectedMeshRenderers.end(); ++itr)
             {
@@ -127,12 +127,12 @@ void DirectionalLightComponent::RenderShadowMaps(CameraComponent* camera)
     }
 }
 
-void DirectionalLightComponent::ActivateAndBindShadowMap(int unit)
+void DirectionalLightComponent::ActivateAndBindShadowMap(int unit, int cascadeIndex)
 {
     // Activate texture unit
     glActiveTexture(GL_TEXTURE0 + unit);
     // Bind shadow map to activated texture unit
-    glBindTexture(GL_TEXTURE_2D, _ShadowMapDBO);
+    glBindTexture(GL_TEXTURE_2D, _ShadowMapDBO[cascadeIndex]);
 }
 
 glm::vec3 DirectionalLightComponent::GetDirection() const

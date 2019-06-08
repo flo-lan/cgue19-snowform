@@ -1,7 +1,7 @@
 #pragma once
 
 #include "LightComponent.h"
-#include <glm\glm.hpp>
+#include <glm/glm.hpp>
 #include <GL/glew.h>
 
 class CameraComponent;
@@ -15,7 +15,7 @@ public:
 
     void InitializeShadowMaps();
     void RenderShadowMaps(CameraComponent* camera);
-    void ActivateAndBindShadowMap(int unit);
+    void ActivateAndBindShadowMap(int unit, int cascadeIndex);
 
     glm::vec3 GetDirection() const;
 
@@ -31,7 +31,7 @@ public:
     int GetShadowMapHeight() const { return (int)_ShadowMapHeight; }
     void SetShadowMapHeight(int shadowMapHeight) { _ShadowMapHeight = (GLsizei)shadowMapHeight; }
 
-    glm::mat4 const& GetShadowMapLightSpace() const { return _ShadowMapLightSpace; }
+    glm::mat4 const& GetShadowMapProjection(int cascadeIndex) const { return _ShadowMapProjections[cascadeIndex]; }
 
     bool IsShadowEnabled() const { return _ShadowEnabled; }
     void EnableShadow(bool enable);
@@ -44,7 +44,7 @@ private:
     GLsizei _ShadowMapWidth;
     GLsizei _ShadowMapHeight;
     ShadowMapMaterial* _ShadowMapMaterial;
-    glm::mat4 _ShadowMapLightSpace;
+    glm::mat4 _ShadowMapProjections[NUM_DIRECTIONAL_SHADOW_CASCADES];
     bool _ShadowInitialized;
     bool _ShadowEnabled;
 };
