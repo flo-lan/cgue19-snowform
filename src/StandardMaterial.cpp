@@ -125,7 +125,7 @@ void StandardMaterial::SetUniforms(CameraComponent* camera, MeshRendererComponen
         {
             DirectionalLightComponent* light = *itr;
 
-            shaderProgram->SetUniformMatrix4fv(locDirectionalLightShadowMapSpace[i], light->GetShadowMapLightSpace());
+            shaderProgram->SetUniformMatrix4fv(locDirectionalLightShadowMapSpace[i], light->GetShadowMapProjection());
 
             if (light->IsShadowEnabled())
             {

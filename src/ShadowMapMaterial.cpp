@@ -6,7 +6,7 @@
 
 ShadowMapMaterial::ShadowMapMaterial(std::string const& _name, ShaderProgram* _shaderProgram) :
     Material(_name, _shaderProgram),
-    lightSpaceMatrix(1.f)
+    shadowMapProjection(1.f)
 {
 }
 
@@ -19,6 +19,6 @@ void ShadowMapMaterial::SetUniforms(CameraComponent* camera, MeshRendererCompone
     if (shaderProgram)
     {
         shaderProgram->SetUniformMatrix4fv(1 /* Model Matrix */, renderer->GetTransform()->GetModelMatrix());
-        shaderProgram->SetUniformMatrix4fv(2 /* Light Space Matrix */, lightSpaceMatrix);
+        shaderProgram->SetUniformMatrix4fv(2 /* Shadow Map Projection Matrix */, shadowMapProjection);
     }
 }

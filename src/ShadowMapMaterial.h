@@ -11,8 +11,8 @@ public:
 
     virtual void SetUniforms(CameraComponent* camera, MeshRendererComponent* renderer);
 
-    void SetLightSpaceMatrix(glm::mat4 const& lightSpaceMatrix) { this->lightSpaceMatrix = lightSpaceMatrix; }
+    void SetShadowMapProjection(glm::mat4 const& shadowMapProjection) { this->shadowMapProjection = shadowMapProjection; }
 
 private:
-    glm::mat4 lightSpaceMatrix;
+    glm::mat4 shadowMapProjection;
 };

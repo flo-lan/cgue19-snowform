@@ -113,7 +113,7 @@ void DirectionalLightComponent::RenderShadowMaps(CameraComponent* camera)
         {
             glClear(GL_DEPTH_BUFFER_BIT);
 
-            _ShadowMapMaterial->SetLightSpaceMatrix(_ShadowMapProjections);
+            _ShadowMapMaterial->SetShadowMapProjection(_ShadowMapProjections);
 
             for (auto itr = affectedMeshRenderers.begin(); itr != affectedMeshRenderers.end(); ++itr)
             {
