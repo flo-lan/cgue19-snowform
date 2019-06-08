@@ -40,3 +40,8 @@ glm::vec3 CameraComponent::GetPosition() const
 {
     return transform->GetPosition();
 }
+
+glm::quat CameraComponent::GetRotation() const
+{
+    return transform->GetRotationQ();
+}

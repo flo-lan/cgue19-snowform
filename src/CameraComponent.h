@@ -19,8 +19,13 @@ public:
     void SetNearPlane(float value) { nearPlane = value; }
     void SetFarPlane(float value) { farPlane = value; }
 
+    float GetFovInRadians() const { return fovInRadians; }
+    float GetNearPlane() const { return nearPlane; }
+    float GetFarPlane() const { return farPlane; }
+
     TransformComponent* GetTransform() const { return transform; }
     glm::vec3 GetPosition() const;
+    glm::quat GetRotation() const;
     glm::mat4 const& GetProjMatrix() const { return projMatrix; }
     glm::mat4 const& GetViewMatrix() const { return viewMatrix; }
     glm::mat4 const& GetViewProjectionMatrix() const { return viewProjectionMatrix; }

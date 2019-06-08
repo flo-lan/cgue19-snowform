@@ -5,8 +5,10 @@
 #include "ShadowMapMaterial.h"
 #include "AssetManager.h"
 #include "GameObject.h"
+#include "Screen.h"
 #include "Scene.h"
 #include <glm/gtc/matrix_transform.hpp> // glm::ortho
+#include <algorithm>
 
 DirectionalLightComponent::DirectionalLightComponent(GameObject* owner) :
     LightComponent::LightComponent(owner),
@@ -78,6 +80,13 @@ void DirectionalLightComponent::InitializeShadowMaps()
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, _ShadowMapDBO[0], 0);
         glDrawBuffer(GL_NONE); // Tell OpenGL we are not going to render any color data
         glReadBuffer(GL_NONE); // Tell OpenGL we are not going to render any color data
+
+        GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+
+        if (status != GL_FRAMEBUFFER_COMPLETE)
+        {
+            fprintf(stderr, "Error on framebuffer initialization: 0x%x\n", status);
+        }
     }
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
@@ -93,39 +102,95 @@ void DirectionalLightComponent::RenderShadowMaps(CameraComponent* camera)
         return;
     }
 
-    _ShadowMapProjections = glm::ortho
-    (
-        _ShadowMapOrthoLeft, _ShadowMapOrthoRight,
-        _ShadowMapOrthoBottom, _ShadowMapOrthoTop,
-        _ShadowMapOrthoNear, _ShadowMapOrthoFar
-    ) *
-    glm::lookAt
-    (
-        transform->GetPosition(),
-        transform->GetPosition() + transform->GetDirectionBackward(),
-        glm::vec3(0.0f, 1.0f, 0.0f)
-    );
-
-    if (_ShadowMapMaterial)
+    float _ShadowMapCascadeEnds[NUM_DIRECTIONAL_SHADOW_CASCADES + 1] =
     {
-        glViewport(0, 0, _ShadowMapWidth, _ShadowMapHeight);
+        camera->GetNearPlane(),
+        camera->GetNearPlane() + (camera->GetFarPlane() - camera->GetNearPlane()) * 0.2f,
+        camera->GetNearPlane() + (camera->GetFarPlane() - camera->GetNearPlane()) * 0.5f,
+        camera->GetFarPlane()
+    };
 
-        glBindFramebuffer(GL_FRAMEBUFFER, _ShadowMapFBO);
+    glm::vec3 cameraPosition = camera->GetPosition();
+    glm::quat cameraRotation = camera->GetRotation();
+
+    float aspectRatio = Screen::GetHeight() / (float)Screen::GetWidth();
+
+    float tanHalfHFOV = tanf(camera->GetFovInRadians() / 2.f);
+    float tanHalfVFOV = tanf(camera->GetFovInRadians() / 2.f * aspectRatio);
+
+    glm::vec3 frustum[8];
+
+    glViewport(0, 0, _ShadowMapWidth, _ShadowMapHeight);
+
+    glBindFramebuffer(GL_DRAW_FRAMEBUFFER, _ShadowMapFBO);
+
+    for (int i = 0; i < NUM_DIRECTIONAL_SHADOW_CASCADES; ++i)
+    {
+        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, _ShadowMapDBO[i], 0);
+
+        glClear(GL_DEPTH_BUFFER_BIT);
+
+        float xn = _ShadowMapCascadeEnds[i] * tanHalfHFOV;
+        float xf = _ShadowMapCascadeEnds[i + 1] * tanHalfHFOV;
+        float yn = _ShadowMapCascadeEnds[i] * tanHalfVFOV;
+        float yf = _ShadowMapCascadeEnds[i + 1] * tanHalfVFOV;
+
+        // Near
+        frustum[0] = cameraPosition - cameraRotation * glm::vec3(xn, yn, _ShadowMapCascadeEnds[i]);
+        frustum[1] = cameraPosition - cameraRotation * glm::vec3(-xn, yn, _ShadowMapCascadeEnds[i]);
+        frustum[2] = cameraPosition - cameraRotation * glm::vec3(xn, -yn, _ShadowMapCascadeEnds[i]);
+        frustum[3] = cameraPosition - cameraRotation * glm::vec3(-xn, -yn, _ShadowMapCascadeEnds[i]);
+
+        // Far
+        frustum[4] = cameraPosition - cameraRotation * glm::vec3(xf, yf, _ShadowMapCascadeEnds[i + 1]);
+        frustum[5] = cameraPosition - cameraRotation * glm::vec3(-xf, yf, _ShadowMapCascadeEnds[i + 1]);
+        frustum[6] = cameraPosition - cameraRotation * glm::vec3(xf, -yf, _ShadowMapCascadeEnds[i + 1]);
+        frustum[7] = cameraPosition - cameraRotation * glm::vec3(-xf, -yf, _ShadowMapCascadeEnds[i + 1]);
+
+        float minX = std::numeric_limits<float>::max();
+        float maxX = std::numeric_limits<float>::min();
+        float minY = std::numeric_limits<float>::max();
+        float maxY = std::numeric_limits<float>::min();
+        float minZ = std::numeric_limits<float>::max();
+        float maxZ = std::numeric_limits<float>::min();
+
+        glm::vec3 frustumCenter = glm::vec3(0.f);
+
+        for (int j = 0; j < NUM_FRUSTUM_CORNERS; ++j)
         {
-            glClear(GL_DEPTH_BUFFER_BIT);
+            glm::vec3 const& frustumCorner = frustum[j];
 
-            _ShadowMapMaterial->SetShadowMapProjection(_ShadowMapProjections);
+            frustumCenter.x += frustumCorner.x;
+            frustumCenter.y += frustumCorner.y;
+            frustumCenter.z += frustumCorner.z;
 
-            for (auto itr = affectedMeshRenderers.begin(); itr != affectedMeshRenderers.end(); ++itr)
-            {
-                if ((*itr)->IsCastShadowsEnabled())
-                {
-                    (*itr)->Render(camera, _ShadowMapMaterial);
-                }
-            }
+            minX = std::min(minX, frustumCorner.x);
+            maxX = std::max(maxX, frustumCorner.x);
+            minY = std::min(minY, frustumCorner.y);
+            maxY = std::max(maxY, frustumCorner.y);
+            minZ = std::min(minZ, frustumCorner.z);
+            maxZ = std::max(maxZ, frustumCorner.z);
         }
-        glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+        frustumCenter /= NUM_FRUSTUM_CORNERS;
+
+        float lightDistance = maxZ - minZ;
+        glm::vec3 lightDirection = transform->GetDirectionBackward();
+        glm::vec3 lightPosition = frustumCenter - lightDirection * lightDistance;
+        glm::mat4 lightMatrix = glm::lookAt(lightPosition, frustumCenter, glm::vec3(0.f, 1.f, 0.f));
+
+        _ShadowMapProjections[i] = glm::ortho(minX, maxX, minY, maxY, 1.f, lightDistance * 2.f) * lightMatrix;
+        _ShadowMapBounds[i] = glm::vec4(minX, maxX, minZ, maxZ);
+
+        _ShadowMapMaterial->SetShadowMapProjection(_ShadowMapProjections[i]);
+
+        for (auto itr = affectedMeshRenderers.begin(); itr != affectedMeshRenderers.end(); ++itr)
+        {
+            (*itr)->Render(camera, _ShadowMapMaterial);
+        }
     }
+
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 void DirectionalLightComponent::ActivateAndBindShadowMap(int unit, int cascadeIndex)
