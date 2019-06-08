@@ -42,9 +42,10 @@ private:
     GLuint locDirectionalLightDirection[MAX_DIRECTIONAL_LIGHT_COUNT];
     GLuint locDirectionalLightDiffuse[MAX_DIRECTIONAL_LIGHT_COUNT];
     GLuint locDirectionalLightSpecular[MAX_DIRECTIONAL_LIGHT_COUNT];
-    GLuint locDirectionalLightShadowMapSpace[MAX_DIRECTIONAL_LIGHT_COUNT];
-    GLuint locDirectionalLightShadowMapTexture[MAX_DIRECTIONAL_LIGHT_COUNT];
-    GLuint locDirectionalLightShadowMapIntensity[MAX_DIRECTIONAL_LIGHT_COUNT];
+    GLuint locDirectionalLightShadowEnabled[MAX_DIRECTIONAL_LIGHT_COUNT];
+    GLuint locDirectionalLightShadowMaps[MAX_DIRECTIONAL_LIGHT_COUNT * NUM_DIRECTIONAL_SHADOW_CASCADES];
+    GLuint locDirectionalLightShadowMapProjections[MAX_DIRECTIONAL_LIGHT_COUNT * NUM_DIRECTIONAL_SHADOW_CASCADES];
+    GLuint locDirectionalLightShadowMapBounds[MAX_DIRECTIONAL_LIGHT_COUNT * NUM_DIRECTIONAL_SHADOW_CASCADES];
     GLuint locPointLightPosition[MAX_POINT_LIGHT_COUNT];
     GLuint locPointLightConstant[MAX_POINT_LIGHT_COUNT];
     GLuint locPointLightLinear[MAX_POINT_LIGHT_COUNT];

@@ -32,6 +32,7 @@ public:
     void SetShadowMapHeight(int shadowMapHeight) { _ShadowMapHeight = (GLsizei)shadowMapHeight; }
 
     glm::mat4 const& GetShadowMapProjection(int cascadeIndex) const { return _ShadowMapProjections[cascadeIndex]; }
+    glm::vec4 const& GetShadowMapBounds(int cascadeIndex) const { return _ShadowMapBounds[cascadeIndex]; }
 
     bool IsShadowEnabled() const { return _ShadowEnabled; }
     void EnableShadow(bool enable);
@@ -45,6 +46,7 @@ private:
     GLsizei _ShadowMapHeight;
     ShadowMapMaterial* _ShadowMapMaterial;
     glm::mat4 _ShadowMapProjections[NUM_DIRECTIONAL_SHADOW_CASCADES];
+    glm::vec4 _ShadowMapBounds[NUM_DIRECTIONAL_SHADOW_CASCADES];
     bool _ShadowInitialized;
     bool _ShadowEnabled;
 };

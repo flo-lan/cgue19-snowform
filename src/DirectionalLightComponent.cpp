@@ -18,6 +18,7 @@ DirectionalLightComponent::DirectionalLightComponent(GameObject* owner) :
     _ShadowMapHeight(1024),
     _ShadowMapMaterial(sAssetManager.GetMaterial<ShadowMapMaterial>("ShadowMapDefault")),
     _ShadowMapProjections{glm::mat4(1.f)},
+    _ShadowMapBounds{glm::vec4(0.f)},
     _ShadowInitialized(false),
     _ShadowEnabled(false)
 {

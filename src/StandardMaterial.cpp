@@ -41,9 +41,14 @@ StandardMaterial::StandardMaterial(std::string const& _name, ShaderProgram* _sha
         locDirectionalLightDirection[i] = shaderProgram->GetUniformLocation(std::string("directionalLights[" + std::to_string(i) + "].direction").c_str());
         locDirectionalLightDiffuse[i] = shaderProgram->GetUniformLocation(std::string("directionalLights[" + std::to_string(i) + "].diffuse").c_str());
         locDirectionalLightSpecular[i] = shaderProgram->GetUniformLocation(std::string("directionalLights[" + std::to_string(i) + "].specular").c_str());
-        locDirectionalLightShadowMapSpace[i] = shaderProgram->GetUniformLocation(std::string("directionalLights[" + std::to_string(i) + "].shadowMapSpace").c_str());
-        locDirectionalLightShadowMapTexture[i] = shaderProgram->GetUniformLocation(std::string("directionalLights[" + std::to_string(i) + "].shadowMapTexture").c_str());
-        locDirectionalLightShadowMapIntensity[i] = shaderProgram->GetUniformLocation(std::string("directionalLights[" + std::to_string(i) + "].shadowMapIntensity").c_str());
+        locDirectionalLightShadowEnabled[i] = shaderProgram->GetUniformLocation(std::string("directionalLights[" + std::to_string(i) + "].shadowEnabled").c_str());
+
+        for (int j = 0; j < NUM_DIRECTIONAL_SHADOW_CASCADES; j++)
+        {
+            locDirectionalLightShadowMaps[i] = shaderProgram->GetUniformLocation(std::string("directionalShadowMaps[" + std::to_string(i * NUM_DIRECTIONAL_SHADOW_CASCADES + j) + "]").c_str());
+            locDirectionalLightShadowMapProjections[i] = shaderProgram->GetUniformLocation(std::string("directionalShadowMapProjections[" + std::to_string(i * NUM_DIRECTIONAL_SHADOW_CASCADES + j) + "]").c_str());
+            locDirectionalLightShadowMapBounds[i] = shaderProgram->GetUniformLocation(std::string("directionalShadowMapBounds[" + std::to_string(i * NUM_DIRECTIONAL_SHADOW_CASCADES + j) + "]").c_str());
+        }
     }
 
     for (int i = 0; i < MAX_POINT_LIGHT_COUNT; i++)
@@ -85,16 +90,22 @@ void StandardMaterial::SetUniforms(CameraComponent* camera, MeshRendererComponen
         shaderProgram->SetUniform3fv(locMaterialDiffuse, diffuseColor);
         shaderProgram->SetUniform3fv(locMaterialSpecular, specularColor);
 
+        int textureUnit = 0;
+
         if (defaultTexture)
         {
-            defaultTexture->ActivateAndBind(0 /* Unit */);
+            defaultTexture->ActivateAndBind(textureUnit);
+
+            ++textureUnit;
         }
 
         if (diffuseTexture)
         {
-            shaderProgram->SetUniform1i(locMaterialDiffuseTexture, 1 /* Unit */);
+            shaderProgram->SetUniform1i(locMaterialDiffuseTexture, textureUnit);
 
-            diffuseTexture->ActivateAndBind(1 /* Unit */);
+            diffuseTexture->ActivateAndBind(textureUnit);
+
+            ++textureUnit;
         }
         else
         {
@@ -103,9 +114,11 @@ void StandardMaterial::SetUniforms(CameraComponent* camera, MeshRendererComponen
 
         if (specularTexture)
         {
-            shaderProgram->SetUniform1i(locMaterialSpecularTexture, 2 /* Unit */);
+            shaderProgram->SetUniform1i(locMaterialSpecularTexture, textureUnit);
 
-            specularTexture->ActivateAndBind(2 /* Unit */);
+            specularTexture->ActivateAndBind(textureUnit);
+
+            ++textureUnit;
         }
         else
         {
@@ -120,30 +133,36 @@ void StandardMaterial::SetUniforms(CameraComponent* camera, MeshRendererComponen
 
         shaderProgram->SetUniform3fv(locAmbientLightAmbient, RenderSettings::AmbientColor * RenderSettings::AmbientIntensity * sSettings.getBrightness());
 
-        uint32_t i = 0;
+        int i = 0;
         for (std::vector<DirectionalLightComponent*>::const_iterator itr = renderer->GetDirectionalLights().begin(); itr != renderer->GetDirectionalLights().end(); itr++, i++)
         {
             DirectionalLightComponent* light = *itr;
-
-            shaderProgram->SetUniformMatrix4fv(locDirectionalLightShadowMapSpace[i], light->GetShadowMapProjection());
-
-            if (light->IsShadowEnabled())
-            {
-                shaderProgram->SetUniform1i(locDirectionalLightShadowMapTexture[i], 3 + i /* Unit */);
-                shaderProgram->SetUniform1fv(locDirectionalLightShadowMapIntensity[i], 1.0f);
-
-                light->ActivateAndBindShadowMap(3 + i /* Unit */);
-            }
-            else
-            {
-                shaderProgram->SetUniform1i(locDirectionalLightShadowMapTexture[i], 0 /* Unit */);
-                shaderProgram->SetUniform1fv(locDirectionalLightShadowMapIntensity[i], 0.0f);
-            }
 
             shaderProgram->SetUniform3fv(locDirectionalLightDirection[i], light->GetDirection());
 
             shaderProgram->SetUniform3fv(locDirectionalLightDiffuse[i],  light->GetColor() * light->GetIntensity());
             shaderProgram->SetUniform3fv(locDirectionalLightSpecular[i], light->GetColor() * light->GetIntensity());
+
+
+            if (light->IsShadowEnabled())
+            {
+                shaderProgram->SetUniform1i(locDirectionalLightShadowEnabled[i], 1);
+
+                for (int j = 0, k = i * NUM_DIRECTIONAL_SHADOW_CASCADES; j < NUM_DIRECTIONAL_SHADOW_CASCADES; j++)
+                {
+                    shaderProgram->SetUniform1i(locDirectionalLightShadowMaps[k + j], textureUnit);
+                    shaderProgram->SetUniformMatrix4fv(locDirectionalLightShadowMapProjections[k + j], light->GetShadowMapProjection(j));
+                    shaderProgram->SetUniform4fv(locDirectionalLightShadowMapBounds[i], light->GetShadowMapBounds(j));
+
+                    light->ActivateAndBindShadowMap(textureUnit, j);
+
+                    ++textureUnit;
+                }
+            }
+            else
+            {
+                shaderProgram->SetUniform1i(locDirectionalLightShadowEnabled[i], 0);
+            }
         }
 
         for (; i < MAX_DIRECTIONAL_LIGHT_COUNT; i++)
