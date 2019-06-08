@@ -43,11 +43,11 @@ StandardMaterial::StandardMaterial(std::string const& _name, ShaderProgram* _sha
         locDirectionalLightSpecular[i] = shaderProgram->GetUniformLocation(std::string("directionalLights[" + std::to_string(i) + "].specular").c_str());
         locDirectionalLightShadowEnabled[i] = shaderProgram->GetUniformLocation(std::string("directionalLights[" + std::to_string(i) + "].shadowEnabled").c_str());
 
-        for (int j = 0; j < NUM_DIRECTIONAL_SHADOW_CASCADES; j++)
+        for (int j = 0, k = i * NUM_DIRECTIONAL_SHADOW_CASCADES; j < NUM_DIRECTIONAL_SHADOW_CASCADES; j++, k++)
         {
-            locDirectionalLightShadowMaps[i] = shaderProgram->GetUniformLocation(std::string("directionalShadowMaps[" + std::to_string(i * NUM_DIRECTIONAL_SHADOW_CASCADES + j) + "]").c_str());
-            locDirectionalLightShadowMapProjections[i] = shaderProgram->GetUniformLocation(std::string("directionalShadowMapProjections[" + std::to_string(i * NUM_DIRECTIONAL_SHADOW_CASCADES + j) + "]").c_str());
-            locDirectionalLightShadowMapBounds[i] = shaderProgram->GetUniformLocation(std::string("directionalShadowMapBounds[" + std::to_string(i * NUM_DIRECTIONAL_SHADOW_CASCADES + j) + "]").c_str());
+            locDirectionalLightShadowMaps[k] = shaderProgram->GetUniformLocation(std::string("directionalShadowMaps[" + std::to_string(k) + "]").c_str());
+            locDirectionalLightShadowMapProjections[k] = shaderProgram->GetUniformLocation(std::string("directionalShadowMapProjections[" + std::to_string(k) + "]").c_str());
+            locDirectionalLightShadowMapBounds[k] = shaderProgram->GetUniformLocation(std::string("directionalShadowMapBounds[" + std::to_string(k) + "]").c_str());
         }
     }
 
@@ -148,11 +148,11 @@ void StandardMaterial::SetUniforms(CameraComponent* camera, MeshRendererComponen
             {
                 shaderProgram->SetUniform1i(locDirectionalLightShadowEnabled[i], 1);
 
-                for (int j = 0, k = i * NUM_DIRECTIONAL_SHADOW_CASCADES; j < NUM_DIRECTIONAL_SHADOW_CASCADES; j++)
+                for (int j = 0, k = i * NUM_DIRECTIONAL_SHADOW_CASCADES; j < NUM_DIRECTIONAL_SHADOW_CASCADES; j++, k++)
                 {
-                    shaderProgram->SetUniform1i(locDirectionalLightShadowMaps[k + j], textureUnit);
-                    shaderProgram->SetUniformMatrix4fv(locDirectionalLightShadowMapProjections[k + j], light->GetShadowMapProjection(j));
-                    shaderProgram->SetUniform4fv(locDirectionalLightShadowMapBounds[i], light->GetShadowMapBounds(j));
+                    shaderProgram->SetUniform1i(locDirectionalLightShadowMaps[k], textureUnit);
+                    shaderProgram->SetUniformMatrix4fv(locDirectionalLightShadowMapProjections[k], light->GetShadowMapProjection(j));
+                    shaderProgram->SetUniform4fv(locDirectionalLightShadowMapBounds[k], light->GetShadowMapBounds(j));
 
                     light->ActivateAndBindShadowMap(textureUnit, j);
 
