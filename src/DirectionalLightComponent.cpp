@@ -202,7 +202,9 @@ void DirectionalLightComponent::RenderShadowMaps(CameraComponent* camera)
             _FrustumDebugSpheres[i*NUM_FRUSTUM_CORNERS + j]->LookAt(center);
         }
 
-        _ShadowMapProjections[i] = glm::ortho(-radius, radius, -radius, radius, 1.f, radius * 2.5f) * lightMatrix;
+        float zFar = (i == 0) ? 2.5f : 2.f;
+
+        _ShadowMapProjections[i] = glm::ortho(-radius, radius, -radius, radius, 1.f, radius * zFar) * lightMatrix;
         _ShadowMapBounds[i] = glm::vec4(minX + 0.1f, maxX - 0.1f, minZ + 0.1f, maxZ - 0.1f); // Make bounds a little smaller to avoid border artefacts
 
         _ShadowMapMaterial->SetShadowMapProjection(_ShadowMapProjections[i]);
