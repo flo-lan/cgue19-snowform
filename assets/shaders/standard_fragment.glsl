@@ -81,52 +81,10 @@ uniform vec4 directionalShadowMapBounds[MAX_DIRECTIONAL_LIGHT_COUNT * NUM_DIRECT
 uniform PointLight pointLights[MAX_POINT_LIGHT_COUNT];
 uniform SpotLight spotLights[MAX_SPOT_LIGHT_COUNT];
 
-int CalculateCascadeIndex(int lightIndex)
-{
-	int cascadeIndex = lightIndex * NUM_DIRECTIONAL_SHADOW_CASCADES;
-
-	if (fragPosition.x >= directionalShadowMapBounds[cascadeIndex].x &&
-		fragPosition.x <= directionalShadowMapBounds[cascadeIndex].y &&
-		fragPosition.z >= directionalShadowMapBounds[cascadeIndex].z &&
-		fragPosition.z <= directionalShadowMapBounds[cascadeIndex].w)
-	{
-		return cascadeIndex;
-	}
-
-	cascadeIndex++;
-
-	if (fragPosition.x >= directionalShadowMapBounds[cascadeIndex].x &&
-		fragPosition.x <= directionalShadowMapBounds[cascadeIndex].y &&
-		fragPosition.z >= directionalShadowMapBounds[cascadeIndex].z &&
-		fragPosition.z <= directionalShadowMapBounds[cascadeIndex].w)
-	{
-		return cascadeIndex;
-	}
-
-	cascadeIndex++;
-
-	/*if (fragPosition.x >= directionalShadowMapBounds[cascadeIndex].x &&
-		fragPosition.x <= directionalShadowMapBounds[cascadeIndex].y &&
-		fragPosition.z >= directionalShadowMapBounds[cascadeIndex].z &&
-		fragPosition.z <= directionalShadowMapBounds[cascadeIndex].w)
-	{
-		return cascadeIndex;
-	}*/
-
-	return cascadeIndex;
-}
-
 // Credits: https://learnopengl.com/Advanced-Lighting/Shadows/Shadow-Mapping
 
-float CalculateDirectionalShadow(int lightIndex, vec3 normal, vec3 lightDir)
+float CalculateDirectionalShadow(int lightIndex, int cascadeIndex, vec3 normal, vec3 lightDir)
 {
-	if (directionalLights[lightIndex].shadowEnabled == 0)
-	{
-		return 0.0;
-	}
-
-	int cascadeIndex = CalculateCascadeIndex(lightIndex);
-
 	vec4 shadowMapSpacePosition = directionalShadowMapProjections[cascadeIndex] * vec4(fragPosition, 1.0);
 	// Perform perspective divide
 	vec3 projCoords = shadowMapSpacePosition.xyz / shadowMapSpacePosition.w;
@@ -174,8 +132,41 @@ vec3 CalculateDirectionalLight(int i, vec3 normal, vec3 viewDirection, vec4 diff
     // Combine results
     vec3 diffuse  = directionalLights[i].diffuse  * material.diffuseReflectionConstant  * material.diffuse  * diff * diffuseTextureColor.rgb * fragColor;
     vec3 specular = directionalLights[i].specular * material.specularReflectionConstant * material.specular * spec * specularTextureColor.rgb;
+	// Return result if shadow is disabled
+	if (directionalLights[i].shadowEnabled == 0)
+	{
+		return diffuse + specular;
+	}
+
 	// Shadow
-	float shadow = CalculateDirectionalShadow(i, normal, lightDirection);
+	float shadow = 0.0;
+	// Calculate cascade index
+	int cascadeIndex = i * NUM_DIRECTIONAL_SHADOW_CASCADES;
+
+	if (fragPosition.x > directionalShadowMapBounds[cascadeIndex].x &&
+		fragPosition.x < directionalShadowMapBounds[cascadeIndex].y &&
+		fragPosition.z > directionalShadowMapBounds[cascadeIndex].z &&
+		fragPosition.z < directionalShadowMapBounds[cascadeIndex].w)
+	{
+		shadow = CalculateDirectionalShadow(i, i * NUM_DIRECTIONAL_SHADOW_CASCADES, normal, lightDirection);
+	}
+	else
+	{
+		cascadeIndex++;
+
+		if (fragPosition.x > directionalShadowMapBounds[cascadeIndex].x &&
+			fragPosition.x < directionalShadowMapBounds[cascadeIndex].y &&
+			fragPosition.z > directionalShadowMapBounds[cascadeIndex].z &&
+			fragPosition.z < directionalShadowMapBounds[cascadeIndex].w)
+		{
+			shadow = CalculateDirectionalShadow(i, i * NUM_DIRECTIONAL_SHADOW_CASCADES + 1, normal, lightDirection);
+		}
+		else
+		{
+			shadow = CalculateDirectionalShadow(i, i * NUM_DIRECTIONAL_SHADOW_CASCADES + 2, normal, lightDirection);
+		}
+	}
+
     return (1.0 - shadow) * (diffuse + specular);
 }
 
