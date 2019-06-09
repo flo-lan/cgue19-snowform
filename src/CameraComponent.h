@@ -20,6 +20,7 @@ public:
     void SetFarPlane(float value) { farPlane = value; }
 
     float GetFovInRadians() const { return fovInRadians; }
+    float GetAspectRatio() const { return aspectRatio; }
     float GetNearPlane() const { return nearPlane; }
     float GetFarPlane() const { return farPlane; }
 
