@@ -203,7 +203,7 @@ void DirectionalLightComponent::RenderShadowMaps(CameraComponent* camera)
         }
 
         _ShadowMapProjections[i] = glm::ortho(-radius, radius, -radius, radius, 1.f, radius * 2.f) * lightMatrix;
-        _ShadowMapBounds[i] = glm::vec4(minX, maxX, minZ, maxZ);
+        _ShadowMapBounds[i] = glm::vec4(minX + 0.1f, maxX - 0.1f, minZ + 0.1f, maxZ - 0.1f); // Make bounds a little smaller to avoid border conflicts
 
         _ShadowMapMaterial->SetShadowMapProjection(_ShadowMapProjections[i]);
 
