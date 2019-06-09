@@ -6,9 +6,6 @@ struct Material
     vec3 diffuse;
     vec3 specular;
 
-    sampler2D diffuseTexture;
-    sampler2D specularTexture;
-
     float ambientReflectionConstant;
     float diffuseReflectionConstant;
     float specularReflectionConstant;
@@ -74,6 +71,8 @@ out vec4 colorOut;
 
 uniform vec3 viewPosition;
 uniform Material material;
+uniform sampler2D diffuseTexture;
+uniform sampler2D specularTexture;
 uniform AmbientLight ambientLight;
 uniform DirectionalLight directionalLights[MAX_DIRECTIONAL_LIGHT_COUNT];
 uniform sampler2D directionalShadowMaps[MAX_DIRECTIONAL_LIGHT_COUNT * NUM_DIRECTIONAL_SHADOW_CASCADES];
@@ -133,8 +132,6 @@ float CalculateDirectionalShadow(int lightIndex, vec3 normal, vec3 lightDir)
 	vec3 projCoords = shadowMapSpacePosition.xyz / shadowMapSpacePosition.w;
 	// Transform to [0,1] range
 	projCoords = projCoords * 0.5 + 0.5;
-	// Get closest depth value from light's perspective (using [0,1] range proj coords)
-	float closestDepth = texture(directionalShadowMaps[cascadeIndex], projCoords.xy).r; 
 	// Get depth of current fragment from light's perspective
 	float currentDepth = projCoords.z;
 	// Calculate shadow bias to avoid shadow acne
@@ -151,7 +148,7 @@ float CalculateDirectionalShadow(int lightIndex, vec3 normal, vec3 lightDir)
 			shadow += currentDepth - bias > pcfDepth ? 1.0 : 0.0;
 		}
 	}
-	
+
 	shadow /= 9.0;
 
 	// Keep the shadow at 0.0 when outside the far plane region of the lights frustum
@@ -224,8 +221,8 @@ vec3 CalculateSpotLight(SpotLight light, vec3 normal, vec3 viewDirection, vec4 d
 
 void main()
 {
-    vec4 diffuseTextureColor = texture(material.diffuseTexture, fragUV);
-    vec4 specularTextureColor = texture(material.specularTexture, fragUV);
+    vec4 diffuseTextureColor = texture(diffuseTexture, fragUV);
+    vec4 specularTextureColor = texture(specularTexture, fragUV);
     vec3 result = ambientLight.ambient * material.ambientReflectionConstant * material.diffuse * diffuseTextureColor.rgb * fragColor;
     vec3 normal = normalize(fragNormal); // Important, because length of fragNormal can be != 1 after interpolation
     vec3 viewDirection = normalize(viewPosition - fragPosition);

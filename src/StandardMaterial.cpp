@@ -28,8 +28,8 @@ StandardMaterial::StandardMaterial(std::string const& _name, ShaderProgram* _sha
     locViewPosition = shaderProgram->GetUniformLocation("viewPosition");
     locMaterialDiffuse = shaderProgram->GetUniformLocation("material.diffuse");
     locMaterialSpecular = shaderProgram->GetUniformLocation("material.specular");
-    locMaterialDiffuseTexture = shaderProgram->GetUniformLocation("material.diffuseTexture");
-    locMaterialSpecularTexture = shaderProgram->GetUniformLocation("material.specularTexture");
+    locMaterialDiffuseTexture = shaderProgram->GetUniformLocation("diffuseTexture");
+    locMaterialSpecularTexture = shaderProgram->GetUniformLocation("specularTexture");
     locMaterialAmbientReflectionConstant = shaderProgram->GetUniformLocation("material.ambientReflectionConstant");
     locMaterialDiffuseReflectionConstant = shaderProgram->GetUniformLocation("material.diffuseReflectionConstant");
     locMaterialSpecularReflectionConstant = shaderProgram->GetUniformLocation("material.specularReflectionConstant");
