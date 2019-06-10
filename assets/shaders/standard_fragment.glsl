@@ -233,7 +233,7 @@ void main()
         result += CalculateSpotLight(spotLights[i], normal, viewDirection, diffuseTextureColor, specularTextureColor);
     }
 
-	if (fragPosition.x >= directionalShadowMapBounds[0].x &&
+	/*if (fragPosition.x >= directionalShadowMapBounds[0].x &&
 		fragPosition.x <= directionalShadowMapBounds[0].y &&
 		fragPosition.z >= directionalShadowMapBounds[0].z &&
 		fragPosition.z <= directionalShadowMapBounds[0].w)
@@ -254,6 +254,6 @@ void main()
 	{
 		colorOut = vec4(result, 1.0) * vec4(0.0, 0.0, 0.6, 1.0);
 	}
-    else
+    else*/
 		colorOut = vec4(result, 1.0);
 }
