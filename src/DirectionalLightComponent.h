@@ -38,7 +38,6 @@ public:
     void EnableShadow(bool enable);
 
 private:
-    TransformComponent* _FrustumDebugSpheres[8 * 3]; // DEBUG
     glm::vec3 color;
     float intensity;
     GLuint _ShadowMapFBO;

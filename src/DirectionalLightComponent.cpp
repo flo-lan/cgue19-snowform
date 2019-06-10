@@ -9,10 +9,6 @@
 #include "Scene.h"
 #include <glm/gtc/matrix_transform.hpp> // glm::ortho
 #include <algorithm>
-#include "BoxColliderComponent.h" // DEBUG
-#include "RigidStaticComponent.h" // DEBUG
-#include "PhysicsEngine.h" // DEBUG
-#include "glm/ext.hpp" // DEBUG
 
 DirectionalLightComponent::DirectionalLightComponent(GameObject* owner) :
     LightComponent::LightComponent(owner),
@@ -29,18 +25,6 @@ DirectionalLightComponent::DirectionalLightComponent(GameObject* owner) :
     _ShadowEnabled(false)
 {
     GetOwner()->GetScene()->InsertDirectionalLightComponent(this);
-
-    // DEBUG
-    for (int i = 0; i < 8 * 3; i++)
-    {
-        GameObject* frustumDebugSphere = GetOwner()->GetScene()->CreateGameObject("FrustumDebugSphere" + i);
-        MeshRendererComponent* meshRenderer = frustumDebugSphere->AttachComponent<MeshRendererComponent>();
-        meshRenderer->SetMaterial(sAssetManager.GetMaterial("Sphere"));
-        meshRenderer->SetMesh(sAssetManager.GetMesh("Sphere"));
-        frustumDebugSphere->AttachComponent<BoxColliderComponent>()->SetPxMaterial(sPhysicsEngine.GetPxMaterial("Default"));
-        frustumDebugSphere->AttachComponent<RigidStaticComponent>();
-        _FrustumDebugSpheres[i] = frustumDebugSphere->GetComponent<TransformComponent>();
-    }
 }
 
 DirectionalLightComponent::~DirectionalLightComponent()
@@ -179,9 +163,6 @@ void DirectionalLightComponent::RenderShadowMaps(CameraComponent* camera)
             maxY = std::max(maxY, frustumCorner.y);
             minZ = std::min(minZ, frustumCorner.z);
             maxZ = std::max(maxZ, frustumCorner.z);
-
-            if (i == 0)
-                _FrustumDebugSpheres[i*NUM_FRUSTUM_CORNERS + j]->SetLocalPosition(frustumCorner.x, frustumCorner.y, frustumCorner.z);
         }
 
         glm::vec3 center = glm::vec3
@@ -195,12 +176,6 @@ void DirectionalLightComponent::RenderShadowMaps(CameraComponent* camera)
 
         glm::vec3 lightPosition = center - transform->GetDirectionBackward() * radius;
         glm::mat4 lightMatrix = glm::lookAt(lightPosition, center, glm::vec3(0.f, 1.f, 0.f));
-
-        for (int j = 0; j < NUM_FRUSTUM_CORNERS; ++j)
-        {
-            _FrustumDebugSpheres[i*NUM_FRUSTUM_CORNERS + j]->SetLocalPosition(lightPosition.x, lightPosition.y, lightPosition.z);
-            _FrustumDebugSpheres[i*NUM_FRUSTUM_CORNERS + j]->LookAt(center);
-        }
 
         float zFar = (i == 0) ? 2.5f : 2.f;
 
