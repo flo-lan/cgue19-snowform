@@ -24,7 +24,7 @@
       <GameObject id="DirectionalLight1" name="Directional Light 1">
         <Components>
           <TransformComponent localPosition="-29.1 21 25" localRotation="50 -270 0" localScale="30 1 40" />
-          <DirectionalLightComponent color="1 1 1" intensity="1" shadow="true" shadowMapWidth="4096" shadowMapHeight="4096" shadowMapOrthoLeft="-50" shadowMapOrthoRight="90" shadowMapOrthoBottom="-25" shadowMapOrthoTop="30" shadowMapOrthoNear="1" shadowMapOrthoFar="60" />
+          <DirectionalLightComponent color="1 1 1" intensity="1" shadow="true" shadowMapWidth="4096" shadowMapHeight="4096" />
         </Components>
         <Children />
       </GameObject>
@@ -221,6 +221,19 @@
             </Components>
             <Children />
           </GameObject>
+          <GameObject name="Coin (1)">
+            <Components>
+              <TransformComponent localPosition="-5 4 5" localRotation="0 0 0" localScale="0.5 0.5 0.5" />
+              <MeshRendererComponent material="StandardDefault" mesh="Coin">
+                <Light gameObjectId="DirectionalLight1" />
+              </MeshRendererComponent>
+              <BoxColliderComponent physicsMaterial="Default" offset="0 0 0" halfExtent="2.5 2.5 2.5" trigger="true" />
+              <RigidStaticComponent raycastLayerMask="1" />
+              <RotateComponent rotationDirection="0 1 0" speed="5" />
+              <CoinComponent />
+            </Components>
+            <Children />
+          </GameObject>
         </Children>
       </GameObject>
       <GameObject name="BlockMovingGroup (1)">
@@ -262,17 +275,6 @@
       <TransformComponent localPosition="0 0 0" localRotation="0 0 0" localScale="1 1 1" />
     </Components>
     <Children>
-      <GameObject name="BlockSnowSlope">
-        <Components>
-          <TransformComponent localPosition="0 0 10" localRotation="0 0 0" localScale="1 1 1" />
-          <MeshRendererComponent material="StandardDefault" mesh="BlockSnowSlope">
-            <Light gameObjectId="DirectionalLight1" />
-          </MeshRendererComponent>
-          <MeshColliderComponent physicsMaterial="Default" collisionMesh="BlockSnowSlope" offset="0 0 0" />
-          <RigidStaticComponent raycastLayerMask="1" />
-        </Components>
-        <Children />
-      </GameObject>
       <GameObject name="BlockSnow">
         <Components>
           <TransformComponent localPosition="0 0 0" localRotation="0 0 0" localScale="1 1 1" />
@@ -286,7 +288,7 @@
       </GameObject>
       <GameObject name="BlockSnow (1)">
         <Components>
-          <TransformComponent localPosition="0 -10 20" localRotation="0 0 0" localScale="1 1 1" />
+          <TransformComponent localPosition="0 0 20" localRotation="0 0 0" localScale="1 1 1" />
           <MeshRendererComponent material="StandardDefault" mesh="BlockSnow">
             <Light gameObjectId="DirectionalLight1" />
           </MeshRendererComponent>
@@ -297,7 +299,7 @@
       </GameObject>
       <GameObject name="BlockSnow (2)">
         <Components>
-          <TransformComponent localPosition="0 -10 30" localRotation="0 0 0" localScale="1 1 1" />
+          <TransformComponent localPosition="0 0 30" localRotation="0 0 0" localScale="1 1 1" />
           <MeshRendererComponent material="StandardDefault" mesh="BlockSnow">
             <Light gameObjectId="DirectionalLight1" />
           </MeshRendererComponent>
@@ -308,22 +310,11 @@
       </GameObject>
       <GameObject name="BlockSnow (3)">
         <Components>
-          <TransformComponent localPosition="0 -10 40" localRotation="0 0 0" localScale="1 1 1" />
+          <TransformComponent localPosition="0 0 40" localRotation="0 0 0" localScale="1 1 1" />
           <MeshRendererComponent material="StandardDefault" mesh="BlockSnow">
             <Light gameObjectId="DirectionalLight1" />
           </MeshRendererComponent>
           <MeshColliderComponent physicsMaterial="Default" collisionMesh="BlockSnow" offset="0 0 0" />
-          <RigidStaticComponent raycastLayerMask="1" />
-        </Components>
-        <Children />
-      </GameObject>
-      <GameObject name="BlockSnowSlope (1)">
-        <Components>
-          <TransformComponent localPosition="-10 0 60" localRotation="0 -180 0" localScale="1 1 1" />
-          <MeshRendererComponent material="StandardDefault" mesh="BlockSnowSlope">
-            <Light gameObjectId="DirectionalLight1" />
-          </MeshRendererComponent>
-          <MeshColliderComponent physicsMaterial="Default" collisionMesh="BlockSnowSlope" offset="0 0 0" />
           <RigidStaticComponent raycastLayerMask="1" />
         </Components>
         <Children />
@@ -427,6 +418,28 @@
         </Components>
         <Children />
       </GameObject>
+      <GameObject name="BlockSnow (9)">
+        <Components>
+          <TransformComponent localPosition="0 0 50" localRotation="0 0 0" localScale="1 1 1" />
+          <MeshRendererComponent material="StandardDefault" mesh="BlockSnow">
+            <Light gameObjectId="DirectionalLight1" />
+          </MeshRendererComponent>
+          <MeshColliderComponent physicsMaterial="Default" collisionMesh="BlockSnow" offset="0 0 0" />
+          <RigidStaticComponent raycastLayerMask="1" />
+        </Components>
+        <Children />
+      </GameObject>
+      <GameObject name="BlockSnow (10)">
+        <Components>
+          <TransformComponent localPosition="0 0 10" localRotation="0 0 0" localScale="1 1 1" />
+          <MeshRendererComponent material="StandardDefault" mesh="BlockSnow">
+            <Light gameObjectId="DirectionalLight1" />
+          </MeshRendererComponent>
+          <MeshColliderComponent physicsMaterial="Default" collisionMesh="BlockSnow" offset="0 0 0" />
+          <RigidStaticComponent raycastLayerMask="1" />
+        </Components>
+        <Children />
+      </GameObject>
     </Children>
   </GameObject>
   <GameObject name="Misc">
@@ -436,7 +449,7 @@
     <Children>
       <GameObject name="Coin">
         <Components>
-          <TransformComponent localPosition="-5 1.5 35" localRotation="0 0 0" localScale="0.5 0.5 0.5" />
+          <TransformComponent localPosition="-5 11.5 35" localRotation="0 0 0" localScale="0.5 0.5 0.5" />
           <MeshRendererComponent material="StandardDefault" mesh="Coin">
             <Light gameObjectId="DirectionalLight1" />
           </MeshRendererComponent>
