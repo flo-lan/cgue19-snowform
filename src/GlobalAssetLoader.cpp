@@ -11,6 +11,8 @@
 #include "ParticleBillboardMaterial.h"
 #include "AssetManager.h"
 #include "PhysicsEngine.h"
+#include "Cubemap.h"
+#include "SkyboxMaterial.h"
 
 GlobalAssetLoader::GlobalAssetLoader()
 {
@@ -29,6 +31,7 @@ bool GlobalAssetLoader::LoadAssets()
     ShaderProgram* textShaderProgram = nullptr;
     ShaderProgram* shadowMapShaderProgram = nullptr;
     ShaderProgram* particleBillboardShaderProgram = nullptr;
+    ShaderProgram* skyboxShaderProgram = nullptr;
 
     if (!(simpleShaderProgram = LoadShaderProgramFromFiles("simple_shader_program",
             "simple_vertex_shader", "assets/shaders/simple_vertex.glsl",
@@ -50,7 +53,10 @@ bool GlobalAssetLoader::LoadAssets()
             "shadow_map_fragment_shader", "assets/shaders/shadow_map_fragment.glsl")) ||
         !(particleBillboardShaderProgram = LoadShaderProgramFromFiles("particle_billboard_shader_program",
             "particle_billboard_vertex_shader", "assets/shaders/particle_billboard_vertex.glsl",
-            "particle_billboard_fragment_shader", "assets/shaders/particle_billboard_fragment.glsl")))
+            "particle_billboard_fragment_shader", "assets/shaders/particle_billboard_fragment.glsl")) ||
+        !(skyboxShaderProgram = LoadShaderProgramFromFiles("skybox_shader_program",
+            "skybox_vertex_shader", "assets/shaders/skybox_vertex.glsl",
+            "skybox_fragment_shader", "assets/shaders/skybox_fragment.glsl")))
     {
         return false;
     }
@@ -69,6 +75,23 @@ bool GlobalAssetLoader::LoadAssets()
         !LoadTextureFromFile("arial_atlas", "assets/fonts/arial.dds", false /* Disable mip maps */) ||
         !LoadTextureFromFile("transition_overlay", "assets/textures/transition_overlay.dds", false /* Disable mip maps */) ||
         !LoadTextureFromFile("transition_overlay_cutoff", "assets/textures/transition_overlay_cutoff.dds", false /* Disable mip maps */))
+    {
+        return false;
+    }
+
+    if (Cubemap* skyboxCubemap = sAssetManager.CreateCubemap("Skybox"))
+    {
+        if (!skyboxCubemap->LoadFromFile("assets/textures/cubemap/negx.dds",
+            "assets/textures/cubemap/posx.dds",
+            "assets/textures/cubemap/posy.dds",
+            "assets/textures/cubemap/negy.dds",
+            "assets/textures/cubemap/posz.dds",
+            "assets/textures/cubemap/negz.dds"))
+        {
+            return false;
+        }
+    }
+    else
     {
         return false;
     }
@@ -131,8 +154,14 @@ bool GlobalAssetLoader::LoadAssets()
         pbm->SetDiffuseColor(glm::vec3(1.f));
     }
 
+    if (SkyboxMaterial* sbm = sAssetManager.CreateMaterial<SkyboxMaterial>("Skybox", skyboxShaderProgram))
+    {
+        sbm->SetCubemap(sAssetManager.GetCubemap("Skybox"));
+    }
+
     sAssetManager.CreateQuadMesh("Image", 1.f, 1.f);
     sAssetManager.CreateQuadMesh("SnowParticle", 1.f, 1.f);
+    sAssetManager.CreateCubeMesh("Skybox", 1.f, 1.f, 1.f);
     sAssetManager.CreateCubeMesh("Cube", 1.5f, 1.5f, 1.5f);
     sAssetManager.CreateCylinderMesh("Cylinder", 32, 1.f, 1.3f);
     sAssetManager.CreateSphereMesh("Sphere", 64, 32, 1.f);

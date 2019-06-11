@@ -263,6 +263,9 @@
     <ClCompile Include="src\Cubemap.cpp">
       <Filter>Engine\Render\Cubemap</Filter>
     </ClCompile>
+    <ClCompile Include="src\SkyboxMaterial.cpp">
+      <Filter>Engine\Render\Material</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameObject.h">
@@ -534,6 +537,9 @@
     </ClInclude>
     <ClInclude Include="src\Cubemap.h">
       <Filter>Engine\Render\Cubemap</Filter>
+    </ClInclude>
+    <ClInclude Include="src\SkyboxMaterial.h">
+      <Filter>Engine\Render\Material</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

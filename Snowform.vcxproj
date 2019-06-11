@@ -62,6 +62,7 @@
     <ClCompile Include="src\Screen.cpp" />
     <ClCompile Include="src\Settings.cpp" />
     <ClCompile Include="src\ShadowMapMaterial.cpp" />
+    <ClCompile Include="src\SkyboxMaterial.cpp" />
     <ClCompile Include="src\SphereColliderComponent.cpp" />
     <ClCompile Include="src\SphereColliderComponentFactory.cpp" />
     <ClCompile Include="src\SpotLightComponentFactory.cpp" />
@@ -153,6 +154,7 @@
     <ClInclude Include="src\Screen.h" />
     <ClInclude Include="src\Settings.h" />
     <ClInclude Include="src\ShadowMapMaterial.h" />
+    <ClInclude Include="src\SkyboxMaterial.h" />
     <ClInclude Include="src\SphereColliderComponent.h" />
     <ClInclude Include="src\SphereColliderComponentFactory.h" />
     <ClInclude Include="src\SpotLightComponentFactory.h" />
