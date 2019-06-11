@@ -17,6 +17,9 @@ public:
 
     void SetTargetId(std::string const& targetId) { this->targetId = targetId; }
     void SetDistance(float distance) { this->distance = distance; }
+    void SetMinDistance(float minDistance) { this->minDistance = minDistance; }
+    void SetMaxDistance(float maxDistance) { this->maxDistance = maxDistance; }
+    void SetScrollSpeed(float scrollSpeed) { this->scrollSpeed = scrollSpeed; }
 
 private:
     TransformComponent* transform;
@@ -26,10 +29,14 @@ private:
     RigidDynamicComponent* targetRigid;
     float angle;
     float distance;
+    float minDistance;
+    float maxDistance;
+    float scrollSpeed;
     float velocity;
     float jumpVelocity;
     float jumpTimer;
     float lastMousePositionX;
     float lastMousePositionY;
     float lastMouseScrollValue;
+    float remainingMouseScroll;
 };

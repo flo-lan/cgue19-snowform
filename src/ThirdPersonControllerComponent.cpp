@@ -8,6 +8,7 @@
 #include "Time.h"
 #include <GLFW/glfw3.h>
 #include <glm/ext.hpp>
+#include <algorithm>
 
 ThirdPersonControllerComponent::ThirdPersonControllerComponent(GameObject* owner) :
     Component::Component(owner),
@@ -16,13 +17,17 @@ ThirdPersonControllerComponent::ThirdPersonControllerComponent(GameObject* owner
     targetTransform(nullptr),
     targetRigid(nullptr),
     angle(0.f),
-    distance(0.f),
+    distance(10.f),
+    minDistance(5.f),
+    maxDistance(25.f),
+    scrollSpeed(30.f),
     velocity(30.f),
     jumpVelocity(10.f),
     jumpTimer(0.f),
     lastMousePositionX(0.f),
     lastMousePositionY(0.f),
-    lastMouseScrollValue(0.f)
+    lastMouseScrollValue(0.f),
+    remainingMouseScroll(0.f)
 {
 }
 
@@ -52,6 +57,37 @@ void ThirdPersonControllerComponent::Update()
         !targetRigid)
     {
         return;
+    }
+
+    remainingMouseScroll += (lastMouseScrollValue - sInputManager.GetMouseScrollValueY());
+
+    if (std::abs(remainingMouseScroll) > 0.01f)
+    {
+        float scrollDistance = scrollSpeed * sTime.GetDeltaTime();
+
+        if (std::abs(remainingMouseScroll) < std::abs(scrollDistance))
+        {
+            scrollDistance = remainingMouseScroll;
+        }
+        else if (remainingMouseScroll < 0.f)
+        {
+            scrollDistance *= -1.f;
+        }
+
+        remainingMouseScroll -= scrollDistance;
+
+        distance += scrollDistance;
+
+        if (distance < minDistance)
+        {
+            distance = minDistance;
+            remainingMouseScroll = 0.f;
+        }
+        else if (distance > maxDistance)
+        {
+            distance = maxDistance;
+            remainingMouseScroll = 0.f;
+        }
     }
 
     angle += glm::radians(sInputManager.GetMousePositionX() - lastMousePositionX) * 0.5f /* Slow down */;
