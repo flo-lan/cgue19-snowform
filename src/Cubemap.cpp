@@ -48,8 +48,8 @@ bool Cubemap::LoadFromFile(std::string const& leftFilePath,
 
     static GLuint textureTypes[NUM_CUBEMAP_TEXTURES] =
     {
-        GL_TEXTURE_CUBE_MAP_POSITIVE_X,
         GL_TEXTURE_CUBE_MAP_NEGATIVE_X,
+        GL_TEXTURE_CUBE_MAP_POSITIVE_X,
         GL_TEXTURE_CUBE_MAP_POSITIVE_Y,
         GL_TEXTURE_CUBE_MAP_NEGATIVE_Y,
         GL_TEXTURE_CUBE_MAP_POSITIVE_Z,
