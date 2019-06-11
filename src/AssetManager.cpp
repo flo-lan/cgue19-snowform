@@ -8,6 +8,7 @@
 #include "Mesh.h"
 #include "Texture2D.h"
 #include "Font.h"
+#include "Cubemap.h"
 #include <fstream>
 
 void AssetManager::Unload()
@@ -15,6 +16,7 @@ void AssetManager::Unload()
     DeleteShaderPrograms();
     DeleteShaders();
     DeleteMaterials();
+    DeleteCubemaps();
     DeleteTextures();
     DeleteMeshes();
     DeleteFonts();
@@ -30,6 +32,12 @@ Texture2D* AssetManager::GetTexture2D(std::string const& name)
 {
     TextureMap::const_iterator itr = textures.find(name);
     return itr != textures.end() ? itr->second : nullptr;
+}
+
+Cubemap* AssetManager::GetCubemap(std::string const& name)
+{
+    CubemapMap::const_iterator itr = cubemaps.find(name);
+    return itr != cubemaps.end() ? itr->second : nullptr;
 }
 
 Mesh* AssetManager::GetMesh(std::string const& name)
@@ -114,6 +122,17 @@ Texture2D* AssetManager::CreateTexture(std::string const& name)
     return textures[name] = new Texture2D(name);
 }
 
+Cubemap* AssetManager::CreateCubemap(std::string const& name)
+{
+    if (cubemaps.find(name) != cubemaps.end())
+    {
+        fprintf(stderr, "Could not create cubemap '%s', because a cubemap with the same name is already loaded!\n", name.c_str());
+        return nullptr;
+    }
+
+    return cubemaps[name] = new Cubemap(name);
+}
+
 void AssetManager::DeleteTextures()
 {
     for (TextureMap::const_iterator itr = textures.begin(); itr != textures.end(); ++itr)
@@ -122,6 +141,16 @@ void AssetManager::DeleteTextures()
     }
 
     textures.clear();
+}
+
+void AssetManager::DeleteCubemaps()
+{
+    for (CubemapMap::const_iterator itr = cubemaps.begin(); itr != cubemaps.end(); ++itr)
+    {
+        delete itr->second;
+    }
+
+    cubemaps.clear();
 }
 
 void AssetManager::DeleteMaterials()

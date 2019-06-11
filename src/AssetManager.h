@@ -7,6 +7,7 @@
 #include <string>
 #include <unordered_map>
 
+class Cubemap;
 class Shader;
 class ShaderProgram;
 class Material;
@@ -30,6 +31,7 @@ private:
     typedef std::unordered_map<std::string /* Shader Name */, Shader*> ShaderMap;
     typedef std::unordered_map<std::string /* Shader Program Name */, ShaderProgram*> ShaderProgramMap;
     typedef std::unordered_map<std::string /* Texture Name */, Texture2D*> TextureMap;
+    typedef std::unordered_map<std::string /* Cubemap Name */, Cubemap*> CubemapMap;
     typedef std::unordered_map<std::string /* Material Name */, Material*> MaterialMap;
     typedef std::unordered_map<uint32_t /* Type Id */, MaterialMap> MaterialTypeMap;
     typedef std::unordered_map<std::string /* Mesh Name */, Mesh*> MeshMap;
@@ -47,6 +49,7 @@ public:
     Shader* CreateShader(std::string const& name, GLenum type);
     ShaderProgram* CreateShaderProgram(std::string const& name);
     Texture2D* CreateTexture(std::string const& name);
+    Cubemap* CreateCubemap(std::string const& name);
     Mesh* CreateQuadMesh(std::string const& name, float width, float height);
     Mesh* CreateCubeMesh(std::string const& name, float width, float height, float depth);
     Mesh* CreateCylinderMesh(std::string const& name, uint32_t segments, float radius, float height);
@@ -66,6 +69,7 @@ public:
 
     ShaderProgram* GetShaderProgram(std::string const& name);
     Texture2D* GetTexture2D(std::string const& name);
+    Cubemap* GetCubemap(std::string const& name);
     Mesh* GetMesh(std::string const& name);
     Material* GetMaterial(std::string const& name);
     Font* GetFont(std::string const& name);
@@ -91,6 +95,7 @@ private:
     void DeleteShaders();
     void DeleteShaderPrograms();
     void DeleteTextures();
+    void DeleteCubemaps();
     void DeleteMaterials();
     void DeleteMeshes();
     void DeleteFonts();
@@ -98,6 +103,7 @@ private:
     ShaderMap shaders;
     ShaderProgramMap shaderPrograms;
     TextureMap textures;
+    CubemapMap cubemaps;
     MaterialTypeMap materials;
     MeshMap meshes;
     FontMap fonts;

@@ -16,6 +16,7 @@
     <ClCompile Include="src\Component.cpp" />
     <ClCompile Include="src\ComponentFactory.cpp" />
     <ClCompile Include="src\ComponentIndustry.cpp" />
+    <ClCompile Include="src\Cubemap.cpp" />
     <ClCompile Include="src\DebugComponent.cpp" />
     <ClCompile Include="src\DebugComponentFactory.cpp" />
     <ClCompile Include="src\DirectionalLightComponent.cpp" />
@@ -102,6 +103,7 @@
     <ClInclude Include="src\Component.h" />
     <ClInclude Include="src\ComponentFactory.h" />
     <ClInclude Include="src\ComponentIndustry.h" />
+    <ClInclude Include="src\Cubemap.h" />
     <ClInclude Include="src\DebugComponent.h" />
     <ClInclude Include="src\DebugComponentFactory.h" />
     <ClInclude Include="src\DirectionalLightComponent.h" />

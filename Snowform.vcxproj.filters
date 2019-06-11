@@ -260,6 +260,9 @@
     <ClCompile Include="src\ParticleBillboardMaterial.cpp">
       <Filter>Engine\Render\Material</Filter>
     </ClCompile>
+    <ClCompile Include="src\Cubemap.cpp">
+      <Filter>Engine\Render\Cubemap</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameObject.h">
@@ -529,6 +532,9 @@
     <ClInclude Include="src\LightConstants.h">
       <Filter>Engine\Render\Illumination</Filter>
     </ClInclude>
+    <ClInclude Include="src\Cubemap.h">
+      <Filter>Engine\Render\Cubemap</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">
@@ -620,6 +626,9 @@
     </Filter>
     <Filter Include="Engine\Render\ParticleSystem">
       <UniqueIdentifier>{01055331-4b4e-4622-a520-e2518f44ddb5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Render\Cubemap">
+      <UniqueIdentifier>{feaca7ef-e4e2-4ff3-8359-bbed3f4f85fc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
