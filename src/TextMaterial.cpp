@@ -18,7 +18,7 @@ TextMaterial::~TextMaterial()
 {
 }
 
-void TextMaterial::SetUniforms(CameraComponent* camera, MeshRendererComponent* renderer)
+void TextMaterial::PreRender(CameraComponent* camera, MeshRendererComponent* renderer)
 {
     if (shaderProgram)
     {

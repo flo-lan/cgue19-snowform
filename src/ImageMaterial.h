@@ -11,7 +11,7 @@ public:
     ImageMaterial(std::string const& name, ShaderProgram* shaderProgram);
     virtual ~ImageMaterial();
 
-    virtual void SetUniforms(CameraComponent* camera, MeshRendererComponent* renderer);
+    virtual void PreRender(CameraComponent* camera, MeshRendererComponent* renderer);
 
     void SetImageTexture(Texture2D* value) { imageTexture = value; }
     void SetImageColor(glm::vec4 value) { imageColor = value; }

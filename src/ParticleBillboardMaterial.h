@@ -11,7 +11,7 @@ public:
     ParticleBillboardMaterial(std::string const& name, ShaderProgram* shaderProgram);
     virtual ~ParticleBillboardMaterial();
 
-    virtual void SetUniforms(CameraComponent* camera, MeshRendererComponent* renderer);
+    virtual void PreRender(CameraComponent* camera, MeshRendererComponent* renderer);
 
     void SetDiffuseTexture(Texture2D* diffuseTexture) { this->diffuseTexture = diffuseTexture; }
     void SetDiffuseColor(glm::vec3 diffuseColor) { this->diffuseColor = diffuseColor; }

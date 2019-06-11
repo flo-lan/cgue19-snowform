@@ -14,7 +14,7 @@ ShadowMapMaterial::~ShadowMapMaterial()
 {
 }
 
-void ShadowMapMaterial::SetUniforms(CameraComponent* camera, MeshRendererComponent* renderer)
+void ShadowMapMaterial::PreRender(CameraComponent* camera, MeshRendererComponent* renderer)
 {
     if (shaderProgram)
     {

@@ -18,7 +18,7 @@ ImageMaterial::~ImageMaterial()
 {
 }
 
-void ImageMaterial::SetUniforms(CameraComponent* camera, MeshRendererComponent* renderer)
+void ImageMaterial::PreRender(CameraComponent* camera, MeshRendererComponent* renderer)
 {
     if (shaderProgram)
     {

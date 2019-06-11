@@ -19,7 +19,7 @@ ParticleBillboardMaterial::~ParticleBillboardMaterial()
 {
 }
 
-void ParticleBillboardMaterial::SetUniforms(CameraComponent* camera, MeshRendererComponent* renderer)
+void ParticleBillboardMaterial::PreRender(CameraComponent* camera, MeshRendererComponent* renderer)
 {
     if (shaderProgram)
     {

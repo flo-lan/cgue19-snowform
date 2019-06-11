@@ -14,7 +14,7 @@ SimpleMaterial::~SimpleMaterial()
 {
 }
 
-void SimpleMaterial::SetUniforms(CameraComponent* camera, MeshRendererComponent* renderer)
+void SimpleMaterial::PreRender(CameraComponent* camera, MeshRendererComponent* renderer)
 {
     if (shaderProgram)
     {

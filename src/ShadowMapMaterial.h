@@ -9,7 +9,7 @@ public:
     ShadowMapMaterial(std::string const& name, ShaderProgram* shaderProgram);
     virtual ~ShadowMapMaterial();
 
-    virtual void SetUniforms(CameraComponent* camera, MeshRendererComponent* renderer);
+    virtual void PreRender(CameraComponent* camera, MeshRendererComponent* renderer);
 
     void SetShadowMapProjection(glm::mat4 const& shadowMapProjection) { this->shadowMapProjection = shadowMapProjection; }
 

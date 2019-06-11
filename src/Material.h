@@ -16,7 +16,8 @@ public:
 
     void Use();
 
-    virtual void SetUniforms(CameraComponent* camera, MeshRendererComponent* renderer) {}
+    virtual void PreRender(CameraComponent* camera, MeshRendererComponent* renderer) {}
+    virtual void PostRender(CameraComponent* camera, MeshRendererComponent* renderer) {}
 
 protected:
     std::string name;

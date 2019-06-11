@@ -16,7 +16,7 @@ ImageCutOffMaterial::~ImageCutOffMaterial()
 {
 }
 
-void ImageCutOffMaterial::SetUniforms(CameraComponent* camera, MeshRendererComponent* renderer)
+void ImageCutOffMaterial::PreRender(CameraComponent* camera, MeshRendererComponent* renderer)
 {
     if (shaderProgram)
     {

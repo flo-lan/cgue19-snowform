@@ -79,7 +79,7 @@ StandardMaterial::~StandardMaterial()
 {
 }
 
-void StandardMaterial::SetUniforms(CameraComponent* camera, MeshRendererComponent* renderer)
+void StandardMaterial::PreRender(CameraComponent* camera, MeshRendererComponent* renderer)
 {
     if (shaderProgram)
     {

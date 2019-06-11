@@ -90,20 +90,22 @@ void MeshRendererComponent::Render(CameraComponent* camera, Material* material)
     if (camera && material && mesh && enabled)
     {
         material->Use();
-        material->SetUniforms(camera, this);
-
-        mesh->Bind();
-
-        if (instanceCount > 0)
+        material->PreRender(camera, this);
         {
-            glDrawElementsInstanced(GL_TRIANGLES, (GLsizei)mesh->GetIndexCount(), GL_UNSIGNED_INT, (void*)0, instanceCount);
-        }
-        else
-        {
-            glDrawElements(GL_TRIANGLES, (GLsizei)mesh->GetIndexCount(), GL_UNSIGNED_INT, (void*)0);
-        }
+            mesh->Bind();
 
-        mesh->Unbind();
+            if (instanceCount > 0)
+            {
+                glDrawElementsInstanced(GL_TRIANGLES, (GLsizei)mesh->GetIndexCount(), GL_UNSIGNED_INT, (void*)0, instanceCount);
+            }
+            else
+            {
+                glDrawElements(GL_TRIANGLES, (GLsizei)mesh->GetIndexCount(), GL_UNSIGNED_INT, (void*)0);
+            }
+
+            mesh->Unbind();
+        }
+        material->PostRender(camera, this);
     }
 }
 
