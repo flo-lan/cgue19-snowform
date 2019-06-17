@@ -79,6 +79,7 @@
     <ClCompile Include="src\TextComponentFactory.cpp" />
     <ClCompile Include="src\TextMaterial.cpp" />
     <ClCompile Include="src\TextComponent.cpp" />
+    <ClCompile Include="src\TextMaterial3D.cpp" />
     <ClCompile Include="src\Texture2D.cpp" />
     <ClCompile Include="src\ThirdPersonControllerComponent.cpp" />
     <ClCompile Include="src\ThirdPersonControllerComponentFactory.cpp" />
@@ -171,6 +172,7 @@
     <ClInclude Include="src\TextComponentFactory.h" />
     <ClInclude Include="src\TextMaterial.h" />
     <ClInclude Include="src\TextComponent.h" />
+    <ClInclude Include="src\TextMaterial3D.h" />
     <ClInclude Include="src\Texture2D.h" />
     <ClInclude Include="src\ThirdPersonControllerComponent.h" />
     <ClInclude Include="src\ThirdPersonControllerComponentFactory.h" />
