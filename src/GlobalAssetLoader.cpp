@@ -7,6 +7,7 @@
 #include "ImageMaterial.h"
 #include "ImageCutOffMaterial.h"
 #include "TextMaterial.h"
+#include "TextMaterial3D.h"
 #include "ShadowMapMaterial.h"
 #include "ParticleBillboardMaterial.h"
 #include "AssetManager.h"
@@ -116,16 +117,19 @@ bool GlobalAssetLoader::LoadAssets()
     if (TextMaterial* tm = sAssetManager.CreateMaterial<TextMaterial>("CoinCount", textShaderProgram))
     {
         tm->SetAtlasTexture(sAssetManager.GetTexture2D("arial_atlas"));
+        tm->SetTextColor(glm::vec4(0.91f, 0.835f, 0.192f, 1.f));
     }
 
     if (TextMaterial* tm = sAssetManager.CreateMaterial<TextMaterial>("FPS", textShaderProgram))
     {
         tm->SetAtlasTexture(sAssetManager.GetTexture2D("arial_atlas"));
+        tm->SetTextColor(glm::vec4(0.91f, 0.835f, 0.192f, 1.f));
     }
 
     if (TextMaterial* tm = sAssetManager.CreateMaterial<TextMaterial>("RemainingTime", textShaderProgram))
     {
         tm->SetAtlasTexture(sAssetManager.GetTexture2D("arial_atlas"));
+        tm->SetTextColor(glm::vec4(0.91f, 0.835f, 0.192f, 1.f));
     }
 
     if (TextMaterial* tm = sAssetManager.CreateMaterial<TextMaterial>("LevelFinished", textShaderProgram))
@@ -136,11 +140,24 @@ bool GlobalAssetLoader::LoadAssets()
     if (TextMaterial* tm = sAssetManager.CreateMaterial<TextMaterial>("CoinsLeft", textShaderProgram))
     {
         tm->SetAtlasTexture(sAssetManager.GetTexture2D("arial_atlas"));
+        tm->SetTextColor(glm::vec4(0.91f, 0.835f, 0.192f, 1.f));
     }
 
     if (TextMaterial* tm = sAssetManager.CreateMaterial<TextMaterial>("Credits", textShaderProgram))
     {
         tm->SetAtlasTexture(sAssetManager.GetTexture2D("arial_atlas"));
+    }
+
+    if (TextMaterial3D* tm = sAssetManager.CreateMaterial<TextMaterial3D>("Outline3D", textShaderProgram))
+    {
+        tm->SetAtlasTexture(sAssetManager.GetTexture2D("arial_atlas"));
+        tm->SetTextColor(glm::vec4(0.f, 0.f, 0.f, 1.f));
+    }
+
+    if (TextMaterial3D* tm = sAssetManager.CreateMaterial<TextMaterial3D>("SnowmanText", textShaderProgram))
+    {
+        tm->SetAtlasTexture(sAssetManager.GetTexture2D("arial_atlas"));
+        tm->SetTextColor(glm::vec4(0.91f, 0.835f, 0.192f, 1.f));
     }
 
     if (ImageCutOffMaterial* im = sAssetManager.CreateMaterial<ImageCutOffMaterial>("TransitionOverlay", imageCutOffShaderProgram))

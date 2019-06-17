@@ -266,6 +266,9 @@
     <ClCompile Include="src\SkyboxMaterial.cpp">
       <Filter>Engine\Render\Material</Filter>
     </ClCompile>
+    <ClCompile Include="src\TextMaterial3D.cpp">
+      <Filter>Engine\Render\Material</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameObject.h">
@@ -539,6 +542,9 @@
       <Filter>Engine\Render\Cubemap</Filter>
     </ClInclude>
     <ClInclude Include="src\SkyboxMaterial.h">
+      <Filter>Engine\Render\Material</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TextMaterial3D.h">
       <Filter>Engine\Render\Material</Filter>
     </ClInclude>
   </ItemGroup>
