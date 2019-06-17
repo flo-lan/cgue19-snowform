@@ -191,7 +191,7 @@
     <Components>
       <TransformComponent localPosition="-5 15 75" localRotation="0 0 0" localScale="1 1 1" />
       <SphereColliderComponent physicsMaterial="Snowball" offset="0 0 0" radius="0.5" trigger="false" />
-      <RigidDynamicComponent CCD="true" kinematic="false" mass="1" maxLinearVelocity="80" maxAngularVelocity="100" raycastLayerMask="2" />
+      <RigidDynamicComponent CCD="true" kinematic="false" mass="1" maxLinearVelocity="10" maxAngularVelocity="20" raycastLayerMask="2" />
       <PlayerComponent />
     </Components>
     <Children>
