@@ -39,4 +39,5 @@ private:
     float lastMousePositionY;
     float lastMouseScrollValue;
     float remainingMouseScroll;
+    bool isGrounded;
 };

@@ -22,12 +22,13 @@ ThirdPersonControllerComponent::ThirdPersonControllerComponent(GameObject* owner
     maxDistance(25.f),
     scrollSpeed(30.f),
     velocity(30.f),
-    jumpVelocity(10.f),
+    jumpVelocity(20.f),
     jumpTimer(0.f),
     lastMousePositionX(0.f),
     lastMousePositionY(0.f),
     lastMouseScrollValue(0.f),
-    remainingMouseScroll(0.f)
+    remainingMouseScroll(0.f),
+    isGrounded(false)
 {
 }
 
@@ -110,46 +111,114 @@ void ThirdPersonControllerComponent::Update()
 
     RaycastHit hitInfo;
 
-    if (sPhysicsEngine.Raycast(targetTransform->GetPosition(), Down, 5.0f, hitInfo, RAYCAST_LAYER_DEFAULT) &&
-        hitInfo.Distance < 1.f)
+    isGrounded = sPhysicsEngine.Raycast(targetTransform->GetPosition(), Down, 5.0f, hitInfo, RAYCAST_LAYER_DEFAULT) &&
+        hitInfo.Distance < 1.f;
+
+    if (isGrounded)
     {
         if (sInputManager.IsKeyPressed(GLFW_KEY_W))
         {
             glm::vec3 direction = transform->GetDirectionBackward();
+            glm::vec3 torqueDirection = transform->GetDirectionRight() * -1.f;
             direction.y = 0;
             direction = glm::normalize(direction) * -1;
-            targetRigid->AddForce(direction * velocity * sTime.GetDeltaTime(), physx::PxForceMode::eIMPULSE);
+            torqueDirection.y = 0;
+            torqueDirection = glm::normalize(torqueDirection);
+            targetRigid->AddForce(direction * velocity * sTime.GetDeltaTime(), physx::PxForceMode::eVELOCITY_CHANGE);
+            targetRigid->AddTorque(torqueDirection * velocity * sTime.GetDeltaTime(), physx::PxForceMode::eVELOCITY_CHANGE);
         }
 
         if (sInputManager.IsKeyPressed(GLFW_KEY_A))
         {
             glm::vec3 direction = transform->GetDirectionRight();
+            glm::vec3 torqueDirection = transform->GetDirectionBackward();
             direction.y = 0;
             direction = glm::normalize(direction) * -1;
-            targetRigid->AddForce(direction * velocity * sTime.GetDeltaTime(), physx::PxForceMode::eIMPULSE);
+            torqueDirection.y = 0;
+            torqueDirection = glm::normalize(torqueDirection);
+            targetRigid->AddForce(direction * velocity * sTime.GetDeltaTime(), physx::PxForceMode::eVELOCITY_CHANGE);
+            targetRigid->AddTorque(torqueDirection * velocity * sTime.GetDeltaTime(), physx::PxForceMode::eVELOCITY_CHANGE);
         }
 
         if (sInputManager.IsKeyPressed(GLFW_KEY_S))
         {
             glm::vec3 direction = transform->GetDirectionBackward();
+            glm::vec3 torqueDirection = transform->GetDirectionRight();
             direction.y = 0;
             direction = glm::normalize(direction);
-            targetRigid->AddForce(direction * velocity * sTime.GetDeltaTime(), physx::PxForceMode::eIMPULSE);
+            torqueDirection.y = 0;
+            torqueDirection = glm::normalize(torqueDirection);
+            targetRigid->AddForce(direction * velocity * sTime.GetDeltaTime(), physx::PxForceMode::eVELOCITY_CHANGE);
+            targetRigid->AddTorque(torqueDirection * velocity * sTime.GetDeltaTime(), physx::PxForceMode::eVELOCITY_CHANGE);
         }
 
         if (sInputManager.IsKeyPressed(GLFW_KEY_D))
         {
             glm::vec3 direction = transform->GetDirectionRight();
+            glm::vec3 torqueDirection = transform->GetDirectionBackward() * -1.f;
             direction.y = 0;
             direction = glm::normalize(direction);
-            targetRigid->AddForce(direction * velocity * sTime.GetDeltaTime(), physx::PxForceMode::eIMPULSE);
+            torqueDirection.y = 0;
+            torqueDirection = glm::normalize(torqueDirection);
+            targetRigid->AddForce(direction * velocity * sTime.GetDeltaTime(), physx::PxForceMode::eVELOCITY_CHANGE);
+            targetRigid->AddTorque(torqueDirection * velocity * sTime.GetDeltaTime(), physx::PxForceMode::eVELOCITY_CHANGE);
         }
 
         if (sInputManager.IsKeyPressed(GLFW_KEY_SPACE) && jumpTimer == 0.f)
         {
             jumpTimer = 0.5f; // max 2 jumps / second
 
-            targetRigid->AddForce(glm::vec3(0.f, jumpVelocity, 0.f), physx::PxForceMode::eIMPULSE);
+            targetRigid->AddForce(glm::vec3(0.f, jumpVelocity, 0.f), physx::PxForceMode::eVELOCITY_CHANGE);
+        }
+    }
+    else
+    {
+        if (sInputManager.IsKeyPressed(GLFW_KEY_W))
+        {
+            glm::vec3 direction = transform->GetDirectionBackward();
+            glm::vec3 torqueDirection = transform->GetDirectionRight() * -1.f;
+            direction.y = 0;
+            direction = glm::normalize(direction) * -1;
+            torqueDirection.y = 0;
+            torqueDirection = glm::normalize(torqueDirection);
+            targetRigid->AddForce(direction * velocity * sTime.GetDeltaTime() * 0.1f, physx::PxForceMode::eVELOCITY_CHANGE);
+            targetRigid->AddTorque(torqueDirection * velocity * sTime.GetDeltaTime() * 0.1f, physx::PxForceMode::eVELOCITY_CHANGE);
+        }
+
+        if (sInputManager.IsKeyPressed(GLFW_KEY_A))
+        {
+            glm::vec3 direction = transform->GetDirectionRight();
+            glm::vec3 torqueDirection = transform->GetDirectionBackward();
+            direction.y = 0;
+            direction = glm::normalize(direction) * -1;
+            torqueDirection.y = 0;
+            torqueDirection = glm::normalize(torqueDirection);
+            targetRigid->AddForce(direction * velocity * sTime.GetDeltaTime() * 0.1f, physx::PxForceMode::eVELOCITY_CHANGE);
+            targetRigid->AddTorque(torqueDirection * velocity * sTime.GetDeltaTime() * 0.1f, physx::PxForceMode::eVELOCITY_CHANGE);
+        }
+
+        if (sInputManager.IsKeyPressed(GLFW_KEY_S))
+        {
+            glm::vec3 direction = transform->GetDirectionBackward();
+            glm::vec3 torqueDirection = transform->GetDirectionRight();
+            direction.y = 0;
+            direction = glm::normalize(direction);
+            torqueDirection.y = 0;
+            torqueDirection = glm::normalize(torqueDirection);
+            targetRigid->AddForce(direction * velocity * sTime.GetDeltaTime() * 0.1f, physx::PxForceMode::eVELOCITY_CHANGE);
+            targetRigid->AddTorque(torqueDirection * velocity * sTime.GetDeltaTime() * 0.1f, physx::PxForceMode::eVELOCITY_CHANGE);
+        }
+
+        if (sInputManager.IsKeyPressed(GLFW_KEY_D))
+        {
+            glm::vec3 direction = transform->GetDirectionRight();
+            glm::vec3 torqueDirection = transform->GetDirectionBackward() * -1.f;
+            direction.y = 0;
+            direction = glm::normalize(direction);
+            torqueDirection.y = 0;
+            torqueDirection = glm::normalize(torqueDirection);
+            targetRigid->AddForce(direction * velocity * sTime.GetDeltaTime() * 0.1f, physx::PxForceMode::eVELOCITY_CHANGE);
+            targetRigid->AddTorque(torqueDirection * velocity * sTime.GetDeltaTime() * 0.1f, physx::PxForceMode::eVELOCITY_CHANGE);
         }
     }
 
