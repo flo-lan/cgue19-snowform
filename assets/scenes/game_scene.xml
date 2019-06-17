@@ -527,4 +527,27 @@
       </GameObject>
     </Children>
   </GameObject>
+  <GameObject name="Ground Collider Fixes">
+    <Components>
+      <TransformComponent localPosition="0 0 0" localRotation="0 0 0" localScale="1 1 1" />
+    </Components>
+    <Children>
+      <GameObject name="Collider Fix 1">
+        <Components>
+          <TransformComponent localPosition="-5 5.03 40" localRotation="0 0 0" localScale="10 10 80" />
+          <BoxColliderComponent physicsMaterial="Default" offset="0 0 0" halfExtent="5 5 40" trigger="false" />
+          <RigidStaticComponent raycastLayerMask="1" />
+        </Components>
+        <Children />
+      </GameObject>
+      <GameObject name="Collider Fix 2">
+        <Components>
+          <TransformComponent localPosition="-5 5.03 75" localRotation="0 0 0" localScale="20 10 20" />
+          <BoxColliderComponent physicsMaterial="Default" offset="0 0 0" halfExtent="10 5 10" trigger="false" />
+          <RigidStaticComponent raycastLayerMask="1" />
+        </Components>
+        <Children />
+      </GameObject>
+    </Children>
+  </GameObject>
 </Scene>
