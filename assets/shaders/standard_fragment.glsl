@@ -126,9 +126,45 @@ vec3 CalculateDirectionalLight(int i, vec3 normal, vec3 viewDirection, vec4 diff
     vec3 lightDirection = normalize(-directionalLights[i].direction);
     // Diffuse shading
     float diff = max(dot(normal, lightDirection), 0.0);
+
+    if (diff > 0.9)
+    {
+        diff = 1;
+    }
+    else if (diff > 0.6)
+    {
+        diff = 0.7;
+    }
+    else if (diff > 0.4)
+    {
+        diff = 0.5;
+    }
+    else
+    {
+        diff = 0.1;
+    }
+
     // Specular shading
     vec3 reflectDirection = reflect(-lightDirection, normal);
     float spec = pow(max(dot(viewDirection, reflectDirection), 0.0), material.shininess);
+
+    if (spec > 0.9)
+    {
+        spec = 1;
+    }
+    else if (spec > 0.6)
+    {
+        spec = 0.7;
+    }
+    else if (spec > 0.4)
+    {
+        spec = 0.5;
+    }
+    else
+    {
+        spec = 0.1;
+    }
+
     // Combine results
     vec3 diffuse  = directionalLights[i].diffuse  * material.diffuseReflectionConstant  * material.diffuse  * diff * diffuseTextureColor.rgb * fragColor;
     vec3 specular = directionalLights[i].specular * material.specularReflectionConstant * material.specular * spec * specularTextureColor.rgb;
@@ -255,5 +291,5 @@ void main()
 		colorOut = vec4(result, 1.0) * vec4(0.0, 0.0, 0.6, 1.0);
 	}
     else*/
-		colorOut = vec4(result, 1.0);
+	colorOut = vec4(result, 1.0);
 }
