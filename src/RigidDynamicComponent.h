@@ -36,6 +36,9 @@ public:
     void AddForce(glm::vec3 const& force, physx::PxForceMode::Enum mode = physx::PxForceMode::eFORCE);
     void AddTorque(glm::vec3 const& torque, physx::PxForceMode::Enum mode = physx::PxForceMode::eFORCE);
 
+    physx::PxVec3 GetLinearVelocity() const;
+    physx::PxVec3 GetAngularVelocity() const;
+
     virtual void SetGlobalPose(physx::PxTransform& globalPose);
 
 protected:

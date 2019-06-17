@@ -118,6 +118,16 @@ void RigidDynamicComponent::AddTorque(glm::vec3 const& torque, physx::PxForceMod
     }
 }
 
+physx::PxVec3 RigidDynamicComponent::GetLinearVelocity() const
+{
+    return pxRigidDynamic ? pxRigidDynamic->getLinearVelocity() : physx::PxVec3();
+}
+
+physx::PxVec3 RigidDynamicComponent::GetAngularVelocity() const
+{
+    return pxRigidDynamic ? pxRigidDynamic->getAngularVelocity() : physx::PxVec3();
+}
+
 void RigidDynamicComponent::SetGlobalPose(physx::PxTransform& globalPose)
 {
     if (pxRigidDynamic)
