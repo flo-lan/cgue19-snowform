@@ -269,6 +269,9 @@
     <ClCompile Include="src\TextMaterial3D.cpp">
       <Filter>Engine\Render\Material</Filter>
     </ClCompile>
+    <ClCompile Include="src\Bounds.cpp">
+      <Filter>Engine\Physics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameObject.h">
@@ -546,6 +549,9 @@
     </ClInclude>
     <ClInclude Include="src\TextMaterial3D.h">
       <Filter>Engine\Render\Material</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Bounds.h">
+      <Filter>Engine\Physics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

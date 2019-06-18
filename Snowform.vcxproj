@@ -4,6 +4,7 @@
     <ClCompile Include="src\ArcBallControllerComponent.cpp" />
     <ClCompile Include="src\ArcBallControllerComponentFactory.cpp" />
     <ClCompile Include="src\AssetLoader.cpp" />
+    <ClCompile Include="src\Bounds.cpp" />
     <ClCompile Include="src\BoxColliderComponent.cpp" />
     <ClCompile Include="src\BoxColliderComponentFactory.cpp" />
     <ClCompile Include="src\CameraComponent.cpp" />
@@ -93,6 +94,7 @@
     <ClInclude Include="src\ArcBallControllerComponentFactory.h" />
     <ClInclude Include="src\AssetLoader.h" />
     <ClInclude Include="src\AssetManager.h" />
+    <ClInclude Include="src\Bounds.h" />
     <ClInclude Include="src\BoxColliderComponent.h" />
     <ClInclude Include="src\BoxColliderComponentFactory.h" />
     <ClInclude Include="src\CameraComponent.h" />
