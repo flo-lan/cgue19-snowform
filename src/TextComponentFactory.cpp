@@ -145,4 +145,55 @@ void TextComponentFactory::Build(GameObject* gameObject, tinyxml2::XMLElement* e
     {
         textComponent->SetEnabled(std::string(element->Attribute("enabled")) == "true");
     }
+
+    if (element->Attribute("outline"))
+    {
+        textComponent->SetOutline(std::string(element->Attribute("outline")) == "true");
+    }
+
+    if (element->Attribute("outlineMaterial"))
+    {
+        std::string outlineMaterialName = std::string(element->Attribute("outlineMaterial"));
+
+        if (Material* outlineMaterial = sAssetManager.GetMaterial(outlineMaterialName))
+        {
+            textComponent->SetOutlineMaterial(outlineMaterial);
+        }
+        else
+        {
+            fprintf(stderr, "Could not find outline material '%s' for text component of game object '%s'!\n", outlineMaterialName.c_str(), gameObject->GetName().c_str());
+        }
+    }
+
+    if (element->Attribute("outlineThickness"))
+    {
+        std::string outlineThicknessValue = std::string(element->Attribute("outlineThickness"));
+        textComponent->SetOutlineThickness(std::strtof(outlineThicknessValue.c_str(), 0));
+    }
+
+    if (element->Attribute("outlineOffset"))
+    {
+        std::string offsetString = std::string(element->Attribute("outlineOffset"));
+        std::vector<std::string> offsetStringSplit = split(offsetString, ' ');
+
+        glm::vec3 offset = glm::vec3(0.f, 0.f, 0.f);
+
+        switch (offsetStringSplit.size())
+        {
+            case 3:
+                offset.z = (float)::atof(offsetStringSplit[2].c_str());
+                // No break
+            case 2:
+                offset.y = (float)::atof(offsetStringSplit[1].c_str());
+                // No break
+            case 1:
+                offset.x = (float)::atof(offsetStringSplit[0].c_str());
+                break;
+            default:
+                fprintf(stderr, "Could not parse outline offset for text component of game object '%s'!\n", gameObject->GetName().c_str());
+                break;
+        }
+
+        textComponent->SetOutlineOffset(offset);
+    }
 }

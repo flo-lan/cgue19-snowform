@@ -21,6 +21,8 @@ public:
 
     virtual void OnStart();
 
+    bool IsEnabled() const { return enabled; }
+
     void Render(CameraComponent* camera) { Render(camera, material); }
     void Render(CameraComponent* camera, Material* material);
 

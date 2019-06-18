@@ -10,19 +10,30 @@
 TextComponent::TextComponent(GameObject* owner) :
     Component::Component(owner),
     transform(owner->GetComponent<TransformComponent>()),
-    meshRenderer(owner->AttachComponent<MeshRendererComponent>()),
+    meshRenderer(nullptr),
+    meshRendererOutline(nullptr),
     textAlignment(TEXT_ALIGNMENT_TOP_LEFT),
     glyphBlock(new GlyphBlock()),
     textMesh(new Mesh("Dynamic Textmesh")),
+    textMeshOutline(new Mesh("Dynamic Textmesh Outline")),
+    outline(false),
+    outlineThickness(1.f),
+    outlineOffset(0.f),
+    isOutlineDirty(false),
     isDirty(false)
 {
     fprintf(stdout, "Attached text component to game object '%s'!\n", GetOwner()->GetName().c_str());
+
+    // Attach outline renderer first (!) Render order is important
+    meshRendererOutline = owner->AttachComponent<MeshRendererComponent>();
+    meshRenderer = owner->AttachComponent<MeshRendererComponent>();
 }
 
 TextComponent::~TextComponent()
 {
     fprintf(stdout, "Deleted text component from game object '%s'!\n", GetOwner()->GetName().c_str());
 
+    delete textMeshOutline;
     delete textMesh;
     delete glyphBlock;
 }
@@ -33,6 +44,10 @@ void TextComponent::OnRemoveComponent(Component* component)
     {
         meshRenderer = nullptr;
     }
+    else if (component == meshRendererOutline)
+    {
+        meshRendererOutline = nullptr;
+    }
 }
 
 void TextComponent::OnDestroy()
@@ -40,6 +55,11 @@ void TextComponent::OnDestroy()
     if (meshRenderer)
     {
         meshRenderer->Destroy();
+    }
+
+    if (meshRendererOutline)
+    {
+        meshRendererOutline->Destroy();
     }
 }
 
@@ -53,6 +73,13 @@ void TextComponent::LateUpdate()
 
         RebuildTextMesh();
     }
+
+    if (isOutlineDirty && outline)
+    {
+        isOutlineDirty = false;
+
+        RebuildOutlineMesh();
+    }
 }
 
 void TextComponent::SetEnabled(bool enable)
@@ -60,6 +87,11 @@ void TextComponent::SetEnabled(bool enable)
     if (meshRenderer)
     {
         meshRenderer->SetEnabled(enable);
+    }
+
+    if (meshRendererOutline && outline)
+    {
+        meshRendererOutline->SetEnabled(enable);
     }
 }
 
@@ -80,6 +112,52 @@ void TextComponent::SetFontSize(float fontSize)
     transform->SetLocalScale(fontSize, fontSize, 0.f);
 
     isDirty = true;
+    isOutlineDirty = true;
+}
+
+void TextComponent::SetOutline(bool outline)
+{
+    if (!this->outline && outline)
+    {
+        isOutlineDirty = true;
+    }
+
+    this->outline = outline;
+
+    if (meshRendererOutline)
+    {
+        meshRendererOutline->SetEnabled(meshRenderer && meshRenderer->IsEnabled());
+    }
+}
+
+void TextComponent::SetOutlineMaterial(Material* outlineMaterial)
+{
+    if (!meshRendererOutline)
+    {
+        return;
+    }
+
+    meshRendererOutline->SetMaterial(outlineMaterial);
+}
+
+void TextComponent::SetOutlineThickness(float outlineThickness)
+{
+    if (this->outlineThickness != outlineThickness)
+    {
+        isOutlineDirty = true;
+    }
+
+    this->outlineThickness = outlineThickness;
+}
+
+void TextComponent::SetOutlineOffset(glm::vec3 outlineOffset)
+{
+    if (this->outlineOffset != outlineOffset)
+    {
+        isOutlineDirty = true;
+    }
+
+    this->outlineOffset = outlineOffset;
 }
 
 Material* TextComponent::GetMaterial() const
@@ -237,4 +315,74 @@ void TextComponent::RebuildTextMesh()
 
     //fprintf(stdout, "Rebuilt text mesh for text '%s' with %i quads and %i indices!\n",
     //        glyphBlock->GetText().c_str(), (int)(mesh.Vertices.size() / 4), (int)mesh.Indices.size());
+}
+
+void TextComponent::RebuildOutlineMesh()
+{
+    if (!meshRenderer)
+    {
+        return;
+    }
+
+    if (!meshRendererOutline)
+    {
+        return;
+    }
+
+    Mesh& mesh = *this->textMesh;
+    Mesh& outlineMesh = *this->textMeshOutline;
+
+    if (mesh.Vertices.size())
+    {
+        outlineMesh.Vertices.resize(mesh.Vertices.size());
+    }
+    else
+    {
+        outlineMesh.Vertices.clear();
+    }
+
+    if (mesh.Indices.size())
+    {
+        outlineMesh.Indices.resize(mesh.Indices.size());
+    }
+    else
+    {
+        outlineMesh.Indices.clear();
+    }
+
+    std::copy(mesh.Vertices.begin(), mesh.Vertices.end(), outlineMesh.Vertices.begin());
+    std::copy(mesh.Indices.begin(), mesh.Indices.end(), outlineMesh.Indices.begin());
+
+    static const glm::vec3 dir00 = glm::vec3(-1.f, -1.f, 0.f);
+    static const glm::vec3 dir01 = glm::vec3(-1.f,  1.f, 0.f);
+    static const glm::vec3 dir10 = glm::vec3( 1.f, -1.f, 0.f);
+    static const glm::vec3 dir11 = glm::vec3( 1.f,  1.f, 0.f);
+
+    glm::vec3 offset00 = dir00 * outlineThickness + outlineOffset;
+    glm::vec3 offset01 = dir01 * outlineThickness + outlineOffset;
+    glm::vec3 offset10 = dir10 * outlineThickness + outlineOffset;
+    glm::vec3 offset11 = dir11 * outlineThickness + outlineOffset;
+
+    for (size_t i = 0; i < outlineMesh.Vertices.size(); i += 4)
+    {
+        Vertex& v00 = outlineMesh.Vertices[i];
+        Vertex& v01 = outlineMesh.Vertices[i+1];
+        Vertex& v10 = outlineMesh.Vertices[i+2];
+        Vertex& v11 = outlineMesh.Vertices[i+3];
+
+        v00.Position = glm::vec3(v00.Position) + offset00;
+        v01.Position = glm::vec3(v01.Position) + offset01;
+        v10.Position = glm::vec3(v10.Position) + offset10;
+        v11.Position = glm::vec3(v11.Position) + offset11;
+    }
+
+    if (outlineMesh.Vertices.size())
+    {
+        textMeshOutline->Upload(); // Hack to update static meshes; ToDo: Implement dynamic mesh drawing for better performance
+        meshRendererOutline->SetMesh(textMeshOutline);
+    }
+    else
+    {
+        meshRendererOutline->SetMesh(nullptr);
+    }
 }

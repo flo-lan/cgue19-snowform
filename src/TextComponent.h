@@ -2,6 +2,7 @@
 
 #include "Component.h"
 #include "GlyphBlock.h"
+#include <glm/glm.hpp>
 #include <string>
 
 class GlyphBlock;
@@ -36,14 +37,18 @@ public:
 
     void SetEnabled(bool enable);
     void SetMaterial(Material* material);
-    void SetFont(Font* font) { glyphBlock->SetFont(font); isDirty = true; }
+    void SetFont(Font* font) { glyphBlock->SetFont(font); isDirty = isOutlineDirty = true; }
     void SetFontSize(float fontSize);
-    void SetText(std::string const& text) { glyphBlock->SetText(text); isDirty = true; }
-    void SetTextAlignment(TextAlignment textAlignment) { this->textAlignment = textAlignment; isDirty = true; }
-    void SetTextOverflowMode(TextOverflowMode textOverflowMode) { glyphBlock->SetTextOverflowMode(textOverflowMode); isDirty = true; }
-    void SetWordWrapping(bool enable) { glyphBlock->SetWordWrapping(enable); isDirty = true; }
-    void SetMaxWidth(float maxWidth) { glyphBlock->SetMaxWidth(maxWidth); isDirty = true; }
-    void SetMaxHeight(float maxHeight) { glyphBlock->SetMaxHeight(maxHeight); isDirty = true; }
+    void SetText(std::string const& text) { glyphBlock->SetText(text); isDirty = isOutlineDirty = true; }
+    void SetTextAlignment(TextAlignment textAlignment) { this->textAlignment = textAlignment; isDirty = isOutlineDirty = true; }
+    void SetTextOverflowMode(TextOverflowMode textOverflowMode) { glyphBlock->SetTextOverflowMode(textOverflowMode); isDirty = isOutlineDirty = true; }
+    void SetWordWrapping(bool enable) { glyphBlock->SetWordWrapping(enable); isDirty = isOutlineDirty = true; }
+    void SetMaxWidth(float maxWidth) { glyphBlock->SetMaxWidth(maxWidth); isDirty = isOutlineDirty = true; }
+    void SetMaxHeight(float maxHeight) { glyphBlock->SetMaxHeight(maxHeight); isDirty = isOutlineDirty = true; }
+    void SetOutline(bool outline);
+    void SetOutlineMaterial(Material* outlineMaterial);
+    void SetOutlineThickness(float outlineThickness);
+    void SetOutlineOffset(glm::vec3 outlineOffset);
 
     Material* GetMaterial() const;
     Font* GetFont() const { return glyphBlock->GetFont(); }
@@ -59,11 +64,18 @@ public:
 
 private:
     void RebuildTextMesh();
+    void RebuildOutlineMesh();
 
     TransformComponent* transform;
     MeshRendererComponent* meshRenderer;
+    MeshRendererComponent* meshRendererOutline;
     TextAlignment textAlignment;
     GlyphBlock* glyphBlock;
     Mesh* textMesh;
+    Mesh* textMeshOutline;
+    bool outline;
+    float outlineThickness;
+    glm::vec3 outlineOffset;
+    bool isOutlineDirty;
     bool isDirty;
 };

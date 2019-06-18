@@ -35,6 +35,11 @@ struct Vertex
     {
     }
 
+    Vertex() :
+        Vertex(0.f, 0.f, 0.f)
+    {
+    }
+
     Vertex(float positionX, float positionY, float positionZ)
         : Vertex(glm::vec3(positionX, positionY, positionZ))
     {
