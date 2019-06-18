@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Bounds.h"
 #include <glm/glm.hpp>
 #include <GL/glew.h>
 #include <string>
@@ -78,10 +79,14 @@ public:
     void Bind();
     void Unbind();
 
+    void RecalculateBounds();
+
     std::string const& GetName() const { return Name; }
 
     size_t GetVertexCount() const { return Vertices.size(); }
     size_t GetIndexCount() const { return Indices.size(); }
+
+    Bounds GetBounds() const { return bounds; }
 
     static Mesh* CreateQuad(std::string const& name, float width, float height);
     static Mesh* CreateCube(std::string const& name, float width, float height, float depth);
@@ -98,4 +103,5 @@ private:
     GLuint VAO;
     GLuint VBO;
     GLuint EBO;
+    Bounds bounds;
 };

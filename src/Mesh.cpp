@@ -10,7 +10,8 @@ Mesh::Mesh(std::string const& name) :
     Name(name),
     VAO(0),
     VBO(0),
-    EBO(0)
+    EBO(0),
+    bounds()
 {
     fprintf(stdout, "Created mesh '%s'!\n", Name.c_str());
 }
@@ -96,6 +97,36 @@ void Mesh::Unbind()
     glBindVertexArray(0);
 }
 
+void Mesh::RecalculateBounds()
+{
+    if (Vertices.size() == 0)
+    {
+        bounds = Bounds();
+        return;
+    }
+
+    glm::vec3 min = Vertices[0].Position;
+    glm::vec3 max = Vertices[0].Position;
+
+    for (int i = 1; i < Vertices.size(); ++i)
+    {
+        glm::vec3 const& pos = Vertices[i].Position;
+
+        if (pos.x < min.x) min.x = pos.x;
+        if (pos.y < min.y) min.y = pos.y;
+        if (pos.z < min.z) min.z = pos.z;
+
+        if (pos.x > max.x) max.x = pos.x;
+        if (pos.y > max.y) max.y = pos.y;
+        if (pos.z > max.z) max.z = pos.z;
+    }
+
+    bounds.Center = (max + min) / 2.f;
+    bounds.Size = max - min;
+    bounds.Min = min;
+    bounds.Max = max;
+}
+
 Mesh* Mesh::CreateQuad(std::string const& name, float width, float height)
 {
     Mesh* mesh = new Mesh(name);
@@ -112,6 +143,8 @@ Mesh* Mesh::CreateQuad(std::string const& name, float width, float height)
 
     mesh->Indices.push_back(0);  mesh->Indices.push_back(2);  mesh->Indices.push_back(1);
     mesh->Indices.push_back(2);  mesh->Indices.push_back(3);  mesh->Indices.push_back(1);
+
+    mesh->RecalculateBounds();
 
     return mesh;
 }
@@ -199,6 +232,8 @@ Mesh* Mesh::CreateCube(std::string const& name, float width, float height, float
     mesh->Indices.push_back(20); mesh->Indices.push_back(21); mesh->Indices.push_back(22); // Unten  | Dreieck Rechts
     mesh->Indices.push_back(22); mesh->Indices.push_back(21); mesh->Indices.push_back(23); // Unten  | Dreieck Links
 
+    mesh->RecalculateBounds();
+
     return mesh;
 }
 
@@ -269,6 +304,8 @@ Mesh* Mesh::CreateCylinder(std::string const& name, uint32_t segments, float rad
         mesh->Indices.push_back(verticesPerCircle + i + 1);
         mesh->Indices.push_back(verticesPerCircle + i);
     }
+
+    mesh->RecalculateBounds();
 
     return mesh;
 }
@@ -343,6 +380,8 @@ Mesh* Mesh::CreateSphere(std::string const& name, uint32_t segmentsLongitude, ui
         mesh->Indices.push_back(startIndex + i + 1);
     }
 
+    mesh->RecalculateBounds();
+
     return mesh;
 }
 
@@ -416,6 +455,8 @@ Mesh* Mesh::CreateTorus(std::string const& name, uint32_t tubeSegments, uint32_t
         }
     }
 
+    mesh->RecalculateBounds();
+
     return mesh;
 }
 
@@ -483,6 +524,8 @@ Mesh* Mesh::CreateFromFile(std::string const& name, std::string const& file)
 
         indexOffset += aiMesh->mNumFaces * 3;
     }
+
+    mesh->RecalculateBounds();
 
     return mesh;
 }
