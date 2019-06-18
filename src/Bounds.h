@@ -11,6 +11,13 @@ struct Bounds
         Max(glm::vec3(0.f))
     {}
 
+    void SetMinMax(glm::vec3 const& min, glm::vec3 const& max);
+    void Offset(glm::vec3 const& offset);
+    void Scale(glm::vec3 const& scale);
+
+    glm::vec3 GetCornerP(glm::vec3 const& normal) const;
+    glm::vec3 GetCornerN(glm::vec3 const& normal) const;
+
     glm::vec3 Center; // The center of the bounding box.
     glm::vec3 Size;   // The total size of the box.
     glm::vec3 Min;    // The minimal point of the box.

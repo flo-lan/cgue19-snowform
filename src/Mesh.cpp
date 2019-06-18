@@ -108,7 +108,7 @@ void Mesh::RecalculateBounds()
     glm::vec3 min = Vertices[0].Position;
     glm::vec3 max = Vertices[0].Position;
 
-    for (int i = 1; i < Vertices.size(); ++i)
+    for (size_t i = 1; i < Vertices.size(); ++i)
     {
         glm::vec3 const& pos = Vertices[i].Position;
 
@@ -121,10 +121,7 @@ void Mesh::RecalculateBounds()
         if (pos.z > max.z) max.z = pos.z;
     }
 
-    bounds.Center = (max + min) / 2.f;
-    bounds.Size = max - min;
-    bounds.Min = min;
-    bounds.Max = max;
+    bounds.SetMinMax(min, max);
 }
 
 Mesh* Mesh::CreateQuad(std::string const& name, float width, float height)

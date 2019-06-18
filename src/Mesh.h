@@ -86,7 +86,7 @@ public:
     size_t GetVertexCount() const { return Vertices.size(); }
     size_t GetIndexCount() const { return Indices.size(); }
 
-    Bounds GetBounds() const { return bounds; }
+    Bounds const& GetBounds() const { return bounds; }
 
     static Mesh* CreateQuad(std::string const& name, float width, float height);
     static Mesh* CreateCube(std::string const& name, float width, float height, float depth);
