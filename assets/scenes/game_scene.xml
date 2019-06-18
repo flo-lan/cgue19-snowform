@@ -478,17 +478,10 @@
         </Components>
         <Children />
       </GameObject>
-      <GameObject name="Snowman Text Outline">
-        <Components>
-          <TransformComponent localPosition="-11.94 15 68.06" localRotation="0 -315 0" localScale="1 1 1" />
-          <TextComponent enabled="true" material="Outline3D" font="Arial" fontSize="1.02" text="Collect all coins and reach the flag&#xA;-----------------------------------&gt;" textAlignment="CenterCenter" textOverflowMode="Overflow" wordWrapping="false" maxWidth="0" maxHeight="0" />
-        </Components>
-        <Children />
-      </GameObject>
       <GameObject name="Snowman Text">
         <Components>
           <TransformComponent localPosition="-11.96 15 68.04" localRotation="0 -315 0" localScale="1 1 1" />
-          <TextComponent enabled="true" material="SnowmanText" font="Arial" fontSize="1" text="Collect all coins and reach the flag&#xA;-----------------------------------&gt;" textAlignment="CenterCenter" textOverflowMode="Overflow" wordWrapping="false" maxWidth="0" maxHeight="0" />
+          <TextComponent enabled="true" material="SnowmanText" font="Arial" fontSize="1" text="Collect all coins and reach the flag&#xA;-----------------------------------&gt;" textAlignment="CenterCenter" textOverflowMode="Overflow" wordWrapping="false" maxWidth="0" maxHeight="0" outline="true" outlineMaterial="OutlineBlack3D" outlineThickness="0.1" outlineOffset="-0.05 0 0" />
         </Components>
         <Children />
       </GameObject>

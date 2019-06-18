@@ -6,6 +6,13 @@
         </Components>
         <Children />
     </GameObject>
+    <GameObject name="Header">
+        <Components>
+            <TransformComponent rect="true" localPosition="0.5 1" localScale="1 120" />
+            <MeshRendererComponent enabled="true" material="Header" mesh="Image" />
+        </Components>
+        <Children />
+    </GameObject>
     <GameObject name="CoinCountContainer">
         <Components>
             <TransformComponent rect="true" localPosition="15.0 -10.0" />

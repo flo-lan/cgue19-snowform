@@ -117,7 +117,7 @@ bool GlobalAssetLoader::LoadAssets()
     if (TextMaterial* tm = sAssetManager.CreateMaterial<TextMaterial>("CoinCount", textShaderProgram))
     {
         tm->SetAtlasTexture(sAssetManager.GetTexture2D("arial_atlas"));
-        tm->SetTextColor(glm::vec4(0.91f, 0.835f, 0.192f, 1.f));
+        tm->SetTextColor(glm::vec4(0.f, 0.f, 0.f, 1.f));
     }
 
     if (TextMaterial* tm = sAssetManager.CreateMaterial<TextMaterial>("FPS", textShaderProgram))
@@ -129,7 +129,7 @@ bool GlobalAssetLoader::LoadAssets()
     if (TextMaterial* tm = sAssetManager.CreateMaterial<TextMaterial>("RemainingTime", textShaderProgram))
     {
         tm->SetAtlasTexture(sAssetManager.GetTexture2D("arial_atlas"));
-        tm->SetTextColor(glm::vec4(0.91f, 0.835f, 0.192f, 1.f));
+        tm->SetTextColor(glm::vec4(0.f, 0.f, 0.f, 1.f));
     }
 
     if (TextMaterial* tm = sAssetManager.CreateMaterial<TextMaterial>("LevelFinished", textShaderProgram))
@@ -140,7 +140,7 @@ bool GlobalAssetLoader::LoadAssets()
     if (TextMaterial* tm = sAssetManager.CreateMaterial<TextMaterial>("CoinsLeft", textShaderProgram))
     {
         tm->SetAtlasTexture(sAssetManager.GetTexture2D("arial_atlas"));
-        tm->SetTextColor(glm::vec4(0.91f, 0.835f, 0.192f, 1.f));
+        tm->SetTextColor(glm::vec4(0.f, 0.f, 0.f, 1.f));
     }
 
     if (TextMaterial* tm = sAssetManager.CreateMaterial<TextMaterial>("Credits", textShaderProgram))
@@ -148,16 +148,45 @@ bool GlobalAssetLoader::LoadAssets()
         tm->SetAtlasTexture(sAssetManager.GetTexture2D("arial_atlas"));
     }
 
-    if (TextMaterial3D* tm = sAssetManager.CreateMaterial<TextMaterial3D>("Outline3D", textShaderProgram))
+    if (TextMaterial* tm = sAssetManager.CreateMaterial<TextMaterial>("OutlineBlack", textShaderProgram))
     {
         tm->SetAtlasTexture(sAssetManager.GetTexture2D("arial_atlas"));
         tm->SetTextColor(glm::vec4(0.f, 0.f, 0.f, 1.f));
     }
 
-    if (TextMaterial3D* tm = sAssetManager.CreateMaterial<TextMaterial3D>("SnowmanText", textShaderProgram))
+    if (TextMaterial* tm = sAssetManager.CreateMaterial<TextMaterial>("OutlineDarkRed", textShaderProgram))
+    {
+        tm->SetAtlasTexture(sAssetManager.GetTexture2D("arial_atlas"));
+        tm->SetTextColor(glm::vec4(0.8f, 0.f, 0.f, 1.f));
+    }
+
+    if (TextMaterial3D* tm = sAssetManager.CreateMaterial<TextMaterial3D>("OutlineBlack3D", textShaderProgram))
+    {
+        tm->SetAtlasTexture(sAssetManager.GetTexture2D("arial_atlas"));
+        tm->SetTextColor(glm::vec4(0.f, 0.f, 0.f, 1.f));
+    }
+
+    if (TextMaterial3D* tm = sAssetManager.CreateMaterial<TextMaterial3D>("OutlineDarkRed3D", textShaderProgram))
+    {
+        tm->SetAtlasTexture(sAssetManager.GetTexture2D("arial_atlas"));
+        tm->SetTextColor(glm::vec4(0.8f, 0.f, 0.f, 1.f));
+    }
+
+    if (TextMaterial3D* tm = sAssetManager.CreateMaterial<TextMaterial3D>("OutlineDarkYellow3D", textShaderProgram))
     {
         tm->SetAtlasTexture(sAssetManager.GetTexture2D("arial_atlas"));
         tm->SetTextColor(glm::vec4(0.91f, 0.835f, 0.192f, 1.f));
+    }
+
+    if (TextMaterial3D* tm = sAssetManager.CreateMaterial<TextMaterial3D>("SnowmanText", textShaderProgram))
+    {
+        tm->SetAtlasTexture(sAssetManager.GetTexture2D("arial_atlas"));
+        tm->SetTextColor(glm::vec4(1.f, 1.f, 1.f, 1.f));
+    }
+
+    if (ImageMaterial* im = sAssetManager.CreateMaterial<ImageMaterial>("Header", imageShaderProgram))
+    {
+        im->SetImageColor(glm::vec4(1.f, 1.f, 1.f, 0.5f));
     }
 
     if (ImageCutOffMaterial* im = sAssetManager.CreateMaterial<ImageCutOffMaterial>("TransitionOverlay", imageCutOffShaderProgram))
