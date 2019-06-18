@@ -14,7 +14,7 @@ PlayerComponent::PlayerComponent(GameObject* owner) :
 
 void PlayerComponent::Update()
 {
-    if (!dead && transform->GetPosition().y < -20.f)
+    if (!dead && transform->GetPosition().y < -5.f)
     {
         dead = true;
 
