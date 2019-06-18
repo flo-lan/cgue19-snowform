@@ -7,15 +7,13 @@
 
 CameraComponent::CameraComponent(GameObject* owner) :
     Component::Component(owner),
+    viewFrustum(),
+    viewFrustumCulling(false),
     transform(GetOwner()->GetComponent<TransformComponent>()),
     projMatrix(1.f),
     viewMatrix(1.f),
     viewProjectionMatrix(1.f),
-    orthographicProjectionMatrix(glm::ortho(0.0f, (float)Screen::GetWidth(), 0.0f, (float)Screen::GetHeight())),
-    fovInRadians(glm::radians(60.f)),
-    aspectRatio(Screen::GetWidth() / (float)Screen::GetHeight()),
-    nearPlane(0.1f),
-    farPlane(100.f)
+    orthographicProjectionMatrix(glm::ortho(0.0f, (float)Screen::GetWidth(), 0.0f, (float)Screen::GetHeight()))
 {
     GetOwner()->GetScene()->SetCamera(this);
 }
@@ -30,7 +28,9 @@ CameraComponent::~CameraComponent()
 
 void CameraComponent::LateUpdate()
 {
-    projMatrix = glm::perspective(fovInRadians, aspectRatio, nearPlane, farPlane);
+    viewFrustum.UpdateViewFrustum(transform->GetPosition(), transform->GetPosition() - transform->GetDirectionBackward(), glm::vec3(0.f, 1.f, 0.f));
+
+    projMatrix = glm::perspective(GetFovInRadians(), GetAspectRatio(), GetNearPlane(), GetFarPlane());
     viewMatrix = glm::inverse(transform->GetModelMatrix());
 
     viewProjectionMatrix = projMatrix * viewMatrix;

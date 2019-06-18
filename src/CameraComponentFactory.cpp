@@ -47,4 +47,9 @@ void CameraComponentFactory::Build(GameObject* gameObject, tinyxml2::XMLElement*
     {
         cameraComponent->SetFarPlane(sSettings.getCameraFar());
     }
+
+    if (element->Attribute("viewFrustumCulling"))
+    {
+        cameraComponent->SetViewFrustumCulling(std::string(element->Attribute("viewFrustumCulling")) == "true");
+    }
 }

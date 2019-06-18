@@ -8,6 +8,7 @@
 #include "Scene.h"
 #include "TransformComponent.h"
 #include "TransformGraphTraverser.h"
+#include "Mesh.h"
 #include <algorithm>
 #include <stack>
 #include <queue>
@@ -243,6 +244,19 @@ void GameObject::Render(CameraComponent* camera, Material* material)
     for (MeshRendererComponentList::const_iterator itr = meshRenderers.begin(); itr != meshRenderers.end(); ++itr)
     {
         (*itr)->Render(camera, material);
+    }
+}
+
+void GameObject::RenderViewFrustumCullingEnabled(CameraComponent* camera)
+{
+    if (destroyed)
+    {
+        return;
+    }
+
+    for (MeshRendererComponentList::const_iterator itr = meshRenderers.begin(); itr != meshRenderers.end(); ++itr)
+    {
+        (*itr)->RenderViewFrustumCullingEnabled(camera);
     }
 }
 

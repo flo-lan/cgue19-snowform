@@ -3,6 +3,7 @@
 #include "Screen.h"
 #include "GameObject.h"
 #include "TransformComponent.h"
+#include "CameraComponent.h"
 #include "DirectionalLightComponent.h"
 #include "ComponentIndustry.h"
 #include "ComponentFactory.h"
@@ -197,6 +198,20 @@ void Scene::PreRender()
     OnPreRender();
 }
 
+struct RenderSceneGraphViewFrustumCullingEnabledTraverser : public SceneGraphTraverser
+{
+    CameraComponent* Camera;
+
+    RenderSceneGraphViewFrustumCullingEnabledTraverser(CameraComponent* camera) :
+        Camera(camera)
+    {}
+
+    virtual void Visit(TransformComponent* transform)
+    {
+        transform->GetOwner()->RenderViewFrustumCullingEnabled(Camera);
+    }
+};
+
 struct RenderSceneGraphTraverser : public SceneGraphTraverser
 {
     CameraComponent* Camera;
@@ -213,7 +228,18 @@ struct RenderSceneGraphTraverser : public SceneGraphTraverser
 
 void Scene::Render()
 {
-    if (camera)
+    if (!camera)
+    {
+        return;
+    }
+
+    if (camera->IsViewFrustumCullingEnabled())
+    {
+        RenderSceneGraphViewFrustumCullingEnabledTraverser traverser(camera);
+
+        TraverseSceneGraphDF(traverser);
+    }
+    else
     {
         RenderSceneGraphTraverser traverser(camera);
 

@@ -90,6 +90,8 @@
     <ClCompile Include="src\TransformGraphTraverser.cpp" />
     <ClCompile Include="src\UniqueTypeId.cpp" />
     <ClCompile Include="src\UserInterfaceScene.cpp" />
+    <ClCompile Include="src\ViewFrustum.cpp" />
+    <ClCompile Include="src\ViewPlane.cpp" />
     <ClInclude Include="src\ArcBallControllerComponent.h" />
     <ClInclude Include="src\ArcBallControllerComponentFactory.h" />
     <ClInclude Include="src\AssetLoader.h" />
@@ -185,6 +187,8 @@
     <ClInclude Include="src\UniqueTypeId.h" />
     <ClInclude Include="src\UserInterfaceScene.h" />
     <ClInclude Include="src\Utils.h" />
+    <ClInclude Include="src\ViewFrustum.h" />
+    <ClInclude Include="src\ViewPlane.h" />
   </ItemGroup>
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">

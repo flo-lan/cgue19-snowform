@@ -32,6 +32,7 @@ public:
     void Update();
     void Render(CameraComponent* camera);
     void Render(CameraComponent* camera, Material* material); // Primary used to render shadow maps
+    void RenderViewFrustumCullingEnabled(CameraComponent* camera);
 
     void CollisionEnter(Collision const& collision);
     void CollisionExit(Collision const& collision);

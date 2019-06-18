@@ -25,6 +25,7 @@ public:
 
     void Render(CameraComponent* camera) { Render(camera, material); }
     void Render(CameraComponent* camera, Material* material);
+    void RenderViewFrustumCullingEnabled(CameraComponent* camera);
 
     void SetEnabled(bool value) { enabled = value; }
     void SetCastShadows(bool castShadows) { this->castShadows = castShadows; }
@@ -45,6 +46,7 @@ public:
     bool IsCastShadowsEnabled() const { return castShadows; }
     TransformComponent* GetTransform() const { return transform; }
     Material* GetMaterial() const { return material; }
+    Mesh* GetMesh() const { return mesh; }
     std::vector<DirectionalLightComponent*> const& GetDirectionalLights() { return directionalLights; }
     std::vector<PointLightComponent*> const& GetPointLights() { return pointLights; }
     std::vector<SpotLightComponent*> const& GetSpotLights() { return spotLights; }

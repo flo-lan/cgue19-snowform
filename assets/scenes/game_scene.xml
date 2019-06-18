@@ -11,7 +11,7 @@
   <GameObject id="MainCamera" name="Main Camera">
     <Components>
       <TransformComponent localPosition="-5 18 95" localRotation="-200 180 180" localScale="1 1 1" />
-      <CameraComponent />
+      <CameraComponent viewFrustumCulling="true" />
       <ThirdPersonControllerComponent targetId="Snowball" distance="20" />
     </Components>
     <Children />

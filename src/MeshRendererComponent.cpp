@@ -109,6 +109,20 @@ void MeshRendererComponent::Render(CameraComponent* camera, Material* material)
     }
 }
 
+void MeshRendererComponent::RenderViewFrustumCullingEnabled(CameraComponent* camera)
+{
+    if (camera && material && mesh && enabled)
+    {
+        Bounds meshBounds = mesh->GetBounds();
+        meshBounds.Offset(transform->GetPosition());
+        meshBounds.Scale(transform->GetScale());
+        if (camera->BoundsInFrustum(meshBounds))
+        {
+            Render(camera, material);
+        }
+    }
+}
+
 void MeshRendererComponent::SetMesh(Mesh* value)
 {
     mesh = value;

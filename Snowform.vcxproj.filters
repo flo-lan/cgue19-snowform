@@ -272,6 +272,12 @@
     <ClCompile Include="src\Bounds.cpp">
       <Filter>Engine\Physics</Filter>
     </ClCompile>
+    <ClCompile Include="src\ViewFrustum.cpp">
+      <Filter>Engine\Render\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ViewPlane.cpp">
+      <Filter>Engine\Render\Camera</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\GameObject.h">
@@ -552,6 +558,12 @@
     </ClInclude>
     <ClInclude Include="src\Bounds.h">
       <Filter>Engine\Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ViewFrustum.h">
+      <Filter>Engine\Render\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ViewPlane.h">
+      <Filter>Engine\Render\Camera</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
