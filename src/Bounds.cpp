@@ -8,12 +8,12 @@ void Bounds::SetMinMax(glm::vec3 const& min, glm::vec3 const& max)
     Max = max;
 }
 
-void Bounds::Offset(glm::vec3 const& offset)
+void Bounds::SetCenter(glm::vec3 const& center)
 {
-    Center += offset;
+    Center = center;
     // Size does not change
-    Min += offset;
-    Max += offset;
+    Min = Center - Size * 0.5f;
+    Max = Center + Size * 0.5f;
 }
 
 void Bounds::Scale(glm::vec3 const& scale)

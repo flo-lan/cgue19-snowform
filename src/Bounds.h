@@ -12,7 +12,7 @@ struct Bounds
     {}
 
     void SetMinMax(glm::vec3 const& min, glm::vec3 const& max);
-    void Offset(glm::vec3 const& offset);
+    void SetCenter(glm::vec3 const& center);
     void Scale(glm::vec3 const& scale);
 
     glm::vec3 GetCornerP(glm::vec3 const& normal) const;

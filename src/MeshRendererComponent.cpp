@@ -114,8 +114,13 @@ void MeshRendererComponent::RenderViewFrustumCullingEnabled(CameraComponent* cam
     if (camera && material && mesh && enabled)
     {
         Bounds meshBounds = mesh->GetBounds();
-        meshBounds.Offset(transform->GetPosition());
+        glm::vec3 offset = glm::vec3(meshBounds.Center.x, meshBounds.Center.y, -meshBounds.Center.z);
+        //if (mesh->GetName() == "BlockSnow") printf("(1) %f %f %f | %f %f %f\n", meshBounds.Center.x, meshBounds.Center.y, meshBounds.Center.z,
+        //    meshBounds.Size.x, meshBounds.Size.y, meshBounds.Size.z);
+        meshBounds.SetCenter(transform->GetPosition() + offset);
         meshBounds.Scale(transform->GetScale());
+        //if (mesh->GetName() == "BlockSnow") printf("(2) %f %f %f | %f %f %f\n", meshBounds.Center.x, meshBounds.Center.y, meshBounds.Center.z,
+        //    transform->GetPositionX(), transform->GetPositionY(), transform->GetPositionZ());
         if (camera->BoundsInFrustum(meshBounds))
         {
             Render(camera, material);
