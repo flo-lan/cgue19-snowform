@@ -21,7 +21,8 @@ GameScene::GameScene() :
     transitionTimeInSeconds(0.f),
     debugContainerEnabled(false),
     debugContainerKeyPressed(false),
-    toggleViewFrustumKeyPressed(false)
+    toggleViewFrustumKeyPressed(false),
+    autoStartNextLevel(true)
 {
 }
 
@@ -52,7 +53,7 @@ void GameScene::OnUpdate()
         }
         case GAME_STATE_OVERLAY_PAUSE:
         {
-            if (sInputManager.IsAnyKeyPressed())
+            if (autoStartNextLevel || sInputManager.IsAnyKeyPressed())
             {
                 EnableOverlay(false);
 

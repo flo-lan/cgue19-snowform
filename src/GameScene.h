@@ -56,4 +56,6 @@ private:
     bool debugContainerEnabled;
     bool debugContainerKeyPressed;
     bool toggleViewFrustumKeyPressed;
+
+    bool autoStartNextLevel;
 };
