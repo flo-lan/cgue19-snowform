@@ -27,6 +27,10 @@ TextComponent::TextComponent(GameObject* owner) :
     // Attach outline renderer first (!) Render order is important
     meshRendererOutline = owner->AttachComponent<MeshRendererComponent>();
     meshRenderer = owner->AttachComponent<MeshRendererComponent>();
+
+    // Disable view frustum culling for text meshes, because text bounds are NYI
+    meshRendererOutline->SetDontCull(true);
+    meshRenderer->SetDontCull(true);
 }
 
 TextComponent::~TextComponent()
