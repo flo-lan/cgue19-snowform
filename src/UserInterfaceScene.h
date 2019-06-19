@@ -26,4 +26,7 @@ public:
     void SetTransitionOverlayCutOff(float cutOff);
     void DisableOverlayTexts();
     void ScrollCredits(float yScroll);
+    void EnableDebugContainer(bool enable);
+    void SetObjectsRenderedText(std::string const& text);
+    void SetObjectsCulledText(std::string const& text);
 };

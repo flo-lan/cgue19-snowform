@@ -52,4 +52,7 @@ private:
 
     float transitionTimeInSecondsOption;
     float transitionTimeInSeconds;
+
+    bool debugContainerEnabled;
+    bool debugContainerKeyPressed;
 };

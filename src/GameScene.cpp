@@ -4,6 +4,7 @@
 #include "InputManager.h"
 #include "GameObject.h"
 #include "TextComponent.h"
+#include "CameraComponent.h"
 #include "Time.h"
 #include <GLFW/glfw3.h>
 
@@ -17,7 +18,9 @@ GameScene::GameScene() :
     remainingTimeInSecondsOption(0.f),
     remainingTimeInSeconds(0.f),
     transitionTimeInSecondsOption(0.f),
-    transitionTimeInSeconds(0.f)
+    transitionTimeInSeconds(0.f),
+    debugContainerEnabled(false),
+    debugContainerKeyPressed(false)
 {
 }
 
@@ -282,6 +285,41 @@ void GameScene::UpdateDebugCommands()
     else if (sInputManager.IsKeyPressed(GLFW_KEY_F11))
     {
         RestartLevel();
+    }
+
+    if (sInputManager.IsKeyPressed(GLFW_KEY_Q))
+    {
+        if (!debugContainerKeyPressed)
+        {
+            debugContainerEnabled = !debugContainerEnabled;
+            debugContainerKeyPressed = true;
+
+            if (auto userInterfaceScene = sSceneManager.GetScene<UserInterfaceScene>())
+            {
+                userInterfaceScene->EnableDebugContainer(debugContainerEnabled);
+            }
+        }
+    }
+    else
+    {
+        debugContainerKeyPressed = false;
+    }
+
+    if (auto userInterfaceScene = sSceneManager.GetScene<UserInterfaceScene>())
+    {
+        CameraComponent* camera = GetCamera();
+
+        std::string objectsRendered = "unk";
+        std::string objectsCulled = "unk";
+
+        if (camera)
+        {
+            objectsRendered = std::to_string(camera->ObjectsRendered);
+            objectsCulled = std::to_string(camera->ObjectsCulled);
+        }
+
+        userInterfaceScene->SetObjectsRenderedText(objectsRendered);
+        userInterfaceScene->SetObjectsCulledText(objectsCulled);
     }
 }
 

@@ -195,6 +195,9 @@ void Scene::PreRender()
         glViewport(0, 0, Screen::GetWidth(), Screen::GetHeight());
     }
 
+    camera->ObjectsRendered = 0;
+    camera->ObjectsCulled = 0;
+
     OnPreRender();
 }
 

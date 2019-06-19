@@ -13,7 +13,9 @@ CameraComponent::CameraComponent(GameObject* owner) :
     projMatrix(1.f),
     viewMatrix(1.f),
     viewProjectionMatrix(1.f),
-    orthographicProjectionMatrix(glm::ortho(0.0f, (float)Screen::GetWidth(), 0.0f, (float)Screen::GetHeight()))
+    orthographicProjectionMatrix(glm::ortho(0.0f, (float)Screen::GetWidth(), 0.0f, (float)Screen::GetHeight())),
+    ObjectsRendered(0),
+    ObjectsCulled(0)
 {
     GetOwner()->GetScene()->SetCamera(this);
 }

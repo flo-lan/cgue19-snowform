@@ -55,6 +55,69 @@
             </GameObject>
         </Children>
     </GameObject>
+    <GameObject name="DebugContainer">
+        <Components>
+            <TransformComponent rect="true" localPosition="0 0" />
+        </Components>
+        <Children>
+            <GameObject name="ObjectsRenderedLabelContainer">
+                <Components>
+                    <TransformComponent rect="true" localPosition="10.0 50.0" />
+                </Components>
+                <Children>
+                    <GameObject id="ObjectsRenderedLabel" name="ObjectsRenderedLabel">
+                        <Components>
+                            <TransformComponent rect="true" localPosition="0 0" />
+                            <TextComponent enabled="false" material="FPS" font="Arial" fontSize="32" text="Rendered:" textAlignment="BottomLeft" textOverflowMode="Overflow" wordWrapping="false" />
+                        </Components>
+                        <Children />
+                    </GameObject>
+                </Children>
+            </GameObject>
+            <GameObject name="ObjectsCulledLabelContainer">
+                <Components>
+                    <TransformComponent rect="true" localPosition="10.0 10.0" />
+                </Components>
+                <Children>
+                    <GameObject id="ObjectsCulledLabel" name="ObjectsCulledLabel">
+                        <Components>
+                            <TransformComponent rect="true" localPosition="0 0" />
+                            <TextComponent enabled="false" material="FPS" font="Arial" fontSize="32" text="Culled:" textAlignment="BottomLeft" textOverflowMode="Overflow" wordWrapping="false" />
+                        </Components>
+                        <Children />
+                    </GameObject>
+                </Children>
+            </GameObject>
+            <GameObject name="ObjectsRenderedContainer">
+                <Components>
+                    <TransformComponent rect="true" localPosition="170.0 50.0" />
+                </Components>
+                <Children>
+                    <GameObject id="ObjectsRendered" name="ObjectsRendered">
+                        <Components>
+                            <TransformComponent rect="true" localPosition="0 0" />
+                            <TextComponent enabled="false" material="FPS" font="Arial" fontSize="32" text="777" textAlignment="BottomLeft" textOverflowMode="Overflow" wordWrapping="false" />
+                        </Components>
+                        <Children />
+                    </GameObject>
+                </Children>
+            </GameObject>
+            <GameObject name="ObjectsCulledContainer">
+                <Components>
+                    <TransformComponent rect="true" localPosition="170.0 10.0" />
+                </Components>
+                <Children>
+                    <GameObject id="ObjectsCulled" name="ObjectsCulled">
+                        <Components>
+                            <TransformComponent rect="true" localPosition="0 0" />
+                            <TextComponent enabled="false" material="FPS" font="Arial" fontSize="32" text="999" textAlignment="BottomLeft" textOverflowMode="Overflow" wordWrapping="false" />
+                        </Components>
+                        <Children />
+                    </GameObject>
+                </Children>
+            </GameObject>
+        </Children>
+    </GameObject>
     <GameObject id="TransitionOverlay" name="TransitionOverlay">
         <Components>
             <TransformComponent rect="true" localPosition="0.5 0.5" localScale="1 1" />

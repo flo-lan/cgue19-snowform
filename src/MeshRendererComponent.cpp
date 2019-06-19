@@ -106,6 +106,8 @@ void MeshRendererComponent::Render(CameraComponent* camera, Material* material)
             mesh->Unbind();
         }
         material->PostRender(camera, this);
+
+        camera->ObjectsRendered++;
     }
 }
 
@@ -119,6 +121,10 @@ void MeshRendererComponent::RenderViewFrustumCullingEnabled(CameraComponent* cam
         if (camera->BoundsInFrustum(meshBounds))
         {
             Render(camera, material);
+        }
+        else
+        {
+            camera->ObjectsCulled++;
         }
     }
 }

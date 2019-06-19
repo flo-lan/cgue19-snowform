@@ -36,6 +36,9 @@ public:
 
     ViewFrustumObjectLocation BoundsInFrustum(Bounds const& bounds) const { return viewFrustum.BoundsInFrustum(bounds); }
 
+    int ObjectsRendered;
+    int ObjectsCulled;
+
 private:
     ViewFrustum viewFrustum;
     bool viewFrustumCulling;

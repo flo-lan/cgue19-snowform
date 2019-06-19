@@ -125,3 +125,42 @@ void UserInterfaceScene::ScrollCredits(float yScroll)
         transform->SetLocalPositionY(transform->GetLocalPositionY() + yScroll);
     }
 }
+
+void UserInterfaceScene::EnableDebugContainer(bool enable)
+{
+    if (TextComponent* textComponent = GetComponentByGameObjectId<TextComponent>("ObjectsRenderedLabel"))
+    {
+        textComponent->SetEnabled(enable);
+    }
+
+    if (TextComponent* textComponent = GetComponentByGameObjectId<TextComponent>("ObjectsCulledLabel"))
+    {
+        textComponent->SetEnabled(enable);
+    }
+
+    if (TextComponent* textComponent = GetComponentByGameObjectId<TextComponent>("ObjectsRendered"))
+    {
+        textComponent->SetEnabled(enable);
+    }
+
+    if (TextComponent* textComponent = GetComponentByGameObjectId<TextComponent>("ObjectsCulled"))
+    {
+        textComponent->SetEnabled(enable);
+    }
+}
+
+void UserInterfaceScene::SetObjectsRenderedText(std::string const& text)
+{
+    if (TextComponent* textComponent = GetComponentByGameObjectId<TextComponent>("ObjectsRendered"))
+    {
+        textComponent->SetText(text);
+    }
+}
+
+void UserInterfaceScene::SetObjectsCulledText(std::string const& text)
+{
+    if (TextComponent* textComponent = GetComponentByGameObjectId<TextComponent>("ObjectsCulled"))
+    {
+        textComponent->SetText(text);
+    }
+}
