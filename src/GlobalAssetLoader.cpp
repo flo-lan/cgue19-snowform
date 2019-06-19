@@ -220,10 +220,12 @@ bool GlobalAssetLoader::LoadAssets()
     sAssetManager.CreateMeshFromFile("BlockSnowCornerLarge", "assets/meshes/block_snow_corner_large.fbx");
     sAssetManager.CreateMeshFromFile("BlockSnowCornerSmall", "assets/meshes/block_snow_corner_small.fbx");
     sAssetManager.CreateMeshFromFile("BlockSnowSlope", "assets/meshes/block_snow_slope.fbx");
+    sAssetManager.CreateMeshFromFile("BlockHexagon", "assets/meshes/block_hexagon.fbx");
     sAssetManager.CreateMeshFromFile("Coin", "assets/meshes/coin.fbx");
     sAssetManager.CreateMeshFromFile("Flag", "assets/meshes/flag.fbx");
     sAssetManager.CreateMeshFromFile("Mushrooms", "assets/meshes/mushrooms.fbx");
     sAssetManager.CreateMeshFromFile("Rocks", "assets/meshes/rocks.fbx");
+    sAssetManager.CreateMeshFromFile("FenceCornerCurved", "assets/meshes/fence_corner_curved.fbx");
     sAssetManager.CreateMeshFromFile("Snowball", "assets/meshes/snowball.fbx");
     sAssetManager.CreateMeshFromFile("Snowman", "assets/meshes/snowman.fbx");
     sAssetManager.CreateMeshFromFile("TreePineSnow", "assets/meshes/tree_pine_snow.fbx");
