@@ -738,7 +738,7 @@
       <GameObject name="Particle System Snowing">
         <Components>
           <TransformComponent localPosition="-5 43.33 46.8" localRotation="0 0 0" localScale="30 1 100" />
-          <ParticleSystemComponent enabled="true" prewarmTime="5" particleCount="5000" particleMaterial="SnowParticle" particleMesh="SnowParticle" minRelativeEmitPosition="-15 0 -50" maxRelativeEmitPosition="15 0 50" minParticleVelocity="0 -1 0" maxParticleVelocity="0 -3 0" minParticleSize="0.01" maxParticleSize="0.2" minParticleLifetime="5" maxParticleLifetime="20" />
+          <ParticleSystemComponent enabled="true" prewarmTime="10" particleCount="5000" particleMaterial="SnowParticle" particleMesh="SnowParticle" minRelativeEmitPosition="-15 0 -50" maxRelativeEmitPosition="15 0 50" minParticleVelocity="0 -1 0" maxParticleVelocity="0 -3 0" minParticleSize="0.01" maxParticleSize="0.2" minParticleLifetime="5" maxParticleLifetime="20" />
         </Components>
         <Children />
       </GameObject>
