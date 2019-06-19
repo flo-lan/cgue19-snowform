@@ -2,7 +2,7 @@
   <GameObject name="Skybox">
     <Components>
       <TransformComponent localPosition="0 0 0" localRotation="0 0 0" localScale="20 20 20" />
-      <MeshRendererComponent material="Skybox" mesh="Skybox" />
+      <MeshRendererComponent material="Skybox" mesh="Skybox" dontCull="true" />
     </Components>
     <Children />
   </GameObject>
@@ -18,7 +18,7 @@
   <GameObject id="MainCamera" name="Main Camera">
     <Components>
       <TransformComponent localPosition="-5 18 95" localRotation="-200 180 180" localScale="1 1 1" />
-      <CameraComponent />
+      <CameraComponent viewFrustumCulling="false" />
       <ThirdPersonControllerComponent targetId="Snowball" distance="20" />
     </Components>
     <Children />
@@ -119,9 +119,9 @@
         </Components>
         <Children />
       </GameObject>
-      <GameObject name="TreePineSnow (7)">
+      <GameObject name="TreePineSnow (8)">
         <Components>
-          <TransformComponent localPosition="-13.8 10 80.8" localRotation="0 -10.64 0" localScale="0.223731 0.223731 0.223731" />
+          <TransformComponent localPosition="-13.05 10 82.97" localRotation="0 -1.989995 0" localScale="0.40417 0.40417 0.40417" />
           <MeshRendererComponent material="StandardDefault" mesh="TreePineSnow">
             <Light gameObjectId="DirectionalLight1" />
           </MeshRendererComponent>
@@ -130,9 +130,9 @@
         </Components>
         <Children />
       </GameObject>
-      <GameObject name="TreePineSnow (8)">
+      <GameObject name="TreePineSnow (7)">
         <Components>
-          <TransformComponent localPosition="-13.05 10 82.97" localRotation="0 -1.989995 0" localScale="0.40417 0.40417 0.40417" />
+          <TransformComponent localPosition="-13.8 10 80.8" localRotation="0 -10.64 0" localScale="0.223731 0.223731 0.223731" />
           <MeshRendererComponent material="StandardDefault" mesh="TreePineSnow">
             <Light gameObjectId="DirectionalLight1" />
           </MeshRendererComponent>
@@ -647,7 +647,7 @@
       </GameObject>
       <GameObject name="Rocks">
         <Components>
-          <TransformComponent localPosition="-12.88 10 87.92" localRotation="0 -180 0" localScale="1 1 1" />
+          <TransformComponent localPosition="-7.47 10 91.5" localRotation="0 -133.2216 0" localScale="1 1 1" />
           <MeshRendererComponent material="StandardDefault" mesh="Rocks">
             <Light gameObjectId="DirectionalLight1" />
           </MeshRendererComponent>
