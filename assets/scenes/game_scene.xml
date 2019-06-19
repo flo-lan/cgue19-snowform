@@ -19,7 +19,7 @@
   <GameObject name="Skybox">
     <Components>
       <TransformComponent localPosition="0 0 0" localRotation="0 0 0" localScale="20 20 20" />
-      <MeshRendererComponent material="Skybox" mesh="Skybox" />
+      <MeshRendererComponent material="Skybox" mesh="Skybox" dontCull="true" />
     </Components>
     <Children />
   </GameObject>

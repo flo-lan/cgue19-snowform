@@ -123,6 +123,7 @@ void ParticleSystemComponent::CreateMeshRenderer()
         meshRenderer = GetOwner()->AttachComponent<MeshRendererComponent>();
         meshRenderer->SetEnabled(false);
         meshRenderer->SetCastShadows(false);
+        meshRenderer->SetDontCull(true);
     }
 }
 

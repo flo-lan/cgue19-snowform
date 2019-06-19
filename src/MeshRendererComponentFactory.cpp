@@ -20,6 +20,11 @@ void MeshRendererComponentFactory::Build(GameObject* gameObject, tinyxml2::XMLEl
         meshRenderer->SetEnabled(std::string(element->Attribute("enabled")) == "true");
     }
 
+    if (element->Attribute("dontCull"))
+    {
+        meshRenderer->SetDontCull(std::string(element->Attribute("dontCull")) == "true");
+    }
+
     if (element->Attribute("material"))
     {
         std::string materialName = std::string(element->Attribute("material"));

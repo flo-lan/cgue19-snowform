@@ -29,6 +29,7 @@ public:
 
     void SetEnabled(bool value) { enabled = value; }
     void SetCastShadows(bool castShadows) { this->castShadows = castShadows; }
+    void SetDontCull(bool dontCull) { this->dontCull = dontCull; }
     void SetMaterial(Material* value) { material = value; }
     void SetMesh(Mesh* value);
     void SetInstanceCount(GLsizei instanceCount) { this->instanceCount = instanceCount; }
@@ -54,6 +55,7 @@ public:
 private:
     bool enabled;
     bool castShadows;
+    bool dontCull;
     TransformComponent* transform;
     Material* material;
     Mesh* mesh;

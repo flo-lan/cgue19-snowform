@@ -113,6 +113,12 @@ void MeshRendererComponent::Render(CameraComponent* camera, Material* material)
 
 void MeshRendererComponent::RenderViewFrustumCullingEnabled(CameraComponent* camera)
 {
+    if (dontCull)
+    {
+        Render(camera, material);
+        return;
+    }
+
     if (camera && material && mesh && enabled)
     {
         Bounds meshBounds = mesh->GetBounds();
