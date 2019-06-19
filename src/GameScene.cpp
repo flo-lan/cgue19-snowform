@@ -20,7 +20,8 @@ GameScene::GameScene() :
     transitionTimeInSecondsOption(0.f),
     transitionTimeInSeconds(0.f),
     debugContainerEnabled(false),
-    debugContainerKeyPressed(false)
+    debugContainerKeyPressed(false),
+    toggleViewFrustumKeyPressed(false)
 {
 }
 
@@ -287,6 +288,23 @@ void GameScene::UpdateDebugCommands()
         RestartLevel();
     }
 
+    if (sInputManager.IsKeyPressed(GLFW_KEY_F8))
+    {
+        if (!toggleViewFrustumKeyPressed)
+        {
+            toggleViewFrustumKeyPressed = true;
+
+            if (CameraComponent* camera = GetCamera())
+            {
+                camera->SetViewFrustumCulling(!camera->IsViewFrustumCullingEnabled());
+            }
+        }
+    }
+    else
+    {
+        toggleViewFrustumKeyPressed = false;
+    }
+
     if (sInputManager.IsKeyPressed(GLFW_KEY_Q))
     {
         if (!debugContainerKeyPressed)
@@ -305,21 +323,22 @@ void GameScene::UpdateDebugCommands()
         debugContainerKeyPressed = false;
     }
 
-    if (auto userInterfaceScene = sSceneManager.GetScene<UserInterfaceScene>())
+    if (debugContainerEnabled)
     {
-        CameraComponent* camera = GetCamera();
-
-        std::string objectsRendered = "unk";
-        std::string objectsCulled = "unk";
-
-        if (camera)
+        if (auto userInterfaceScene = sSceneManager.GetScene<UserInterfaceScene>())
         {
-            objectsRendered = std::to_string(camera->ObjectsRendered);
-            objectsCulled = std::to_string(camera->ObjectsCulled);
-        }
+            std::string objectsRendered = "unk";
+            std::string objectsCulled = "unk";
 
-        userInterfaceScene->SetObjectsRenderedText(objectsRendered);
-        userInterfaceScene->SetObjectsCulledText(objectsCulled);
+            if (CameraComponent* camera = GetCamera())
+            {
+                objectsRendered = std::to_string(camera->ObjectsRendered);
+                objectsCulled = std::to_string(camera->ObjectsCulled);
+            }
+
+            userInterfaceScene->SetObjectsRenderedText(objectsRendered);
+            userInterfaceScene->SetObjectsCulledText(objectsCulled);
+        }
     }
 }
 

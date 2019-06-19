@@ -55,4 +55,5 @@ private:
 
     bool debugContainerEnabled;
     bool debugContainerKeyPressed;
+    bool toggleViewFrustumKeyPressed;
 };
