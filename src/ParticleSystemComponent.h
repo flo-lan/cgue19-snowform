@@ -23,7 +23,7 @@ struct Particle
 };
 
 #define WORK_GROUP_SIZE 256
-#define PARTICLE_BUFFER_SIZE 10000
+#define PARTICLE_BUFFER_SIZE 5000
 
 class ParticleSystemComponent : public Component
 {
