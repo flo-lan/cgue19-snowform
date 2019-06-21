@@ -46,12 +46,15 @@ private:
     GLuint locDirectionalLightShadowMaps[MAX_DIRECTIONAL_LIGHT_COUNT * NUM_DIRECTIONAL_SHADOW_CASCADES];
     GLuint locDirectionalLightShadowMapProjections[MAX_DIRECTIONAL_LIGHT_COUNT * NUM_DIRECTIONAL_SHADOW_CASCADES];
     GLuint locDirectionalLightShadowMapBounds[MAX_DIRECTIONAL_LIGHT_COUNT * NUM_DIRECTIONAL_SHADOW_CASCADES];
+#if MAX_POINT_LIGHT_COUNT > 0
     GLuint locPointLightPosition[MAX_POINT_LIGHT_COUNT];
     GLuint locPointLightConstant[MAX_POINT_LIGHT_COUNT];
     GLuint locPointLightLinear[MAX_POINT_LIGHT_COUNT];
     GLuint locPointLightQuadratic[MAX_POINT_LIGHT_COUNT];
     GLuint locPointLightDiffuse[MAX_POINT_LIGHT_COUNT];
     GLuint locPointLightSpecular[MAX_POINT_LIGHT_COUNT];
+#endif
+#if MAX_SPOT_LIGHT_COUNT > 0
     GLuint locSpotLightPosition[MAX_SPOT_LIGHT_COUNT];
     GLuint locSpotLightDirection[MAX_SPOT_LIGHT_COUNT];
     GLuint locSpotLightInnerCutOff[MAX_SPOT_LIGHT_COUNT];
@@ -61,6 +64,7 @@ private:
     GLuint locSpotLightQuadratic[MAX_SPOT_LIGHT_COUNT];
     GLuint locSpotLightDiffuse[MAX_SPOT_LIGHT_COUNT];
     GLuint locSpotLightSpecular[MAX_SPOT_LIGHT_COUNT];
+#endif
 
     glm::vec3 diffuseColor;
     glm::vec3 specularColor;

@@ -51,6 +51,7 @@ StandardMaterial::StandardMaterial(std::string const& _name, ShaderProgram* _sha
         }
     }
 
+#if MAX_POINT_LIGHT_COUNT > 0
     for (int i = 0; i < MAX_POINT_LIGHT_COUNT; i++)
     {
         locPointLightPosition[i] = shaderProgram->GetUniformLocation(std::string("pointLights[" + std::to_string(i) + "].position").c_str());
@@ -60,7 +61,9 @@ StandardMaterial::StandardMaterial(std::string const& _name, ShaderProgram* _sha
         locPointLightDiffuse[i] = shaderProgram->GetUniformLocation(std::string("pointLights[" + std::to_string(i) + "].diffuse").c_str());
         locPointLightSpecular[i] = shaderProgram->GetUniformLocation(std::string("pointLights[" + std::to_string(i) + "].specular").c_str());
     }
+#endif
 
+#if MAX_SPOT_LIGHT_COUNT > 0
     for (int i = 0; i < MAX_SPOT_LIGHT_COUNT; i++)
     {
         locSpotLightPosition[i] = shaderProgram->GetUniformLocation(std::string("spotLights[" + std::to_string(i) + "].position").c_str());
@@ -73,6 +76,7 @@ StandardMaterial::StandardMaterial(std::string const& _name, ShaderProgram* _sha
         locSpotLightDiffuse[i] = shaderProgram->GetUniformLocation(std::string("spotLights[" + std::to_string(i) + "].diffuse").c_str());
         locSpotLightSpecular[i] = shaderProgram->GetUniformLocation(std::string("spotLights[" + std::to_string(i) + "].specular").c_str());
     }
+#endif
 }
 
 StandardMaterial::~StandardMaterial()
@@ -171,6 +175,7 @@ void StandardMaterial::PreRender(CameraComponent* camera, MeshRendererComponent*
             shaderProgram->SetUniform3fv(locDirectionalLightSpecular[i], glm::vec3(0.f));
         }
 
+#if MAX_POINT_LIGHT_COUNT > 0
         i = 0;
         for (std::vector<PointLightComponent*>::const_iterator itr = renderer->GetPointLights().begin(); itr != renderer->GetPointLights().end(); itr++, i++)
         {
@@ -191,7 +196,9 @@ void StandardMaterial::PreRender(CameraComponent* camera, MeshRendererComponent*
             shaderProgram->SetUniform3fv(locPointLightDiffuse[i], glm::vec3(0.f));
             shaderProgram->SetUniform3fv(locPointLightSpecular[i], glm::vec3(0.f));
         }
+#endif
 
+#if MAX_SPOT_LIGHT_COUNT > 0
         i = 0;
         for (std::vector<SpotLightComponent*>::const_iterator itr = renderer->GetSpotLights().begin(); itr != renderer->GetSpotLights().end(); itr++, i++)
         {
@@ -216,5 +223,6 @@ void StandardMaterial::PreRender(CameraComponent* camera, MeshRendererComponent*
             shaderProgram->SetUniform3fv(locSpotLightDiffuse[i], glm::vec3(0.f));
             shaderProgram->SetUniform3fv(locSpotLightSpecular[i], glm::vec3(0.f));
         }
+#endif
     }
 }

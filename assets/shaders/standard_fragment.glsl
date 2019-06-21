@@ -259,7 +259,8 @@ void main()
         result += CalculateDirectionalLight(i, normal, viewDirection, diffuseTextureColor, specularTextureColor);
     }
 
-    for (int i = 0; i < MAX_POINT_LIGHT_COUNT; i++)
+	// We don't use any point or spotlights
+    /*for (int i = 0; i < MAX_POINT_LIGHT_COUNT; i++)
     {
         result += CalculatePointLight(pointLights[i], normal, viewDirection, diffuseTextureColor, specularTextureColor);
     }
@@ -267,7 +268,7 @@ void main()
     for (int i = 0; i < MAX_SPOT_LIGHT_COUNT; i++)
     {
         result += CalculateSpotLight(spotLights[i], normal, viewDirection, diffuseTextureColor, specularTextureColor);
-    }
+    }*/
 
 	/*if (fragPosition.x >= directionalShadowMapBounds[0].x &&
 		fragPosition.x <= directionalShadowMapBounds[0].y &&
