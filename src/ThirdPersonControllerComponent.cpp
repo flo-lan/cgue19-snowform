@@ -181,8 +181,8 @@ void ThirdPersonControllerComponent::Update()
             direction = glm::normalize(direction) * -1;
             torqueDirection.y = 0;
             torqueDirection = glm::normalize(torqueDirection);
-            targetRigid->AddForce(direction * velocity * sTime.GetDeltaTime() * 0.1f, physx::PxForceMode::eVELOCITY_CHANGE);
-            targetRigid->AddTorque(torqueDirection * velocity * sTime.GetDeltaTime() * 0.1f, physx::PxForceMode::eVELOCITY_CHANGE);
+            targetRigid->AddForce(direction * velocity * sTime.GetDeltaTime() * 0.2f, physx::PxForceMode::eVELOCITY_CHANGE);
+            targetRigid->AddTorque(torqueDirection * velocity * sTime.GetDeltaTime() * 0.2f, physx::PxForceMode::eVELOCITY_CHANGE);
         }
 
         if (sInputManager.IsKeyPressed(GLFW_KEY_A))
@@ -193,8 +193,8 @@ void ThirdPersonControllerComponent::Update()
             direction = glm::normalize(direction) * -1;
             torqueDirection.y = 0;
             torqueDirection = glm::normalize(torqueDirection);
-            targetRigid->AddForce(direction * velocity * sTime.GetDeltaTime() * 0.1f, physx::PxForceMode::eVELOCITY_CHANGE);
-            targetRigid->AddTorque(torqueDirection * velocity * sTime.GetDeltaTime() * 0.1f, physx::PxForceMode::eVELOCITY_CHANGE);
+            targetRigid->AddForce(direction * velocity * sTime.GetDeltaTime() * 0.2f, physx::PxForceMode::eVELOCITY_CHANGE);
+            targetRigid->AddTorque(torqueDirection * velocity * sTime.GetDeltaTime() * 0.2f, physx::PxForceMode::eVELOCITY_CHANGE);
         }
 
         if (sInputManager.IsKeyPressed(GLFW_KEY_S))
@@ -205,8 +205,8 @@ void ThirdPersonControllerComponent::Update()
             direction = glm::normalize(direction);
             torqueDirection.y = 0;
             torqueDirection = glm::normalize(torqueDirection);
-            targetRigid->AddForce(direction * velocity * sTime.GetDeltaTime() * 0.1f, physx::PxForceMode::eVELOCITY_CHANGE);
-            targetRigid->AddTorque(torqueDirection * velocity * sTime.GetDeltaTime() * 0.1f, physx::PxForceMode::eVELOCITY_CHANGE);
+            targetRigid->AddForce(direction * velocity * sTime.GetDeltaTime() * 0.2f, physx::PxForceMode::eVELOCITY_CHANGE);
+            targetRigid->AddTorque(torqueDirection * velocity * sTime.GetDeltaTime() * 0.2f, physx::PxForceMode::eVELOCITY_CHANGE);
         }
 
         if (sInputManager.IsKeyPressed(GLFW_KEY_D))
@@ -217,8 +217,8 @@ void ThirdPersonControllerComponent::Update()
             direction = glm::normalize(direction);
             torqueDirection.y = 0;
             torqueDirection = glm::normalize(torqueDirection);
-            targetRigid->AddForce(direction * velocity * sTime.GetDeltaTime() * 0.1f, physx::PxForceMode::eVELOCITY_CHANGE);
-            targetRigid->AddTorque(torqueDirection * velocity * sTime.GetDeltaTime() * 0.1f, physx::PxForceMode::eVELOCITY_CHANGE);
+            targetRigid->AddForce(direction * velocity * sTime.GetDeltaTime() * 0.2f, physx::PxForceMode::eVELOCITY_CHANGE);
+            targetRigid->AddTorque(torqueDirection * velocity * sTime.GetDeltaTime() * 0.2f, physx::PxForceMode::eVELOCITY_CHANGE);
         }
     }
 
