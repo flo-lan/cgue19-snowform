@@ -195,6 +195,13 @@ void GameScene::SetOption(std::string const& key, std::string const& value)
     {
         transitionTimeInSecondsOption = (float)std::atof(value.c_str());
     }
+    else if (key == "LevelText")
+    {
+        if (UserInterfaceScene* userInterfaceScene = sSceneManager.GetScene<UserInterfaceScene>())
+        {
+            userInterfaceScene->SetLevelText(value);
+        }
+    }
     else
     {
         fprintf(stderr, "Could not set unknown game scene option '%s'!\n", key.c_str());

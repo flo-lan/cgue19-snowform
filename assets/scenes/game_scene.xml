@@ -5,6 +5,7 @@
       <SceneOptionComponent key="NextLevelScene" value="assets/scenes/game_scene2.xml" />
       <SceneOptionComponent key="RemainingTime" value="02:00" />
       <SceneOptionComponent key="TransitionTime" value="1" />
+      <SceneOptionComponent key="LevelText" value="Level 1" />
     </Components>
     <Children />
   </GameObject>

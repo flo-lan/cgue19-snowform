@@ -12,6 +12,7 @@
       <SceneOptionComponent key="NextLevelScene" value="" />
       <SceneOptionComponent key="RemainingTime" value="04:00" />
       <SceneOptionComponent key="TransitionTime" value="1" />
+      <SceneOptionComponent key="LevelText" value="Level 2" />
     </Components>
     <Children />
   </GameObject>

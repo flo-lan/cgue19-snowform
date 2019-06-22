@@ -30,4 +30,5 @@ public:
     void SetObjectsRenderedText(std::string const& text);
     void SetObjectsCulledText(std::string const& text);
     void SetFPSText(std::string const& text);
+    void SetLevelText(std::string const& text);
 };

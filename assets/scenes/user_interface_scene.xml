@@ -27,6 +27,20 @@
             </GameObject>
         </Children>
     </GameObject>
+    <GameObject name="LevelTextContainer">
+        <Components>
+            <TransformComponent rect="true" localPosition="0 -30" />
+        </Components>
+        <Children>
+            <GameObject id="LevelText" name="LevelText">
+                <Components>
+                    <TransformComponent rect="true" localPosition="0.5 1" />
+                    <TextComponent material="CoinCount" font="Arial" fontSize="32" text="Level 1" textAlignment="CenterCenter" textOverflowMode="Overflow" wordWrapping="false" />
+                </Components>
+                <Children />
+            </GameObject>
+        </Children>
+    </GameObject>
     <GameObject name="FPSContainer">
         <Components>
             <TransformComponent rect="true" localPosition="-15.0 10.0" />

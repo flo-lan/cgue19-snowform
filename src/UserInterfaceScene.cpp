@@ -165,9 +165,17 @@ void UserInterfaceScene::SetObjectsCulledText(std::string const& text)
     }
 }
 
-void UserInterfaceScene::SetFPSText(std::string const & text)
+void UserInterfaceScene::SetFPSText(std::string const& text)
 {
     if (TextComponent* textComponent = GetComponentByGameObjectId<TextComponent>("FPS"))
+    {
+        textComponent->SetText(text);
+    }
+}
+
+void UserInterfaceScene::SetLevelText(std::string const& text)
+{
+    if (TextComponent* textComponent = GetComponentByGameObjectId<TextComponent>("LevelText"))
     {
         textComponent->SetText(text);
     }
