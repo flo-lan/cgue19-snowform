@@ -117,7 +117,7 @@ bool GlobalAssetLoader::LoadAssets()
     if (TextMaterial* tm = sAssetManager.CreateMaterial<TextMaterial>("CoinCount", textShaderProgram))
     {
         tm->SetAtlasTexture(sAssetManager.GetTexture2D("arial_atlas"));
-        tm->SetTextColor(glm::vec4(0.f, 0.f, 0.f, 1.f));
+        tm->SetTextColor(glm::vec4(1.f, 1.f, 1.f, 1.f));
     }
 
     if (TextMaterial* tm = sAssetManager.CreateMaterial<TextMaterial>("FPS", textShaderProgram))
@@ -129,7 +129,7 @@ bool GlobalAssetLoader::LoadAssets()
     if (TextMaterial* tm = sAssetManager.CreateMaterial<TextMaterial>("RemainingTime", textShaderProgram))
     {
         tm->SetAtlasTexture(sAssetManager.GetTexture2D("arial_atlas"));
-        tm->SetTextColor(glm::vec4(0.f, 0.f, 0.f, 1.f));
+        tm->SetTextColor(glm::vec4(1.f, 1.f, 1.f, 1.f));
     }
 
     if (TextMaterial* tm = sAssetManager.CreateMaterial<TextMaterial>("LevelFinished", textShaderProgram))
@@ -140,7 +140,7 @@ bool GlobalAssetLoader::LoadAssets()
     if (TextMaterial* tm = sAssetManager.CreateMaterial<TextMaterial>("CoinsLeft", textShaderProgram))
     {
         tm->SetAtlasTexture(sAssetManager.GetTexture2D("arial_atlas"));
-        tm->SetTextColor(glm::vec4(0.f, 0.f, 0.f, 1.f));
+        tm->SetTextColor(glm::vec4(1.f, 1.f, 1.f, 1.f));
     }
 
     if (TextMaterial* tm = sAssetManager.CreateMaterial<TextMaterial>("Credits", textShaderProgram))
@@ -186,7 +186,7 @@ bool GlobalAssetLoader::LoadAssets()
 
     if (ImageMaterial* im = sAssetManager.CreateMaterial<ImageMaterial>("Header", imageShaderProgram))
     {
-        im->SetImageColor(glm::vec4(1.f, 1.f, 1.f, 0.5f));
+        im->SetImageColor(glm::vec4(0.f, 0.f, 0.f, 0.3f));
     }
 
     if (ImageCutOffMaterial* im = sAssetManager.CreateMaterial<ImageCutOffMaterial>("TransitionOverlay", imageCutOffShaderProgram))
