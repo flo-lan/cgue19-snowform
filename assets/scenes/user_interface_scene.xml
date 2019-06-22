@@ -155,13 +155,13 @@
     </GameObject>
     <GameObject name="CoinsLeftContainer">
           <Components>
-            <TransformComponent rect="true" localPosition="-250 150" />
+            <TransformComponent rect="true" localPosition="15 -60" />
         </Components>
         <Children>
             <GameObject id="CoinsLeft" name="CoinsLeft">
                 <Components>
-                    <TransformComponent rect="true" localPosition="0.5 0.5" />
-                    <TextComponent material="LevelFinished" font="Arial" fontSize="64" enabled="false" text="You haven't collected all coins yet." wordWrapping="true" textAlignment="CenterCenter" textOverflowMode="Ellipsis" maxWidth="500" maxHeight="300" />
+                    <TransformComponent rect="true" localPosition="0 1" />
+                    <TextComponent material="CoinsLeft" font="Arial" fontSize="48" enabled="false" text="You haven't collected all coins yet." wordWrapping="true" textAlignment="TopLeft" textOverflowMode="Ellipsis" maxWidth="720" maxHeight="300" />
                 </Components>
                 <Children />
             </GameObject>

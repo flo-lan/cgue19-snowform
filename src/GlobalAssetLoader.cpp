@@ -140,7 +140,7 @@ bool GlobalAssetLoader::LoadAssets()
     if (TextMaterial* tm = sAssetManager.CreateMaterial<TextMaterial>("CoinsLeft", textShaderProgram))
     {
         tm->SetAtlasTexture(sAssetManager.GetTexture2D("arial_atlas"));
-        tm->SetTextColor(glm::vec4(1.f, 1.f, 1.f, 1.f));
+        tm->SetTextColor(glm::vec4(0.f, 0.f, 0.f, 1.f));
     }
 
     if (TextMaterial* tm = sAssetManager.CreateMaterial<TextMaterial>("Credits", textShaderProgram))
