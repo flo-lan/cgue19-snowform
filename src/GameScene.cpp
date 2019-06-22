@@ -2,6 +2,8 @@
 #include "UserInterfaceScene.h"
 #include "SceneManager.h"
 #include "InputManager.h"
+#include "AssetManager.h"
+#include "ImageCutOffMaterial.h"
 #include "GameObject.h"
 #include "TextComponent.h"
 #include "CameraComponent.h"
@@ -275,6 +277,25 @@ void GameScene::RestartLevel()
 void GameScene::EnableOverlay(bool enable)
 {
     gameState = GAME_STATE_OVERLAY_TRANSITION;
+
+    if (ImageCutOffMaterial* im = sAssetManager.GetMaterial<ImageCutOffMaterial>("TransitionOverlay"))
+    {
+        switch (rand() % 3)
+        {
+            case 0:
+                im->SetCutOffTexture(sAssetManager.GetTexture2D("transition_overlay_cutoff"));
+                break;
+            case 1:
+                im->SetCutOffTexture(sAssetManager.GetTexture2D("transition_overlay_cutoff2"));
+                break;
+            case 2:
+                im->SetCutOffTexture(sAssetManager.GetTexture2D("transition_overlay_cutoff3"));
+                break;
+            default:
+                im->SetCutOffTexture(sAssetManager.GetTexture2D("transition_overlay_cutoff"));
+                break;
+        }
+    }
 
     if (auto userInterfaceScene = sSceneManager.GetScene<UserInterfaceScene>())
     {

@@ -12,9 +12,16 @@ out vec4 colorOut;
 
 void main()
 {
-	if (cutOff <= texture(cutOffTexture, fragUV).a)
+	float alpha = texture(cutOffTexture, fragUV).a;
+
+	if (cutOff <= alpha)
 	{
 		colorOut = texture(imageTexture, fragUV) * imageColor;
+	}
+	else if (cutOff <= alpha + 0.05)
+	{
+		alpha = (alpha + 0.05 - cutOff) / 0.05;
+		colorOut = texture(imageTexture, fragUV) * imageColor * vec4(1.0, 1.0, 1.0, alpha);
 	}
 	else
 	{

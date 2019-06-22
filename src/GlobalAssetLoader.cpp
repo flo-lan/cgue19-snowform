@@ -75,7 +75,9 @@ bool GlobalAssetLoader::LoadAssets()
         !LoadTextureFromFile("snowball_diffuse", "assets/textures/snowball_diffuse.dds") ||
         !LoadTextureFromFile("arial_atlas", "assets/fonts/arial.dds", false /* Disable mip maps */) ||
         !LoadTextureFromFile("transition_overlay", "assets/textures/transition_overlay.dds", false /* Disable mip maps */) ||
-        !LoadTextureFromFile("transition_overlay_cutoff", "assets/textures/transition_overlay_cutoff.dds", false /* Disable mip maps */))
+        !LoadTextureFromFile("transition_overlay_cutoff", "assets/textures/transition_overlay_cutoff.dds", false /* Disable mip maps */) ||
+        !LoadTextureFromFile("transition_overlay_cutoff2", "assets/textures/transition_overlay_cutoff2.dds", false /* Disable mip maps */) ||
+        !LoadTextureFromFile("transition_overlay_cutoff3", "assets/textures/transition_overlay_cutoff3.dds", false /* Disable mip maps */))
     {
         return false;
     }
