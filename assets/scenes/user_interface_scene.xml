@@ -35,7 +35,7 @@
             <GameObject id="FPS" name="FPS">
                 <Components>
                     <TransformComponent rect="true" localPosition="1 0" />
-                    <TextComponent material="FPS" font="Arial" fontSize="32" text="" textAlignment="BottomRight" textOverflowMode="Overflow" wordWrapping="false" />
+                    <TextComponent enabled="false" material="FPS" font="Arial" fontSize="32" text="" textAlignment="BottomRight" textOverflowMode="Overflow" wordWrapping="false" />
                 </Components>
                 <Children />
             </GameObject>

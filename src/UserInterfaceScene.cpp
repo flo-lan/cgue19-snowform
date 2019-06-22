@@ -23,11 +23,6 @@ void UserInterfaceScene::OnLoad()
 
 void UserInterfaceScene::OnUpdate()
 {
-    if (TextComponent* textComponent = GetComponentByGameObjectId<TextComponent>("FPS"))
-    {
-        std::string fps = std::to_string((int)round(sTime.GetFPS()));
-        textComponent->SetText(fps);
-    }
 }
 
 void UserInterfaceScene::OnPreRender()
@@ -147,6 +142,11 @@ void UserInterfaceScene::EnableDebugContainer(bool enable)
     {
         textComponent->SetEnabled(enable);
     }
+
+    if (TextComponent* textComponent = GetComponentByGameObjectId<TextComponent>("FPS"))
+    {
+        textComponent->SetEnabled(enable);
+    }
 }
 
 void UserInterfaceScene::SetObjectsRenderedText(std::string const& text)
@@ -160,6 +160,14 @@ void UserInterfaceScene::SetObjectsRenderedText(std::string const& text)
 void UserInterfaceScene::SetObjectsCulledText(std::string const& text)
 {
     if (TextComponent* textComponent = GetComponentByGameObjectId<TextComponent>("ObjectsCulled"))
+    {
+        textComponent->SetText(text);
+    }
+}
+
+void UserInterfaceScene::SetFPSText(std::string const & text)
+{
+    if (TextComponent* textComponent = GetComponentByGameObjectId<TextComponent>("FPS"))
     {
         textComponent->SetText(text);
     }

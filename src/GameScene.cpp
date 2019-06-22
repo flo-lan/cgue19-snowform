@@ -339,6 +339,9 @@ void GameScene::UpdateDebugCommands()
 
             userInterfaceScene->SetObjectsRenderedText(objectsRendered);
             userInterfaceScene->SetObjectsCulledText(objectsCulled);
+
+            std::string fps = std::to_string((int)round(sTime.GetFPS()));
+            userInterfaceScene->SetFPSText(fps);
         }
     }
 }
