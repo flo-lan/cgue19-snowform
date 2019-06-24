@@ -73,6 +73,7 @@ bool GlobalAssetLoader::LoadAssets()
         !LoadTextureFromFile("bricks_specular", "assets/textures/bricks_specular.dds") ||
         !LoadTextureFromFile("wood_diffuse", "assets/textures/wood_texture.dds") ||
         !LoadTextureFromFile("snowball_diffuse", "assets/textures/snowball_diffuse.dds") ||
+        !LoadTextureFromFile("snowball_specular", "assets/textures/snowball_specular.dds") ||
         !LoadTextureFromFile("arial_atlas", "assets/fonts/arial.dds", false /* Disable mip maps */) ||
         !LoadTextureFromFile("transition_overlay", "assets/textures/transition_overlay.dds", false /* Disable mip maps */) ||
         !LoadTextureFromFile("transition_overlay_cutoff", "assets/textures/transition_overlay_cutoff.dds", false /* Disable mip maps */) ||
@@ -114,6 +115,7 @@ bool GlobalAssetLoader::LoadAssets()
     if (auto m = sAssetManager.CreateMaterial<StandardMaterial>("Snowball", standardShaderProgram))
     {
         m->SetDiffuseTexture(sAssetManager.GetTexture2D("snowball_diffuse"));
+        m->SetSpecularTexture(sAssetManager.GetTexture2D("snowball_specular"));
     }
 
     if (TextMaterial* tm = sAssetManager.CreateMaterial<TextMaterial>("CoinCount", textShaderProgram))
