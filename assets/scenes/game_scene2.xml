@@ -9,7 +9,7 @@
   <GameObject name="Scene Options">
     <Components>
       <TransformComponent localPosition="0 0 0" localRotation="0 0 0" localScale="1 1 1" />
-      <SceneOptionComponent key="NextLevelScene" value="" />
+      <SceneOptionComponent key="NextLevelScene" value="assets/scenes/game_scene3.xml" />
       <SceneOptionComponent key="RemainingTime" value="04:00" />
       <SceneOptionComponent key="TransitionTime" value="1" />
       <SceneOptionComponent key="LevelText" value="Level 2" />
@@ -215,6 +215,8 @@
       <GameObject name="BlockMovingGroup">
         <Components>
           <TransformComponent localPosition="-26.77 8.7 44.1" localRotation="0 -311.47 0" localScale="1 1 1" />
+          <BoxColliderComponent physicsMaterial="MovingPlatform" offset="-5 1.25 5" halfExtent="5 1.25 5" trigger="false" />
+          <RigidDynamicComponent CCD="false" kinematic="true" mass="999999" maxLinearVelocity="100000" maxAngularVelocity="100" raycastLayerMask="1" />
           <MovingPlatformComponent moveDirection="0 1 0" length="10" time="5" />
         </Components>
         <Children>
@@ -224,8 +226,6 @@
               <MeshRendererComponent material="StandardDefault" mesh="BlockMoving">
                 <Light gameObjectId="DirectionalLight1" />
               </MeshRendererComponent>
-              <BoxColliderComponent physicsMaterial="Default" offset="-5 1.25 5" halfExtent="5 1.25 5" trigger="false" />
-              <RigidDynamicComponent CCD="false" kinematic="true" mass="999999" maxLinearVelocity="100000" maxAngularVelocity="100" raycastLayerMask="1" />
             </Components>
             <Children />
           </GameObject>
@@ -234,6 +234,8 @@
       <GameObject name="BlockMovingGroup (1)">
         <Components>
           <TransformComponent localPosition="0 7.39 49.7" localRotation="0 0 0" localScale="1 1 1" />
+          <BoxColliderComponent physicsMaterial="MovingPlatform" offset="-5 1.25 5" halfExtent="5 1.25 5" trigger="false" />
+          <RigidDynamicComponent CCD="false" kinematic="true" mass="999999" maxLinearVelocity="100000" maxAngularVelocity="100" raycastLayerMask="1" />
           <MovingPlatformComponent moveDirection="0 1 0" length="15" time="3" />
         </Components>
         <Children>
@@ -243,8 +245,6 @@
               <MeshRendererComponent material="StandardDefault" mesh="BlockMoving">
                 <Light gameObjectId="DirectionalLight1" />
               </MeshRendererComponent>
-              <BoxColliderComponent physicsMaterial="Default" offset="-5 1.25 5" halfExtent="5 1.25 5" trigger="false" />
-              <RigidDynamicComponent CCD="false" kinematic="true" mass="999999" maxLinearVelocity="100000" maxAngularVelocity="100" raycastLayerMask="1" />
             </Components>
             <Children />
           </GameObject>

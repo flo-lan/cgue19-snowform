@@ -188,6 +188,12 @@ bool GlobalAssetLoader::LoadAssets()
         tm->SetTextColor(glm::vec4(1.f, 1.f, 1.f, 1.f));
     }
 
+    if (TextMaterial3D* tm = sAssetManager.CreateMaterial<TextMaterial3D>("BlackText", textShaderProgram))
+    {
+        tm->SetAtlasTexture(sAssetManager.GetTexture2D("arial_atlas"));
+        tm->SetTextColor(glm::vec4(0.f, 0.f, 0.f, 1.f));
+    }
+
     if (ImageMaterial* im = sAssetManager.CreateMaterial<ImageMaterial>("Header", imageShaderProgram))
     {
         im->SetImageColor(glm::vec4(0.f, 0.f, 0.f, 0.3f));
@@ -233,6 +239,7 @@ bool GlobalAssetLoader::LoadAssets()
     sAssetManager.CreateMeshFromFile("Snowball", "assets/meshes/snowball.fbx");
     sAssetManager.CreateMeshFromFile("Snowman", "assets/meshes/snowman.fbx");
     sAssetManager.CreateMeshFromFile("SnowmanFancy", "assets/meshes/snowman_fancy.fbx");
+    sAssetManager.CreateMeshFromFile("TreeDecorated", "assets/meshes/tree_decorated.fbx");
     sAssetManager.CreateMeshFromFile("TreePineSnow", "assets/meshes/tree_pine_snow.fbx");
     sAssetManager.CreateMeshFromFile("TreePineSnowRound", "assets/meshes/tree_pine_snow_round.fbx");
 
