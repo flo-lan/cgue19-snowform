@@ -17,13 +17,6 @@ Time::Time()
 
 void Time::UpdateDeltaTime()
 {
-    // difference between delta and limit
-    const float sleepTime = fpsLimit - (glfwGetTime() - lastTime);
-    if (sleepTime > 0)
-    {
-        Sleep(sleepTime * 1000); // time in milliseconds
-    }
-
     currentTime = glfwGetTime();
     unscaledDeltaTime = currentTime - lastTime;
     deltaTime = unscaledDeltaTime * timeScale;
