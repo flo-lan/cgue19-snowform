@@ -21,17 +21,19 @@
             <GameObject name="Credits">
                 <Components>
                     <TransformComponent rect="true" localPosition="0.5 0.0" />
-                    <TextComponent material="Credits" font="Arial" fontSize="50" enabled="true" text="Credits
-
-[Programming]
+                    <TextComponent material="Credits" font="Arial" fontSize="50" enabled="true" text="[Programmers]
 
 Andreas Krischke
 Florian Langeder
 
-[Art]
+[3D Assets]
 
 Kenney
 www.kenney.nl
+
+[Music]
+
+YUC'e - Future Candy
 
 [Libs]
 
