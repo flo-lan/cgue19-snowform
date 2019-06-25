@@ -175,7 +175,7 @@
             <GameObject id="FallenToDeath" name="FallenToDeath">
                 <Components>
                     <TransformComponent rect="true" localPosition="0.5 0.5" />
-                    <TextComponent material="LevelFinished" font="Arial" fontSize="64" enabled="false" text="You have fallen to death!" wordWrapping="true" textAlignment="CenterCenter" textOverflowMode="Ellipsis" maxWidth="500" maxHeight="300" />
+                    <TextComponent material="LevelFinished" font="Arial" fontSize="64" enabled="false" text="You perished!" wordWrapping="true" textAlignment="CenterCenter" textOverflowMode="Ellipsis" maxWidth="500" maxHeight="300" />
                 </Components>
                 <Children />
             </GameObject>
