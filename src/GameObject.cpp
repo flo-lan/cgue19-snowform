@@ -193,7 +193,10 @@ void GameObject::Update()
             ++itr;
         }
     }
+}
 
+void GameObject::LateUpdate()
+{
     // Call LateUpdate()
     for (ComponentList::const_iterator itr = componentList.begin(); itr != componentList.end();)
     {

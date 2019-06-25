@@ -171,9 +171,23 @@ void Scene::Update()
                 gameObject->GetScene()->DeleteGameObject(gameObject);
             }
         }
-    } t;
+    } updateTraverser;
 
-    TraverseSceneGraphDF(t);
+    static struct LateUpdateSceneGraphTraverser : public SceneGraphTraverser
+    {
+        virtual void Visit(TransformComponent* transform)
+        {
+            GameObject* gameObject = transform->GetOwner();
+
+            if (!gameObject->IsDestroyed())
+            {
+                gameObject->LateUpdate();
+            }
+        }
+    } lateUpdateTraverser;
+
+    TraverseSceneGraphDF(updateTraverser);
+    TraverseSceneGraphDF(lateUpdateTraverser);
 
     OnUpdate();
 }

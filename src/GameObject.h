@@ -30,6 +30,7 @@ private:
 
 public:
     void Update();
+    void LateUpdate();
     void Render(CameraComponent* camera);
     void Render(CameraComponent* camera, Material* material); // Primary used to render shadow maps
     void RenderViewFrustumCullingEnabled(CameraComponent* camera);
