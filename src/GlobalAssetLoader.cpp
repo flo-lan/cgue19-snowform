@@ -232,10 +232,13 @@ bool GlobalAssetLoader::LoadAssets()
     sAssetManager.CreateMeshFromFile("FenceCornerCurved", "assets/meshes/fence_corner_curved.fbx");
     sAssetManager.CreateMeshFromFile("Snowball", "assets/meshes/snowball.fbx");
     sAssetManager.CreateMeshFromFile("Snowman", "assets/meshes/snowman.fbx");
+    sAssetManager.CreateMeshFromFile("SnowmanFancy", "assets/meshes/snowman_fancy.fbx");
     sAssetManager.CreateMeshFromFile("TreePineSnow", "assets/meshes/tree_pine_snow.fbx");
+    sAssetManager.CreateMeshFromFile("TreePineSnowRound", "assets/meshes/tree_pine_snow_round.fbx");
 
     sPhysicsEngine.CreatePxMaterial("Default", 0.5f, 0.5f, 0.5f);
     sPhysicsEngine.CreatePxMaterial("Snowball", 5.0f, 5.0f, 0.5f);
+    sPhysicsEngine.CreatePxMaterial("MovingPlatform", 5.0f, 5.0f, 0.1f);
 
     return true;
 }
