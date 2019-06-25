@@ -106,7 +106,7 @@ void DirectionalLightComponent::RenderShadowMaps(CameraComponent* camera)
     {
         -camera->GetNearPlane(),
         -camera->GetNearPlane() - (camera->GetFarPlane() - camera->GetNearPlane()) * 0.2f,
-        -camera->GetNearPlane() - (camera->GetFarPlane() - camera->GetNearPlane()) * 0.6f,
+        -camera->GetNearPlane() - (camera->GetFarPlane() - camera->GetNearPlane()) * 0.5f,
         -camera->GetFarPlane()
     };
 
